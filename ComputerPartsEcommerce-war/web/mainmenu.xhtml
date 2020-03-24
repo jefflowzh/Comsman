@@ -19,9 +19,17 @@
                 <p:menu toggleable="true" >
                     <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home" />
 
-                    <p:submenu label="Test Menu">
-                        <p:menuitem value="menuItem1" outcome="/index" icon="fa fa-bars" />
-                        <p:menuitem value="menuItem2" outcome="/index" icon="fa fa-bars" />
+                    <p:submenu label="Tasks">
+                        <p:menuitem value="Computer-building" outcome="/index" icon="fa fa-tv" />
+                        <p:menuitem value="Deliveries" outcome="/index" icon="fa fa-truck" />
+                    </p:submenu>
+                    
+                    <p:submenu label="System Adminstration">
+                        <p:menuitem value="Staff Management" outcome="/index" icon="fa fa-id-card" />
+                        <p:menuitem value="Product Management" outcome="/index" icon="fa fa-product-hunt" />
+                        <p:menuitem value="Order Management" outcome="/index" icon="fa fa-clipboard" />
+                        <p:menuitem value="Task Management" outcome="/index" icon="fa fa-tasks" />
+                        <p:menuitem value="Customer Management" outcome="/index" icon="fa fa-users" />
                     </p:submenu>
 
                     <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />

@@ -47,7 +47,6 @@ public class LoginManagedBean {
     }
 
     public void logout(ActionEvent event) throws IOException {
-        System.out.println("im here logout");
         ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/login.xhtml");
     }
