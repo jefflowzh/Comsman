@@ -1,0 +1,27 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package files #
+*.jar
+*.war
+*.ear
+*.zip
+
+# User defined
+nbproject/private/
+build/
+dist/
+
+ComputerPartsEcommerce-ejb/nbproject/private/
+ComputerPartsEcommerce-ejb/build/
+ComputerPartsEcommerce-ejb/dist/
+
+ComputerPartsEcommerce-war/nbproject/private/
+ComputerPartsEcommerce-war/build/
+ComputerPartsEcommerce-war/dist/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
