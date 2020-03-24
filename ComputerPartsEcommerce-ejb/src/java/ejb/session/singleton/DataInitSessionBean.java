@@ -55,7 +55,8 @@ public class DataInitSessionBean {
         try
         {
             // check if there is anything in database
-            customerSessionBean.retrieveCustomerByEmail("email@email.com");
+            // customerSessionBean.retrieveCustomerByEmail("email@email.com");
+            staffSessionBean.retrieveStaffByEmail("wd@email.com");
         }
         catch(Exception ex)
         {
@@ -67,8 +68,10 @@ public class DataInitSessionBean {
 //        ComputerPart testComputerPart = new ComputerPart("Computer Part 1", 1.0, 1, "image");
 //        computerPartSessionBean.createNewComputerPart(testComputerPart);
 //        
-//        Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "Staff1", "Staff1", "Staff Address", "Staff Email", "Staff Password", "12345");
-//        staffSessionBean.createNewStaff(testStaff);
+        Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
+        staffSessionBean.createNewStaff(testStaff);
+        Staff testStaffTech = new Staff(StaffAccessRightEnum.TECHNICIAN, "StaffFN", "StaffLN", "Staff Address", "tech@email.com", "password", "12345");
+        staffSessionBean.createNewStaff(testStaffTech);
 //        
 //        List<ComputerPart> testComputerParts = new ArrayList<>();
 //        testComputerParts.add(testComputerPart);

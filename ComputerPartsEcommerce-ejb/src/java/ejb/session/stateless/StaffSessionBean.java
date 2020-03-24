@@ -1,7 +1,6 @@
 package ejb.session.stateless;
 
 import entity.Staff;
-import entity.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -10,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.StaffNotFoundException;
+import util.security.CryptographicHelper;
 
 @Stateless
 public class StaffSessionBean implements StaffSessionBeanLocal {
@@ -26,26 +26,26 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     }
 
     @Override
-    public User retrieveStaffByEmail(String email) throws StaffNotFoundException {
+    public Staff retrieveStaffByEmail(String email) throws StaffNotFoundException {
         Query query = em.createQuery("SELECT s FROM User s WHERE s.email = :inEmail");
         query.setParameter("inEmail", email);
 
         try {
-            return (User) query.getSingleResult();
+            return (Staff) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
             throw new StaffNotFoundException("Staff Email " + email + " does not exist!");
         }
     }
     
     @Override
-    public User staffLogin(String email, String password) throws InvalidLoginCredentialException {
+    public Staff staffLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
-            User user = retrieveStaffByEmail(email);            
-            // String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staffEntity.getSalt()));
+            Staff staff = retrieveStaffByEmail(email);            
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staff.getSalt()));
             
-            if(user.getPassword().equals(password)){
+            if(staff.getPassword().equals(passwordHash)){
                 // staffEntity.getSaleTransactionEntities().size();                
-                return user;
+                return staff;
             } else {
                 throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
             }

@@ -6,7 +6,6 @@
 package ejb.session.stateless;
 
 import entity.Staff;
-import entity.User;
 import javax.ejb.Local;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.StaffNotFoundException;
@@ -20,8 +19,8 @@ public interface StaffSessionBeanLocal {
 
     public Long createNewStaff(Staff newStaff);
     
-    public User retrieveStaffByEmail(String email) throws StaffNotFoundException;
+    public Staff retrieveStaffByEmail(String email) throws StaffNotFoundException;
     
-    public User staffLogin(String email, String password) throws InvalidLoginCredentialException;
+    public Staff staffLogin(String email, String password) throws InvalidLoginCredentialException;
     
 }

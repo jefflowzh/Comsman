@@ -6,7 +6,7 @@
 package jsf.managedbean;
 
 import ejb.session.stateless.StaffSessionBeanLocal;
-import entity.User;
+import entity.Staff;
 import javax.faces.event.ActionEvent;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -36,7 +36,7 @@ public class LoginManagedBean {
 
     public void login(ActionEvent event) throws IOException {
         try {
-            User currentStaffEntity = staffSessionBeanLocal.staffLogin(email, password);
+            Staff currentStaffEntity = staffSessionBeanLocal.staffLogin(email, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentStaffEntity", currentStaffEntity);

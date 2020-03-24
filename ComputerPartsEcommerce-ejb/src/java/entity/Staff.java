@@ -13,6 +13,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import util.security.CryptographicHelper;
 
 @Entity
 public class Staff extends User implements Serializable {
