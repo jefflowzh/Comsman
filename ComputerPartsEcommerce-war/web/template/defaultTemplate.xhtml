@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Comsman - E-commerce System</title>
+        <h:outputStylesheet name="css/layout.css" />
+        <h:outputStylesheet name="css/default.css" />
+    </h:head>
+
+    <h:body>
+        <div class="layout-header">
+            <ui:insert name="top">
+                <div class="company-logo">
+                    <p:graphicImage library="images" name="logo.png" width="265" alt="Company Logo" />
+                </div>
+            </ui:insert>
+        </div>
+
+
+        <div class="layout-sidebar">
+            <ui:insert name="left" >
+                <ui:include src="/mainmenu.xhtml"></ui:include>
+
+            </ui:insert>
+        </div>
+
+        <div class="layout-main-content">
+            <ui:insert name="content">
+                Content
+            </ui:insert>
+        </div>
+
+
+
+    </h:body>
+
+</html>

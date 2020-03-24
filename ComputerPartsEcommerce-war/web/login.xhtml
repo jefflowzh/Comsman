@@ -20,21 +20,24 @@
                         <div class="col s6 offset-s3" style="padding-top: 85px">
                             <div class="card">
                                 <div class="card-content">
-                                    <img class="responsive-img" style="max-width: 64px" src="images/logo.png" />
+                                    <p:graphicImage library="images" name="logo.png" width="200" alt="Company Logo" />
                                     <div class="left-align">
                                         <h:form id="login-form">
                                             <p:growl id="growl" life="2000" />
                                             <div class="row">
                                                 <div class="col s12 input-field">
-                                                    <h:inputText id="username" required="true" requiredMessage="Username is required!" />
-                                                    <h:outputLabel for="username" value="Username" />
+                                                    <h:inputText id="email" value="#{loginManagedBean.email}" required="true" requiredMessage="Email is required!" />
+                                                    <h:outputLabel for="email" value="Email" />
                                                 </div>
                                                 <div class="col s12 input-field">
-                                                    <h:inputSecret id="password" required="true" requiredMessage="Password is required!" />
+                                                    <h:inputSecret id="password"  value="#{loginManagedBean.password}" required="true" requiredMessage="Password is required!" />
                                                     <h:outputLabel for="password" value="Password" />
                                                 </div>
                                                 <div class="col s12 input-field">
-                                                    <p:commandButton value="Login" update="growl" icon="fa fa-save"/>
+                                                    <div align="center">
+                                                        <p:commandButton style="background: #8c8789; border: none; color:white" type="reset" value="Clear" icon="fa fa-undo" />&nbsp;
+                                                        <p:commandButton actionListener="#{loginManagedBean.login}" style="background: #faba3c; border: none; color:white" value="Login" update="growl" icon="fa fa-sign-in"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </h:form>
@@ -47,13 +50,13 @@
             </div>
         </div>
         <script>
-            $(document).on("ready", function(){
-                $('#login-page').css({'height':window.innerHeight + 'px'})
+            $(document).on("ready", function () {
+                $('#login-page').css({'height': window.innerHeight + 'px'})
             });
         </script>
-        
+
         <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
     </h:body>
 </html>
 

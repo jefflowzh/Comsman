@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section id="mainmenu" class="mainmenu" >
+        
+        <div class="profile-pic">
+            <p:graphicImage library="images" name="user.png" height="70" width="70" alt="Profile Pic" />
+        </div>
+        <div class="profile-name">
+            <h:outputText value="#{sessionScope.currentStaffEntity.firstName} #{sessionScope.currentStaffEntity.lastName} " />
+        </div>
+
+        <nav>
+            <h:form>
+                <p:menu toggleable="true" >
+                    <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home" />
+
+                    <p:submenu label="Test Menu">
+                        <p:menuitem value="menuItem1" outcome="/index" icon="fa fa-bars" />
+                        <p:menuitem value="menuItem2" outcome="/index" icon="fa fa-bars" />
+                    </p:submenu>
+
+                    <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
+                </p:menu>
+                
+            </h:form>
+        </nav>
+    </section>
+
+        
+
+</ui:composition>
