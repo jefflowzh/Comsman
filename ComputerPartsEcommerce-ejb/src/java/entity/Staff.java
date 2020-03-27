@@ -24,7 +24,7 @@ public class Staff extends User implements Serializable {
     private StaffAccessRightEnum role;
     @OneToMany(mappedBy = "assemblyAssignedTo")
     private List<ComputerSet> assignedComputerSets;
-    @OneToMany(mappedBy = "deliveredBy")
+    @OneToMany(mappedBy = "deliveryAssignedTo")
     private List<CustomerOrder> deliveries;
 
     public Staff() {

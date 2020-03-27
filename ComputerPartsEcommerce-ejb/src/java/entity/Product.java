@@ -30,8 +30,12 @@ public abstract class Product implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String image;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isDisabled;
 
     public Product() {
+        isDisabled = false;
     }
 
     public Product(String name, Double price, Integer inventoryQuantity, String image) {
@@ -82,6 +86,14 @@ public abstract class Product implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(Boolean isDisabled) {
+        this.isDisabled = isDisabled;
+    }    
 
     @Override
     public int hashCode() {

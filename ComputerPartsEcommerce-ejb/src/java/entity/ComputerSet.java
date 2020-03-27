@@ -34,14 +34,13 @@ public class ComputerSet extends Product implements Serializable {
     public ComputerSet(){
     }
 
-    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.computerParts = computerParts;
         this.warrentyLengthInYears = warrentyLengthInYears;
         this.isAmatuer = isAmatuer;
-        this.assemblyAssignedTo = assemblyAssignedTo;
         
-        assemblyComplete = false;
+        this.assemblyComplete = false;
     }   
 
     public List<ComputerPart> getComputerParts() {

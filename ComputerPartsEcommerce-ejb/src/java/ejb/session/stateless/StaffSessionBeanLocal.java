@@ -1,27 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb.session.stateless;
 
 import entity.Staff;
 import entity.User;
 import javax.ejb.Local;
+import util.exception.ComputerSetNotFoundException;
+import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.StaffNotFoundException;
 
-/**
- *
- * @author jeffl
- */
 @Local
 public interface StaffSessionBeanLocal {
 
     public Long createNewStaff(Staff newStaff);
-    
-    public User retrieveStaffByEmail(String email) throws StaffNotFoundException;
-    
-    public User staffLogin(String email, String password) throws InvalidLoginCredentialException;
+
+    public Staff retrieveStaffById(Long staffId, Boolean loadDeliveries, Boolean loadAssignedComputerSets) throws StaffNotFoundException;
+
+    public Staff retrieveStaffByEmail(String email, Boolean loadDeliveries, Boolean loadAssignedComputerSets) throws StaffNotFoundException;
+
+    public Staff staffLogin(String email, String password) throws InvalidLoginCredentialException;
+
+    public void updateStaff(Staff staff, Long customerOrderId, Long computerSetId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException;
+
+    public void deleteStaff(Long staffId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException;
     
 }

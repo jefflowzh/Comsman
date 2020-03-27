@@ -36,8 +36,12 @@ public abstract class User implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String contactNumber;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isDisabled;
 
     public User() {
+        isDisabled = false;
     }
 
     public User(String firstName, String lastName, String address, String email, String password, String contactNumber) {
@@ -105,6 +109,14 @@ public abstract class User implements Serializable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(Boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
 
     @Override
