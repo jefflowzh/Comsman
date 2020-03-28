@@ -3,7 +3,7 @@ package ejb.session.stateless;
 import entity.ComputerSet;
 import entity.CustomerOrder;
 import entity.Staff;
-import entity.User;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,6 +15,7 @@ import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.StaffNotFoundException;
+import util.security.CryptographicHelper;
 
 @Stateless
 public class StaffSessionBean implements StaffSessionBeanLocal {
@@ -27,7 +28,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
-
+    
     @Override
     public Long createNewStaff(Staff newStaff) {
         em.persist(newStaff);
@@ -53,18 +54,6 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         }
     }
     
-//    @Override
-//    public User retrieveStaffByEmail(String email) throws StaffNotFoundException {
-//        Query query = em.createQuery("SELECT s FROM User s WHERE s.email = :inEmail");
-//        query.setParameter("inEmail", email);
-//
-//        try {
-//            return (User) query.getSingleResult();
-//        } catch (NoResultException | NonUniqueResultException ex) {
-//            throw new StaffNotFoundException("Staff Email " + email + " does not exist!");
-//        }
-//    }
-    
     @Override
     public Staff retrieveStaffByEmail(String email, Boolean loadDeliveries, Boolean loadAssignedComputerSets) throws StaffNotFoundException {
         Query query = em.createQuery("SELECT s FROM User s WHERE s.email = :inEmail");
@@ -84,30 +73,14 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         }
     }
     
-//    @Override
-//    public User staffLogin(String email, String password) throws InvalidLoginCredentialException {
-//        try {
-//            Staff staff = retrieveStaffByEmail(email);            
-//            // String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staffEntity.getSalt()));
-//            
-//            if(user.getPassword().equals(password)){
-//                // staffEntity.getSaleTransactionEntities().size();                
-//                return user;
-//            } else {
-//                throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
-//            }
-//        } catch(StaffNotFoundException ex) {
-//            throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
-//        }
-//    }
     
-     @Override
+    @Override
     public Staff staffLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
             Staff staff = retrieveStaffByEmail(email, true, true);            
-            // String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staffEntity.getSalt()));
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staff.getSalt()));
             
-            if(staff.getPassword().equals(password)){
+            if(staff.getPassword().equals(passwordHash)){
                 // staffEntity.getSaleTransactionEntities().size();                
                 return staff;
             } else {
@@ -165,4 +138,10 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         staff.setIsDisabled(true);
     }
 
+    public List<Staff> retrieveAllStaffs() {
+        Query query = em.createQuery("SELECT s FROM Staff s");
+        
+        return query.getResultList();
+    }
+    
 }

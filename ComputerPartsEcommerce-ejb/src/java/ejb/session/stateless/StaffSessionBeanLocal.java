@@ -1,7 +1,7 @@
 package ejb.session.stateless;
 
 import entity.Staff;
-import entity.User;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
@@ -22,5 +22,7 @@ public interface StaffSessionBeanLocal {
     public void updateStaff(Staff staff, Long customerOrderId, Long computerSetId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException;
 
     public void deleteStaff(Long staffId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException;
+    
+    public List<Staff> retrieveAllStaffs();
     
 }
