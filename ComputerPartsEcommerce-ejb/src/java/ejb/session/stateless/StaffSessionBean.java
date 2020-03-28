@@ -138,8 +138,10 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         staff.setIsDisabled(true);
     }
 
+    @Override
     public List<Staff> retrieveAllStaffs() {
-        Query query = em.createQuery("SELECT s FROM Staff s");
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = :inIsDisabled ");
+        query.setParameter("inIsDisabled", false);
         
         return query.getResultList();
     }
