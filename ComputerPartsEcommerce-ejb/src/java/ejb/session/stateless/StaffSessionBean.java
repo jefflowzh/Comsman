@@ -1,12 +1,18 @@
 package ejb.session.stateless;
 
+import entity.ComputerSet;
+import entity.CustomerOrder;
 import entity.Staff;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.exception.ComputerSetNotFoundException;
+import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.StaffNotFoundException;
 import util.security.CryptographicHelper;
@@ -16,6 +22,12 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
+    
+    @EJB
+    private ComputerSetSessionBeanLocal computerSetSessionBeanLocal;
+
+    @EJB
+    private CustomerOrderSessionBeanLocal customerOrderSessionBeanLocal;
 
     @Override
     public Long createNewStaff(Staff newStaff) {
@@ -53,5 +65,12 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
             throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
         }
     }
-
+    
+    @Override
+    public List<Staff> retrieveAllStaffs() {
+        Query query = em.createQuery("SELECT s FROM Staff s");
+        
+        return query.getResultList();
+    }
+    
 }

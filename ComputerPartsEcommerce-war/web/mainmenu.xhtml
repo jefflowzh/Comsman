@@ -25,7 +25,7 @@
                     </p:submenu>
                     
                     <p:submenu label="System Adminstration" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER'}">
-                        <p:menuitem value="Staff Management" outcome="/index" icon="fa fa-id-card" />
+                        <p:menuitem value="Staff Management" outcome="/manager/staffManagement.html" icon="fa fa-id-card" />
                         <p:menuitem value="Product Management" outcome="/index" icon="fa fa-product-hunt" />
                         <p:menuitem value="Order Management" outcome="/index" icon="fa fa-clipboard" />
                         <p:menuitem value="Task Management" outcome="/index" icon="fa fa-tasks" />

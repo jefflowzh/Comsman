@@ -39,9 +39,13 @@ public abstract class User implements Serializable {
     private String contactNumber;
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isDisabled;
 
     public User() {
          this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+         this.isDisabled = false;
     }
 
     public User(String firstName, String lastName, String address, String email, String password, String contactNumber) {
@@ -53,6 +57,7 @@ public abstract class User implements Serializable {
         this.email = email;
         setPassword(password);
         this.contactNumber = contactNumber;
+        this.isDisabled = false;
     }
 
     public Long getUserId() {
@@ -146,6 +151,14 @@ public abstract class User implements Serializable {
     @Override
     public String toString() {
         return "entity.User[ id=" + userId + " ]";
+    }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(Boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
     
 }
