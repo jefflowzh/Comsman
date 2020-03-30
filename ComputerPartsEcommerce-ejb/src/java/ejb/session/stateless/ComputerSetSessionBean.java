@@ -18,5 +18,5 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
         
         return newComputerSet.getProductId();
     }
-
+    
 }
