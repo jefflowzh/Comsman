@@ -90,9 +90,12 @@ public class ComputerSet implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Boolean assemblyComplete;
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn
-    private LineItem lineItem; 
+    private LineItem lineItem;
+    @Column(nullable = false)
+    @NotNull
+    private Double price;
     
     //@OneToOne
     //@JoinColumn(nullable = false)
@@ -101,12 +104,11 @@ public class ComputerSet implements Serializable {
     public ComputerSet(){
     }
 
-    
     /* original constructor
     public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
 
 
-    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
 
         super(name, price, inventoryQuantity, image);
         this.computerParts = computerParts;
@@ -117,7 +119,7 @@ public class ComputerSet implements Serializable {
     
     // new constructor 
 
-    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer) {
+    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
         this.cpu = cpu;
         this.motherBoard = motherBoard;
         this.rams = rams;
@@ -126,11 +128,9 @@ public class ComputerSet implements Serializable {
         this.warrentyLengthInYears = warrentyLengthInYears;
         this.isAmatuer = isAmatuer;
         this.assemblyComplete = false;
+        this.lineItem = lineItem;
     }
-    
-    
-   
-    
+
     public CPU getCpu() {
         return cpu;
     }
@@ -282,6 +282,14 @@ public class ComputerSet implements Serializable {
 
     public void setLineItem(LineItem lineItem) {
         this.lineItem = lineItem;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
     
       @Override

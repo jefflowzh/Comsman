@@ -110,7 +110,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         }
         
         if (computerSetId != null) {
-            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId, false);
+            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId);
             if(!updatedStaff.getAssignedComputerSets().contains(computerSet)) {
                 // association
                 updatedStaff.getAssignedComputerSets().add(computerSet);
@@ -133,7 +133,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
             updateStaff(staff, customerOrder.getCustomerOrderId(), null);
         }
         for (ComputerSet computerSet : staff.getAssignedComputerSets()) {
-            updateStaff(staff, null, computerSet.getProductId());
+            updateStaff(staff, null, computerSet.getComputerSetId());
         }
         staff.setIsDisabled(true);
     }

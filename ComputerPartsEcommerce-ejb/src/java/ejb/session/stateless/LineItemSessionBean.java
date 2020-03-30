@@ -30,5 +30,5 @@ public class LineItemSessionBean implements LineItemSessionBeanLocal {
             throw new LineItemNotFoundException("LineItem ID " + lineItemId + " does not exist!");
         }
     }
-
+    
 }
