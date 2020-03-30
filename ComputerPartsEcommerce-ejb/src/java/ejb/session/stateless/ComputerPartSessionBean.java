@@ -101,66 +101,125 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
     }
     
     public List<CPU> retrieveAllCPU() {
-        Query query = em.createQuery("SELECT c FROM CPU"); 
+        Query query = em.createQuery("SELECT c FROM CPU c"); 
         return query.getResultList();
         
     }
 
     public List<CPUAirCooler> retrieveAllCPUAirCooler() {
-        Query query = em.createQuery("SELECT c FROM CPUAirCooler"); 
+        Query query = em.createQuery("SELECT c FROM CPUAirCooler c"); 
         return query.getResultList();
         
     }
     
     public List<CPUWaterCooler> retrieveAllCPUWaterCooler() {
-        Query query = em.createQuery("SELECT c FROM CPUWaterCooler"); 
+        Query query = em.createQuery("SELECT c FROM CPUWaterCooler c"); 
         return query.getResultList();
         
     }
     
     public List<ComputerCase> retrieveAllComCase() {
-        Query query = em.createQuery("SELECT c FROM ComptuerCase"); 
+        Query query = em.createQuery("SELECT c FROM ComptuerCase c"); 
         return query.getResultList();
         
     }
     
     public List<GPU> retrieveAllGPU() {
-        Query query = em.createQuery("SELECT c FROM GPU"); 
+        Query query = em.createQuery("SELECT c FROM GPU c"); 
         return query.getResultList();
         
     }
     
     public List<HDD> retrieveAllHDD() {
-        Query query = em.createQuery("SELECT c FROM HDD"); 
+        Query query = em.createQuery("SELECT c FROM HDD c"); 
         return query.getResultList();
         
     }
     
     public List<MotherBoard> retrieveAllMotherBoard() {
-        Query query = em.createQuery("SELECT c FROM MotherBoard"); 
+        Query query = em.createQuery("SELECT c FROM MotherBoard c"); 
         return query.getResultList();
         
     }
     
     public List<PowerSupply> retrieveAllPowerSupply() {
-        Query query = em.createQuery("SELECT c FROM PowerSupply"); 
+        Query query = em.createQuery("SELECT c FROM PowerSupply c"); 
         return query.getResultList();
         
     }
     
     public List<RAM> retrieveAllRAM() {
-        Query query = em.createQuery("SELECT c FROM RAM"); 
+        Query query = em.createQuery("SELECT c FROM RAM c"); 
         return query.getResultList();
         
     }
     
     public List<SSD> retrieveAllSSD() {
-        Query query = em.createQuery("SELECT c FROM SSD"); 
+        Query query = em.createQuery("SELECT c FROM SSD c"); 
         return query.getResultList();
         
     }
     
     
+    public List<CPU> retrieveCPUById(Long id) {
+        Query query = em.createQuery("SELECT c FROM CPU"); 
+        return query.getResultList();
+        
+    }
+
+    public List<CPUAirCooler> retrieveCPUAirCoolerById(Long id) {
+        Query query = em.createQuery("SELECT c FROM CPUAirCooler"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<CPUWaterCooler> retrieveCPUWaterCoolerById(Long id) {
+        Query query = em.createQuery("SELECT c FROM CPUWaterCooler"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<ComputerCase> retrieveComCaseById(Long id) {
+        Query query = em.createQuery("SELECT c FROM ComptuerCase"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<GPU> retrieveGPUById(Long id) {
+        Query query = em.createQuery("SELECT c FROM GPU"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<HDD> retrieveAllHDDById(Long id) {
+        Query query = em.createQuery("SELECT c FROM HDD"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<MotherBoard> retrieveMotherBoardById(Long id) {
+        Query query = em.createQuery("SELECT c FROM MotherBoard"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<PowerSupply> retrievePowerSupplyById(Long id) {
+        Query query = em.createQuery("SELECT c FROM PowerSupply"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<RAM> retrieveRAMById(Long id) {
+        Query query = em.createQuery("SELECT c FROM RAM"); 
+        return query.getResultList();
+        
+    }
+    
+    public List<SSD> retrieveSSDById(Long id) {
+        Query query = em.createQuery("SELECT c FROM SSD"); 
+        return query.getResultList();
+        
+    }
     
   
     

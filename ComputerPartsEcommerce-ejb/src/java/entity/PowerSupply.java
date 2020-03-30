@@ -22,8 +22,8 @@ public class PowerSupply extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(mappedBy = "psu")
-   private List<ComputerSet> computerSets;
+   // @OneToMany(mappedBy = "psu")
+  // private List<ComputerSet> computerSets;
 
     private String Manufacturer;
     private String formFactor;// (micro atx)

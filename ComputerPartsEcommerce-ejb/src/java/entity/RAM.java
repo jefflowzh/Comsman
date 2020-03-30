@@ -22,8 +22,8 @@ public class RAM extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
    
-         @ManyToMany(mappedBy = "rams")
-   private List<ComputerSet> computerSets;
+   //@ManyToMany(mappedBy = "rams")
+   //private List<ComputerSet> computerSets;
     
     private String Manufacturer;
     private String speed;

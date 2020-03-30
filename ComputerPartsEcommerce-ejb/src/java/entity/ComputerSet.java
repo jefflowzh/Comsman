@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,8 +20,7 @@ public class ComputerSet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long computerSetId;
-    //@OneToMany
-    //private List<ComputerPart> computerParts;
+    
     
     /*For a computer set there are mandatory computer parts
     cpu 
@@ -90,6 +90,13 @@ public class ComputerSet implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Boolean assemblyComplete;
+    @OneToOne
+    @JoinColumn
+    private LineItem lineItem; 
+    
+    //@OneToOne
+    //@JoinColumn(nullable = false)
+    //private CustomerOrder customerOrder;
     
     public ComputerSet(){
     }
@@ -97,19 +104,30 @@ public class ComputerSet implements Serializable {
     
     /* original constructor
     public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
-=======
+
 
     public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
->>>>>>> 79ae37ff48bf11c063a4b521bd8a742ae28be54b
+
         super(name, price, inventoryQuantity, image);
         this.computerParts = computerParts;
         this.warrentyLengthInYears = warrentyLengthInYears;
         this.isAmatuer = isAmatuer;      
-<<<<<<< HEAD
         assemblyComplete = false;
     }   */
     
     // new constructor 
+
+    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer) {
+        this.cpu = cpu;
+        this.motherBoard = motherBoard;
+        this.rams = rams;
+        this.psu = psu;
+        this.compCase = compCase;
+        this.warrentyLengthInYears = warrentyLengthInYears;
+        this.isAmatuer = isAmatuer;
+        this.assemblyComplete = false;
+    }
+    
     
    
     
@@ -223,6 +241,47 @@ public class ComputerSet implements Serializable {
 
     public void setAssemblyComplete(Boolean assemblyComplete) {
         this.assemblyComplete = assemblyComplete;
+    }
+
+    public Long getComputerSetId() {
+        return computerSetId;
+    }
+
+    public void setComputerSetId(Long computerSetId) {
+        this.computerSetId = computerSetId;
+    }
+
+    public CPUWaterCooler getWaterCooler() {
+        return waterCooler;
+    }
+
+    public void setWaterCooler(CPUWaterCooler waterCooler) {
+        this.waterCooler = waterCooler;
+    }
+
+    public CPUAirCooler getAirCooler() {
+        return airCooler;
+    }
+
+    public void setAirCooler(CPUAirCooler airCooler) {
+        this.airCooler = airCooler;
+    }
+/*
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
+    }
+    */
+
+    public LineItem getLineItem() {
+        return lineItem;
+    }
+
+    public void setLineItem(LineItem lineItem) {
+        this.lineItem = lineItem;
     }
     
       @Override

@@ -22,8 +22,8 @@ public class ComputerCase extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-   @OneToMany(mappedBy = "compCase")
-   private List<ComputerSet> computerSets;
+   //@OneToMany(mappedBy = "compCase")
+   //private List<ComputerSet> computerSets;
  
     private String Manufacturer;
     private String type; //(ATX Mid Tower)

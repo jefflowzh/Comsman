@@ -19,8 +19,8 @@ public class GPU extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
    
-   @ManyToMany(mappedBy = "gpus")
-   private List<ComputerSet> computerSets;
+   //@ManyToMany(mappedBy = "gpus")
+   //private List<ComputerSet> computerSets;
     
     private String Manufacturer;
     private String chipset; //(GTX 1660)

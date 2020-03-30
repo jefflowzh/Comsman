@@ -22,8 +22,8 @@ public class MotherBoard extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(mappedBy = "motherBoard")
-   private List<ComputerSet> computerSets;
+    //@OneToMany(mappedBy = "motherBoard")
+   //private List<ComputerSet> computerSets;
     
     private String Manufacturer;
     private String formFactor;

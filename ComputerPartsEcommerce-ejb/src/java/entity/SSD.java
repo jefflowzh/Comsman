@@ -20,8 +20,8 @@ import javax.persistence.ManyToMany;
 @Entity
 public class SSD extends ComputerPart implements Serializable {
 
-   @ManyToMany(mappedBy = "ssds")
-   private List<ComputerSet> computerSets;
+  // @ManyToMany(mappedBy = "ssds")
+   //private List<ComputerSet> computerSets;
    
     private String Manufacturer;
     private String type; //(RPM)
