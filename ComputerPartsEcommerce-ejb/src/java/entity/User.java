@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotNull;
+import util.security.CryptographicHelper;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -36,8 +37,17 @@ public abstract class User implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String contactNumber;
+    @Column(columnDefinition = "CHAR(32) NOT NULL")
+    private String salt;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isDisabled;
 
     public User() {
+        isDisabled = false;
+        
+        this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+        this.isDisabled = false;
     }
 
     public User(String firstName, String lastName, String address, String email, String password, String contactNumber) {
@@ -47,8 +57,9 @@ public abstract class User implements Serializable {
         this.lastName = lastName;
         this.address = address;
         this.email = email;
-        this.password = password;
+        setPassword(password);
         this.contactNumber = contactNumber;
+        this.isDisabled = false;
     }
 
     public Long getUserId() {
@@ -96,7 +107,11 @@ public abstract class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if(password != null) {
+            this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
+        } else {
+            this.password = null;
+        }
     }
 
     public String getContactNumber() {
@@ -105,6 +120,22 @@ public abstract class User implements Serializable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+    
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(Boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
 
     @Override
@@ -131,5 +162,5 @@ public abstract class User implements Serializable {
     public String toString() {
         return "entity.User[ id=" + userId + " ]";
     }
-    
+
 }

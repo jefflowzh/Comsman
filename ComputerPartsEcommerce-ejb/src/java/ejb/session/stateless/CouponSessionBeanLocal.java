@@ -1,20 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb.session.stateless;
 
 import entity.Coupon;
 import javax.ejb.Local;
+import util.exception.CouponNotFoundException;
 
-/**
- *
- * @author jeffl
- */
 @Local
 public interface CouponSessionBeanLocal {
 
     public Long createNewCoupon(Coupon newCoupon);
     
+    public Coupon retrieveCouponById(Long couponId) throws CouponNotFoundException;
+
+    public void updateCoupon(Coupon updatedCoupon);
+
+    public void deleteCoupon(Long couponId) throws CouponNotFoundException;
+  
 }

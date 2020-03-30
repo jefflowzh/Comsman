@@ -41,6 +41,9 @@ public class Coupon implements Serializable {
     private CouponTypeEnum couponType;
     private Double rate;
     private Double flatAmount;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isDisabled;
 
     public Coupon() {
     }
@@ -117,6 +120,14 @@ public class Coupon implements Serializable {
 
     public void setFlatAmount(Double flatAmount) {
         this.flatAmount = flatAmount;
+    }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(Boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
     
     @Override

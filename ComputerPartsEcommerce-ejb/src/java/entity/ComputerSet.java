@@ -93,15 +93,19 @@ public class ComputerSet implements Serializable {
     
     public ComputerSet(){
     }
+
     
     /* original constructor
     public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
+=======
+
+    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
+>>>>>>> 79ae37ff48bf11c063a4b521bd8a742ae28be54b
         super(name, price, inventoryQuantity, image);
         this.computerParts = computerParts;
         this.warrentyLengthInYears = warrentyLengthInYears;
-        this.isAmatuer = isAmatuer;
-        this.assemblyAssignedTo = assemblyAssignedTo;
-        
+        this.isAmatuer = isAmatuer;      
+<<<<<<< HEAD
         assemblyComplete = false;
     }   */
     

@@ -15,13 +15,18 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import javax.persistence.Query;
+
+import util.exception.ComputerPartNotFoundException;
+import util.exception.CustomerNotFoundException;
 
 @Stateless
 public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
+
 
     
     public Long createNewCPU(CPU cpu) {

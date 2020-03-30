@@ -46,7 +46,7 @@ public class CustomerOrder implements Serializable {
     private Customer customer;
     @ManyToOne
     @JoinColumn
-    private Staff deliveredBy;
+    private Staff deliveryAssignedTo;
     @ManyToOne
     @JoinColumn
     private Coupon coupon;
@@ -54,7 +54,7 @@ public class CustomerOrder implements Serializable {
     public CustomerOrder() {
     }
 
-    public CustomerOrder(Date orderDate, Double totalPrice, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems, Customer customer) {
+    public CustomerOrder(Date orderDate, Double totalPrice, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
         this();
         
         this.orderDate = orderDate;
@@ -62,7 +62,6 @@ public class CustomerOrder implements Serializable {
         this.requiresDelivery = requiresDelivery;
         this.billingAddress = billingAddress;
         this.lineItems = lineItems;
-        this.customer = customer;
     }
 
     public Long getCustomerOrderId() {
@@ -137,12 +136,12 @@ public class CustomerOrder implements Serializable {
         this.customer = customer;
     }
 
-    public Staff getDeliveredBy() {
-        return deliveredBy;
+    public Staff getDeliveryAssignedTo() {
+        return deliveryAssignedTo;
     }
 
-    public void setDeliveredBy(Staff deliveredBy) {
-        this.deliveredBy = deliveredBy;
+    public void setDeliveryAssignedTo(Staff deliveryAssignedTo) {
+        this.deliveryAssignedTo = deliveryAssignedTo;
     }
 
     public Coupon getCoupon() {

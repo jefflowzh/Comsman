@@ -13,6 +13,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import util.security.CryptographicHelper;
 
 @Entity
 public class Staff extends User implements Serializable {
@@ -24,7 +25,7 @@ public class Staff extends User implements Serializable {
     private StaffAccessRightEnum role;
     @OneToMany(mappedBy = "assemblyAssignedTo")
     private List<ComputerSet> assignedComputerSets;
-    @OneToMany(mappedBy = "deliveredBy")
+    @OneToMany(mappedBy = "deliveryAssignedTo")
     private List<CustomerOrder> deliveries;
 
     public Staff() {
