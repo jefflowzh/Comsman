@@ -74,7 +74,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     
     @Override
     public List<Customer> retrieveAllCustomers(Boolean loadCart, Boolean loadOrders){
-        Query query = em.createQuery("SELECT c FROM Customer c");
+        Query query = em.createQuery("SELECT c FROM Customer c WHERE C.isDisabled = false");
         List<Customer> customers = query.getResultList();
         
         if (loadCart) {

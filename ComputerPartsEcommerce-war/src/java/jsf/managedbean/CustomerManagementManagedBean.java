@@ -48,8 +48,10 @@ public class CustomerManagementManagedBean implements Serializable
             Long newCustomerId = customerSessionBeanLocal.createNewCustomer(getNewCustomerEntity());
             Customer newCustomer = customerSessionBeanLocal.retrieveCustomerById(newCustomerId, Boolean.FALSE, Boolean.TRUE);
             getCustomers().add(newCustomer);
+            System.out.println("OLD EMAIL" + newCustomer.getEmail());
             newCustomer = new Customer();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New custoemr created successfully (Customer ID: " + newCustomerId + ")", null));
+            System.out.println("NEW EMAIL" + newCustomer.getEmail());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New customer created successfully (Customer ID: " + newCustomerId + ")", null));
         } catch (CustomerNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occured while creating the new customer: " + ex.getMessage(), null));
         } catch (Exception ex) {
@@ -58,6 +60,8 @@ public class CustomerManagementManagedBean implements Serializable
     }
     
     public void doUpdateCustomer(ActionEvent event) {
+        System.out.println("******" + "NULL CHECK PRE");
+        System.out.println("****** NULL CHECK" + (Customer)event.getComponent().getAttributes().get("customerEntityToUpdate"));
         setSelectedCustomerEntityToUpdate((Customer)event.getComponent().getAttributes().get("customerEntityToUpdate"));
     }
     

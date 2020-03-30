@@ -127,21 +127,20 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     @Override
     public void deleteStaff(Long staffId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException { 
         Staff staff = retrieveStaffById(staffId, true, true);
-        
+        /*
         // remove associations with staff
         for (CustomerOrder customerOrder : staff.getDeliveries()) {
             updateStaff(staff, customerOrder.getCustomerOrderId(), null);
         }
         for (ComputerSet computerSet : staff.getAssignedComputerSets()) {
             updateStaff(staff, null, computerSet.getProductId());
-        }
+        }*/
         staff.setIsDisabled(true);
     }
 
     @Override
     public List<Staff> retrieveAllStaffs() {
-        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = :inIsDisabled ");
-        query.setParameter("inIsDisabled", false);
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = false ");
         
         return query.getResultList();
     }
