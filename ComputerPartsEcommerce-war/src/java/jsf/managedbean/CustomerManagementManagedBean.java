@@ -46,11 +46,18 @@ public class CustomerManagementManagedBean implements Serializable
     public void createNewCustomer(ActionEvent event) {
         try {
             Long newCustomerId = customerSessionBeanLocal.createNewCustomer(getNewCustomerEntity());
-            Customer newCustomer = customerSessionBeanLocal.retrieveCustomerById(newCustomerId, Boolean.FALSE, Boolean.TRUE);
+            /*Customer newCustomer = customerSessionBeanLocal.retrieveCustomerById(newCustomerId, Boolean.FALSE, Boolean.TRUE);
             getCustomers().add(newCustomer);
             System.out.println("OLD EMAIL" + newCustomer.getEmail());
             newCustomer = new Customer();
-            System.out.println("NEW EMAIL" + newCustomer.getEmail());
+            System.out.println("NEW EMAIL" + newCustomer.getEmail()); */
+            
+            newCustomerEntity = customerSessionBeanLocal.retrieveCustomerById(newCustomerId, Boolean.FALSE, Boolean.TRUE);
+            
+            customers.add(newCustomerEntity);
+            
+            newCustomerEntity = new Customer();
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New customer created successfully (Customer ID: " + newCustomerId + ")", null));
         } catch (CustomerNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occured while creating the new customer: " + ex.getMessage(), null));
@@ -86,7 +93,8 @@ public class CustomerManagementManagedBean implements Serializable
     public void deleteCustomer(ActionEvent event) {
         try {
             customerSessionBeanLocal.deleteCustomer(selectedCustomerEntityToDelete.getUserId());
-            setSelectedCustomerEntityToDelete(null);
+            // setSelectedCustomerEntityToDelete(null);
+            customers.remove(getSelectedCustomerEntityToDelete());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Customer deleted successfully", null));
         } catch (CustomerNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer not found", null));

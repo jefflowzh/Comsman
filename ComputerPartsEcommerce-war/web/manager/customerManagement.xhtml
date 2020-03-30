@@ -146,7 +146,7 @@
                 
                 <p:confirmDialog header="Warning" id="dialogDeleteCustomer" widgetVar="dialogDeleteCustomer" message="Confirm deletion?">
                         <div align="center">
-                            <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{customerManagementManagedBean.deleteCustomer}" oncomplete="PF('dialogDeleteCustomer').hide()" update="formAllCustomers:dataTableAllCustomers" />
+                            <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{customerManagementManagedBean.deleteCustomer}" oncomplete="PF('dialogDeleteCustomer').hide()" update="formAllCustomers:dataTableAllCustomers formAllCustomers:messages" />
                             <p:commandButton value="No" icon="fa fa-times" onclick="PF('dialogDeleteCustomer').hide()" />
                         </div>
                 </p:confirmDialog>
@@ -312,7 +312,7 @@
                             
                             <p:row>
                                 <p:column colspan="2">
-                                    <p:commandButton value="Update Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.updateCustomer(event)}" oncomplete="PF('sidebarUpdateCustomer').hide()" />
+                                    <p:commandButton value="Update Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.updateCustomer}" oncomplete="PF('sidebarUpdateCustomer').hide();" />
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
