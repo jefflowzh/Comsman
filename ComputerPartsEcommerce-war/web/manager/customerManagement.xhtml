@@ -55,10 +55,10 @@
                                 <p:commandButton update="formViewCustomer" oncomplete="PF('dialogViewCustomer').show()" icon="fa fa-eye" title="View">
                                     <f:setPropertyActionListener value="#{customerEntity}" target="#{customerManagementManagedBean.currentCustomer}" />
                                 </p:commandButton>
-                                <p:commandButton actionListener="#{customerManagementManagedBean.doUpdateCustomer(event)}" update="formUpdateCustomer" oncomplete="PF('sidebarUpdateCustomer').show()" icon="fa fa-pencil" title="Update">
+                                <p:commandButton actionListener="#{customerManagementManagedBean.doUpdateCustomer}" update="formUpdateCustomer" oncomplete="PF('sidebarUpdateCustomer').show()" icon="fa fa-pencil" title="Update">
                                     <f:attribute name="customerEntityToUpdate" value="#{customerEntity}" />
                                 </p:commandButton>
-                                <p:commandButton actionListener="#{customerManagementManagedBean.doDeleteCustomer(event)}" oncomplete="PF('dialogDeleteCustomer').show()" icon="fa fa-trash" title="Delete">
+                                <p:commandButton actionListener="#{customerManagementManagedBean.doDeleteCustomer}" oncomplete="PF('dialogDeleteCustomer').show()" icon="fa fa-trash" title="Delete">
                                     <f:attribute name="customerEntityToDelete" value="#{customerEntity}" />
                                 </p:commandButton>
                             </div>
@@ -142,16 +142,16 @@
                             </p:row>
                         </p:panelGrid>
                     </p:dialog>
-                    
-                    <p:confirmDialog header="Warning" id="dialogDeleteCustomer" widgetVar="dialogDeleteCustomer" message="Confirm deletion?">
-                        <div align="center">
-                            <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{customerManagementManagedBean.deleteCustomer(event)}" oncomplete="PF('dialogDeleteStaff').hide()" update="formAllCustomers:dataTableAllCustomers formAllCustomers:messages" />
-                            <p:commandButton value="No" icon="fa fa-times" onclick="PF('dialogDeleteCustomer').hide()" />
-                        </div>
-                    </p:confirmDialog>
                 </h:form>
                 
-                <h:form id="formCreateNewCustimer">
+                <p:confirmDialog header="Warning" id="dialogDeleteCustomer" widgetVar="dialogDeleteCustomer" message="Confirm deletion?">
+                        <div align="center">
+                            <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{customerManagementManagedBean.deleteCustomer}" oncomplete="PF('dialogDeleteCustomer').hide()" update="formAllCustomers:dataTableAllCustomers" />
+                            <p:commandButton value="No" icon="fa fa-times" onclick="PF('dialogDeleteCustomer').hide()" />
+                        </div>
+                </p:confirmDialog>
+                
+                <h:form id="formCreateNewCustomer">
                     <p:sidebar id="sidebarCreateCustomer" widgetVar="sidebarCreateCustomer" position="right" baseZIndex="10000" style="width: 30%">
                         <p:commandButton value="Close" icon="fa fa-remove" style="border: none !important; background-color: white !important; color: black" oncomplete="PF('sidebarCreateCustomer').hide()" />
                         
@@ -233,7 +233,7 @@
                             <p:row>
                                 <p:column colspan="3">
                                     <p:commandButton type="reset" value="Clear" />&nbsp;
-                                    <p:commandButton value="Create New Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.createNewCustomer(event)}" oncomplete="PF('sidebarCreateCustomer').hide()" />
+                                    <p:commandButton value="Create New Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.createNewCustomer}" oncomplete="PF('sidebarCreateCustomer').hide()" />
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -271,15 +271,6 @@
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="email" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.email}" required="true" requiredMessage="Email is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="password" value="Password: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:password id="password" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.password}" required="true" requiredMessage="Password is required" />
                                 </p:column>
                             </p:row>
 
