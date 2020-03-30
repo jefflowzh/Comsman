@@ -5,10 +5,12 @@ import entity.Customer;
 import entity.CustomerOrder;
 import entity.LineItem;
 import entity.Staff;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.exception.CouponNotFoundException;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
@@ -118,6 +120,12 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             customerOrder.setCustomer(null);
         }
         em.remove(customerOrder);
+    }
+    
+    public List<CustomerOrder> retrieveAllOrders() {
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o");
+        
+        return query.getResultList();
     }
 
 }

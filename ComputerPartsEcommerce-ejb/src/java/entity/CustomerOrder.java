@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import util.enumeration.OrderStatusEnum;
 
 @Entity
 public class CustomerOrder implements Serializable {
@@ -27,6 +30,7 @@ public class CustomerOrder implements Serializable {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+    @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fulfilledDate;
     @Column(nullable = false)
@@ -50,8 +54,13 @@ public class CustomerOrder implements Serializable {
     @ManyToOne
     @JoinColumn
     private Coupon coupon;
+    @Column(nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum orderStatus;
 
     public CustomerOrder() {
+        this.orderStatus = OrderStatusEnum.UNASSIGNED;
     }
 
     public CustomerOrder(Date orderDate, Double totalPrice, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
@@ -175,6 +184,14 @@ public class CustomerOrder implements Serializable {
     @Override
     public String toString() {
         return "entity.Order[ id=" + customerOrderId + " ]";
+    }
+
+    public OrderStatusEnum getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatusEnum orderStatus) {
+        this.orderStatus = orderStatus;
     }
     
 }

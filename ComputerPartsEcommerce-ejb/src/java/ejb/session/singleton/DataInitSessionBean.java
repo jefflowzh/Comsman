@@ -14,6 +14,7 @@ import entity.Customer;
 import entity.LineItem;
 import entity.CustomerOrder;
 import entity.Staff;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,8 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import util.enumeration.CouponTypeEnum;
 import util.enumeration.StaffAccessRightEnum;
+import util.exception.CustomerNotFoundException;
+import util.exception.StaffNotFoundException;
 
 @Singleton
 @LocalBean
@@ -48,31 +51,29 @@ public class DataInitSessionBean {
 
     public DataInitSessionBean() {
     }
-    
+
     @PostConstruct
-    public void postConstruct()
-    {
-        try
-        {
+    public void postConstruct() {
+        try {
             // check if there is anything in database
             // customerSessionBean.retrieveCustomerByEmail("email@email.com");
             staffSessionBean.retrieveStaffByEmail("wd@email.com", true, true);
-        }
-        catch(Exception ex)
-        {
+        } catch (StaffNotFoundException ex) {
             initializeData();
+
         }
     }
-    
-    private void initializeData(){
-//        ComputerPart testComputerPart = new ComputerPart("Computer Part 1", 1.0, 1, "image");
-//        computerPartSessionBean.createNewComputerPart(testComputerPart);
-//        
+
+    private void initializeData() {
+
         Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
         staffSessionBean.createNewStaff(testStaff);
         Staff testStaffTech = new Staff(StaffAccessRightEnum.TECHNICIAN, "StaffFN", "StaffLN", "Staff Address", "tech@email.com", "password", "12345");
         staffSessionBean.createNewStaff(testStaffTech);
-//        
+
+        ComputerPart testComputerPart = new ComputerPart("Computer Part 1", 100.00, 10, "image");
+        computerPartSessionBean.createNewComputerPart(testComputerPart);
+
 //        List<ComputerPart> testComputerParts = new ArrayList<>();
 //        testComputerParts.add(testComputerPart);
 //        ComputerSet testComputerSet = new ComputerSet(testComputerParts, 1, true, testStaff, "Computer Set 1", 1.0, 1, "image");
@@ -81,16 +82,23 @@ public class DataInitSessionBean {
 //        Coupon testCoupon = new Coupon("YAY2020", new Date(), new Date(), 1, CouponTypeEnum.PERCENTAGE);
 //        couponSessionBean.createNewCoupon(testCoupon);
 //        
-//        Customer testCustomer = new Customer("123", "123", "Customer1", "Customer1", "Customer Address", "Customer Email", "Customer Password", "12345");
-//        customerSessionBean.createNewCustomer(testCustomer);
+        Customer testCustomer = new Customer("cardNum", "ccv", "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
+        customerSessionBean.createNewCustomer(testCustomer);
 //        
-//        LineItem testLineItem = new LineItem(testComputerPart, 1);
-//        lineItemSessionBean.createNewLineItem(testLineItem);
-//        
-//        List<LineItem> testLineItems = new ArrayList<>();
-//        testLineItems.add(testLineItem);
-//        CustomerOrder testCustomerOrder = new CustomerOrder(new Date(), 1.0, true, "Billing address", testLineItems, testCustomer);
-//        customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder);   
+        LineItem testLineItem = new LineItem(testComputerPart, 1);
+        lineItemSessionBean.createNewLineItem(testLineItem);
+//      
+        try {
+            List<LineItem> testLineItems = new ArrayList<>();
+            testLineItems.add(testLineItem);
+            Date date = new Date();
+            System.out.println("hereeeee");
+            CustomerOrder testCustomerOrder = new CustomerOrder(new Timestamp(date.getTime()), 10.0, true, "Billing address", testLineItems);
+            System.out.println("there");
+            customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder, (long) 3);
+        } catch (CustomerNotFoundException ex) {
+            System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());
+        }
     }
-    
+
 }

@@ -2,6 +2,7 @@ package ejb.session.stateless;
 
 import entity.CustomerOrder;
 import entity.LineItem;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.CouponNotFoundException;
 import util.exception.CustomerNotFoundException;
@@ -18,5 +19,7 @@ public interface CustomerOrderSessionBeanLocal {
     public void updateCustomerOrder(CustomerOrder customerOrder, Long customerId, Long staffId, Long couponId, LineItem lineItem) throws CustomerNotFoundException, StaffNotFoundException, CouponNotFoundException;
 
     public void deleteCustomerOrder(Long customerOrderId) throws CustomerOrderNotFoundException;
+    
+    public List<CustomerOrder> retrieveAllOrders();
  
 }
