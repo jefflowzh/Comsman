@@ -1,0 +1,334 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/defaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <div class="layout-content">
+            
+            <h2>
+                Customer Management
+                <p:commandButton value="Create Customer" onclick="PF('sidebarCreateCustomer').show()" icon="fa fa-plus" />
+            </h2>
+            
+            <div class="layout-subcontent">
+                
+                <h:form id="formAllCustomers">
+                    <p:growl id="growl" life="1000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+                    
+                    <p:dataTable id="dataTableAllCustomers" widgetVar="dataTableAllCustomers" value="#{customerManagementManagedBean.customers}" var="customerEntity" rowKey="#{customerEntity.userId}" rowIndexVar="row"
+                                 filteredValue="#{customerManagementManagedBean.filteredCustomers}"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search : " />
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllCustomers').filter()" style="width: 700px" placeholder="Enter Keyword" />
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <p:column headerText="Customer ID" sortBy="#{customerEntity.userId}" filterBy="#{customerEntity.userId}" filterMatchMode="contains">
+                            <h:outputText value="#{customerEntity.userId}" />
+                        </p:column>
+                        
+                        <p:column headerText="First Name" sortBy="#{customerEntity.firstName}" filterBy="#{customerEntity.firstName}" filterMatchMode="contains">
+                            <h:outputText value="#{customerEntity.firstName}" />
+                        </p:column>
+                        
+                        <p:column headerText="Last Name" sortBy="#{customerEntity.lastName}" filterBy="#{customerEntity.lastName}" filterMatchMode="contains">
+                            <h:outputText value="#{customerEntity.lastName}" />
+                        </p:column>
+                        
+                        <p:column headerText="Email" sortBy="#{customerEntity.email}" filterBy="#{customerEntity.email}" filterMatchMode="contains">
+                            <h:outputText value="#{customerEntity.email}" />
+                        </p:column>
+                        
+                        <p:column headerText="Loyalty Points" sortBy="#{customerEntity.loyaltyPoints}" filterBy="#{customerEntity.loyaltyPoints}" filterMatchMode="contains">
+                            <h:outputText value="#{customerEntity.loyaltyPoints}" />
+                        </p:column>
+                        
+                        <p:column headerText="Action">
+                            <div class="actionButton">
+                                <p:commandButton update="formViewCustomer" oncomplete="PF('dialogViewCustomer').show()" icon="fa fa-eye" title="View">
+                                    <f:setPropertyActionListener value="#{customerEntity}" target="#{customerManagementManagedBean.currentCustomer}" />
+                                </p:commandButton>
+                                <p:commandButton actionListener="#{customerManagementManagedBean.doUpdateCustomer(event)}" update="formUpdateCustomer" oncomplete="PF('sidebarUpdateCustomer').show()" icon="fa fa-pencil" title="Update">
+                                    <f:attribute name="customerEntityToUpdate" value="#{customerEntity}" />
+                                </p:commandButton>
+                                <p:commandButton actionListener="#{customerManagementManagedBean.doDeleteCustomer(event)}" oncomplete="PF('dialogDeleteCustomer').show()" icon="fa fa-trash" title="Delete">
+                                    <f:attribute name="customerEntityToDelete" value="#{customerEntity}" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <h:form id="formViewCustomer">
+                    <p:dialog id="dialogViewCustomer" widgetVar="dialogViewCustomer" header="View Customer" closable="true">
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Customer ID" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.userId}" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="First Name " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.firstName}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Last Name: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.lastName}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Email: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.email}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Contact: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.contactNumber}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Address: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.address}" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Loyalty Points: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{customerManagementManagedBean.currentCustomer.loyaltyPoints}" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Orders: " />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="Link to new tab FILTERED order.xhtml" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:dialog>
+                    
+                    <p:confirmDialog header="Warning" id="dialogDeleteCustomer" widgetVar="dialogDeleteCustomer" message="Confirm deletion?">
+                        <div align="center">
+                            <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{customerManagementManagedBean.deleteCustomer(event)}" oncomplete="PF('dialogDeleteStaff').hide()" update="formAllCustomers:dataTableAllCustomers formAllCustomers:messages" />
+                            <p:commandButton value="No" icon="fa fa-times" onclick="PF('dialogDeleteCustomer').hide()" />
+                        </div>
+                    </p:confirmDialog>
+                </h:form>
+                
+                <h:form id="formCreateNewCustimer">
+                    <p:sidebar id="sidebarCreateCustomer" widgetVar="sidebarCreateCustomer" position="right" baseZIndex="10000" style="width: 30%">
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border: none !important; background-color: white !important; color: black" oncomplete="PF('sidebarCreateCustomer').hide()" />
+                        
+                        <p:messages id="messagesCreateNewCustomer" redisplay="false" />
+                        
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width: 100%">
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="firstName" value="First Name: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="firstName" value="#{customerManagementManagedBean.newCustomerEntity.firstName}" required="true" requiredMessage="First Name is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="lastName" value="Last Name: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="lastName" value="#{customerManagementManagedBean.newCustomerEntity.lastName}" required="true" requiredMessage="Last Name is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="email" value="Email (for login): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="email" value="#{customerManagementManagedBean.newCustomerEntity.email}" required="true" requiredMessage="Email is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="password" value="Password: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:password id="password" value="#{customerManagementManagedBean.newCustomerEntity.password}" required="true" requiredMessage="Password is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="contact" value="Contact Number: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="contact" value="#{customerManagementManagedBean.newCustomerEntity.contactNumber}" required="true" requiredMessage="Contact Number is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="address" value="Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="address" value="#{customerManagementManagedBean.newCustomerEntity.address}" required="true" requiredMessage="Address is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="cardNumber" value="Credit Card Number: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="cardNumber" value="#{customerManagementManagedBean.newCustomerEntity.cardNumber}" required="true" requiredMessage="Credit Card Number is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="cvv" value="CVV: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="cvv" value="#{customerManagementManagedBean.newCustomerEntity.ccv}" required="true" requiredMessage="CVV is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column colspan="3">
+                                    <p:commandButton type="reset" value="Clear" />&nbsp;
+                                    <p:commandButton value="Create New Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.createNewCustomer(event)}" oncomplete="PF('sidebarCreateCustomer').hide()" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:sidebar>
+                </h:form>
+                
+                <h:form id="formUpdateCustomer">
+                    <p:sidebar id="sidebarUpdateCustomer" widgetVar="sidebarUpdateCustomer" position="right" baseZIndex="10000" style="width: 30%">
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border: none !important; background-color: white !important; color: black" oncomplete="PF('sidebarUpdateCustomer').hide()" />
+                        
+                        <p:messages id="messagesUpdateCustomer" redisplay="false" />
+                        
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width: 100%">
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="firstName" value="First Name: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="firstName" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.firstName}" required="true" requiredMessage="First Name is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="lastName" value="Last Name: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="lastName" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.lastName}" required="true" requiredMessage="Last Name is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="email" value="Email (for login): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="email" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.email}" required="true" requiredMessage="Email is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="password" value="Password: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:password id="password" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.password}" required="true" requiredMessage="Password is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="contact" value="Contact Number: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="contact" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.contactNumber}" required="true" requiredMessage="Contact Number is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="address" value="Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="address" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.address}" required="true" requiredMessage="Address is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="cardNumber" value="Credit Card Number: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="cardNumber" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.cardNumber}" required="true" requiredMessage="Credit Card Number is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="cvv" value="CVV: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="cvv" value="#{customerManagementManagedBean.selectedCustomerEntityToUpdate.ccv}" required="true" requiredMessage="CVV is required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column colspan="2">
+                                    <p:commandButton value="Update Customer" update="@form formAllCustomers:dataTableAllCustomers formAllCustomers:messages" actionListener="#{customerManagementManagedBean.updateCustomer(event)}" oncomplete="PF('sidebarUpdateCustomer').hide()" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:sidebar>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

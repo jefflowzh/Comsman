@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
+import util.exception.StaffNotFoundException;
 
 @Stateless
 public class CustomerSessionBean implements CustomerSessionBeanLocal {
@@ -92,7 +93,10 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     }
     
     @Override
-    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerOrderNotFoundException {
+    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException {
+        if (customer == null || customer.getUserId() == null) {
+            throw new CustomerNotFoundException("Customer does not exist!");
+        }
         Customer updatedCustomer = em.merge(customer);
         
         // When adding or removing an order to/from a customer
