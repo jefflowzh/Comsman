@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -50,7 +50,7 @@
                             <h:outputText value="#{orderEntity.customer.firstName} #{orderEntity.customer.lastName}" />
                         </p:column>
 
-                        <p:column headerText="Delivery" sortBy="#{orderEntity.requiresDelivery}" filterBy="#{orderEntity.requiresDelivery}" filterMatchMode="contains">
+                        <p:column headerText="Requires Delivery" sortBy="#{orderEntity.requiresDelivery}" filterBy="#{orderEntity.requiresDelivery}" filterMatchMode="contains">
                             <h:outputText value="#{orderEntity.requiresDelivery}" />
                         </p:column>
 
@@ -60,8 +60,11 @@
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton icon="fa fa-pencil" title="Update">
+                                <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateOrder}" update="formUpdateOrder" oncomplete="PF('sidebarUpdateOrder').show()" icon="fa fa-pencil" title="Update">
                                     <f:attribute name="orderEntityToUpdate" value="#{orderEntity}" />
+                                </p:commandButton>
+                                <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateLineItems}" update="formViewLineItems" oncomplete="PF('dialogViewLineItems').show()" icon="fa fa-cart-plus" title="View Line Items">
+                                    <f:attribute name="lineItemsToUpdate" value="#{orderEntity}" />
                                 </p:commandButton>
                             </div>
                         </p:column>
@@ -69,6 +72,131 @@
                     </p:dataTable>
 
                 </h:form>
+
+                <h:form id="formUpdateOrder">
+                    <p:sidebar id="sidebarUpdateOrder" widgetVar="sidebarUpdateOrder" position="right" baseZIndex="10000" style="width: 30%;">
+
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarUpdateOrder').hide()"/>
+
+                        <p:messages id="messagesUpdateOrder" redisplay="false" />
+
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Order ID: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.customerOrderId}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Order Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.orderDate}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Fufilled Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.fulfilledDate}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Total Price: $" style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.totalPrice}" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel for="selectBoolean" value='Requires Delivery: ' style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="selectBoolean" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery}" appendTo="@this">
+                                        <f:selectItem itemLabel="true" itemValue="true" />
+                                        <f:selectItem itemLabel="false" itemValue="false" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery == true}">
+                                <p:column>
+                                    <p:outputLabel for="deliveryAddress" value="Delivery Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="deliveryAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.deliveryAddress}" required="true" requiredMessage="Delivery Address is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery == true}">
+                                <p:column>
+                                    <p:outputLabel for="billingAddress" value="Billing Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="billingAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.billingAddress}" required="true" requiredMessage="Billing Address is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="2">
+                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" />
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:sidebar>
+                </h:form>
+
+                <h:form id="formViewLineItems">
+
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dialog id="dialogViewLineItems" widgetVar="dialogViewLineItems" header="View Line Items" closable="true" width="1000">
+
+                        <!-- <p:commandButton value="Create New Line Item" update="formViewLineItems" icon="fa fa-plus" style="margin-bottom: 10px"/> -->
+
+                        <p:dataTable id="dataTableAllLineItems" widgetVar="dataTableAllLineItems" value="#{orderManagementManagedBean.selectedLineItemsToUpdate}" var="lineItemEntity" rowKey="#{lineItemEntity.lineItemId}" rowIndexVar="row"
+                                     rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">Ï
+
+                            <p:column headerText="Line Item ID" sortBy="#{lineItemEntity.lineItemId}">
+                                <h:outputText value="#{lineItemEntity.lineItemId}" />
+                            </p:column>
+
+                            <p:column headerText="Product Name" sortBy="#{lineItemEntity.product.name}">
+                                <h:outputText value="#{lineItemEntity.product.name}" />
+                            </p:column>
+
+                            <p:column headerText="Quantity" sortBy="#{lineItemEntity.quantity}">
+                                <h:outputText value="#{lineItemEntity.quantity}" />
+                            </p:column>
+
+                            <p:column headerText="Action" style="width: 100px">
+                                <div align="center">
+                                    <p:commandButton actionListener="#{orderManagementManagedBean.doDeleteLineItems}" oncomplete="PF('dialogDeleteLineItem').show()" icon="fa fa-trash" title="Delete">
+                                        <f:attribute name="lineItemToDelete" value="#{lineItemEntity}" />
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                </h:form>
+
+                <p:confirmDialog header="Warning" id="dialogDeleteLineItem" widgetVar="dialogDeleteLineItem" message="Confirm deletion?">
+                    <div align="center">
+                        <p:commandButton value="Yes" icon="fa fa-check" actionListener="#{orderManagementManagedBean.deleteLineItem}" oncomplete="PF('dialogDeleteLineItem').hide()" update="formAllOrder:dataTableAllOrder formViewLineItems:dataTableAllLineItems formViewLineItems:messages"/>
+                        <p:commandButton value="No" icon="fa fa-times"  onclick="PF('dialogDeleteLineItem').hide()" />
+                    </div>
+                </p:confirmDialog>
 
             </div>
 

@@ -122,6 +122,7 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         em.remove(customerOrder);
     }
     
+    @Override
     public List<CustomerOrder> retrieveAllOrders() {
         Query query = em.createQuery("SELECT o FROM CustomerOrder o");
         

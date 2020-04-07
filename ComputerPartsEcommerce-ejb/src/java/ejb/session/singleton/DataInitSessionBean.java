@@ -73,6 +73,8 @@ public class DataInitSessionBean {
 
         ComputerPart testComputerPart = new ComputerPart("Computer Part 1", 100.00, 10, "image");
         computerPartSessionBean.createNewComputerPart(testComputerPart);
+        ComputerPart testComputerPart2 = new ComputerPart("Computer Part 2", 100.00, 10, "image");
+        computerPartSessionBean.createNewComputerPart(testComputerPart2);
 
 //        List<ComputerPart> testComputerParts = new ArrayList<>();
 //        testComputerParts.add(testComputerPart);
@@ -87,16 +89,31 @@ public class DataInitSessionBean {
 //        
         LineItem testLineItem = new LineItem(testComputerPart, 1);
         lineItemSessionBean.createNewLineItem(testLineItem);
+        LineItem testLineItem2 = new LineItem(testComputerPart2, 5);
+        lineItemSessionBean.createNewLineItem(testLineItem2);
+        LineItem testLineItem3 = new LineItem(testComputerPart, 100);
+        lineItemSessionBean.createNewLineItem(testLineItem3);
 //      
         try {
             List<LineItem> testLineItems = new ArrayList<>();
             testLineItems.add(testLineItem);
+            testLineItems.add(testLineItem2);
             Date date = new Date();
-            System.out.println("hereeeee");
-            CustomerOrder testCustomerOrder = new CustomerOrder(new Timestamp(date.getTime()), 10.0, true, "Billing address", testLineItems);
-            System.out.println("there");
+            CustomerOrder testCustomerOrder = new CustomerOrder(new Timestamp(date.getTime()), true, "Billing address", testLineItems);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder, (long) 3);
-        } catch (CustomerNotFoundException ex) {
+            
+            } catch (CustomerNotFoundException ex) {
+            System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());
+        }
+        
+       try {
+            List<LineItem> testLineItems2 = new ArrayList<>();
+            testLineItems2.add(testLineItem3);
+            Date date2 = new Date();
+            CustomerOrder testCustomerOrder2 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems2);
+            customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder2, (long) 3);
+            
+            } catch (CustomerNotFoundException ex) {
             System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());
         }
     }
