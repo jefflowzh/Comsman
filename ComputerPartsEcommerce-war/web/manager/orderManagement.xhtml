@@ -19,7 +19,7 @@
                     <p:growl id="growl" sticky="false" life="1000" />
                     <p:messages id="messages" redisplay="false" closable="true" />
 
-                    <p:dataTable id="dataTableAllOrder" widgetVar="dataTableAllOrder" value="#{orderManagementManagedBean.orderEntities}" var="orderEntity" rowKey="#{orderEntity.orderId}" rowIndexVar="row"
+                    <p:dataTable id="dataTableAllOrder" widgetVar="dataTableAllOrder" value="#{orderManagementManagedBean.orderEntities}" var="orderEntity" rowKey="#{orderEntity.customerOrderId}" rowIndexVar="row"
                                  filteredValue="#{orderManagementManagedBean.filteredOrderEntities}"
                                  rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
 

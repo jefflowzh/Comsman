@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.enumeration.OrderStatusEnum;
 import util.exception.CouponNotFoundException;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
@@ -125,6 +126,15 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     @Override
     public List<CustomerOrder> retrieveAllOrders() {
         Query query = em.createQuery("SELECT o FROM CustomerOrder o");
+        
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<CustomerOrder> retrieveAllTasks() {
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inStatus and o.orderStatus <> :inVoid");
+        query.setParameter("inStatus", OrderStatusEnum.DELIVERED);
+        query.setParameter("inVoid", OrderStatusEnum.VOIDED);
         
         return query.getResultList();
     }

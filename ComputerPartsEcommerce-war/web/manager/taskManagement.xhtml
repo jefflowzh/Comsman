@@ -15,6 +15,56 @@
 
             <div class="layout-subcontent">
 
+                <h:form id="formAllTasks">
+                    <p:growl id="growl" sticky="false" life="1000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dataTable id="dataTableAllOrder" widgetVar="dataTableAllOrder" value="#{taskManagementManagedBean.tasks}" var="task" rowKey="#{task.customerOrderId}" rowIndexVar="row"
+                                 filteredValue="#{taskManagementManagedBean.filteredTasks}"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search : " />
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllOrder').filter()" style="width: 700px;" placeholder="Enter Keyword" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="Order ID" sortBy="#{task.customerOrderId}" filterBy="#{task.customerOrderId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.customerOrderId}" />
+                        </p:column>
+
+                        <p:column headerText="Order Date" sortBy="#{task.orderDate}" filterBy="#{task.orderDate}" filterMatchMode="contains">
+                            <h:outputText value="#{task.orderDate}" />
+                        </p:column>
+
+                        <p:column headerText="Requires Delivery" sortBy="#{task.requiresDelivery}" filterBy="#{task.requiresDelivery}" filterMatchMode="contains">
+                            <h:outputText value="#{task.requiresDelivery}" />
+                        </p:column>
+
+                        <p:column headerText="Delivery Assigned To" sortBy="#{task.deliveryAssignedTo}" filterBy="#{task.deliveryAssignedTo}" filterMatchMode="contains" >
+                            <h:outputText rendered="#{task.requiresDelivery == true}" value="#{task.deliveryAssignedTo}" />
+                            <h:outputText rendered="#{task.requiresDelivery == false}" value="No deliver needed" />
+                        </p:column>
+
+                        <p:column headerText="Status" sortBy="#{task.orderStatus}" filterBy="#{order.orderStatus}" filterMatchMode="contains">
+                            <h:outputText value="#{task.orderStatus}" />
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <div class="actionButton">
+                                <p:commandButton icon="fa fa-desktop" title="Update">
+                                    <f:attribute name="" value="" />
+                                </p:commandButton>
+                                <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true}">
+                                    <f:attribute name="" value="" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
 
             </div>
 

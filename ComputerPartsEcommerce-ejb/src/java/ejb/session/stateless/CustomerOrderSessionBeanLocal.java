@@ -21,5 +21,7 @@ public interface CustomerOrderSessionBeanLocal {
     public void deleteCustomerOrder(Long customerOrderId) throws CustomerOrderNotFoundException;
     
     public List<CustomerOrder> retrieveAllOrders();
+    
+    public List<CustomerOrder> retrieveAllTasks();
  
 }
