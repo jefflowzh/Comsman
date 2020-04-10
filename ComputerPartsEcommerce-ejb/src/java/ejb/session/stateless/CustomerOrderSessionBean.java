@@ -39,6 +39,12 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         newCustomerOrder.setCustomer(customer);
         customer.getOrders().add(newCustomerOrder);
         
+        // boolean therescomputerset = false
+        // for (lineItem: newcustomerorder.getlineItem) -> lineItem.getComputerSet = not null -> unassigned, setCSflag = true break;
+        
+        // if (setCSflag == false) -> status -> completed
+        
+        
         em.persist(newCustomerOrder);
         em.flush();
         
