@@ -110,7 +110,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         }
         
         if (computerSetId != null) {
-            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId, false);
+            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId);
             if(!updatedStaff.getAssignedComputerSets().contains(computerSet)) {
                 // association
                 updatedStaff.getAssignedComputerSets().add(computerSet);
@@ -127,14 +127,15 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     @Override
     public void deleteStaff(Long staffId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException { 
         Staff staff = retrieveStaffById(staffId, true, true);
-        /*
+        
         // remove associations with staff
         for (CustomerOrder customerOrder : staff.getDeliveries()) {
             updateStaff(staff, customerOrder.getCustomerOrderId(), null);
         }
         for (ComputerSet computerSet : staff.getAssignedComputerSets()) {
-            updateStaff(staff, null, computerSet.getProductId());
-        }*/
+            // updateStaff(staff, null, computerSet.getProductId()); // someone changed this
+            updateStaff(staff, null, computerSet.getComputerSetId());
+        }
         staff.setIsDisabled(true);
     }
 

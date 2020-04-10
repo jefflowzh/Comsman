@@ -8,4 +8,5 @@ public interface ComputerPartSessionBeanLocal {
     
     public Long createNewComputerPart(ComputerPart newComputerPart);
 
+
 }

@@ -18,12 +18,14 @@ public class LineItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lineItemId;
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn
     private Product product;
     @Column(nullable = false)
     @NotNull
     private Integer quantity;
+    @OneToOne (mappedBy = "lineItem")
+    private ComputerSet computerSet;
 
     public LineItem() {
     }
@@ -34,7 +36,14 @@ public class LineItem implements Serializable {
         this.product = product;
         this.quantity = quantity;
     }
-
+    
+    // In the case of computer set, because you can't create a computer set before creating a line item first
+    public LineItem(Integer quantity) {
+        this();
+        
+        this.quantity = quantity;
+    }
+    
     public Long getLineItemId() {
         return lineItemId;
     }
@@ -59,6 +68,14 @@ public class LineItem implements Serializable {
         this.quantity = quantity;
     }
 
+    public ComputerSet getComputerSet() {
+        return computerSet;
+    }
+
+    public void setComputerSet(ComputerSet computerSet) {
+        this.computerSet = computerSet;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

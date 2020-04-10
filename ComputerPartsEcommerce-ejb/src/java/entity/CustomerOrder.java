@@ -58,6 +58,9 @@ public class CustomerOrder implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
+   // @OneToOne(mappedBy = "customerOrder")
+   // private ComputerSet computerSet;
+    
 
     public CustomerOrder() {
         this.orderStatus = OrderStatusEnum.UNASSIGNED;
@@ -167,6 +170,16 @@ public class CustomerOrder implements Serializable {
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
     }
+
+    /*
+    public ComputerSet getComputerSet() {
+        return computerSet;
+    }
+
+    public void setComputerSet(ComputerSet computerSet) {
+        this.computerSet = computerSet;
+    }
+*/
     
     @Override
     public int hashCode() {
