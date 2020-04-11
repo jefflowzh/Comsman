@@ -110,7 +110,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         }
         
         if (computerSetId != null) {
-            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId, false);
+            ComputerSet computerSet = computerSetSessionBeanLocal.retrieveComputerSetById(computerSetId);
             if(!updatedStaff.getAssignedComputerSets().contains(computerSet)) {
                 // association
                 updatedStaff.getAssignedComputerSets().add(computerSet);
@@ -133,13 +133,15 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
             updateStaff(staff, customerOrder.getCustomerOrderId(), null);
         }
         for (ComputerSet computerSet : staff.getAssignedComputerSets()) {
-            updateStaff(staff, null, computerSet.getProductId());
+            // updateStaff(staff, null, computerSet.getProductId()); // someone changed this
+            updateStaff(staff, null, computerSet.getComputerSetId());
         }
         staff.setIsDisabled(true);
     }
 
+    @Override
     public List<Staff> retrieveAllStaffs() {
-        Query query = em.createQuery("SELECT s FROM Staff s");
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = false ");
         
         return query.getResultList();
     }

@@ -36,7 +36,14 @@ public class LineItem implements Serializable {
         this.product = product;
         this.quantity = quantity;
     }
-
+    
+    // In the case of computer set, because you can't create a computer set before creating a line item first
+    public LineItem(Integer quantity) {
+        this();
+        
+        this.quantity = quantity;
+    }
+    
     public Long getLineItemId() {
         return lineItemId;
     }
@@ -69,8 +76,6 @@ public class LineItem implements Serializable {
         this.computerSet = computerSet;
     }
     
-    
-
     @Override
     public int hashCode() {
         int hash = 0;

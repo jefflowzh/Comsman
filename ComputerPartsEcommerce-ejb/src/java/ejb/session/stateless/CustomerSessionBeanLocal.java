@@ -18,7 +18,7 @@ public interface CustomerSessionBeanLocal {
 
     public List<Customer> retrieveAllCustomers(Boolean loadCart, Boolean loadOrders);
 
-    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerOrderNotFoundException;
+    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException;
 
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException;
 
