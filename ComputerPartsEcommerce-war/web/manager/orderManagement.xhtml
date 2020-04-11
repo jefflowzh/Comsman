@@ -120,6 +120,15 @@
 
                             <p:row>
                                 <p:column>
+                                    <p:outputLabel for="billingAddress" value="Billing Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="billingAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.billingAddress}" required="true" requiredMessage="Billing Address is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
                                     <h:outputLabel for="selectBoolean" value='Requires Delivery: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
@@ -136,15 +145,6 @@
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="deliveryAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.deliveryAddress}" required="true" requiredMessage="Delivery Address is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery == true}">
-                                <p:column>
-                                    <p:outputLabel for="billingAddress" value="Billing Address: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="billingAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.billingAddress}" required="true" requiredMessage="Billing Address is required" />
                                 </p:column>
                             </p:row>
 
@@ -172,8 +172,9 @@
                                 <h:outputText value="#{lineItemEntity.lineItemId}" />
                             </p:column>
 
-                            <p:column headerText="Product Name" sortBy="#{lineItemEntity.product.name}">
-                                <h:outputText value="#{lineItemEntity.product.name}" />
+                            <p:column headerText="Item Name" sortBy="#{lineItemEntity.product.name}">
+                                <h:outputText value="#{lineItemEntity.product.name}" rendered="#{lineItemEntity.product != null}"/>
+                                <h:outputText value="Computer Set" rendered="#{lineItemEntity.product == null}"/>
                             </p:column>
 
                             <p:column headerText="Quantity" sortBy="#{lineItemEntity.quantity}">

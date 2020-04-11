@@ -1,10 +1,9 @@
 package ejb.session.stateless;
 
-import entity.ComputerPart;
 import entity.ComputerSet;
+import entity.GPU;
 import entity.LineItem;
 import entity.Staff;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,7 +18,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
 
     @EJB
     private LineItemSessionBeanLocal lineItemSessionBeanLocal;
-    
+
     @EJB
     private ComputerPartSessionBeanLocal computerPartSessionBeanLocal;
 
@@ -28,21 +27,21 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
-    
+
     @Override
     // create set first, assign staff seperately later
-    public Long createNewComputerSet(ComputerSet newComputerSet, Long lineItemId) throws LineItemNotFoundException {
-        LineItem lineItem = lineItemSessionBeanLocal.retrieveLineItemById(lineItemId);
-        
-        newComputerSet.setLineItem(lineItem);
-        lineItem.setComputerSet(newComputerSet);
+    public Long createNewComputerSet(ComputerSet newComputerSet, LineItem lineItem) throws LineItemNotFoundException {
+        //LineItem lineItem = lineItemSessionBeanLocal.retrieveLineItemById(lineItemId);
+        LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(lineItem);
+
+        newComputerSet.setLineItem(newLineItem);
+        newLineItem.setComputerSet(newComputerSet);
         
         em.persist(newComputerSet);
         em.flush();
-        
+
         return newComputerSet.getComputerSetId();
     }
-    
 
     @Override
     public ComputerSet retrieveComputerSetById(Long computerSetId) throws ComputerSetNotFoundException {
@@ -61,15 +60,15 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     public void updateComputerSet(ComputerSet computerSet, Long staffId) throws ComputerPartNotFoundException, StaffNotFoundException {
 
         ComputerSet updatedComputerSet = em.merge(computerSet);
-        
+
         // When need to change staff and computer assignments
         if (staffId != null) {
             Staff staff = staffSessionBeanLocal.retrieveStaffById(staffId, false, true);
-            if(updatedComputerSet.getAssemblyAssignedTo() == null) {
+            if (updatedComputerSet.getAssemblyAssignedTo() == null) {
                 // do association
                 updatedComputerSet.setAssemblyAssignedTo(staff);
                 staff.getAssignedComputerSets().add(updatedComputerSet);
-            } else if (updatedComputerSet.getAssemblyAssignedTo() == staff){
+            } else if (updatedComputerSet.getAssemblyAssignedTo() == staff) {
                 // do disassociation
                 updatedComputerSet.setAssemblyAssignedTo(null);
                 staff.getAssignedComputerSets().remove(updatedComputerSet);
@@ -80,14 +79,12 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
                 staff.getAssignedComputerSets().add(updatedComputerSet);
             }
         }
-        
+
     }
-    
+
 //    @Override
 //    public void deleteComputerSet(Long computerSetId) throws ComputerSetNotFoundException { 
 //        ComputerSet computerSet = retrieveComputerSetById(computerSetId);     
 //        computerSet.setIsDisabled(true);
 //    }
-
-
 }

@@ -35,6 +35,7 @@ public class ComputerCase extends ComputerPart implements Serializable {
     private Double topFanSupport;
     private Double frontFanSupport;
     private Double rearFanSupport;
+    private String selectedColour;
 
     public ComputerCase() {
     }
@@ -139,8 +140,12 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.rearFanSupport = rearFanSupport;
     }
 
-   
+   public String getSelectedColour() {
+        return selectedColour;
+    }
 
-    
+    public void setSelectedColour(String selectedColour) {
+        this.selectedColour = selectedColour;
+    } 
     
 }

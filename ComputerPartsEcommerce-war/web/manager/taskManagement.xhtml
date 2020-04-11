@@ -19,7 +19,7 @@
                     <p:growl id="growl" sticky="false" life="1000" />
                     <p:messages id="messages" redisplay="false" closable="true" />
 
-                    <p:dataTable id="dataTableAllOrder" widgetVar="dataTableAllOrder" value="#{taskManagementManagedBean.tasks}" var="task" rowKey="#{task.customerOrderId}" rowIndexVar="row"
+                    <p:dataTable id="dataTableAllTasks" widgetVar="dataTableAllTasks" value="#{taskManagementManagedBean.tasks}" var="task" rowKey="#{task.customerOrderId}" rowIndexVar="row"
                                  filteredValue="#{taskManagementManagedBean.filteredTasks}"
                                  rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
 
@@ -53,17 +53,40 @@
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton icon="fa fa-desktop" title="Update">
+                                <p:commandButton icon="fa fa-desktop" title="Assign Computer Set" oncomplete="PF('sidebarAssignComSet').show()">
                                     <f:attribute name="" value="" />
                                 </p:commandButton>
-                                <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true}">
+                                <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true and task.orderStatus eq 'COMPLETED'}">
                                     <f:attribute name="" value="" />
                                 </p:commandButton>
                             </div>
                         </p:column>
 
                     </p:dataTable>
+                </h:form>
 
+                <h:form id="formAssignComSet">
+                    <p:sidebar id="sidebarAssignComSet" widgetVar="sidebarAssignComSet" position="right" baseZIndex="10000" style="width: 30%;">
+
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarAssignComSet').hide()"/>
+
+                        <p:messages id="messages" redisplay="false" />
+
+                        <p:dataGrid var="task" value="#{taskManagementManagedBean.tasks}" id="tasks">
+                            <h:panelGrid columns="3" style="width: 100%;">
+                                <p:row>
+                                    <p:column>
+                                        <h:outputLabel value="LineItem ID: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{task.customerOrderId}" />
+                                    </p:column>
+                                </p:row>
+                            </h:panelGrid>
+
+                        </p:dataGrid>
+
+                    </p:sidebar>
                 </h:form>
 
             </div>

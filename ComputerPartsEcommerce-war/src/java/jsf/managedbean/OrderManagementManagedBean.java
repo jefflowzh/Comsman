@@ -73,11 +73,6 @@ public class OrderManagementManagedBean implements Serializable {
     public void doUpdateLineItems(ActionEvent event) {
         setSelectedOrderEntityToUpdate((CustomerOrder) event.getComponent().getAttributes().get("lineItemsToUpdate"));
         setSelectedLineItemsToUpdate(selectedOrderEntityToUpdate.getLineItems());
-        for (LineItem l : selectedLineItemsToUpdate) {
-            System.out.println(l.getLineItemId());
-            System.out.println(l.getProduct().getName());
-            System.out.println(l.getQuantity());
-        }
     }
 
     public void updateLineItems(ActionEvent event) {

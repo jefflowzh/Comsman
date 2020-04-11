@@ -34,10 +34,13 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
 
     @Override
     public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException {
+        System.out.println("ENTER HERE");
         Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId, false, true);
         
         newCustomerOrder.setCustomer(customer);
         customer.getOrders().add(newCustomerOrder);
+        
+        System.out.println("INSIDE CREATENEWCUSTOMERORDER");
         
         // boolean therescomputerset = false
         // for (lineItem: newcustomerorder.getlineItem) -> lineItem.getComputerSet = not null -> unassigned, setCSflag = true break;
@@ -47,6 +50,8 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         
         em.persist(newCustomerOrder);
         em.flush();
+        
+        System.out.println("*******************************" + newCustomerOrder.getCustomerOrderId());
         
         return newCustomerOrder.getCustomerOrderId();
     }

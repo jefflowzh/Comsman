@@ -26,9 +26,8 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
-
-
     
+    @Override
     public Long createNewCPU(CPU cpu) {
         em.persist(cpu);
         em.flush();
@@ -50,6 +49,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return cpuWaterCooler.getProductId();
     }
     
+    @Override
     public Long createNewComCase(ComputerCase computerCase) {
         em.persist(computerCase);
         em.flush();
@@ -71,6 +71,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return hdd.getProductId();
     }
     
+    @Override
     public Long createNewMotherBoard(MotherBoard mb) {
         em.persist(mb);
         em.flush();
@@ -78,6 +79,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return mb.getProductId();
     }
     
+    @Override
     public Long createNewPowerSupply(PowerSupply ps) {
         em.persist(ps);
         em.flush();
@@ -85,6 +87,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return ps.getProductId();
     }
     
+    @Override
     public Long createNewRAM(RAM ram) {
         em.persist(ram);
         em.flush();

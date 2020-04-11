@@ -63,20 +63,22 @@ public class CustomerOrder implements Serializable {
     
 
     public CustomerOrder() {
+        this.totalPrice = 0.0;
         this.orderStatus = OrderStatusEnum.UNASSIGNED;
     }
 
     public CustomerOrder(Date orderDate, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
         this();
-        double tempStore = 0;
         
         for(LineItem l : lineItems) {
-            double tempTotalPrice = 0;
-            tempTotalPrice = l.getProduct().getPrice() * l.getQuantity();
-            tempStore += tempTotalPrice;
+            if (l.getComputerSet() != null) {
+                this.totalPrice += l.getComputerSet().getPrice() * l.getQuantity();
+            } else {
+                this.totalPrice += l.getProduct().getPrice() * l.getQuantity();
+            }
         }
         
-        this.totalPrice = tempStore;
+        System.out.println("********************" + this.totalPrice);
         this.orderDate = orderDate;
         this.requiresDelivery = requiresDelivery;
         this.billingAddress = billingAddress;

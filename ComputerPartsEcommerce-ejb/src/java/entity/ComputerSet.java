@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -102,6 +103,12 @@ public class ComputerSet implements Serializable {
     //private CustomerOrder customerOrder;
     
     public ComputerSet(){
+        this.rams = new ArrayList<>();
+        this.gpus = new ArrayList<>();
+        this.hdds = new ArrayList<>();
+        this.ssds = new ArrayList<>();
+        this.price = 0.0;
+        this.assemblyComplete = false;
     }
 
     /* original constructor
@@ -119,16 +126,13 @@ public class ComputerSet implements Serializable {
     
     // new constructor 
 
-    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
-        this.cpu = cpu;
-        this.motherBoard = motherBoard;
-        this.rams = rams;
-        this.psu = psu;
-        this.compCase = compCase;
+    //public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer) {
+        this();
         this.warrentyLengthInYears = warrentyLengthInYears;
+        // assuming warrenty is $100/year
+        this.price += (warrentyLengthInYears - 3) * 100; 
         this.isAmatuer = isAmatuer;
-        this.assemblyComplete = false;
-        this.lineItem = lineItem;
     }
 
     public CPU getCpu() {
@@ -137,6 +141,7 @@ public class ComputerSet implements Serializable {
 
     public void setCpu(CPU cpu) {
         this.cpu = cpu;
+        this.price += cpu.getPrice();
     }
 
     public MotherBoard getMotherBoard() {
@@ -145,6 +150,7 @@ public class ComputerSet implements Serializable {
 
     public void setMotherBoard(MotherBoard motherBoard) {
         this.motherBoard = motherBoard;
+        this.price += motherBoard.getPrice();
     }
 
     public PowerSupply getPsu() {
@@ -153,6 +159,7 @@ public class ComputerSet implements Serializable {
 
     public void setPsu(PowerSupply psu) {
         this.psu = psu;
+        this.price += psu.getPrice();
     }
 
     public ComputerCase getCompCase() {
@@ -161,6 +168,7 @@ public class ComputerSet implements Serializable {
 
     public void setCompCase(ComputerCase compCase) {
         this.compCase = compCase;
+        this.price += compCase.getPrice();
     }
 
     public List<RAM> getRams() {
@@ -173,6 +181,7 @@ public class ComputerSet implements Serializable {
     
     public void addRam(RAM ram){
         this.rams.add(ram);
+        this.price += ram.getPrice();
     }
 
     public List<GPU> getGpus() {
@@ -185,6 +194,7 @@ public class ComputerSet implements Serializable {
     
     public void addGpu(GPU gpu){
         this.gpus.add(gpu);
+        this.price += gpu.getPrice();
     }
 
     public List<HDD> getHdds() {
@@ -197,6 +207,7 @@ public class ComputerSet implements Serializable {
     
     public void addHdd(HDD hdd){
         this.hdds.add(hdd);
+        this.price += hdd.getPrice();
     }
 
     public List<SSD> getSsds() {
@@ -209,6 +220,7 @@ public class ComputerSet implements Serializable {
 
     public void addSsd(SSD ssd){
         this.ssds.add(ssd);
+        this.price += ssd.getPrice();
     }
     
     public Integer getWarrentyLengthInYears() {
@@ -257,6 +269,7 @@ public class ComputerSet implements Serializable {
 
     public void setWaterCooler(CPUWaterCooler waterCooler) {
         this.waterCooler = waterCooler;
+        this.price += waterCooler.getPrice();
     }
 
     public CPUAirCooler getAirCooler() {
@@ -265,6 +278,7 @@ public class ComputerSet implements Serializable {
 
     public void setAirCooler(CPUAirCooler airCooler) {
         this.airCooler = airCooler;
+        this.price += airCooler.getPrice();
     }
 /*
     public CustomerOrder getCustomerOrder() {
