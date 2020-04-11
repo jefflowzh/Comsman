@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
 import ejb.session.stateless.StaffSessionBeanLocal;
@@ -19,12 +14,9 @@ import javax.faces.view.ViewScoped;
 import util.enumeration.StaffAccessRightEnum;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
+import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
 
-/**
- *
- * @author weidonglim
- */
 @Named(value = "staffManagementManagedBean")
 @ViewScoped
 public class StaffManagementManagedBean implements Serializable {
@@ -69,6 +61,10 @@ public class StaffManagementManagedBean implements Serializable {
             tempEnum = "";
             newStaffEntity = new Staff();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New staff created successfully (Product ID: " + newStaff.getUserId() + ")", null));
+        } catch (StaffAlreadyExistsException ex) {
+            newStaffEntity = new Staff();
+            tempEnum = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff already exists!", null)); 
         } catch (StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new staff: " + ex.getMessage(), null));
         } catch (Exception ex) {
