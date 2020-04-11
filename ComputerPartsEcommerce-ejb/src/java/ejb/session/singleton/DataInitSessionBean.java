@@ -27,6 +27,7 @@ import javax.ejb.Startup;
 import util.enumeration.CouponTypeEnum;
 import util.enumeration.StaffAccessRightEnum;
 import util.exception.CustomerNotFoundException;
+import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
 
 @Singleton
@@ -66,10 +67,14 @@ public class DataInitSessionBean {
 
     private void initializeData() {
 
-        Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
-        staffSessionBean.createNewStaff(testStaff);
-        Staff testStaffTech = new Staff(StaffAccessRightEnum.TECHNICIAN, "StaffFN", "StaffLN", "Staff Address", "tech@email.com", "password", "12345");
-        staffSessionBean.createNewStaff(testStaffTech);
+        try {
+            Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
+            staffSessionBean.createNewStaff(testStaff);
+            Staff testStaffTech = new Staff(StaffAccessRightEnum.TECHNICIAN, "StaffFN", "StaffLN", "Staff Address", "tech@email.com", "password", "12345");
+            staffSessionBean.createNewStaff(testStaffTech);
+        } catch(StaffAlreadyExistsException ex) {
+            System.out.println("Staff already exists");
+        }
 
         ComputerPart testComputerPart = new ComputerPart("Computer Part 1", 100.00, 10, "image");
         computerPartSessionBean.createNewComputerPart(testComputerPart);

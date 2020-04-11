@@ -6,12 +6,13 @@ import javax.ejb.Local;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
+import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
 
 @Local
 public interface StaffSessionBeanLocal {
 
-    public Long createNewStaff(Staff newStaff);
+    public Long createNewStaff(Staff newStaff) throws StaffAlreadyExistsException;
 
     public Staff retrieveStaffById(Long staffId, Boolean loadDeliveries, Boolean loadAssignedComputerSets) throws StaffNotFoundException;
 
