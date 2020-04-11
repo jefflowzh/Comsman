@@ -5,17 +5,17 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <section id="mainmenu" class="mainmenu" >
+    <section id="mainmenu" class="mainmenu">
         
         <div class="profile-pic">
-            <p:graphicImage library="images" name="user.png" height="70" width="70" alt="Profile Pic" />
+            <p:graphicImage library="images" name="user.png" height="70" width="70" alt="Profile Pic" rendered="#{sessionScope.isLogin == true}"/>
         </div>
         <div class="profile-name">
-            <h:outputText value="#{sessionScope.currentStaffEntity.firstName} #{sessionScope.currentStaffEntity.lastName} " />
+            <h:outputText value="#{sessionScope.currentStaffEntity.firstName} #{sessionScope.currentStaffEntity.lastName} " rendered="#{sessionScope.isLogin == true}"/>
         </div>
 
         <nav>
-            <h:form>
+            <h:form rendered="#{sessionScope.isLogin == true}">
                 <p:menu toggleable="true" >
                     <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home" />
 
