@@ -100,5 +100,4 @@ public class LineItem implements Serializable {
     public String toString() {
         return "entity.LineItem[ id=" + lineItemId + " ]";
     }
-    
 }

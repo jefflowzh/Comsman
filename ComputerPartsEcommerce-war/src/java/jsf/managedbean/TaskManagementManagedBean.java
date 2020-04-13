@@ -37,7 +37,7 @@ public class TaskManagementManagedBean {
     @PostConstruct
     public void postConstruct() {
         // those voided / delivered will not be shown
-        setTasks(getCustomerOrderSessionBeanLocal().retrieveAllTasks());
+        tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
     }
 
     public CustomerOrderSessionBeanLocal getCustomerOrderSessionBeanLocal() {
