@@ -31,6 +31,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import util.enumeration.CouponTypeEnum;
 import util.enumeration.StaffAccessRightEnum;
+import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerNotFoundException;
 import util.exception.StaffAlreadyExistsException;
 import util.exception.LineItemNotFoundException;
@@ -122,7 +123,7 @@ public class DataInitSessionBean {
 
         LineItem testcomsetLineItem = new LineItem(1);
         
-        computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
+        List<Long> computerSetIds = computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
         
         Customer testCustomer = new Customer("cardNum", "ccv", "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
         customerSessionBean.createNewCustomer(testCustomer);
@@ -134,6 +135,20 @@ public class DataInitSessionBean {
             
             CustomerOrder testCustomerOrder3 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems3);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder3, (long) 3);
+            System.out.println("AAAAAAAAAAAAAAA");
+            System.out.println(computerSetIds);
+            ComputerSet computerSet = new ComputerSet();
+            LineItem lineItemToAddToOrder;
+            try {
+                computerSet = computerSetSessionBean.retrieveComputerSetById(computerSetIds.get(0));
+            } catch (ComputerSetNotFoundException ex) {
+                
+            }
+            System.out.println(computerSet);
+            lineItemToAddToOrder = computerSet.getLineItem();
+            testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
+            System.out.println(lineItemToAddToOrder);
+            lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
 
         } catch (CustomerNotFoundException ex) {
             System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());

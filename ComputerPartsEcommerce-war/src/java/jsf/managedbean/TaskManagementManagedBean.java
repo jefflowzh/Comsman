@@ -1,26 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
+import ejb.session.stateless.ComputerSetSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
+import entity.ComputerSet;
 import entity.CustomerOrder;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
-/**
- *
- * @author weidonglim
- */
 @Named(value = "taskManagementManagedBean")
 @RequestScoped
 public class TaskManagementManagedBean {
+
+    @EJB(name = "ComputerSetSessionBeanLocal")
+    private ComputerSetSessionBeanLocal computerSetSessionBeanLocal;
 
     @EJB
     private LineItemSessionBeanLocal lineItemSessionBeanLocal;
@@ -30,6 +29,9 @@ public class TaskManagementManagedBean {
 
     private List<CustomerOrder> tasks;
     private List<CustomerOrder> filteredTasks;
+    private List<ComputerSet> computerSets;
+    
+    private Long selectedOrderId;
 
     public TaskManagementManagedBean() {
     }
@@ -38,6 +40,13 @@ public class TaskManagementManagedBean {
     public void postConstruct() {
         // those voided / delivered will not be shown
         tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
+    }
+    
+    public void loadComputerSetsOfOrder(ActionEvent event) {
+        System.out.println(event.getComponent().getAttributes().get("selectedOrderId"));
+        selectedOrderId = (Long) event.getComponent().getAttributes().get("selectedOrderId");
+        setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByOrderId(getSelectedOrderId(), Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE));
+        System.out.println(computerSets);
     }
 
     public CustomerOrderSessionBeanLocal getCustomerOrderSessionBeanLocal() {
@@ -72,8 +81,19 @@ public class TaskManagementManagedBean {
         this.filteredTasks = filteredTasks;
     }
 
-    
-    
-    
+    public List<ComputerSet> getComputerSets() {
+        return computerSets;
+    }
 
+    public void setComputerSets(List<ComputerSet> computerSets) {
+        this.computerSets = computerSets;
+    }
+
+    public Long getSelectedOrderId() {
+        return selectedOrderId;
+    }
+
+    public void setSelectedOrderId(Long selectedOrderId) {
+        this.selectedOrderId = selectedOrderId;
+    }
 }

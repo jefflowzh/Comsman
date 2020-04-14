@@ -53,8 +53,8 @@
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton icon="fa fa-desktop" title="Assign Computer Set" oncomplete="PF('sidebarAssignComSet').show()">
-                                    <f:attribute name="" value="" />
+                                <p:commandButton icon="fa fa-desktop" title="Assign Computer Set" oncomplete="PF('sidebarAssignComSet').show()" actionListener="#{taskManagementManagedBean.loadComputerSetsOfOrder}" update="formAssignComSet">
+                                    <f:attribute name="selectedOrderId" value="#{task.customerOrderId}"/>
                                 </p:commandButton>
                                 <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true and task.orderStatus eq 'COMPLETED'}">
                                     <f:attribute name="" value="" />
@@ -71,20 +71,13 @@
                         <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarAssignComSet').hide()"/>
 
                         <p:messages id="messages" redisplay="false" />
-
-                        <p:dataGrid var="task" value="#{taskManagementManagedBean.tasks}" id="tasks">
-                            <h:panelGrid columns="3" style="width: 100%;">
-                                <p:row>
-                                    <p:column>
-                                        <h:outputLabel value="LineItem ID: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{task.customerOrderId}" />
-                                    </p:column>
-                                </p:row>
-                            </h:panelGrid>
-
-                        </p:dataGrid>
+                        
+                        <p:dataTable id="dataTableAllTasks" widgetVar="dataTableAllComputerSets" value="#{taskManagementManagedBean.computerSets}" var="computerSet" rowKey="#{computerSet.computerSetId}" rowIndexVar="row"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+                            <p:column headerText="Computer Set ID" sortBy="#{computerSet.computerSetId}">
+                                <h:outputText value="#{computerSet.computerSetId}" />
+                            </p:column>
+                        </p:dataTable>
 
                     </p:sidebar>
                 </h:form>

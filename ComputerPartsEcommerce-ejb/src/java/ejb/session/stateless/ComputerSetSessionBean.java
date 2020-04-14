@@ -40,20 +40,20 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
             LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(new LineItem(1));
 
             ComputerSet newComputerSet = new ComputerSet();
-            newComputerSet.setAirCooler(computerSetModel.getAirCooler());
-            newComputerSet.setCompCase(computerSetModel.getCompCase());
-            newComputerSet.setCpu(computerSetModel.getCpu());
-            newComputerSet.setGpus(computerSetModel.getGpus());
-            newComputerSet.setHdds(computerSetModel.getHdds());
-            newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
+            if (computerSetModel.getAirCooler() != null) newComputerSet.setAirCooler(computerSetModel.getAirCooler());
+            if (computerSetModel.getCompCase() != null) newComputerSet.setCompCase(computerSetModel.getCompCase());
+            if (computerSetModel.getCpu() != null) newComputerSet.setCpu(computerSetModel.getCpu());
+            if (computerSetModel.getGpus() != null) newComputerSet.setGpus(computerSetModel.getGpus());
+            if (computerSetModel.getHdds() != null) newComputerSet.setHdds(computerSetModel.getHdds());
+            if (computerSetModel.getIsAmateur()!= null) newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
             newComputerSet.setLineItem(newLineItem);
-            newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
-            newComputerSet.setPrice(computerSetModel.getPrice());
-            newComputerSet.setPsu(computerSetModel.getPsu());
-            newComputerSet.setRams(computerSetModel.getRams());
-            newComputerSet.setSsds(computerSetModel.getSsds());
-            newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
-            newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
+            if (computerSetModel.getMotherBoard() != null) newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
+            if (computerSetModel.getPrice() != null) newComputerSet.setPrice(computerSetModel.getPrice());
+            if (computerSetModel.getPsu() != null) newComputerSet.setPsu(computerSetModel.getPsu());
+            if (computerSetModel.getRams() != null) newComputerSet.setRams(computerSetModel.getRams());
+            if (computerSetModel.getSsds() != null) newComputerSet.setSsds(computerSetModel.getSsds());
+            if (computerSetModel.getWarrentyLengthInYears() != null) newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
+            if (computerSetModel.getWaterCooler() != null) newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
             
             newLineItem.setComputerSet(newComputerSet);
 
@@ -107,6 +107,34 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
         Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId");
         query.setParameter("inStaffId", staffId);
+        List<ComputerSet> computerSets = query.getResultList();
+        if (loadRams) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getRams().size();
+            }
+        }
+        if (loadGpus) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getGpus().size();
+            }
+        }
+        if (loadHdds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getHdds().size();
+            }
+        }
+        if (loadSsds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getSsds().size();
+            }
+        }
+        return computerSets;
+    }
+    
+    @Override
+    public List<ComputerSet> retrieveComputerSetsByOrderId(Long orderId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
+        Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.lineItem.customerOrder.customerOrderId = :inOrderId");
+        query.setParameter("inOrderId", orderId);
         List<ComputerSet> computerSets = query.getResultList();
         if (loadRams) {
             for (ComputerSet computerSet : computerSets) {

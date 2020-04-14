@@ -20,7 +20,7 @@
                     <p:messages id="messages" redisplay="false" closable="true" />
 
                     <p:dataTable id="dataTableAllComputerBuildingTasks" widgetVar="dataTableAllComputerBuildingTasks" value="#{computerBuildingTasksManagedBean.sets}" var="task" rowKey="#{task.computerSetId}" rowIndexVar="row"
-                                 filteredValue="#{computerBuildingTasksManagedBean.filteredSets}"
+                                 sortBy="#{task.assemblyComplete}" filteredValue="#{computerBuildingTasksManagedBean.filteredSets}"
                                  rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
 
                         <f:facet name="header">
@@ -34,12 +34,16 @@
                             <h:outputText value="#{task.computerSetId}" />
                         </p:column>
 
-                        <p:column headerText="Order Date" sortBy="#{task.lineItem.lineItemId}" filterBy="#{task.lineItem.lineItemId}" filterMatchMode="contains">
-                            <h:outputText value="#{task.lineItem.lineItemId}" />
+                        <p:column headerText="Order Date" sortBy="#{task.lineItem.customerOrder.customerOrderId}" filterBy="#{task.lineItem.customerOrder.customerOrderId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.lineItem.customerOrder.customerOrderId}" />
                         </p:column>
 
                         <p:column headerText="Amateur Set" sortBy="#{task.isAmateur}" filterBy="#{task.isAmateur}" filterMatchMode="contains">
                             <h:outputText value="#{task.isAmateur}" />
+                        </p:column>
+                        
+                        <p:column headerText="Status" sortBy="#{task.assemblyComplete}" filterBy="#{task.assemblyComplete}" filterMatchMode="contains">
+                            <h:outputText value="#{task.assemblyComplete}" />
                         </p:column>
 
 <!--                        <p:column headerText="Action">
