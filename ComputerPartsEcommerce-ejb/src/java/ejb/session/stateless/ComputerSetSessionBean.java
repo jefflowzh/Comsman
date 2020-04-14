@@ -3,6 +3,7 @@ package ejb.session.stateless;
 import entity.ComputerSet;
 import entity.LineItem;
 import entity.Staff;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,17 +31,38 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
 
     @Override
     // create set first, assign staff seperately later
-    public Long createNewComputerSet(ComputerSet newComputerSet, LineItem lineItem) throws LineItemNotFoundException {
-        //LineItem lineItem = lineItemSessionBeanLocal.retrieveLineItemById(lineItemId);
-        LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(lineItem);
-
-        newComputerSet.setLineItem(newLineItem);
-        newLineItem.setComputerSet(newComputerSet);
+    public List<Long> createNewComputerSet(ComputerSet computerSetModel, LineItem lineItem) {
+        //Make X line items and computer sets where X is the quantity of lineItem, each line item should contain only 1 computer set as each computer set can only be assigned to 1 staff (i.e. it will be inappropriate to assigned a computer set with quantity 100 to 1 staff.
+        Integer quantity = lineItem.getQuantity();
+        List<Long> computerSetIds = new ArrayList<>();
         
-        em.persist(newComputerSet);
-        em.flush();
+        for (int computerSet = 0; computerSet < quantity; computerSet++) {
+            LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(new LineItem(1));
 
-        return newComputerSet.getComputerSetId();
+            ComputerSet newComputerSet = new ComputerSet();
+            newComputerSet.setAirCooler(computerSetModel.getAirCooler());
+            newComputerSet.setCompCase(computerSetModel.getCompCase());
+            newComputerSet.setCpu(computerSetModel.getCpu());
+            newComputerSet.setGpus(computerSetModel.getGpus());
+            newComputerSet.setHdds(computerSetModel.getHdds());
+            newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
+            newComputerSet.setLineItem(newLineItem);
+            newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
+            newComputerSet.setPrice(computerSetModel.getPrice());
+            newComputerSet.setPsu(computerSetModel.getPsu());
+            newComputerSet.setRams(computerSetModel.getRams());
+            newComputerSet.setSsds(computerSetModel.getSsds());
+            newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
+            newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
+            
+            newLineItem.setComputerSet(newComputerSet);
+
+            em.persist(newComputerSet);
+            em.flush();
+            computerSetIds.add(newComputerSet.getComputerSetId());
+        }
+        
+        return computerSetIds;
     }
 
     @Override

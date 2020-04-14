@@ -122,11 +122,7 @@ public class DataInitSessionBean {
 
         LineItem testcomsetLineItem = new LineItem(1);
         
-        try {
-            computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
-        } catch(LineItemNotFoundException ex) {
-            System.out.println("fail to create singleton comset for initial data !! >> " + ex.getMessage());
-        }
+        computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
         
         Customer testCustomer = new Customer("cardNum", "ccv", "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
         customerSessionBean.createNewCustomer(testCustomer);
