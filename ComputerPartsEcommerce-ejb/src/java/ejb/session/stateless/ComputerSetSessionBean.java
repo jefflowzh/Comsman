@@ -102,7 +102,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
             }
         }
     }
-    
+
     @Override
     public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
         Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId");

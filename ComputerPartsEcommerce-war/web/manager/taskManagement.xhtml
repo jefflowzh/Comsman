@@ -77,8 +77,15 @@
                             <p:column headerText="Computer Set ID" sortBy="#{computerSet.computerSetId}">
                                 <h:outputText value="#{computerSet.computerSetId}" />
                             </p:column>
+                            <p:column headerText="Assign to">
+                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.assignedStaff[taskManagementManagedBean.computerSets.indexOf(computerSet)]}" filter="true" filterMatchMode="contains" appendTo="dataTableAllTasks">
+                                    <f:selectItem value="#{null}" itemLabel="--Select One--"/>
+                                    <f:selectItems value="#{taskManagementManagedBean.assignableStaff}" var="staff" itemLabel="#{staff.firstName} #{staff.lastName}" itemValue="#{staff.userId}"/>
+                                </p:selectOneMenu>
+                            </p:column>
                         </p:dataTable>
 
+                        <p:commandButton value="Confirm Assignment" actionListener="#{taskManagementManagedBean.confirmAssignment}"/>
                     </p:sidebar>
                 </h:form>
 
