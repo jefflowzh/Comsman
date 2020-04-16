@@ -146,7 +146,7 @@ public class DataInitSessionBean {
         cs.setSelectedColour("red");
         comset.setCompCase(cs);
 
-        LineItem testcomsetLineItem = new LineItem(1);
+        LineItem testcomsetLineItem = new LineItem(2);
 
         List<Long> computerSetIds = computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
 
