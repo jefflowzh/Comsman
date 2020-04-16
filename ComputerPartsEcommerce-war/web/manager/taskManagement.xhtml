@@ -77,15 +77,20 @@
                             <p:column headerText="Computer Set ID" sortBy="#{computerSet.computerSetId}">
                                 <h:outputText value="#{computerSet.computerSetId}" />
                             </p:column>
+                            <p:column headerText="Current Assigned Staff">
+                                <h:outputText value="#{computerSet.assemblyAssignedTo.firstName} #{computerSet.assemblyAssignedTo.lastName}" rendered="#{computerSet.assemblyAssignedTo != null}"/>
+                            </p:column>
                             <p:column headerText="Assign to">
-                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.assignedStaff[taskManagementManagedBean.computerSets.indexOf(computerSet)]}" filter="true" filterMatchMode="contains" appendTo="dataTableAllTasks">
-                                    <f:selectItem value="#{null}" itemLabel="--Select One--"/>
+                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" filter="true" filterMatchMode="contains" appendTo="dataTableAllTasks">
+                                    <p:ajax listener="#{taskManagementManagedBean.doMatchComputerSetWithStaffId(computerSet)}"/>
+                                    <f:selectItem value="#{null}" itemLabel="--Select One--" itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Unassign Staff" itemValue="#{taskManagementManagedBean.negativeOne}" itemDisabled="#{computerSet.assemblyAssignedTo == null}"/>
                                     <f:selectItems value="#{taskManagementManagedBean.assignableStaff}" var="staff" itemLabel="#{staff.firstName} #{staff.lastName}" itemValue="#{staff.userId}"/>
                                 </p:selectOneMenu>
                             </p:column>
                         </p:dataTable>
 
-                        <p:commandButton value="Confirm Assignment" actionListener="#{taskManagementManagedBean.confirmAssignment}"/>
+                        <p:commandButton value="Confirm Assignment" actionListener="#{taskManagementManagedBean.matchComputerSetsWithStaffId}" update="@form formAllTasks:dataTableAllTasks formAllTasks:messages" oncomplete="PF('sidebarAssignComSet').hide()"/>
                     </p:sidebar>
                 </h:form>
 

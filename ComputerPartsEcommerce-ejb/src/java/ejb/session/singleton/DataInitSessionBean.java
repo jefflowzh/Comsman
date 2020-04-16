@@ -121,7 +121,7 @@ public class DataInitSessionBean {
         cs.setSelectedColour("red");
         comset.setCompCase(cs);
 
-        LineItem testcomsetLineItem = new LineItem(1);
+        LineItem testcomsetLineItem = new LineItem(2);
         
         List<Long> computerSetIds = computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
         
@@ -131,6 +131,7 @@ public class DataInitSessionBean {
         try {
             List<LineItem> testLineItems3 = new ArrayList<>();
             testLineItems3.add(lineItemSessionBean.retrieveLineItemById((long) 1));
+            testLineItems3.add(lineItemSessionBean.retrieveLineItemById((long) 2));
             Date date2 = new Date();
             
             CustomerOrder testCustomerOrder3 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems3);
@@ -147,7 +148,16 @@ public class DataInitSessionBean {
             System.out.println(computerSet);
             lineItemToAddToOrder = computerSet.getLineItem();
             testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
-            System.out.println(lineItemToAddToOrder);
+            lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
+            
+            try { // for next line item
+                computerSet = computerSetSessionBean.retrieveComputerSetById(computerSetIds.get(1));
+            } catch (ComputerSetNotFoundException ex) {
+                
+            }
+            System.out.println(computerSet);
+            lineItemToAddToOrder = computerSet.getLineItem();
+            testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
             lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
 
         } catch (CustomerNotFoundException ex) {

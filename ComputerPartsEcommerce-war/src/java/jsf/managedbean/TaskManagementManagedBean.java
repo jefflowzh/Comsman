@@ -7,17 +7,21 @@ import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.ComputerSet;
 import entity.CustomerOrder;
 import entity.Staff;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import util.exception.StaffNotFoundException;
 
 @Named(value = "taskManagementManagedBean")
-@RequestScoped
-public class TaskManagementManagedBean {
+@ViewScoped
+public class TaskManagementManagedBean implements Serializable {
 
     @EJB(name = "StaffSessionBeanLocal")
     private StaffSessionBeanLocal staffSessionBeanLocal;
@@ -35,9 +39,12 @@ public class TaskManagementManagedBean {
     private List<CustomerOrder> filteredTasks;
     private List<ComputerSet> computerSets;
     private List<Staff> assignableStaff;
-    private Long[] assignedStaff;
     
     private Long selectedOrderId;
+    private Long temporaryHoldingStaffId;
+    private Long negativeOne;
+    
+    private HashMap<ComputerSet, Long> computerSetsWithStaff;
 
     public TaskManagementManagedBean() {
     }
@@ -49,17 +56,38 @@ public class TaskManagementManagedBean {
     }
     
     public void loadComputerSetsOfOrder(ActionEvent event) {
+        negativeOne = new Long(-1);
         selectedOrderId = (Long) event.getComponent().getAttributes().get("selectedOrderId");
         setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByOrderId(getSelectedOrderId(), Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE));
+        computerSetsWithStaff = new HashMap<>();
+        for (ComputerSet computerSet : computerSets) {
+            computerSetsWithStaff.put(computerSet, null);
+            System.out.println("******* " + computerSet.getAssemblyAssignedTo());
+        }
         setAssignableStaff(staffSessionBeanLocal.retrieveAllStaffs());
-        setAssignedStaff(new Long[computerSets.size()]);
-        System.out.println("Loaded");
-        System.out.println(assignedStaff);
     }
     
-    public void confirmAssignment(ActionEvent event) {
-        if (assignedStaff == null) {
-            System.out.println("IS NULL");
+    public void doMatchComputerSetWithStaffId(ComputerSet computerSet) {
+        System.out.println("******* " + temporaryHoldingStaffId);
+        if (temporaryHoldingStaffId == null || (computerSet.getAssemblyAssignedTo() != null && temporaryHoldingStaffId.equals(computerSet.getAssemblyAssignedTo().getUserId()))) {
+        } else if (temporaryHoldingStaffId.equals(Long.valueOf(-1))) {
+            computerSetsWithStaff.put(computerSet, computerSet.getAssemblyAssignedTo().getUserId());
+        } else {
+            computerSetsWithStaff.put(computerSet, temporaryHoldingStaffId);
+        }
+        temporaryHoldingStaffId = null;
+        System.out.println("******** " + temporaryHoldingStaffId);
+    }
+    
+    public void matchComputerSetsWithStaffId(ActionEvent event) { // Sends to backend for matching between computer sets and staff
+        try {
+            for (ComputerSet computerSet : computerSets) {
+                computerSetSessionBeanLocal.updateComputerSet(computerSet, computerSetsWithStaff.get(computerSet));
+            }
+            temporaryHoldingStaffId = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets assigned!", null));
+        } catch (StaffNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff does not exist!", null));
         }
     }
 
@@ -110,14 +138,6 @@ public class TaskManagementManagedBean {
     public void setAssignableStaff(List<Staff> assignableStaff) {
         this.assignableStaff = assignableStaff;
     }
-
-    public Long[] getAssignedStaff() {
-        return assignedStaff;
-    }
-
-    public void setAssignedStaff(Long[] assignedStaff) {
-        this.assignedStaff = assignedStaff;
-    }
     
     public Long getSelectedOrderId() {
         return selectedOrderId;
@@ -125,5 +145,29 @@ public class TaskManagementManagedBean {
 
     public void setSelectedOrderId(Long selectedOrderId) {
         this.selectedOrderId = selectedOrderId;
+    }
+
+    public Long getTemporaryHoldingStaffId() {
+        return temporaryHoldingStaffId;
+    }
+
+    public void setTemporaryHoldingStaffId(Long temporaryHoldingStaffId) {
+        this.temporaryHoldingStaffId = temporaryHoldingStaffId;
+    }
+
+    public Long getNegativeOne() {
+        return negativeOne;
+    }
+
+    public void setNegativeOne(Long negativeOne) {
+        this.negativeOne = negativeOne;
+    }
+    
+    public HashMap<ComputerSet, Long> getComputerSetsWithStaff() {
+        return computerSetsWithStaff;
+    }
+
+    public void setComputerSetsWithStaff(HashMap<ComputerSet, Long> computerSetsWithStaff) {
+        this.computerSetsWithStaff = computerSetsWithStaff;
     }
 }
