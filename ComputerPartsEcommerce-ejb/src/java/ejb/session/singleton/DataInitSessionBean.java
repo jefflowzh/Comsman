@@ -8,6 +8,8 @@ import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.CPU;
+import entity.CPUAirCooler;
+import entity.CPUWaterCooler;
 import entity.ComputerCase;
 import entity.ComputerPart;
 import entity.ComputerSet;
@@ -15,9 +17,12 @@ import entity.Coupon;
 import entity.Customer;
 import entity.LineItem;
 import entity.CustomerOrder;
+import entity.GPU;
+import entity.HDD;
 import entity.MotherBoard;
 import entity.PowerSupply;
 import entity.RAM;
+import entity.SSD;
 import entity.Staff;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -78,7 +83,7 @@ public class DataInitSessionBean {
             staffSessionBean.createNewStaff(testStaff);
             Staff testStaffTech = new Staff(StaffAccessRightEnum.TECHNICIAN, "StaffFN", "StaffLN", "Staff Address", "tech@email.com", "password", "12345");
             staffSessionBean.createNewStaff(testStaffTech);
-        } catch(StaffAlreadyExistsException ex) {
+        } catch (StaffAlreadyExistsException ex) {
             System.out.println("Staff already exists");
         }
 
@@ -86,7 +91,6 @@ public class DataInitSessionBean {
 //        computerPartSessionBean.createNewComputerPart(testComputerPart);
 //        ComputerPart testComputerPart2 = new ComputerPart("Computer Part 2", 100.00, 10, "image");
 //        computerPartSessionBean.createNewComputerPart(testComputerPart2);
-
         // test computerset
         //create cpu
         CPU testcpu = new CPU("Manufacturer", 3, 3, "socket", true, true, "cpu", 100.00, 5, "image");
@@ -108,12 +112,33 @@ public class DataInitSessionBean {
         String[] MotherBoardFormFactor = {"MotherBoardFormFactor"};
         ComputerCase cs = new ComputerCase("Manufacturer", "type", colours, "sidePanelView", MotherBoardFormFactor, 5, 100.99, 10.00, 11.00, 102.00, "case", 100.00, 5, "image");
         computerPartSessionBean.createNewComCase(cs);
+
+        // create gpu
+        GPU gpu = new GPU("Manufacturer", "chipset", "Interface", 5.5, 5, 6, "externalPower", 8, "MemoryType", "gpu", 100.00, 10, "image");
+        computerPartSessionBean.createNewGPU(gpu);
+
+        // create hdd
+        HDD hdd = new HDD("Manufacturer", "type", 5, "formFactor", "Interface", "hdd", 100.00, 10, "image");
+        computerPartSessionBean.createNewHDD(hdd);
+
+        // create ssd
+        SSD ssd = new SSD("Manufacturer", "type", 5, "formFactor", "Interface", true, "ssd", 100.00, 10, "image");
+        computerPartSessionBean.createNewSSD(ssd);
+        
+        // create watercooler
+        String[] CPUChipCompatibility = {"CPUChipCompatibility", "CPUChipCompatibility2"};
+        CPUWaterCooler watercooler = new CPUWaterCooler("Manufacturer", "color", 5, CPUChipCompatibility, 5.5, "CPUWaterCooler", 100.00, 10, "image");
+        computerPartSessionBean.createNewCPUWaterCooler(watercooler);
+
+        // create aircooler
+        CPUAirCooler aircooler = new CPUAirCooler("Manufacturer", "color", 5, 5.5, CPUChipCompatibility, "CPUAirCooler", 100.00, 10, "image");
+        computerPartSessionBean.createNewCPUAirCooler(aircooler);
         
         // creat com set
         ComputerSet comset = new ComputerSet(5, false);
         comset.setCpu(testcpu);
         comset.setMotherBoard(testMB);
-        for (RAM r: rams) {
+        for (RAM r : rams) {
             comset.addRam(r);
         }
         comset.setPsu(powersupply);
@@ -121,21 +146,21 @@ public class DataInitSessionBean {
         comset.setCompCase(cs);
 
         LineItem testcomsetLineItem = new LineItem(1);
-        
+
         try {
             computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
-        } catch(LineItemNotFoundException ex) {
+        } catch (LineItemNotFoundException ex) {
             System.out.println("fail to create singleton comset for initial data !! >> " + ex.getMessage());
         }
-        
+
         Customer testCustomer = new Customer("cardNum", "ccv", "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
         customerSessionBean.createNewCustomer(testCustomer);
-        
+
         try {
             List<LineItem> testLineItems3 = new ArrayList<>();
             testLineItems3.add(lineItemSessionBean.retrieveLineItemById((long) 1));
             Date date2 = new Date();
-            
+
             CustomerOrder testCustomerOrder3 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems3);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder3, (long) 3);
 
@@ -144,7 +169,7 @@ public class DataInitSessionBean {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        
+
         LineItem testpartLineItem = new LineItem(testcpu, 3);
 
         try {
@@ -152,7 +177,7 @@ public class DataInitSessionBean {
             List<LineItem> testLineItems4 = new ArrayList<>();
             testLineItems4.add(testpartLineItem);
             Date date2 = new Date();
-            
+
             CustomerOrder testCustomerOrder4 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems4);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder4, (long) 3);
 
@@ -170,7 +195,6 @@ public class DataInitSessionBean {
 //        Coupon testCoupon = new Coupon("YAY2020", new Date(), new Date(), 1, CouponTypeEnum.PERCENTAGE);
 //        couponSessionBean.createNewCoupon(testCoupon);
 //        
-        
 //        
 //        LineItem testLineItem = new LineItem(testComputerPart, 1);
 //        lineItemSessionBean.createNewLineItem(testLineItem);

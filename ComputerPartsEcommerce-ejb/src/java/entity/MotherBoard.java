@@ -152,6 +152,14 @@ public class MotherBoard extends ComputerPart implements Serializable {
     public void setSuportedMemorySpeed(String[] suportedMemorySpeed) {
         this.suportedMemorySpeed = suportedMemorySpeed;
     }
+
+    public Integer getSATA6GB() {
+        return SATA6GB;
+    }
+
+    public void setSATA6GB(Integer SATA6GB) {
+        this.SATA6GB = SATA6GB;
+    }
    
     
     

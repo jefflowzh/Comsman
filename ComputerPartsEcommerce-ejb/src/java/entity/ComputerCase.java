@@ -35,7 +35,7 @@ public class ComputerCase extends ComputerPart implements Serializable {
     private Double topFanSupport;
     private Double frontFanSupport;
     private Double rearFanSupport;
-    private String selectedColour;
+    private String selectedColour; // the color customer selected
 
     public ComputerCase() {
     }

@@ -3,6 +3,7 @@
     width: 18%;
     height: 100%;
     background-color: white;
+    overflow: scroll;
 }
 
 .layout-header{

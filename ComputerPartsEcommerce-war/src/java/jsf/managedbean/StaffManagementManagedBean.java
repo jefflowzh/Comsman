@@ -89,7 +89,6 @@ public class StaffManagementManagedBean implements Serializable {
         try {
             selectedStaffEntityToUpdate.setRole(roleEnumUpdate);
             
-            // verify if its null
             staffSessionBeanLocal.updateStaff(selectedStaffEntityToUpdate, null, null);
             
             selectedStaffEntityToUpdate = new Staff();

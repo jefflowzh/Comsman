@@ -26,206 +26,267 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
-    
+
     @Override
     public Long createNewCPU(CPU cpu) {
         em.persist(cpu);
         em.flush();
-        
+
         return cpu.getProductId();
     }
 
+    @Override
     public Long createNewCPUAirCooler(CPUAirCooler cpuAirCooler) {
         em.persist(cpuAirCooler);
         em.flush();
-        
+
         return cpuAirCooler.getProductId();
     }
-    
+
+    @Override
     public Long createNewCPUWaterCooler(CPUWaterCooler cpuWaterCooler) {
         em.persist(cpuWaterCooler);
         em.flush();
-        
+
         return cpuWaterCooler.getProductId();
     }
-    
+
     @Override
     public Long createNewComCase(ComputerCase computerCase) {
         em.persist(computerCase);
         em.flush();
-        
+
         return computerCase.getProductId();
     }
-    
+
+    @Override
     public Long createNewGPU(GPU gpu) {
         em.persist(gpu);
         em.flush();
-        
+
         return gpu.getProductId();
     }
-    
+
+    @Override
     public Long createNewHDD(HDD hdd) {
         em.persist(hdd);
         em.flush();
-        
+
         return hdd.getProductId();
     }
-    
+
     @Override
     public Long createNewMotherBoard(MotherBoard mb) {
         em.persist(mb);
         em.flush();
-        
+
         return mb.getProductId();
     }
-    
+
     @Override
     public Long createNewPowerSupply(PowerSupply ps) {
         em.persist(ps);
         em.flush();
-        
+
         return ps.getProductId();
     }
-    
+
     @Override
     public Long createNewRAM(RAM ram) {
         em.persist(ram);
         em.flush();
-        
+
         return ram.getProductId();
     }
-    
+
+    @Override
     public Long createNewSSD(SSD ssd) {
         em.persist(ssd);
         em.flush();
-        
+
         return ssd.getProductId();
-        
-    }
-    
-    public List<CPU> retrieveAllCPU() {
-        Query query = em.createQuery("SELECT c FROM CPU c"); 
-        return query.getResultList();
-        
+
     }
 
+    @Override
+    public List<CPU> retrieveAllCPU() {
+        Query query = em.createQuery("SELECT c FROM CPU c");
+        return query.getResultList();
+
+    }
+
+    @Override
     public List<CPUAirCooler> retrieveAllCPUAirCooler() {
-        Query query = em.createQuery("SELECT c FROM CPUAirCooler c"); 
+        Query query = em.createQuery("SELECT c FROM CPUAirCooler c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<CPUWaterCooler> retrieveAllCPUWaterCooler() {
-        Query query = em.createQuery("SELECT c FROM CPUWaterCooler c"); 
+        Query query = em.createQuery("SELECT c FROM CPUWaterCooler c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<ComputerCase> retrieveAllComCase() {
-        Query query = em.createQuery("SELECT c FROM ComptuerCase c"); 
+        Query query = em.createQuery("SELECT c FROM ComputerCase c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<GPU> retrieveAllGPU() {
-        Query query = em.createQuery("SELECT c FROM GPU c"); 
+        Query query = em.createQuery("SELECT c FROM GPU c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<HDD> retrieveAllHDD() {
-        Query query = em.createQuery("SELECT c FROM HDD c"); 
+        Query query = em.createQuery("SELECT c FROM HDD c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<MotherBoard> retrieveAllMotherBoard() {
-        Query query = em.createQuery("SELECT c FROM MotherBoard c"); 
+        Query query = em.createQuery("SELECT c FROM MotherBoard c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<PowerSupply> retrieveAllPowerSupply() {
-        Query query = em.createQuery("SELECT c FROM PowerSupply c"); 
+        Query query = em.createQuery("SELECT c FROM PowerSupply c");
         return query.getResultList();
-        
+
     }
-    
+
+    @Override
     public List<RAM> retrieveAllRAM() {
-        Query query = em.createQuery("SELECT c FROM RAM c"); 
+        Query query = em.createQuery("SELECT c FROM RAM c");
         return query.getResultList();
-        
+
     }
-    
+
     public List<SSD> retrieveAllSSD() {
-        Query query = em.createQuery("SELECT c FROM SSD c"); 
+        Query query = em.createQuery("SELECT c FROM SSD c");
         return query.getResultList();
-        
+
     }
-    
-    
+
     public List<CPU> retrieveCPUById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPU"); 
+        Query query = em.createQuery("SELECT c FROM CPU");
         return query.getResultList();
-        
+
     }
 
     public List<CPUAirCooler> retrieveCPUAirCoolerById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPUAirCooler"); 
+        Query query = em.createQuery("SELECT c FROM CPUAirCooler");
         return query.getResultList();
-        
+
     }
-    
+
     public List<CPUWaterCooler> retrieveCPUWaterCoolerById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPUWaterCooler"); 
+        Query query = em.createQuery("SELECT c FROM CPUWaterCooler");
         return query.getResultList();
-        
+
     }
-    
+
     public List<ComputerCase> retrieveComCaseById(Long id) {
-        Query query = em.createQuery("SELECT c FROM ComptuerCase"); 
+        Query query = em.createQuery("SELECT c FROM ComptuerCase");
         return query.getResultList();
-        
+
     }
-    
+
     public List<GPU> retrieveGPUById(Long id) {
-        Query query = em.createQuery("SELECT c FROM GPU"); 
+        Query query = em.createQuery("SELECT c FROM GPU");
         return query.getResultList();
-        
+
     }
-    
+
     public List<HDD> retrieveAllHDDById(Long id) {
-        Query query = em.createQuery("SELECT c FROM HDD"); 
+        Query query = em.createQuery("SELECT c FROM HDD");
         return query.getResultList();
-        
+
     }
-    
+
     public List<MotherBoard> retrieveMotherBoardById(Long id) {
-        Query query = em.createQuery("SELECT c FROM MotherBoard"); 
+        Query query = em.createQuery("SELECT c FROM MotherBoard");
         return query.getResultList();
-        
+
     }
-    
+
     public List<PowerSupply> retrievePowerSupplyById(Long id) {
-        Query query = em.createQuery("SELECT c FROM PowerSupply"); 
+        Query query = em.createQuery("SELECT c FROM PowerSupply");
         return query.getResultList();
-        
+
     }
-    
+
     public List<RAM> retrieveRAMById(Long id) {
-        Query query = em.createQuery("SELECT c FROM RAM"); 
+        Query query = em.createQuery("SELECT c FROM RAM");
         return query.getResultList();
-        
+
     }
-    
+
     public List<SSD> retrieveSSDById(Long id) {
-        Query query = em.createQuery("SELECT c FROM SSD"); 
+        Query query = em.createQuery("SELECT c FROM SSD");
         return query.getResultList();
-        
+
+    }
+
+    @Override
+    public void updateCPU(CPU cpu) throws ComputerPartNotFoundException {
+        em.merge(cpu);
     }
     
-  
+    @Override
+    public void updateMotherBoard(MotherBoard motherboard) throws ComputerPartNotFoundException {
+        em.merge(motherboard);
+    }
     
+    @Override
+    public void updateRAM(RAM ram) throws ComputerPartNotFoundException {
+        em.merge(ram);
+    }
+    
+    @Override
+    public void updatePowerSupply(PowerSupply powerSupply) throws ComputerPartNotFoundException {
+        em.merge(powerSupply);
+    }
+    
+    @Override
+    public void updateComCase(ComputerCase computerCase) throws ComputerPartNotFoundException {
+        em.merge(computerCase);
+    }
+    
+    @Override
+    public void updateGPU(GPU gpu) throws ComputerPartNotFoundException {
+        em.merge(gpu);
+    }
+    
+    @Override
+    public void updateHDD(HDD hdd) throws ComputerPartNotFoundException {
+        em.merge(hdd);
+    }
+    
+    @Override
+    public void updateSSD(SSD ssd) throws ComputerPartNotFoundException {
+        em.merge(ssd);
+    }
+    
+    @Override
+    public void updateCPUWaterCooler(CPUWaterCooler CPUWaterCooler) throws ComputerPartNotFoundException {
+        em.merge(CPUWaterCooler);
+    }
+    
+    @Override
+    public void updateCPUAirCooler(CPUAirCooler CPUAirCooler) throws ComputerPartNotFoundException {
+        em.merge(CPUAirCooler);
+    }
+
     @Override
     public Long createNewComputerPart(ComputerPart newComputerPart) {
         em.persist(newComputerPart);
@@ -233,5 +294,5 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
         return newComputerPart.getProductId();
     }
-    
+
 }
