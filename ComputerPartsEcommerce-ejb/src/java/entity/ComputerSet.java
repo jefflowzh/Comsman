@@ -84,7 +84,7 @@ public class ComputerSet implements Serializable {
     private Integer warrentyLengthInYears;
     @Column(nullable = false)
     @NotNull
-    private Boolean isAmatuer;
+    private Boolean isAmateur;
     @ManyToOne
     @JoinColumn
     private Staff assemblyAssignedTo;
@@ -112,27 +112,27 @@ public class ComputerSet implements Serializable {
     }
 
     /* original constructor
-    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmateur, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
 
 
-    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmateur, String name, Double price, Integer inventoryQuantity, String image) {
 
         super(name, price, inventoryQuantity, image);
         this.computerParts = computerParts;
         this.warrentyLengthInYears = warrentyLengthInYears;
-        this.isAmatuer = isAmatuer;      
+        this.isAmateur = isAmateur;      
         assemblyComplete = false;
     }   */
     
     // new constructor 
 
-    //public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+    //public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmateur, LineItem lineItem) {
     public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer) {
         this();
         this.warrentyLengthInYears = warrentyLengthInYears;
         // assuming warrenty is $100/year
         this.price += (warrentyLengthInYears - 3) * 100; 
-        this.isAmatuer = isAmatuer;
+        this.isAmateur = isAmatuer;
     }
 
     public CPU getCpu() {
@@ -231,12 +231,12 @@ public class ComputerSet implements Serializable {
         this.warrentyLengthInYears = warrentyLengthInYears;
     }
 
-    public Boolean getIsAmatuer() {
-        return isAmatuer;
+    public Boolean getIsAmateur() {
+        return isAmateur;
     }
 
-    public void setIsAmatuer(Boolean isAmatuer) {
-        this.isAmatuer = isAmatuer;
+    public void setIsAmateur(Boolean isAmateur) {
+        this.isAmateur = isAmateur;
     }
 
     public Staff getAssemblyAssignedTo() {

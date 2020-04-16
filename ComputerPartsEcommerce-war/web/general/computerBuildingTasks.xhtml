@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/defaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <div class="layout-content">
+
+            <h2>
+                Computer Building tasks
+            </h2>
+
+            <div class="layout-subcontent">
+
+                <h:form id="formAllComputerBuildingTasks">
+                    <p:growl id="growl" sticky="false" life="1000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dataTable id="dataTableAllComputerBuildingTasks" widgetVar="dataTableAllComputerBuildingTasks" value="#{computerBuildingTasksManagedBean.sets}" var="task" rowKey="#{task.computerSetId}" rowIndexVar="row"
+                                 sortBy="#{task.assemblyComplete}" filteredValue="#{computerBuildingTasksManagedBean.filteredSets}"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search : " />
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllComputerBuildingTasks').filter()" style="width: 700px;" placeholder="Enter Keyword" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="Computer Set ID" sortBy="#{task.computerSetId}" filterBy="#{task.computerSetId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.computerSetId}" />
+                        </p:column>
+
+                        <p:column headerText="Order Date" sortBy="#{task.lineItem.customerOrder.customerOrderId}" filterBy="#{task.lineItem.customerOrder.customerOrderId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.lineItem.customerOrder.customerOrderId}" />
+                        </p:column>
+
+                        <p:column headerText="Amateur Set" sortBy="#{task.isAmateur}" filterBy="#{task.isAmateur}" filterMatchMode="contains">
+                            <h:outputText value="#{task.isAmateur}" />
+                        </p:column>
+                        
+                        <p:column headerText="Status" sortBy="#{task.assemblyComplete}" filterBy="#{task.assemblyComplete}" filterMatchMode="contains">
+                            <h:outputText value="#{task.assemblyComplete}" />
+                        </p:column>
+
+<!--                        <p:column headerText="Action">
+                            <div class="actionButton">
+                                <p:commandButton icon="fa fa-desktop" title="Assign Computer Set" oncomplete="PF('sidebarAssignComSet').show()">
+                                    <f:attribute name="" value="" />
+                                </p:commandButton>
+                                <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true and task.orderStatus eq 'COMPLETED'}">
+                                    <f:attribute name="" value="" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>-->
+
+                    </p:dataTable>
+                </h:form>
+
+<!--                <h:form id="formAssignComSet">
+                    <p:sidebar id="sidebarAssignComSet" widgetVar="sidebarAssignComSet" position="right" baseZIndex="10000" style="width: 30%;">
+
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarAssignComSet').hide()"/>
+
+                        <p:messages id="messages" redisplay="false" />
+
+                        <p:dataGrid var="task" value="#{taskManagementManagedBean.tasks}" id="tasks">
+                            <h:panelGrid columns="3" style="width: 100%;">
+                                <p:row>
+                                    <p:column>
+                                        <h:outputLabel value="LineItem ID: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{task.customerOrderId}" />
+                                    </p:column>
+                                </p:row>
+                            </h:panelGrid>
+
+                        </p:dataGrid>
+
+                    </p:sidebar>
+                </h:form>-->
+
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -43,7 +43,7 @@ public class CustomerOrder implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String billingAddress;
-    @OneToMany
+    @OneToMany(mappedBy = "customerOrder")
     private List<LineItem> lineItems;
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)

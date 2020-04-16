@@ -1,14 +1,15 @@
 package ejb.session.stateless;
 
 import entity.ComputerSet;
-import entity.GPU;
 import entity.LineItem;
 import entity.Staff;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.exception.ComputerPartNotFoundException;
+import javax.persistence.Query;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.LineItemNotFoundException;
 import util.exception.StaffNotFoundException;
@@ -30,17 +31,38 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
 
     @Override
     // create set first, assign staff seperately later
-    public Long createNewComputerSet(ComputerSet newComputerSet, LineItem lineItem) throws LineItemNotFoundException {
-        //LineItem lineItem = lineItemSessionBeanLocal.retrieveLineItemById(lineItemId);
-        LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(lineItem);
-
-        newComputerSet.setLineItem(newLineItem);
-        newLineItem.setComputerSet(newComputerSet);
+    public List<Long> createNewComputerSet(ComputerSet computerSetModel, LineItem lineItem) {
+        //Make X line items and computer sets where X is the quantity of lineItem, each line item should contain only 1 computer set as each computer set can only be assigned to 1 staff (i.e. it will be inappropriate to assigned a computer set with quantity 100 to 1 staff.
+        Integer quantity = lineItem.getQuantity();
+        List<Long> computerSetIds = new ArrayList<>();
         
-        em.persist(newComputerSet);
-        em.flush();
+        for (int computerSet = 0; computerSet < quantity; computerSet++) {
+            LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(new LineItem(1));
 
-        return newComputerSet.getComputerSetId();
+            ComputerSet newComputerSet = new ComputerSet();
+            if (computerSetModel.getAirCooler() != null) newComputerSet.setAirCooler(computerSetModel.getAirCooler());
+            if (computerSetModel.getCompCase() != null) newComputerSet.setCompCase(computerSetModel.getCompCase());
+            if (computerSetModel.getCpu() != null) newComputerSet.setCpu(computerSetModel.getCpu());
+            if (computerSetModel.getGpus() != null) newComputerSet.setGpus(computerSetModel.getGpus());
+            if (computerSetModel.getHdds() != null) newComputerSet.setHdds(computerSetModel.getHdds());
+            if (computerSetModel.getIsAmateur()!= null) newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
+            newComputerSet.setLineItem(newLineItem);
+            if (computerSetModel.getMotherBoard() != null) newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
+            if (computerSetModel.getPrice() != null) newComputerSet.setPrice(computerSetModel.getPrice());
+            if (computerSetModel.getPsu() != null) newComputerSet.setPsu(computerSetModel.getPsu());
+            if (computerSetModel.getRams() != null) newComputerSet.setRams(computerSetModel.getRams());
+            if (computerSetModel.getSsds() != null) newComputerSet.setSsds(computerSetModel.getSsds());
+            if (computerSetModel.getWarrentyLengthInYears() != null) newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
+            if (computerSetModel.getWaterCooler() != null) newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
+            
+            newLineItem.setComputerSet(newComputerSet);
+
+            em.persist(newComputerSet);
+            em.flush();
+            computerSetIds.add(newComputerSet.getComputerSetId());
+        }
+        
+        return computerSetIds;
     }
 
     @Override
@@ -57,7 +79,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     @Override
     // Put staffId as non-null if there is need for association/disassociation/replacement
     // Put computerPartId as non-null to add a computer part
-    public void updateComputerSet(ComputerSet computerSet, Long staffId) throws ComputerPartNotFoundException, StaffNotFoundException {
+    public void updateComputerSet(ComputerSet computerSet, Long staffId) throws StaffNotFoundException {
 
         ComputerSet updatedComputerSet = em.merge(computerSet);
 
@@ -79,7 +101,62 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
                 staff.getAssignedComputerSets().add(updatedComputerSet);
             }
         }
+    }
 
+    @Override
+    public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
+        Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId");
+        query.setParameter("inStaffId", staffId);
+        List<ComputerSet> computerSets = query.getResultList();
+        if (loadRams) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getRams().size();
+            }
+        }
+        if (loadGpus) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getGpus().size();
+            }
+        }
+        if (loadHdds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getHdds().size();
+            }
+        }
+        if (loadSsds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getSsds().size();
+            }
+        }
+        return computerSets;
+    }
+    
+    @Override
+    public List<ComputerSet> retrieveComputerSetsByOrderId(Long orderId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
+        Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.lineItem.customerOrder.customerOrderId = :inOrderId");
+        query.setParameter("inOrderId", orderId);
+        List<ComputerSet> computerSets = query.getResultList();
+        if (loadRams) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getRams().size();
+            }
+        }
+        if (loadGpus) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getGpus().size();
+            }
+        }
+        if (loadHdds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getHdds().size();
+            }
+        }
+        if (loadSsds) {
+            for (ComputerSet computerSet : computerSets) {
+                computerSet.getSsds().size();
+            }
+        }
+        return computerSets;
     }
 
 //    @Override

@@ -20,7 +20,7 @@
                     <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home" />
 
                     <p:submenu label="Tasks" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER' || sessionScope.currentStaffEntity.role == 'TECHNICIAN'}">
-                        <p:menuitem value="Computer-building" outcome="/index" icon="fa fa-tv" />
+                        <p:menuitem value="Computer Building" outcome="/general/computerBuildingTasks" icon="fa fa-tv" />
                         <p:menuitem value="Deliveries" outcome="/index" icon="fa fa-truck" />
                     </p:submenu>
                     
