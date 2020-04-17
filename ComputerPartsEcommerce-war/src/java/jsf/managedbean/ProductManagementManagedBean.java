@@ -5,6 +5,7 @@
  */
 package jsf.managedbean;
 
+import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -49,18 +51,26 @@ public class ProductManagementManagedBean implements Serializable {
 
     private Product selectedProductToUpdate;
     private Product selectedProductImage;
+    private Product selectedProductToDelete;
+
+    private List<StringValue> stringValues;
+    private List<StringValue> stringValues2;
+    private Product previousProduct;
 
     private UploadedFile uploadedFile;
     // private String destination = "C:\\IS3106_Project_Images_Src\\"; // windows
-    private String destination = "/Users/weidonglim/Documents/IS3106_Project_Images_Src"; // mac
+    private String destination = "/Users/weidonglim/Documents/IS3106_Project_Images_Src/"; // mac
 
     public ProductManagementManagedBean() {
-
+        stringValues = new ArrayList<>();
     }
 
     @PostConstruct
     public void postConstruct() {
         // products = computerPartSessionBeanLocal.retrieveAllCPU();
+//        stringValues.add(new StringValue("String One"));
+//        stringValues.add(new StringValue("String Two"));
+//        stringValues.add(new StringValue("String Three"));
     }
 
     public void subjectSelectionChanged(final AjaxBehaviorEvent event) {
@@ -89,20 +99,94 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void doUpdateProduct(ActionEvent event) {
         setSelectedProductToUpdate((Product) event.getComponent().getAttributes().get("productToUpdate"));
+
+        if (previousProduct == null || !(previousProduct.getProductId().equals(selectedProductToUpdate.getProductId()))) {
+
+            if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard) {
+                List<String> temp = computerPartSessionBeanLocal.retrieveAllStringValue(selectedProduct, selectedProductToUpdate.getProductId());
+
+                stringValues = new ArrayList<>();
+
+                // when empty you load
+                if (stringValues.isEmpty()) {
+                    for (String s : temp) {
+                        stringValues.add(new StringValue(s));
+                    }
+                }
+
+                previousProduct = selectedProductToUpdate;
+            }
+            
+            if(selectedProductToUpdate instanceof ComputerCase) {
+                List<String> coloursTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("colours", selectedProductToUpdate.getProductId());
+                List<String> mbffTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("motherBoardFormFactor", selectedProductToUpdate.getProductId());
+                
+                stringValues = new ArrayList<>();
+
+                // when empty you load
+                if (stringValues.isEmpty()) {
+                    for (String s1 : coloursTemp) {
+                        stringValues.add(new StringValue(s1));
+                    }
+                }
+                
+                stringValues2 = new ArrayList<>();
+                
+                if (stringValues2.isEmpty()) {
+                    for (String s2 : mbffTemp) {
+                        stringValues2.add(new StringValue(s2));
+                    }
+                }
+                previousProduct = selectedProductToUpdate;
+            }
+        }
+    }
+
+    public void addString(ActionEvent event) {
+        stringValues.add(new StringValue());
+    }
+    
+    public void addString2(ActionEvent event) {
+        stringValues2.add(new StringValue());
     }
 
     public void updateProduct(ActionEvent event) {
+        List<String> temp = new ArrayList<>();
+        List<String> coloursTemp = new ArrayList<>();
+        List<String> mbffTemp = new ArrayList<>();
+
+        if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard){
+            for (StringValue s : stringValues) {
+                temp.add(s.getValue());
+            }
+        }
+        
+        if (selectedProductToUpdate instanceof ComputerCase){
+            for (StringValue s : stringValues) {
+                coloursTemp.add(s.getValue());
+            }
+            for (StringValue s : getStringValues2()) {
+                mbffTemp.add(s.getValue());
+            }
+        }
+
         try {
             if (selectedProductToUpdate instanceof CPU) {
                 computerPartSessionBeanLocal.updateCPU((CPU) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof MotherBoard) {
-                computerPartSessionBeanLocal.updateMotherBoard((MotherBoard) selectedProductToUpdate);
+                MotherBoard selectedMotherBoardToUpdate = (MotherBoard) selectedProductToUpdate;
+                selectedMotherBoardToUpdate.setSuportedMemorySpeed(temp);
+                computerPartSessionBeanLocal.updateMotherBoard((MotherBoard) selectedMotherBoardToUpdate);
             } else if (selectedProductToUpdate instanceof RAM) {
                 computerPartSessionBeanLocal.updateRAM((RAM) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof PowerSupply) {
                 computerPartSessionBeanLocal.updatePowerSupply((PowerSupply) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof ComputerCase) {
-                computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedProductToUpdate);
+                ComputerCase selectedComputerCaseToUpdate = (ComputerCase) selectedProductToUpdate;
+                selectedComputerCaseToUpdate.setColours(coloursTemp);
+                selectedComputerCaseToUpdate.setMotherBoardFormFactor(mbffTemp);
+                computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedComputerCaseToUpdate);
+                //computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof GPU) {
                 computerPartSessionBeanLocal.updateGPU((GPU) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof HDD) {
@@ -110,16 +194,37 @@ public class ProductManagementManagedBean implements Serializable {
             } else if (selectedProductToUpdate instanceof SSD) {
                 computerPartSessionBeanLocal.updateSSD((SSD) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof CPUWaterCooler) {
-                computerPartSessionBeanLocal.updateCPUWaterCooler((CPUWaterCooler) selectedProductToUpdate);
+                CPUWaterCooler selectedCPUWaterCoolerToUpdate = (CPUWaterCooler) selectedProductToUpdate;
+                selectedCPUWaterCoolerToUpdate.setCPUChipCompatibility(temp);
+                computerPartSessionBeanLocal.updateCPUWaterCooler((CPUWaterCooler) selectedCPUWaterCoolerToUpdate);
             } else if (selectedProductToUpdate instanceof CPUAirCooler) {
-                computerPartSessionBeanLocal.updateCPUAirCooler((CPUAirCooler) selectedProductToUpdate);
+                CPUAirCooler selectedCPUAirCoolerToUpdate = (CPUAirCooler) selectedProductToUpdate;
+                selectedCPUAirCoolerToUpdate.setCPUChipCompatibility(temp);
+                computerPartSessionBeanLocal.updateCPUAirCooler((CPUAirCooler) selectedCPUAirCoolerToUpdate);
             }
 
             selectedProductToUpdate = null;
+            // stringValues = new ArrayList<>();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
         } catch (ComputerPartNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer Part not found error occurred: " + ex.getMessage(), null));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
+        }
+    }
+
+    public void doDeleteProduct(ActionEvent event) {
+        setSelectedProductToDelete((Product) event.getComponent().getAttributes().get("productToDelete"));
+    }
+
+    public void deleteProduct(ActionEvent event) {
+        try {
+            computerPartSessionBeanLocal.deleteProduct(selectedProduct, selectedProductToDelete.getProductId());
+
+            products.remove(selectedProductToDelete);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product deleted successfully", null));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
         }
@@ -156,6 +261,11 @@ public class ProductManagementManagedBean implements Serializable {
     }
 
     public void imageManager(ActionEvent event) {
+        String fileName = uploadedFile.getFileName();
+
+        selectedProductImage.setImage(fileName);
+        upload(selectedProductImage.getImage());
+
         try {
             if (selectedProductImage instanceof CPU) {
                 computerPartSessionBeanLocal.updateCPU((CPU) selectedProductImage);
@@ -180,6 +290,7 @@ public class ProductManagementManagedBean implements Serializable {
             }
 
             selectedProductImage = null;
+            uploadedFile = null;
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product image updated successfully", null));
         } catch (ComputerPartNotFoundException ex) {
@@ -235,6 +346,30 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void setSelectedProductImage(Product selectedProductImage) {
         this.selectedProductImage = selectedProductImage;
+    }
+
+    public Product getSelectedProductToDelete() {
+        return selectedProductToDelete;
+    }
+
+    public void setSelectedProductToDelete(Product selectedProductToDelete) {
+        this.selectedProductToDelete = selectedProductToDelete;
+    }
+
+    public List<StringValue> getStringValues() {
+        return stringValues;
+    }
+
+    public void setStringValues(List<StringValue> stringValues) {
+        this.stringValues = stringValues;
+    }
+
+    public List<StringValue> getStringValues2() {
+        return stringValues2;
+    }
+
+    public void setStringValues2(List<StringValue> stringValues2) {
+        this.stringValues2 = stringValues2;
     }
 
 }

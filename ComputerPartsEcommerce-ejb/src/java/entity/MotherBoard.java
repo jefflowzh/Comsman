@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +22,9 @@ import javax.persistence.OneToMany;
 public class MotherBoard extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     //@OneToMany(mappedBy = "motherBoard")
-   //private List<ComputerSet> computerSets;
-    
+    //private List<ComputerSet> computerSets;
     private String Manufacturer;
     private String formFactor;
     private String socket;
@@ -37,9 +37,9 @@ public class MotherBoard extends ComputerPart implements Serializable {
     private Integer m2Slot;
     private Integer SATA6GB;
     private Boolean wiFi;
-    private String[] suportedMemorySpeed;
-    
-
+    //private String[] suportedMemorySpeed;
+    @ElementCollection
+    private List<String> suportedMemorySpeed;
 
     public MotherBoard() {
     }
@@ -48,7 +48,7 @@ public class MotherBoard extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public MotherBoard(String Manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Boolean wiFi, String[] suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
+    public MotherBoard(String Manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Integer SATA6GB ,Boolean wiFi, List<String> suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.Manufacturer = Manufacturer;
         this.formFactor = formFactor;
@@ -59,12 +59,11 @@ public class MotherBoard extends ComputerPart implements Serializable {
         this.SLICrossFire = SLICrossFire;
         this.PCIEx16 = PCIEx16;
         this.m2Slot = m2Slot;
+        this.SATA6GB = SATA6GB;
         this.wiFi = wiFi;
         this.suportedMemorySpeed = suportedMemorySpeed;
     }
 
-    
-    
     public String getManufacturer() {
         return Manufacturer;
     }
@@ -145,11 +144,11 @@ public class MotherBoard extends ComputerPart implements Serializable {
         this.wiFi = wiFi;
     }
 
-    public String[] getSuportedMemorySpeed() {
+    public List<String> getSuportedMemorySpeed() {
         return suportedMemorySpeed;
     }
 
-    public void setSuportedMemorySpeed(String[] suportedMemorySpeed) {
+    public void setSuportedMemorySpeed(List<String> suportedMemorySpeed) {
         this.suportedMemorySpeed = suportedMemorySpeed;
     }
 
@@ -160,8 +159,5 @@ public class MotherBoard extends ComputerPart implements Serializable {
     public void setSATA6GB(Integer SATA6GB) {
         this.SATA6GB = SATA6GB;
     }
-   
-    
-    
-    
+
 }

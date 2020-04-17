@@ -80,6 +80,9 @@
                                 <p:commandButton actionListener="#{productManagementManagedBean.doImageManager}"  update="formImageManager" oncomplete="PF('sidebarImageManager').show()" icon="fa fa-image" title="Manage Image">
                                     <f:attribute name="productImageManager" value="#{product}" />
                                 </p:commandButton>
+                                <p:commandButton actionListener="#{productManagementManagedBean.doDeleteProduct}" oncomplete="PF('dialogDeleteProduct').show()" icon="fa fa-trash" title="Delete">
+                                    <f:attribute name="productToDelete" value="#{product}" />
+                                </p:commandButton>
                             </div>
                         </p:column>
 
@@ -88,7 +91,7 @@
                 </h:form>
 
                 <h:form id="formUpdateProduct">
-                    <p:sidebar id="sidebarUpdateProduct" widgetVar="sidebarUpdateProduct" position="right" baseZIndex="10000" style="width: 30%; overflow: scroll">
+                    <p:sidebar id="sidebarUpdateProduct" widgetVar="sidebarUpdateProduct" position="right" baseZIndex="10000" style="width: 35%; overflow: scroll">
 
                         <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarUpdateProduct').hide()"/>
 
@@ -489,7 +492,7 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler')}">
+                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler')}">
                                 <p:column>
                                     <p:outputLabel for="noiseLevel" value="Noise Level: " style="font-weight: bold;"/>
                                 </p:column>
@@ -516,17 +519,82 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row>
+                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler' or productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="CPU Chip Compat: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{stringValue.value}" />
+                                    </p:column>
+                                </p:row>
+                            </ui:repeat>
+
+                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Suported Memory Speed: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{stringValue.value}" />
+                                    </p:column>
+                                </p:row>
+                            </ui:repeat>
+
+                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Colours: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{stringValue.value}" />
+                                    </p:column>
+                                </p:row>
+                            </ui:repeat>
+
+                            <ui:repeat value="#{productManagementManagedBean.stringValues2}" var="stringValue2" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="MBFF: " style="font-weight: bold;"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{stringValue2.value}" />
+                                    </p:column>
+                                </p:row>
+                            </ui:repeat>
+
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
                                 <p:column colspan="2">
-                                    <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
+                                    <div align="center">
+                                        <p:commandButton value="Add New String" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
+                                    </div>
                                 </p:column>
                             </p:row>
+
+                            <!-- asthetic issue -> create another for rendering computercase -->
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
+                                <p:column colspan="2">
+                                    <div align="center">
+                                        <p:commandButton value="Add New Colour" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString2}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
+                                    </div>
+                                </p:column>
+                            </p:row>
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
+                                <p:column colspan="2">
+                                    <div align="center">
+                                        <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
+                                    </div>
+                                </p:column>
+                            </p:row>
+
                         </p:panelGrid>
                     </p:sidebar>
                 </h:form>
 
                 <!-- Image Manager -->
-                <h:form id="formImageManager">
+                <h:form id="formImageManager" enctype="multipart/form-data">
                     <p:sidebar id="sidebarImageManager" widgetVar="sidebarImageManager" position="right" baseZIndex="10000" style="width: 30%;">
 
                         <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarImageManager').hide()"/>
@@ -547,8 +615,15 @@
                             <p:row>
                                 <p:column>
                                     <div align="center">
-                                        <p:fileUpload id="image" mode="simple" value="#{productManagementManagedBean.uploadedFile}" skinSimple="true"/>
-                                        <p:commandButton value="Submit" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.imageManager}" oncomplete="PF('sidebarImageManager').hide();"/>
+                                        <p:fileUpload id="image" label="Update the Image" mode="simple" value="#{productManagementManagedBean.uploadedFile}" skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style=""/>
+                                    </div>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column style="padding-top: 20px">
+                                    <div align="center">
+                                        <p:commandButton value="Submit" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.imageManager}" oncomplete="PF('sidebarImageManager').hide();" ajax="false"/>
                                     </div>
                                 </p:column>
                             </p:row>
@@ -556,6 +631,13 @@
                         </p:panelGrid>
                     </p:sidebar>
                 </h:form>
+
+                <p:confirmDialog header="Warning" id="dialogDeleteProduct" widgetVar="dialogDeleteProduct" message="Are you sure you want to delete?">
+                    <div align="center">
+                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{productManagementManagedBean.deleteProduct}" oncomplete="PF('dialogDeleteProduct').hide()" update="formAllProducts:dataTableAllProducts formAllProducts:messages"/>
+                        <p:commandButton value="No"  icon="pi pi-times" onclick="PF('dialogDeleteProduct').hide()" />
+                    </div>
+                </p:confirmDialog>
 
             </div>
 

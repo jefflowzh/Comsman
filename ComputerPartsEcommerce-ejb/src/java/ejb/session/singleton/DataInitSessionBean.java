@@ -1,5 +1,6 @@
 package ejb.session.singleton;
 
+import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.ComputerSetSessionBeanLocal;
 import ejb.session.stateless.CouponSessionBeanLocal;
@@ -94,47 +95,60 @@ public class DataInitSessionBean {
 //        computerPartSessionBean.createNewComputerPart(testComputerPart2);
         // test computerset
         //create cpu
-        CPU testcpu = new CPU("Manufacturer", 3, 3, "socket", true, true, "cpu", 100.00, 5, "image");
+        CPU testcpu = new CPU("Manufacturer", 3, 3, "socket", true, true, "cpu", 100.00, 5, "test.png");
         computerPartSessionBean.createNewCPU(testcpu);
         //create mb
-        String[] suportedMemorySpeed = {"222", "111"};
-        MotherBoard testMB = new MotherBoard("Manufacturer", "formFactor", "socket", "chipset", 4, "red", true, 5, 5, true, suportedMemorySpeed, "motherboard", 100.00, 5, "image");
+        // String[] suportedMemorySpeed = {"222", "111"};
+        List<String> suportedMemorySpeed = new ArrayList<>();
+        suportedMemorySpeed.add("222");
+        suportedMemorySpeed.add("111");
+        MotherBoard testMB = new MotherBoard("Manufacturer", "formFactor", "socket", "chipset", 4, "red", true, 5, 5, 6, true, suportedMemorySpeed, "motherboard", 100.00, 5, "test.png");
         computerPartSessionBean.createNewMotherBoard(testMB);
         // create ram
         List<RAM> rams = new ArrayList<>();
-        RAM testram = new RAM("Manufacturer", "speed", "type", 4, 3, 5, "ram", 100.00, 5, "image");
+        RAM testram = new RAM("Manufacturer", "speed", "type", 4, 3, 5, "ram", 100.00, 5, "test.png");
         computerPartSessionBean.createNewRAM(testram);
         rams.add(testram);
         // create psu
-        PowerSupply powersupply = new PowerSupply("Manufacturer", "formFactor", "efficiency", 5, "modularity", 5, 5, "psu", 100.00, 5, "image");
+        PowerSupply powersupply = new PowerSupply("Manufacturer", "formFactor", "efficiency", 5, "modularity", 5, 5, "psu", 100.00, 5, "test.png");
         computerPartSessionBean.createNewPowerSupply(powersupply);
         // create computer case
-        String[] colours = {"red", "blue"};
-        String[] MotherBoardFormFactor = {"MotherBoardFormFactor"};
-        ComputerCase cs = new ComputerCase("Manufacturer", "type", colours, "sidePanelView", MotherBoardFormFactor, 5, 100.99, 10.00, 11.00, 102.00, "case", 100.00, 5, "image");
+        // String[] colours = {"red", "blue"};
+        List<String> colours = new ArrayList<>();
+        colours.add("red");
+        colours.add("white");
+        
+        List<String> motherBoardFormFactor = new ArrayList<>();
+        motherBoardFormFactor.add("mbff1");
+        motherBoardFormFactor.add("mbff2");
+        // String[] MotherBoardFormFactor = {"MotherBoardFormFactor"};
+        ComputerCase cs = new ComputerCase("Manufacturer", "type", colours, "sidePanelView", motherBoardFormFactor, 5, 100.99, 10.00, 11.00, 102.00, "case", 100.00, 5, "test.png");
         computerPartSessionBean.createNewComCase(cs);
 
         // create gpu
-        GPU gpu = new GPU("Manufacturer", "chipset", "Interface", 5.5, 5, 6, "externalPower", 8, "MemoryType", "gpu", 100.00, 10, "image");
+        GPU gpu = new GPU("Manufacturer", "chipset", "Interface", 5.5, 5, 6, "externalPower", 8, "MemoryType", "gpu", 100.00, 10, "test.png");
         computerPartSessionBean.createNewGPU(gpu);
 
         // create hdd
-        HDD hdd = new HDD("Manufacturer", "type", 5, "formFactor", "Interface", "hdd", 100.00, 10, "image");
+        HDD hdd = new HDD("Manufacturer", "type", 5, "formFactor", "Interface", "hdd", 100.00, 10, "test.png");
         computerPartSessionBean.createNewHDD(hdd);
 
         // create ssd
-        SSD ssd = new SSD("Manufacturer", "type", 5, "formFactor", "Interface", true, "ssd", 100.00, 10, "image");
+        SSD ssd = new SSD("Manufacturer", "type", 5, "formFactor", "Interface", true, "ssd", 100.00, 10, "test.png");
         computerPartSessionBean.createNewSSD(ssd);
-        
+
         // create watercooler
-        String[] CPUChipCompatibility = {"CPUChipCompatibility", "CPUChipCompatibility2"};
-        CPUWaterCooler watercooler = new CPUWaterCooler("Manufacturer", "color", 5, CPUChipCompatibility, 5.5, "CPUWaterCooler", 100.00, 10, "image");
+        // String[] CPUChipCompatibility2 = {"CPUChipCompatibility", "CPUChipCompatibility2"};
+        List<String> CPUChipCompatibility = new ArrayList<>();
+        CPUChipCompatibility.add("String One");
+        CPUChipCompatibility.add("String Two");
+        CPUWaterCooler watercooler = new CPUWaterCooler("Manufacturer", "color", 5, CPUChipCompatibility, 5.5, "CPUWaterCooler", 100.00, 10, "test.png");
         computerPartSessionBean.createNewCPUWaterCooler(watercooler);
 
         // create aircooler
-        CPUAirCooler aircooler = new CPUAirCooler("Manufacturer", "color", 5, 5.5, CPUChipCompatibility, "CPUAirCooler", 100.00, 10, "image");
+        CPUAirCooler aircooler = new CPUAirCooler("Manufacturer", "color", 5, 5.5, CPUChipCompatibility, "CPUAirCooler", 100.00, 10, "test.png");
         computerPartSessionBean.createNewCPUAirCooler(aircooler);
-        
+
         // creat com set
         ComputerSet comset = new ComputerSet(5, false);
         comset.setCpu(testcpu);
@@ -168,17 +182,17 @@ public class DataInitSessionBean {
             try {
                 computerSet = computerSetSessionBean.retrieveComputerSetById(computerSetIds.get(0));
             } catch (ComputerSetNotFoundException ex) {
-                
+
             }
             System.out.println(computerSet);
             lineItemToAddToOrder = computerSet.getLineItem();
             testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
             lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
-            
+
             try { // for next line item
                 computerSet = computerSetSessionBean.retrieveComputerSetById(computerSetIds.get(1));
             } catch (ComputerSetNotFoundException ex) {
-                
+
             }
             System.out.println(computerSet);
             lineItemToAddToOrder = computerSet.getLineItem();

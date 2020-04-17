@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,9 +28,13 @@ public class ComputerCase extends ComputerPart implements Serializable {
  
     private String Manufacturer;
     private String type; //(ATX Mid Tower)
-    private String[] colours;
+    // private String[] colours;
+    @ElementCollection
+    private List<String> colours;
     private String sidePanelView; //tintered tempered glass
-    private String[] MotherBoardFormFactor; //atx micro atx mini itx
+    // private String[] MotherBoardFormFactor; //atx micro atx mini itx
+    @ElementCollection
+    private List<String> motherBoardFormFactor;
     private Integer fullHeightExpansionSlot; //7
     private Double MaxVideoCardLength; //in mm
     private Double topFanSupport;
@@ -44,13 +49,13 @@ public class ComputerCase extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String Manufacturer, String type, String[] colours, String sidePanelView, String[] MotherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String Manufacturer, String type, List<String> colours, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.Manufacturer = Manufacturer;
         this.type = type;
         this.colours = colours;
         this.sidePanelView = sidePanelView;
-        this.MotherBoardFormFactor = MotherBoardFormFactor;
+        this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
         this.MaxVideoCardLength = MaxVideoCardLength;
         this.topFanSupport = topFanSupport;
@@ -76,13 +81,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.type = type;
     }
 
-    public String[] getColours() {
-        return colours;
-    }
-
-    public void setColours(String[] colours) {
-        this.colours = colours;
-    }
 
     public String getSidePanelView() {
         return sidePanelView;
@@ -90,14 +88,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
 
     public void setSidePanelView(String sidePanelView) {
         this.sidePanelView = sidePanelView;
-    }
-
-    public String[] getMotherBoardFormFactor() {
-        return MotherBoardFormFactor;
-    }
-
-    public void setMotherBoardFormFactor(String[] MotherBoardFormFactor) {
-        this.MotherBoardFormFactor = MotherBoardFormFactor;
     }
 
     public Integer getFullHeightExpansionSlot() {
@@ -147,5 +137,21 @@ public class ComputerCase extends ComputerPart implements Serializable {
     public void setSelectedColour(String selectedColour) {
         this.selectedColour = selectedColour;
     } 
+
+    public List<String> getColours() {
+        return colours;
+    }
+
+    public void setColours(List<String> colours) {
+        this.colours = colours;
+    }
+
+    public List<String> getMotherBoardFormFactor() {
+        return motherBoardFormFactor;
+    }
+
+    public void setMotherBoardFormFactor(List<String> motherBoardFormFactor) {
+        this.motherBoardFormFactor = motherBoardFormFactor;
+    }
     
 }

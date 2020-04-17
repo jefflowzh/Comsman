@@ -6,6 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
 /**
@@ -17,21 +20,23 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    
     private String Manufacturer;
     private String colour;
     private Integer noiseLevel; // (in dB)
     private Double Height; // (mm) //this one not really useful if its water cooled
-    private String[] CPUChipCompatibility;
+    @ElementCollection
+    private List<String> CPUChipCompatibility;
+// private String[] CPUChipCompatibility;
 
     public CPUAirCooler() {
+        CPUChipCompatibility = new ArrayList<>();
     }
 
     public CPUAirCooler(String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
     }
 
-    public CPUAirCooler(String Manufacturer, String colour, Integer noiseLevel, Double Height, String[] CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
+    public CPUAirCooler(String Manufacturer, String colour, Integer noiseLevel, Double Height, List<String> CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.Manufacturer = Manufacturer;
         this.colour = colour;
@@ -72,11 +77,11 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
         this.Height = Height;
     }
 
-    public String[] getCPUChipCompatibility() {
+    public List<String> getCPUChipCompatibility() {
         return CPUChipCompatibility;
     }
 
-    public void setCPUChipCompatibility(String[] CPUChipCompatibility) {
+    public void setCPUChipCompatibility(List<String> CPUChipCompatibility) {
         this.CPUChipCompatibility = CPUChipCompatibility;
     }
 

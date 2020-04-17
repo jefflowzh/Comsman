@@ -5,7 +5,11 @@
  */
 package entity;
 
+import datamodel.StringValue;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,18 +26,21 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
    
     private String Manufacturer;
     private String colour;
-    private Integer noiseLevel; //(in dB)
-    private String[] CPUChipCompatibility;
-    private Double RadiatorSize; // (mm)
+    private Integer noiseLevel;
+    // private String[] CPUChipCompatibility;
+    @ElementCollection
+    private List<String> CPUChipCompatibility;
+    private Double RadiatorSize; 
 
     public CPUWaterCooler() {
+        CPUChipCompatibility = new ArrayList<>();
     }
 
     public CPUWaterCooler(String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
     }
 
-    public CPUWaterCooler(String Manufacturer, String colour, Integer noiseLevel, String[] CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
+    public CPUWaterCooler(String Manufacturer, String colour, Integer noiseLevel, List<String> CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.Manufacturer = Manufacturer;
         this.colour = colour;
@@ -66,13 +73,21 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
         this.noiseLevel = noiseLevel;
     }
 
-    public String[] getCPUChipCompatibility() {
+    public List<String> getCPUChipCompatibility() {
         return CPUChipCompatibility;
     }
 
-    public void setCPUChipCompatibility(String[] CPUChipCompatibility) {
+    public void setCPUChipCompatibility(List<String> CPUChipCompatibility) {
         this.CPUChipCompatibility = CPUChipCompatibility;
     }
+
+//    public String[] getCPUChipCompatibility() {
+//        return CPUChipCompatibility;
+//    }
+//
+//    public void setCPUChipCompatibility(String[] CPUChipCompatibility) {
+//        this.CPUChipCompatibility = CPUChipCompatibility;
+//    }
 
     public Double getRadiatorSize() {
         return RadiatorSize;

@@ -1,5 +1,6 @@
 package ejb.session.stateless;
 
+import datamodel.StringValue;
 import entity.CPU;
 import entity.CPUAirCooler;
 import entity.CPUWaterCooler;
@@ -17,7 +18,7 @@ import util.exception.ComputerPartNotFoundException;
 
 @Local
 public interface ComputerPartSessionBeanLocal {
-    
+
     public Long createNewComputerPart(ComputerPart newComputerPart);
 
     public Long createNewCPU(CPU cpu);
@@ -31,9 +32,9 @@ public interface ComputerPartSessionBeanLocal {
     public Long createNewComCase(ComputerCase computerCase);
 
     public Long createNewGPU(GPU gpu);
-    
+
     public Long createNewHDD(HDD hdd);
-    
+
     public List<CPU> retrieveAllCPU();
 
     public List<MotherBoard> retrieveAllMotherBoard();
@@ -79,5 +80,31 @@ public interface ComputerPartSessionBeanLocal {
     public void updateCPUAirCooler(CPUAirCooler CPUAirCooler) throws ComputerPartNotFoundException;
 
     public void updateCPUWaterCooler(CPUWaterCooler CPUWaterCooler) throws ComputerPartNotFoundException;
+
+    public CPU retrieveCPUById(Long productId) throws ComputerPartNotFoundException;
+
+    public MotherBoard retrieveMotherBoardById(Long productId) throws ComputerPartNotFoundException;
+
+    public RAM retrieveRAMById(Long productId) throws ComputerPartNotFoundException;
+
+    public PowerSupply retrievePowerSupplyById(Long productId) throws ComputerPartNotFoundException;
+
+    public ComputerCase retrieveComputerCaseById(Long productId) throws ComputerPartNotFoundException;
+
+    public GPU retrieveGPUById(Long productId) throws ComputerPartNotFoundException;
+
+    public HDD retrieveHDDById(Long productId) throws ComputerPartNotFoundException;
+
+    public SSD retrieveSSDById(Long productId) throws ComputerPartNotFoundException;
+
+    public CPUWaterCooler retrieveCPUWaterCoolerById(Long productId) throws ComputerPartNotFoundException;
+
+    public CPUAirCooler retrieveCPUAirCoolerById(Long productId) throws ComputerPartNotFoundException;
+
+    public void deleteProduct(String type, Long productId) throws ComputerPartNotFoundException;
+
+    public List<String> retrieveAllStringValue(String type, long productId);
+
+    public List<String> retrieveAllCCStringValue(String type, long productId);
 
 }
