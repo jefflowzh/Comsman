@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -42,6 +43,7 @@ public class MotherBoard extends ComputerPart implements Serializable {
     private List<String> suportedMemorySpeed;
 
     public MotherBoard() {
+        suportedMemorySpeed = new ArrayList<>();
     }
 
     public MotherBoard(String name, Double price, Integer inventoryQuantity, String image) {

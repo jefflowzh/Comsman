@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -43,6 +44,8 @@ public class ComputerCase extends ComputerPart implements Serializable {
     private String selectedColour; // the color customer selected
 
     public ComputerCase() {
+        colours = new ArrayList<>();
+        motherBoardFormFactor = new ArrayList<>();
     }
 
     public ComputerCase(String name, Double price, Integer inventoryQuantity, String image) {

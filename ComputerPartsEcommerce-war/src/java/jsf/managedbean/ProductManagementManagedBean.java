@@ -30,10 +30,12 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
 import util.exception.ComputerPartNotFoundException;
 
@@ -45,9 +47,12 @@ public class ProductManagementManagedBean implements Serializable {
     private ComputerPartSessionBeanLocal computerPartSessionBeanLocal;
 
     private String selectedProduct;
+    private String selectedProductToCreate;
 
     private List<? extends Product> products;
     private List<? extends Product> filteredProducts;
+
+    private Product newProduct;
 
     private Product selectedProductToUpdate;
     private Product selectedProductImage;
@@ -56,6 +61,9 @@ public class ProductManagementManagedBean implements Serializable {
     private List<StringValue> stringValues;
     private List<StringValue> stringValues2;
     private Product previousProduct;
+
+    private String stringEdit;
+    private String stringEdit2;
 
     private UploadedFile uploadedFile;
     // private String destination = "C:\\IS3106_Project_Images_Src\\"; // windows
@@ -116,11 +124,11 @@ public class ProductManagementManagedBean implements Serializable {
 
                 previousProduct = selectedProductToUpdate;
             }
-            
-            if(selectedProductToUpdate instanceof ComputerCase) {
+
+            if (selectedProductToUpdate instanceof ComputerCase) {
                 List<String> coloursTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("colours", selectedProductToUpdate.getProductId());
                 List<String> mbffTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("motherBoardFormFactor", selectedProductToUpdate.getProductId());
-                
+
                 stringValues = new ArrayList<>();
 
                 // when empty you load
@@ -129,9 +137,9 @@ public class ProductManagementManagedBean implements Serializable {
                         stringValues.add(new StringValue(s1));
                     }
                 }
-                
+
                 stringValues2 = new ArrayList<>();
-                
+
                 if (stringValues2.isEmpty()) {
                     for (String s2 : mbffTemp) {
                         stringValues2.add(new StringValue(s2));
@@ -142,10 +150,14 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
+    public void addToStringValues(ActionEvent event) {
+        stringValues.add(new StringValue("stringEdit"));
+    }
+
     public void addString(ActionEvent event) {
         stringValues.add(new StringValue());
     }
-    
+
     public void addString2(ActionEvent event) {
         stringValues2.add(new StringValue());
     }
@@ -155,13 +167,13 @@ public class ProductManagementManagedBean implements Serializable {
         List<String> coloursTemp = new ArrayList<>();
         List<String> mbffTemp = new ArrayList<>();
 
-        if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard){
+        if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard) {
             for (StringValue s : stringValues) {
                 temp.add(s.getValue());
             }
         }
-        
-        if (selectedProductToUpdate instanceof ComputerCase){
+
+        if (selectedProductToUpdate instanceof ComputerCase) {
             for (StringValue s : stringValues) {
                 coloursTemp.add(s.getValue());
             }
@@ -300,6 +312,106 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
+    public void doCreateNewProduct(ActionEvent event) {
+        if (selectedProduct.equals("CPU")) {
+            newProduct = new CPU();
+        } else if (selectedProduct.equals("MotherBoard")) {
+            newProduct = new MotherBoard();
+        } else if (selectedProduct.equals("RAM")) {
+            newProduct = new RAM();
+        } else if (selectedProduct.equals("PowerSupply")) {
+            newProduct = new PowerSupply();
+        } else if (selectedProduct.equals("ComputerCase")) {
+            newProduct = new ComputerCase();
+        } else if (selectedProduct.equals("GPU")) {
+            newProduct = new GPU();
+        } else if (selectedProduct.equals("HDD")) {
+            newProduct = new HDD();
+        } else if (selectedProduct.equals("SSD")) {
+            newProduct = new SSD();
+        } else if (selectedProduct.equals("CPUWaterCooler")) {
+            newProduct = new CPUWaterCooler();
+        } else if (selectedProduct.equals("CPUAirCooler")) {
+            newProduct = new CPUAirCooler();
+        }
+    }
+
+    public void createNewProduct(ActionEvent event) {
+        try {
+            String fileName = uploadedFile.getFileName();
+
+            newProduct.setImage(fileName);
+            upload(newProduct.getImage());
+
+            if (selectedProduct.equals("CPU")) {
+                CPU newCPU = (CPU) newProduct;
+                computerPartSessionBeanLocal.createNewCPU(newCPU);
+            } else if (selectedProduct.equals("MotherBoard")) {
+                String[] values = stringEdit.trim().split(",");
+                MotherBoard newMotherBoard = (MotherBoard) newProduct;
+                for (String s : values) {
+                    newMotherBoard.getSuportedMemorySpeed().add(s);
+                }
+                computerPartSessionBeanLocal.createNewMotherBoard(newMotherBoard);
+            } else if (selectedProduct.equals("RAM")) {
+                RAM newRAM = (RAM) newProduct;
+                computerPartSessionBeanLocal.createNewRAM(newRAM);
+            } else if (selectedProduct.equals("PowerSupply")) {
+                PowerSupply newPowerSupply = (PowerSupply) newProduct;
+                computerPartSessionBeanLocal.createNewPowerSupply(newPowerSupply);
+            } else if (selectedProduct.equals("ComputerCase")) {
+                String[] values = stringEdit.trim().split(",");
+                String[] values2 = stringEdit2.trim().split(",");
+
+                ComputerCase newComputerCase = (ComputerCase) newProduct;
+
+                for (String s : values) {
+                    newComputerCase.getColours().add(s);
+                }
+                for (String s : values2) {
+                    newComputerCase.getMotherBoardFormFactor().add(s);
+                }
+
+                computerPartSessionBeanLocal.createNewComCase(newComputerCase);
+            } else if (selectedProduct.equals("GPU")) {
+                GPU newGPU = (GPU) newProduct;
+                computerPartSessionBeanLocal.createNewGPU(newGPU);
+            } else if (selectedProduct.equals("HDD")) {
+                HDD newHDD = (HDD) newProduct;
+                computerPartSessionBeanLocal.createNewHDD(newHDD);
+            } else if (selectedProduct.equals("SSD")) {
+                SSD newSSD = (SSD) newProduct;
+                computerPartSessionBeanLocal.createNewSSD(newSSD);
+            } else if (selectedProduct.equals("CPUWaterCooler")) {
+                String[] values = stringEdit.trim().split(",");
+                CPUWaterCooler newCPUWaterCooler = (CPUWaterCooler) newProduct;
+                for (String s : values) {
+                    newCPUWaterCooler.getCPUChipCompatibility().add(s);
+                }
+                computerPartSessionBeanLocal.createNewCPUWaterCooler(newCPUWaterCooler);
+            } else if (selectedProduct.equals("CPUAirCooler")) {
+                String[] values = stringEdit.trim().split(",");
+                CPUAirCooler newCPUAirCooler = (CPUAirCooler) newProduct;
+                for (String s : values) {
+                    newCPUAirCooler.getCPUChipCompatibility().add(s);
+                }
+                computerPartSessionBeanLocal.createNewCPUAirCooler(newCPUAirCooler);
+            }
+
+            stringEdit = "";
+            newProduct = null;
+            uploadedFile = null;
+
+            // refresh the page
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product created successfully", null));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
+        }
+    }
+
     public String getSelectedProduct() {
         return selectedProduct;
     }
@@ -370,6 +482,38 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void setStringValues2(List<StringValue> stringValues2) {
         this.stringValues2 = stringValues2;
+    }
+
+    public Product getNewProduct() {
+        return newProduct;
+    }
+
+    public void setNewProduct(Product newProduct) {
+        this.newProduct = newProduct;
+    }
+
+    public String getSelectedProductToCreate() {
+        return selectedProductToCreate;
+    }
+
+    public void setSelectedProductToCreate(String selectedProductToCreate) {
+        this.selectedProductToCreate = selectedProductToCreate;
+    }
+
+    public String getStringEdit() {
+        return stringEdit;
+    }
+
+    public void setStringEdit(String stringEdit) {
+        this.stringEdit = stringEdit;
+    }
+
+    public String getStringEdit2() {
+        return stringEdit2;
+    }
+
+    public void setStringEdit2(String stringEdit2) {
+        this.stringEdit2 = stringEdit2;
     }
 
 }
