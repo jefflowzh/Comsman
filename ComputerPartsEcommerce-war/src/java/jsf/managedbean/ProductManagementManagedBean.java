@@ -312,7 +312,7 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
-    public void doCreateNewProduct(ActionEvent event) {
+    public void createNewProduct(ActionEvent event) {
         if (selectedProduct.equals("CPU")) {
             newProduct = new CPU();
         } else if (selectedProduct.equals("MotherBoard")) {
@@ -334,9 +334,7 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("CPUAirCooler")) {
             newProduct = new CPUAirCooler();
         }
-    }
 
-    public void createNewProduct(ActionEvent event) {
         try {
             String fileName = uploadedFile.getFileName();
 
@@ -346,6 +344,7 @@ public class ProductManagementManagedBean implements Serializable {
             if (selectedProduct.equals("CPU")) {
                 CPU newCPU = (CPU) newProduct;
                 computerPartSessionBeanLocal.createNewCPU(newCPU);
+
             } else if (selectedProduct.equals("MotherBoard")) {
                 String[] values = stringEdit.trim().split(",");
                 MotherBoard newMotherBoard = (MotherBoard) newProduct;
@@ -353,12 +352,15 @@ public class ProductManagementManagedBean implements Serializable {
                     newMotherBoard.getSuportedMemorySpeed().add(s);
                 }
                 computerPartSessionBeanLocal.createNewMotherBoard(newMotherBoard);
+
             } else if (selectedProduct.equals("RAM")) {
                 RAM newRAM = (RAM) newProduct;
                 computerPartSessionBeanLocal.createNewRAM(newRAM);
+
             } else if (selectedProduct.equals("PowerSupply")) {
                 PowerSupply newPowerSupply = (PowerSupply) newProduct;
                 computerPartSessionBeanLocal.createNewPowerSupply(newPowerSupply);
+
             } else if (selectedProduct.equals("ComputerCase")) {
                 String[] values = stringEdit.trim().split(",");
                 String[] values2 = stringEdit2.trim().split(",");
@@ -373,15 +375,19 @@ public class ProductManagementManagedBean implements Serializable {
                 }
 
                 computerPartSessionBeanLocal.createNewComCase(newComputerCase);
+
             } else if (selectedProduct.equals("GPU")) {
                 GPU newGPU = (GPU) newProduct;
                 computerPartSessionBeanLocal.createNewGPU(newGPU);
+
             } else if (selectedProduct.equals("HDD")) {
                 HDD newHDD = (HDD) newProduct;
                 computerPartSessionBeanLocal.createNewHDD(newHDD);
+
             } else if (selectedProduct.equals("SSD")) {
                 SSD newSSD = (SSD) newProduct;
                 computerPartSessionBeanLocal.createNewSSD(newSSD);
+
             } else if (selectedProduct.equals("CPUWaterCooler")) {
                 String[] values = stringEdit.trim().split(",");
                 CPUWaterCooler newCPUWaterCooler = (CPUWaterCooler) newProduct;
@@ -389,6 +395,7 @@ public class ProductManagementManagedBean implements Serializable {
                     newCPUWaterCooler.getCPUChipCompatibility().add(s);
                 }
                 computerPartSessionBeanLocal.createNewCPUWaterCooler(newCPUWaterCooler);
+
             } else if (selectedProduct.equals("CPUAirCooler")) {
                 String[] values = stringEdit.trim().split(",");
                 CPUAirCooler newCPUAirCooler = (CPUAirCooler) newProduct;
@@ -396,11 +403,13 @@ public class ProductManagementManagedBean implements Serializable {
                     newCPUAirCooler.getCPUChipCompatibility().add(s);
                 }
                 computerPartSessionBeanLocal.createNewCPUAirCooler(newCPUAirCooler);
+
             }
 
             stringEdit = "";
-            newProduct = null;
+            selectedProduct = null;
             uploadedFile = null;
+            newProduct = null;
 
             // refresh the page
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -410,6 +419,11 @@ public class ProductManagementManagedBean implements Serializable {
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
         }
+    }
+
+    public void changeNull() {
+        System.out.println("here-----------------");
+        newProduct = null;
     }
 
     public String getSelectedProduct() {
