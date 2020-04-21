@@ -39,6 +39,13 @@ public class CustomerOrder implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Boolean requiresDelivery;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean delivered;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean voided;
+    @Column
     private String deliveryAddress;
     @Column(nullable = false)
     @NotNull
@@ -65,6 +72,8 @@ public class CustomerOrder implements Serializable {
     public CustomerOrder() {
         this.totalPrice = 0.0;
         this.orderStatus = OrderStatusEnum.UNASSIGNED;
+        this.delivered = false;
+        this.voided = false;
     }
 
     public CustomerOrder(Date orderDate, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
@@ -124,7 +133,23 @@ public class CustomerOrder implements Serializable {
     public void setRequiresDelivery(Boolean requiresDelivery) {
         this.requiresDelivery = requiresDelivery;
     }
+    
+    public Boolean getDelivered() {
+        return delivered;
+    }
 
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
+    }
+
+    public Boolean getVoided() {
+        return voided;
+    }
+
+    public void setVoided(Boolean voided) {
+        this.voided = voided;
+    }
+    
     public String getDeliveryAddress() {
         return deliveryAddress;
     }
@@ -215,5 +240,4 @@ public class CustomerOrder implements Serializable {
     public void setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
     }
-    
 }

@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import util.exception.CustomerOrderNotFoundException;
 import util.exception.StaffNotFoundException;
 
 @Named(value = "taskManagementManagedBean")
@@ -85,9 +86,13 @@ public class TaskManagementManagedBean implements Serializable {
                 computerSetSessionBeanLocal.updateComputerSet(computerSet, computerSetsWithStaff.get(computerSet));
             }
             temporaryHoldingStaffId = null;
+            customerOrderSessionBeanLocal.updateOrderStatus(selectedOrderId);
+            tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets assigned!", null));
         } catch (StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff does not exist!", null));
+        } catch (CustomerOrderNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer order does not exist!", null));
         }
     }
 

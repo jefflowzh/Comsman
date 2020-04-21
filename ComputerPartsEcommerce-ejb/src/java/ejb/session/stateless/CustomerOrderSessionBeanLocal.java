@@ -12,11 +12,13 @@ import util.exception.StaffNotFoundException;
 @Local
 public interface CustomerOrderSessionBeanLocal {
 
-    public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException;
+    public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException, CustomerOrderNotFoundException;
 
     public CustomerOrder retrieveCustomerOrderById(Long customerOrderId, Boolean loadLineItems) throws CustomerOrderNotFoundException;
 
     public void updateCustomerOrder(CustomerOrder customerOrder, Long customerId, Long staffId, Long couponId, LineItem lineItem) throws CustomerNotFoundException, StaffNotFoundException, CouponNotFoundException;
+
+    public void updateOrderStatus(Long customerOrderId) throws CustomerOrderNotFoundException;
 
     public void deleteCustomerOrder(Long customerOrderId) throws CustomerOrderNotFoundException;
     
