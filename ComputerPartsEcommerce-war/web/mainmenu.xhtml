@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <section id="mainmenu" class="mainmenu">
-        
+
         <div class="profile-pic">
             <p:graphicImage library="images" name="user.png" height="70" width="70" alt="Profile Pic" rendered="#{sessionScope.isLogin == true}"/>
         </div>
@@ -18,12 +18,15 @@
             <h:form rendered="#{sessionScope.isLogin == true}">
                 <p:menu toggleable="true" >
                     <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home" />
+                    <p:menuitem value="Change Password" onclick="PF('sidebarChangePassword').show()" actionListener="#{staffManagementManagedBean.doChangePassword}" icon="fa fa-key" >
+                        <f:attribute name="staffEntityToChangePW" value="#{sessionScope.currentStaffEntity}" />
+                    </p:menuitem>
 
                     <p:submenu label="Tasks" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER' || sessionScope.currentStaffEntity.role == 'TECHNICIAN'}">
                         <p:menuitem value="Computer Building" outcome="/general/computerBuildingTasks" icon="fa fa-tv" />
                         <p:menuitem value="Deliveries" outcome="/index" icon="fa fa-truck" />
                     </p:submenu>
-                    
+
                     <p:submenu label="System Adminstration" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER'}">
                         <p:menuitem value="Staff Management" outcome="/manager/staffManagement" icon="fa fa-id-card" />
                         <p:menuitem value="Product Management" outcome="/manager/productManagement" icon="fa fa-product-hunt" />
@@ -34,11 +37,48 @@
 
                     <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
                 </p:menu>
-                
+
             </h:form>
+
+            <h:form id="formChangePassword">
+
+                <p:sidebar id="sidebarChangePassword" widgetVar="sidebarChangePassword" position="right" baseZIndex="10000" style="width: 30%;">
+                    <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarChangePassword').hide()"/>
+                    <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
+                        <p:growl id="growl" life="1000" />
+                        <p:messages id="messages" redisplay="false" closable="true" />
+
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel for="oldpassword" value='Old Password: ' style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:password id="oldpassword" value="#{staffManagementManagedBean.oldPassword}" required="true" requiredMessage="Old Password is required" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel for="password" value='New Password: ' style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:password id="password" value="#{staffManagementManagedBean.password}" required="true" requiredMessage="Password is required" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton value="Change Password" update="messages" actionListener="#{staffManagementManagedBean.changePassword}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:sidebar>
+
+            </h:form>
+
         </nav>
     </section>
 
-        
+
 
 </ui:composition>

@@ -5,13 +5,18 @@ package jsf.managedbean;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import ejb.session.stateless.ComputerSetSessionBeanLocal;
+import entity.ComputerSet;
+import entity.CustomerOrder;
+import entity.Staff;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -34,16 +39,50 @@ import org.primefaces.model.ScheduleModel;
 @ViewScoped
 public class ScheduleManagedBean implements Serializable {
 
+    @EJB(name = "ComputerSetSessionBeanLocal")
+    private ComputerSetSessionBeanLocal computerSetSessionBeanLocal;
+
+    private List<ComputerSet> sets;
+
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
 
-    public ScheduleManagedBean() {
+    @PostConstruct
+    public void postConstruct() {
+        Staff staff = (Staff) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentStaffEntity");
+        setSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE));
+
         eventModel = new DefaultScheduleModel();
-        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
-        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Plant blablabla", theDayAfter3Pm(), fourDaysLater3pm()));
+
+        if (sets != null) {
+            for (ComputerSet s : sets) {
+                CustomerOrder order = s.getLineItem().getCustomerOrder();
+//                System.out.println("date " + order.getOrderDate());
+
+                Calendar calendarStart = toCalendar(order.getOrderDate());
+                
+                eventModel.addEvent(new DefaultScheduleEvent("Order Id: " + order.getCustomerOrderId() + ", LineItem Id: " + s.getLineItem().getLineItemId() , calendarStart.getTime() , fourteenDaysLater(calendarStart)));
+
+            }
+        } else {
+            System.out.println("null");
+        }
+
+//        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
+//        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
+//        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
+//        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
+//        eventModel.addEvent(new DefaultScheduleEvent("Plant blablabla", theDayAfter3Pm(), fourDaysLater3pm()));
+    }
+
+    public ScheduleManagedBean() {
+
+    }
+
+    public static Calendar toCalendar(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
 
     public Date getRandomDate(Date base) {
@@ -63,6 +102,16 @@ public class ScheduleManagedBean implements Serializable {
 
     public ScheduleModel getEventModel() {
         return eventModel;
+    }
+    
+    private Date fourteenDaysLater(Calendar c) {
+        Calendar t = (Calendar) c.clone();
+        t.set(Calendar.AM_PM, Calendar.PM);
+        t.set(Calendar.DATE, t.get(Calendar.DATE) + 14);
+        t.set(Calendar.HOUR, 11);
+        t.set(Calendar.MINUTE, 59);
+
+        return t.getTime();
     }
 
     private Calendar today() {
@@ -185,4 +234,11 @@ public class ScheduleManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    public List<ComputerSet> getSets() {
+        return sets;
+    }
+
+    public void setSets(List<ComputerSet> sets) {
+        this.sets = sets;
+    }
 }

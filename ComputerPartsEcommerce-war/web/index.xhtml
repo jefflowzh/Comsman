@@ -16,11 +16,11 @@
         
         <h3>Your Schedule:</h3>
 
-        <h:form style="width: 80%" styleClass="custom">
+        <h:form style="width: 69%; height: 50%;" styleClass="custom">
             <p:growl id="messages" showDetail="true" />
 
             <h:panelGrid columnClasses="value">
-                <p:schedule id="schedule" styleClass="custom" value="#{scheduleManagedBean.eventModel}" widgetVar="myschedule">
+                <p:schedule id="schedule" value="#{scheduleManagedBean.eventModel}" widgetVar="myschedule">
 
                     <p:ajax event="dateSelect" listener="#{scheduleManagedBean.onDateSelect}" update="eventDetails" />
                     <p:ajax event="eventSelect" listener="#{scheduleManagedBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />

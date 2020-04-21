@@ -1082,7 +1082,8 @@
                             <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
                                 <p:column colspan="2">
                                     <div align="center">
-                                        <p:commandButton value="Add New String" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Add New CCC" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Add New SMS" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'MotherBoard')}" style="margin-right: 10px"/>
                                         <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
                                     </div>
                                 </p:column>
@@ -1092,8 +1093,8 @@
                             <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
                                 <p:column colspan="2">
                                     <div align="center">
-                                        <p:commandButton value="Add New Colour" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString2}" process="@form" update="@form" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Add New Colour" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
+                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString2}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
                                     </div>
                                 </p:column>
                             </p:row>
