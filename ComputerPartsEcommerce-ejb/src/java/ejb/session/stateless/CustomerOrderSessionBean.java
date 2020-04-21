@@ -33,7 +33,7 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     private EntityManager em;
 
     @Override
-    public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException {
+    public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException, CustomerOrderNotFoundException {
         System.out.println("ENTER HERE");
         Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId, false, true);
         
@@ -50,6 +50,8 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         
         em.persist(newCustomerOrder);
         em.flush();
+        
+        updateOrderStatus(newCustomerOrder.getCustomerOrderId());
         
         System.out.println("*******************************" + newCustomerOrder.getCustomerOrderId());
         
@@ -115,6 +117,65 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         
         if (lineItem != null) {
             updatedCustomerOrder.getLineItems().add(lineItem);
+        }
+    }
+    
+    public void updateOrderStatus(Long customerOrderId) throws CustomerOrderNotFoundException {
+        System.out.println("******** STATUS UPDATED");
+        CustomerOrder customerOrder;
+        Boolean haveComputerSets = false;
+        Boolean assignedComputerSetsExist = false;
+        Boolean unassignedComputerSetsExist = false;
+        Boolean incompleteComputerSetsExist = false;
+        
+        customerOrder = retrieveCustomerOrderById(customerOrderId, Boolean.TRUE);
+        
+        if (customerOrder.getVoided()) {
+            customerOrder.setOrderStatus(OrderStatusEnum.VOIDED);
+            return;
+        }
+        
+        if (customerOrder.getDelivered()) {
+            customerOrder.setOrderStatus(OrderStatusEnum.DELIVERED);
+            return;
+        }
+        
+        List<LineItem> lineItems = customerOrder.getLineItems();
+        for (LineItem lineItem : lineItems) {
+            if (lineItem.getComputerSet() != null) {
+                haveComputerSets = true;
+                if (lineItem.getComputerSet().getAssemblyAssignedTo() != null) {
+                    System.out.println("******assigned exist");
+                    assignedComputerSetsExist = true;
+                } else {
+                    System.out.println("******unassigned sets exist");
+                    unassignedComputerSetsExist = true;
+                }
+                
+                if (!lineItem.getComputerSet().getAssemblyComplete()) {
+                    incompleteComputerSetsExist = true;
+                }
+            }
+        }
+        
+        if (!haveComputerSets) {
+            customerOrder.setOrderStatus(OrderStatusEnum.COMPLETED);
+        } else {
+            System.out.println("******else entered");
+            if (unassignedComputerSetsExist) {
+                customerOrder.setOrderStatus(OrderStatusEnum.UNASSIGNED);
+            }
+            if (assignedComputerSetsExist) {
+                System.out.println("******Paritaly ass");
+                customerOrder.setOrderStatus(OrderStatusEnum.PARTIALLY_ASSIGNED);
+            }
+            if (!unassignedComputerSetsExist) {
+                System.out.println("******ass");
+                customerOrder.setOrderStatus(OrderStatusEnum.ASSIGNED);
+            }
+            if (!incompleteComputerSetsExist) {
+                customerOrder.setOrderStatus(OrderStatusEnum.COMPLETED);
+            }
         }
     }
     
