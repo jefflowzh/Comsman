@@ -13,7 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
-import util.exception.StaffNotFoundException;
+import util.exception.InvalidLoginCredentialException;
+import util.security.CryptographicHelper;
 
 @Stateless
 public class CustomerSessionBean implements CustomerSessionBeanLocal {
@@ -26,8 +27,22 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     
     @Override
     public Long createNewCustomer(Customer newCustomer) {
-        em.persist(newCustomer);
+        try {
+            em.persist(newCustomer);
         em.flush();
+        } catch (Exception ex) {
+            System.out.println("*************************************************************" + newCustomer.getEmail());
+            System.out.println("*************************************************************" + newCustomer.getPassword());
+            System.out.println("*************************************************************" + newCustomer.getFirstName());
+            System.out.println("*************************************************************" + newCustomer.getLastName());
+            System.out.println("*************************************************************" + newCustomer.getAddress());
+            System.out.println("*************************************************************" + newCustomer.getContactNumber());
+            
+            System.out.println(newCustomer);
+            
+            throw ex;
+        }
+        
         
         return newCustomer.getUserId();
     }
@@ -122,6 +137,22 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException { 
         Customer customer = retrieveCustomerById(customerId, false, false);
         customer.setIsDisabled(true);
+    }
+    
+    @Override
+    public Customer customerLogin(String email, String password) throws InvalidLoginCredentialException {
+        try {
+            Customer customer = retrieveCustomerByEmail(email, true, true);
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + customer.getSalt()));
+            if(customer.getPassword().equals(passwordHash))
+            {             
+                return customer;
+            } else {
+                throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
+            }
+        } catch (CustomerNotFoundException ex) {
+            throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
+        }
     }
        
 }

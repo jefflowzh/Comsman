@@ -113,7 +113,11 @@ public abstract class User implements Serializable {
             this.password = null;
         }
     }
-
+    
+    public void setPasswordOfPreviouslyDisabledAccount(String password) {
+        this.password = password;
+    }
+    
     public String getContactNumber() {
         return contactNumber;
     }

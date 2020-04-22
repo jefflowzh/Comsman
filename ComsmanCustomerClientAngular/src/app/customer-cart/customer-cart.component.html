@@ -1,0 +1,29 @@
+<p>customer-cart works!</p>
+
+<div class="container">
+    <p-dataView [value]="cart">
+        <ng-template let-lineItem pTemplate="listItem">
+            <div class="ui-g-12">
+                <div class="car-details">
+                    <div>
+                        <!-- <img src="assets/showcase/images/demo/car/{{car.brand}}.png"> -->
+                        {{lineItem.product.image}}
+                        <div class="ui-g">
+                            <div class="ui-g-12">Name: <b>{{lineItem.product.name}}</b></div>
+                            <div class="ui-g-12">Price: <b>{{lineItem.product.price}}</b></div>
+                        </div>
+                    </div>
+                    <button pButton type="button" icon="pi pi-search"></button>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<p-dataView [value]="cart">
+    <ng-template let-lineItem pTemplate="listItem">
+        <div>
+            {{lineItem.lineItemId}}
+        </div>
+    </ng-template>
+</p-dataView>

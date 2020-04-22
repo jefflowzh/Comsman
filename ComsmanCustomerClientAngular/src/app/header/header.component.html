@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="">
+        <!-- <img src="../../../../ComputerPartsEcommerce-war/web/resources/images/logo.png" alt="logo not working"> -->
+        <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/ca5d12864c12916c05640b36e47ac5c9.png"
+            width="70">
+    </a>
+
+    <div class="navbar-collapse" id="navbarSupportedContent">
+        <div class="mr-auto" style="display: flex">
+            <input type="text" placeholder="Search" pInputText [(ngModel)]="searchQuery" onchange=""
+                style="margin-right:.25em; width:750px;" />
+            <button pButton type=" button" label="Search" icon="pi pi-search" iconPos="left"></button>
+        </div>
+
+        <div *ngIf="sessionService.getIsLogin() == true" style="margin-right: 20px;">
+            <a style="color:white; font-size: large" routerLink="/customerCart"><i class="pi pi-shopping-cart"
+                    style="font-size: large;"></i>
+                My Cart</a>
+        </div>
+
+        <div *ngIf="sessionService.getIsLogin() == true" style="margin-right: 20px;">
+            <a style="color:white; font-size: large" routerLink=""><i class="pi pi-id-card"
+                    style="font-size: large;"></i>
+                My Account</a>
+        </div>
+
+        <div *ngIf="sessionService.getIsLogin() == true" style="margin-right: 20px;">
+            <a style="color:white; font-size: large" (click)="customerLogout()"><i class="pi pi-sign-out"
+                    style="font-size: large;"></i>
+                Logout</a>
+        </div>
+
+        <div style="color:white">
+            <div style="text-align: right;">Welcome!</div>
+            <a *ngIf="sessionService.getIsLogin() == false" style="color:white" routerLink="/customerLogin">
+                <i class="pi pi-user" style="font-size: medium;"></i>
+                <b>Sign In/Register</b>
+            </a>
+            <div *ngIf="sessionService.getIsLogin() == true" style="color:white">
+                <i class="pi pi-user" style="font-size: medium;"></i>
+                <b>{{sessionService.getCurrentCustomer().firstName}}
+                    {{sessionService.getCurrentCustomer().lastName}}</b>
+            </div>
+        </div>
+    </div>
+
+    <p-dialog header="Logging out.." [(visible)]="displayLoading">
+        <div style="text-align: center;">
+            <i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>
+        </div>
+    </p-dialog>
+
+</nav>

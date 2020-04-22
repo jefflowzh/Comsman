@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
+import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
 import util.security.CryptographicHelper;
 
@@ -30,7 +31,25 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     private EntityManager em;
     
     @Override
-    public Long createNewStaff(Staff newStaff) {
+    public Long createNewStaff(Staff newStaff) throws StaffAlreadyExistsException {
+        for (Staff staff : retrieveAllStaffsIncludingDisabled()) {
+            System.out.println("loop entered");
+            if (newStaff.getEmail().equals(staff.getEmail())) {
+                System.out.println("dup found");
+                if (staff.getIsDisabled()) {
+                    staff.setFirstName(newStaff.getFirstName());
+                    staff.setLastName(newStaff.getLastName());
+                    staff.setPasswordOfPreviouslyDisabledAccount(newStaff.getPassword());
+                    staff.setSalt(newStaff.getSalt());
+                    staff.setContactNumber(newStaff.getContactNumber());
+                    staff.setAddress(newStaff.getAddress());
+                    staff.setRole(newStaff.getRole());
+                    staff.setIsDisabled(Boolean.FALSE);
+                    return staff.getUserId();
+                }
+                throw new StaffAlreadyExistsException("Staff already exists!");
+            }
+        }        
         em.persist(newStaff);
         em.flush();
 
@@ -77,17 +96,20 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     @Override
     public Staff staffLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
-            Staff staff = retrieveStaffByEmail(email, true, true);            
+            Staff staff = retrieveStaffByEmail(email, true, true);
+            if(staff.getIsDisabled()) {
+                throw new InvalidLoginCredentialException("Email does not exist!");
+            }
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staff.getSalt()));
             
             if(staff.getPassword().equals(passwordHash)){
                 // staffEntity.getSaleTransactionEntities().size();                
                 return staff;
             } else {
-                throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
+                throw new InvalidLoginCredentialException("Invalid password!");
             }
         } catch(StaffNotFoundException ex) {
-            throw new InvalidLoginCredentialException("Email does not exist or invalid password!");
+            throw new InvalidLoginCredentialException("Email does not exist!");
         }
     }
     
@@ -141,9 +163,14 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
 
     @Override
     public List<Staff> retrieveAllStaffs() {
-        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = false ");
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.isDisabled = false");
         
         return query.getResultList();
     }
     
+    public List<Staff> retrieveAllStaffsIncludingDisabled() {
+        Query query = em.createQuery("SELECT s FROM Staff s");
+        
+        return query.getResultList();
+    }
 }

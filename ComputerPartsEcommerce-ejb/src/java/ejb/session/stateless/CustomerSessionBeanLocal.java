@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
+import util.exception.InvalidLoginCredentialException;
 
 @Local
 public interface CustomerSessionBeanLocal {
@@ -21,5 +22,7 @@ public interface CustomerSessionBeanLocal {
     public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException;
 
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException;
+
+    public Customer customerLogin(String email, String password) throws InvalidLoginCredentialException;
 
 }

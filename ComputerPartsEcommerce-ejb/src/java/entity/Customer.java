@@ -11,16 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Customer extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Column(nullable = false, length = 16)
-    @NotNull
+//    @Column(nullable = false, length = 16)
+//    @NotNull
+    @Column(length = 16)
+//    @Size(min = 16, max = 16)
     private String cardNumber;
-    @Column(nullable = false, length = 3)
-    @NotNull
+//    @Column(nullable = false, length = 3)
+//    @NotNull
+    @Column(length = 3)
+//    @Size(min = 3, max = 3)
     private String ccv;
     @OneToMany
     @NotNull
@@ -38,10 +43,8 @@ public class Customer extends User implements Serializable {
         orders = new ArrayList<>();
     }
     
-    public Customer(String cardNumber, String ccv, String firstName, String lastName, String address, String email, String password, String contactNumber) {
+    public Customer(String firstName, String lastName, String address, String email, String password, String contactNumber) {
         super(firstName, lastName, address, email, password, contactNumber);
-        this.cardNumber = cardNumber;
-        this.ccv = ccv;
         
         cart = new ArrayList<>();
         loyaltyPoints = 0;
