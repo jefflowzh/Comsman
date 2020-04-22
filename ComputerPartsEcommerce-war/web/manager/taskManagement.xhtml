@@ -26,7 +26,7 @@
                         <f:facet name="header">
                             <p:outputPanel>
                                 <h:outputText value="Search : " />
-                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllOrder').filter()" style="width: 700px;" placeholder="Enter Keyword" />
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllTasks').filter()" style="width: 700px;" placeholder="Enter Keyword" />
                             </p:outputPanel>
                         </f:facet>
 
@@ -44,10 +44,10 @@
 
                         <p:column headerText="Delivery Assigned To" sortBy="#{task.deliveryAssignedTo}" filterBy="#{task.deliveryAssignedTo}" filterMatchMode="contains" >
                             <h:outputText rendered="#{task.requiresDelivery == true}" value="#{task.deliveryAssignedTo}" />
-                            <h:outputText rendered="#{task.requiresDelivery == false}" value="No deliver needed" />
+                            <h:outputText rendered="#{task.requiresDelivery == false}" value="No delivery needed" />
                         </p:column>
 
-                        <p:column headerText="Status" sortBy="#{task.orderStatus}" filterBy="#{order.orderStatus}" filterMatchMode="contains">
+                        <p:column headerText="Status" sortBy="#{task.orderStatus}" filterBy="#{task.orderStatus}" filterMatchMode="contains">
                             <h:outputText value="#{task.orderStatus}" />
                         </p:column>
 
@@ -56,8 +56,8 @@
                                 <p:commandButton icon="fa fa-desktop" title="Assign Computer Set" oncomplete="PF('sidebarAssignComSet').show()" actionListener="#{taskManagementManagedBean.loadComputerSetsOfOrder}" update="formAssignComSet">
                                     <f:attribute name="selectedOrderId" value="#{task.customerOrderId}"/>
                                 </p:commandButton>
-                                <p:commandButton icon="fa fa-truck" title="Update" rendered="#{task.requiresDelivery == true and task.orderStatus eq 'COMPLETED'}">
-                                    <f:attribute name="" value="" />
+                                <p:commandButton icon="fa fa-truck" title="Assign Delivery" oncomplete="PF('sidebarAssignDelivery').show()" actionListener="#{taskManagementManagedBean.doAssignDelivery}" update="formAssignDelivery" rendered="#{task.requiresDelivery == true and task.orderStatus eq 'COMPLETED'}">
+                                    <f:attribute name="selectedOrderId" value="#{task.customerOrderId}" />
                                 </p:commandButton>
                             </div>
                         </p:column>
@@ -65,8 +65,61 @@
                     </p:dataTable>
                 </h:form>
 
+                <h:form id="formAssignDelivery">
+                    <p:sidebar id="sidebarAssignDelivery" widgetVar="sidebarAssignDelivery" position="right" baseZIndex="10000" style="width: 40%;">
+
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarAssignDelivery').hide()"/>
+
+                        <p:messages id="messages" redisplay="false"/>
+                        
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Order ID: "/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{taskManagementManagedBean.orderToAssignDelivery.customerOrderId}"/>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Delivery Address:"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{taskManagementManagedBean.orderToAssignDelivery.deliveryAddress}"/>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Deliver By: "/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{taskManagementManagedBean.orderToAssignDelivery.deliverBy}"/>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Assign To: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" appendTo="sidebarAssignDelivery">
+                                    <f:selectItem value="#{null}" itemLabel="--Select One--" itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Unassign Staff" itemValue="#{taskManagementManagedBean.negativeOne}" itemDisabled="#{taskManagementManagedBean.orderToAssignDelivery.deliveryAssignedTo == null}"/>
+                                    <f:selectItems value="#{taskManagementManagedBean.assignableStaff}" var="staff" itemLabel="#{staff.firstName} #{staff.lastName}" itemValue="#{staff.userId}"/>
+                                </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:commandButton value="Confirm Assignment" actionListener="#{taskManagementManagedBean.assignDelivery}" update="@form formAllTasks:dataTableAllTasks formAllTasks:messages" oncomplete="PF('sidebarAssignDelivery').hide()"/>
+                    </p:sidebar>
+                </h:form>
+                
                 <h:form id="formAssignComSet">
-                    <p:sidebar id="sidebarAssignComSet" widgetVar="sidebarAssignComSet" position="right" baseZIndex="10000" style="width: 30%;">
+                    <p:sidebar id="sidebarAssignComSet" widgetVar="sidebarAssignComSet" position="right" baseZIndex="10000" style="width: 40%;">
 
                         <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarAssignComSet').hide()"/>
 
@@ -81,7 +134,7 @@
                                 <h:outputText value="#{computerSet.assemblyAssignedTo.firstName} #{computerSet.assemblyAssignedTo.lastName}" rendered="#{computerSet.assemblyAssignedTo != null}"/>
                             </p:column>
                             <p:column headerText="Assign to">
-                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" filter="true" filterMatchMode="contains" appendTo="dataTableAllTasks">
+                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" appendTo="dataTableAllTasks">
                                     <p:ajax listener="#{taskManagementManagedBean.doMatchComputerSetWithStaffId(computerSet)}"/>
                                     <f:selectItem value="#{null}" itemLabel="--Select One--" itemValue="#{null}"/>
                                     <f:selectItem itemLabel="Unassign Staff" itemValue="#{taskManagementManagedBean.negativeOne}" itemDisabled="#{computerSet.assemblyAssignedTo == null}"/>
