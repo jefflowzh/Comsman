@@ -1,0 +1,142 @@
+<div class="container" style="width: 60%; margin-top: 50px;">
+    <div>
+        <h2 style="display: inline;">New Customer? Sign up below.</h2>
+    </div>
+    <p></p>
+
+
+    <form #customerRegistrationForm="ngForm" (ngSubmit)="customerRegistration(customerRegistrationForm)"
+        style="background-color: aliceblue;">
+
+        <br>
+
+        <div class="ui-g ui-fluid" style="margin-left: 20%;">
+
+            <div class="ui-g-12 ui-md-9">
+                First name
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input id="firstName" name="firstName" #firstNameReverseBind="ngModel"
+                        [(ngModel)]="customer.firstName" type="text" pInputText placeholder="First name"
+                        required="true">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-9" style="color: crimson;"
+                *ngIf="firstNameReverseBind.invalid && (firstNameReverseBind.dirty || firstNameReverseBind.touched || submitted)">
+                <div *ngIf="firstNameReverseBind.errors.required">
+                    First name is required!
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-9">
+                Last name
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+                    <input id="lastName" name="lastName" #lastNameReverseBind="ngModel" [(ngModel)]="customer.lastName"
+                        type="text" pInputText placeholder="Last name" required="true">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-5" style="color: crimson;"
+                *ngIf="lastNameReverseBind.invalid && (lastNameReverseBind.dirty || lastNameReverseBind.touched || submitted)">
+                <div *ngIf="lastNameReverseBind.errors.required">
+                    Last name is required!
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-9">
+                Email
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+                    <input id="email" name="email" #emailReverseBind="ngModel" [(ngModel)]="customer.email" type="email"
+                        pInputText placeholder="Email" required="true"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-5" style="color: crimson;"
+                *ngIf="emailReverseBind.invalid && (emailReverseBind.dirty || emailReverseBind.touched || submitted)">
+                <div *ngIf="emailReverseBind.errors.required">
+                    Email is required!
+                </div>
+                <div *ngIf="emailReverseBind.errors?.pattern">
+                    Please enter a valid email!
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-9">
+                Password
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+                    <input id="password" name="password" #passwordReverseBind="ngModel" [(ngModel)]="password"
+                        type="password" pInputText placeholder="Password" required="true">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-9" style="color: crimson;"
+                *ngIf="passwordReverseBind.invalid && (passwordReverseBind.dirty || passwordReverseBind.touched || submitted)">
+                <div *ngIf="passwordReverseBind.errors.required">
+                    Password is required!
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-9">
+                Address
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+                    <input id="address" name="address" #addressReverseBind="ngModel" [(ngModel)]="customer.address"
+                        type="text" pInputText placeholder="Address" required="true">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-5" style="color: crimson;"
+                *ngIf="addressReverseBind.invalid && (addressReverseBind.dirty || addressReverseBind.touched || submitted)">
+                <div *ngIf="addressReverseBind.errors.required">
+                    Address is required!
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-9">
+                Contact number
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+                    <input id="contactNumber" name="contactNumber" #contactNumberReverseBind="ngModel"
+                        [(ngModel)]="customer.contactNumber" type="text" pInputText placeholder="Contact Number"
+                        required="true">
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-5" style="color: crimson;"
+                *ngIf="contactNumberReverseBind.invalid && (contactNumberReverseBind.dirty || contactNumberReverseBind.touched || submitted)">
+                <div *ngIf="contactNumberReverseBind.errors.required">
+                    Contact Number is required!
+                </div>
+            </div>
+
+        </div>
+
+
+        <div *ngIf="registrationError == true" style="text-align: center; color: crimson;">
+            {{errorMessage}}
+        </div>
+
+        <br>
+
+        <div style="text-align: center;">
+            <button pButton type="button" class="ui-button-info" label="Clear" (click)="clear()"
+                style=" margin-right:.25em; width:15%;"></button>
+            <button pButton type="submit" class="ui-button-success" label="Register" style="width: 15%;"></button>
+        </div>
+
+        <br>
+
+        <p-dialog header="Welcome" [(visible)]="displayRegistrationSuccessDialog">
+            <div style="text-align: center;">
+                Registration successful!
+                <button type="button" pButton icon="pi pi-check" (click)="displayRegistrationSuccessDialog=false"
+                    label="Yes"></button>
+            </div>
+        </p-dialog>
+
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+</div>

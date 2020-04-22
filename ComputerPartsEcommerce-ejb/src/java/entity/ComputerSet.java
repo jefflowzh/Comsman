@@ -49,7 +49,7 @@ public class ComputerSet implements Serializable {
     private List<RAM> rams;
     
     @NotNull
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(nullable = false)
     private PowerSupply psu;
     

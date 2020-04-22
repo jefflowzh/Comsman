@@ -1,0 +1,53 @@
+<br>
+
+<div class="container" style="outline: thin solid lightgray; border-radius:50px;">
+
+    <br>
+
+    Possibly breadcrumb here
+
+    <br>
+    <br>
+
+    <h1>All {{header}}</h1>
+
+    <p-dataView #dv [value]="products" [paginator]="true" [rows]="18" paginatorPosition="both" filterBy="name"
+        [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <div class="ui-g">
+                    <div class="ui-g-6 ui-md-4 filter-container">
+                        <div style="position:relative">
+                            <input type="search" pInputText placeholder="Search by name"
+                                (input)="dv.filter($event.target.value)" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8">
+                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                            (onChange)="onSortChange($event)" [style]="{'min-width':'140px', 'float':'right'}">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </p-header>
+        <ng-template let-product pTemplate="gridItem">
+            <div style="padding:.5em;" class="ui-g-12 ui-md-4">
+                <p-card header={{product.name}} styleClass="ui-card-shadow">
+                    <p-header style="display: block;">
+                        <!-- {{product.image}} -->
+                        <img src="Card"
+                            src="https://www.sony.com.sg/image/eb0062b3db03748efc7f5ca3fd82ccc5?fmt=pjpeg&wid=330&bgcolor=FFFFFF&bgc=FFFFFF"
+                            style="width: 50%; display: block; margin-left: auto; margin-right: auto">
+                    </p-header>
+
+                    <div><b>Price</b>: {{product.price}}</div>
+                    <p-footer style="display: block;">
+                        <button pButton type="button" label="View details"
+                            style="display: block; margin-left: auto; margin-right: auto"></button>
+                    </p-footer>
+                </p-card>
+            </div>
+        </ng-template>
+    </p-dataView>
+
+</div>
