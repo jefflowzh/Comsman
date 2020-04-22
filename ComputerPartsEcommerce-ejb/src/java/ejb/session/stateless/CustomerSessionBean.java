@@ -89,7 +89,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     
     @Override
     public List<Customer> retrieveAllCustomers(Boolean loadCart, Boolean loadOrders){
-        Query query = em.createQuery("SELECT c FROM Customer c");
+        Query query = em.createQuery("SELECT c FROM Customer c WHERE C.isDisabled = false");
         List<Customer> customers = query.getResultList();
         
         if (loadCart) {
@@ -108,7 +108,10 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     }
     
     @Override
-    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerOrderNotFoundException {
+    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException {
+        if (customer == null || customer.getUserId() == null) {
+            throw new CustomerNotFoundException("Customer does not exist!");
+        }
         Customer updatedCustomer = em.merge(customer);
         
         // When adding or removing an order to/from a customer

@@ -38,6 +38,9 @@ public class Customer extends User implements Serializable {
     private List<CustomerOrder> orders;
 
     public Customer() {
+        cart = new ArrayList<>();
+        loyaltyPoints = 0;
+        orders = new ArrayList<>();
     }
     
     public Customer(String firstName, String lastName, String address, String email, String password, String contactNumber) {

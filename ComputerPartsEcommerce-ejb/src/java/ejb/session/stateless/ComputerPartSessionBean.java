@@ -19,7 +19,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import util.exception.ComputerPartNotFoundException;
-import util.exception.CustomerNotFoundException;
 
 @Stateless
 public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
@@ -161,66 +160,158 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
     }
     
     
-    public List<CPU> retrieveCPUById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPU"); 
-        return query.getResultList();
+    public CPU retrieveCPUById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(CPU.class, id);
+        if (computerPart != null && computerPart instanceof CPU){
+            return (CPU) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof CPU)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a CPU");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
+            
+        
         
     }
 
-    public List<CPUAirCooler> retrieveCPUAirCoolerById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPUAirCooler"); 
-        return query.getResultList();
-        
+    public CPUAirCooler retrieveCPUAirCoolerById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(CPUAirCooler.class, id);
+        if (computerPart != null && computerPart instanceof CPUAirCooler){
+            return (CPUAirCooler) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof CPUAirCooler)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a CPU Air Cooler");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<CPUWaterCooler> retrieveCPUWaterCoolerById(Long id) {
-        Query query = em.createQuery("SELECT c FROM CPUWaterCooler"); 
-        return query.getResultList();
-        
+    public CPUWaterCooler retrieveCPUWaterCoolerById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(CPUWaterCooler.class, id);
+        if (computerPart != null && computerPart instanceof CPUWaterCooler){
+            return (CPUWaterCooler) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof CPUWaterCooler)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a CPU Water Cooler");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<ComputerCase> retrieveComCaseById(Long id) {
-        Query query = em.createQuery("SELECT c FROM ComptuerCase"); 
-        return query.getResultList();
-        
+    public ComputerCase retrieveComCaseById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(ComputerCase.class, id);
+        if (computerPart != null && computerPart instanceof ComputerCase){
+            return (ComputerCase) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof ComputerCase)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a Computer Case");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<GPU> retrieveGPUById(Long id) {
-        Query query = em.createQuery("SELECT c FROM GPU"); 
-        return query.getResultList();
-        
+    public GPU retrieveGPUById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(GPU.class, id);
+        if (computerPart != null && computerPart instanceof GPU){
+            return (GPU) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof GPU)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a GPU");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<HDD> retrieveAllHDDById(Long id) {
-        Query query = em.createQuery("SELECT c FROM HDD"); 
-        return query.getResultList();
-        
+    public HDD retrieveAllHDDById(Long id) throws ComputerPartNotFoundException {
+       ComputerPart computerPart = em.find(HDD.class, id);
+        if (computerPart != null && computerPart instanceof HDD){
+            return (HDD) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof HDD)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a HDD");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<MotherBoard> retrieveMotherBoardById(Long id) {
-        Query query = em.createQuery("SELECT c FROM MotherBoard"); 
-        return query.getResultList();
-        
+    public MotherBoard retrieveMotherBoardById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(MotherBoard.class, id);
+        if (computerPart != null && computerPart instanceof MotherBoard){
+            return (MotherBoard) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof MotherBoard)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a Mother Board");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<PowerSupply> retrievePowerSupplyById(Long id) {
-        Query query = em.createQuery("SELECT c FROM PowerSupply"); 
-        return query.getResultList();
-        
+    public PowerSupply retrievePowerSupplyById(Long id) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(PowerSupply.class, id);
+        if (computerPart != null && computerPart instanceof PowerSupply){
+            return (PowerSupply) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof PowerSupply)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a Power Supply");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<RAM> retrieveRAMById(Long id) {
-        Query query = em.createQuery("SELECT c FROM RAM"); 
-        return query.getResultList();
-        
+    public RAM retrieveRAMById(Long id) throws ComputerPartNotFoundException {
+       ComputerPart computerPart = em.find(RAM.class, id);
+        if (computerPart != null && computerPart instanceof RAM){
+            return (RAM) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof RAM)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a RAM");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
-    public List<SSD> retrieveSSDById(Long id) {
-        Query query = em.createQuery("SELECT c FROM SSD"); 
-        return query.getResultList();
-        
+    public SSD retrieveSSDById(Long id) throws ComputerPartNotFoundException {
+       ComputerPart computerPart = em.find(SSD.class, id);
+        if (computerPart != null && computerPart instanceof SSD){
+            return (SSD) computerPart;
+        }
+        else if(computerPart != null && !(computerPart instanceof SSD)){
+            throw new ComputerPartNotFoundException("Part Id: " + id + " is not a SSD");
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
+    }
+    
+    public ComputerPart retrieveComputerPartById(Long id) throws ComputerPartNotFoundException
+    {
+        ComputerPart computerPart = em.find(SSD.class, id);
+        if (computerPart != null){
+            return computerPart;
+        }
+        else{
+            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        }
     }
     
   
+    
+    @Override
+    public Long createNewComputerPart(ComputerPart newComputerPart) {
+        em.persist(newComputerPart);
+        em.flush();
+
+        return newComputerPart.getProductId();
+    }
     
 }

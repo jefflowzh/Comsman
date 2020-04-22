@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import util.enumeration.OrderStatusEnum;
 
 @Entity
 public class CustomerOrder implements Serializable {
@@ -27,6 +30,7 @@ public class CustomerOrder implements Serializable {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+    @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fulfilledDate;
     @Column(nullable = false)
@@ -50,18 +54,30 @@ public class CustomerOrder implements Serializable {
     @ManyToOne
     @JoinColumn
     private Coupon coupon;
+    @Column(nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum orderStatus;
    // @OneToOne(mappedBy = "customerOrder")
    // private ComputerSet computerSet;
     
 
     public CustomerOrder() {
+        this.orderStatus = OrderStatusEnum.UNASSIGNED;
     }
 
-    public CustomerOrder(Date orderDate, Double totalPrice, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
+    public CustomerOrder(Date orderDate, Boolean requiresDelivery, String billingAddress, List<LineItem> lineItems) {
         this();
+        double tempStore = 0;
         
+        for(LineItem l : lineItems) {
+            double tempTotalPrice = 0;
+            tempTotalPrice = l.getProduct().getPrice() * l.getQuantity();
+            tempStore += tempTotalPrice;
+        }
+        
+        this.totalPrice = tempStore;
         this.orderDate = orderDate;
-        this.totalPrice = totalPrice;
         this.requiresDelivery = requiresDelivery;
         this.billingAddress = billingAddress;
         this.lineItems = lineItems;
@@ -188,6 +204,14 @@ public class CustomerOrder implements Serializable {
     @Override
     public String toString() {
         return "entity.Order[ id=" + customerOrderId + " ]";
+    }
+
+    public OrderStatusEnum getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatusEnum orderStatus) {
+        this.orderStatus = orderStatus;
     }
     
 }

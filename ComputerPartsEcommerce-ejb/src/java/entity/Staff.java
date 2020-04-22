@@ -38,7 +38,7 @@ public class Staff extends User implements Serializable {
         deliveries = new ArrayList<>();
     }
   
-    public Enum getRole() {
+    public StaffAccessRightEnum getRole() {
         return role;
     }
 

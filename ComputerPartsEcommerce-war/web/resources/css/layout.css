@@ -199,4 +199,11 @@ body .ui-selectbooleanbutton.ui-state-active, body .ui-buttonset:not(.ui-splitbu
     text-decoration : underline;
 }
 
+.ui-icon.ui-icon-alert.ui-confirm-dialog-severity {
+    color: black;
+}
+
+.ui-icon.ui-icon-alert {
+    color: black; 
+}
 

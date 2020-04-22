@@ -35,7 +35,7 @@ public class MotherBoard extends ComputerPart implements Serializable {
     private Boolean SLICrossFire;
     private Integer PCIEx16;
     private Integer m2Slot;
-    private Integer SATA6GB;
+    //private Integer SATA6GB;
     private Boolean wiFi;
     private String[] suportedMemorySpeed;
     

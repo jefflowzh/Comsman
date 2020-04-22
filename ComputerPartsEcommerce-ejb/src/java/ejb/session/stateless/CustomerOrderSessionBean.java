@@ -5,10 +5,13 @@ import entity.Customer;
 import entity.CustomerOrder;
 import entity.LineItem;
 import entity.Staff;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import util.enumeration.OrderStatusEnum;
 import util.exception.CouponNotFoundException;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
@@ -35,6 +38,12 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         
         newCustomerOrder.setCustomer(customer);
         customer.getOrders().add(newCustomerOrder);
+        
+        // boolean therescomputerset = false
+        // for (lineItem: newcustomerorder.getlineItem) -> lineItem.getComputerSet = not null -> unassigned, setCSflag = true break;
+        
+        // if (setCSflag == false) -> status -> completed
+        
         
         em.persist(newCustomerOrder);
         em.flush();
@@ -118,6 +127,22 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             customerOrder.setCustomer(null);
         }
         em.remove(customerOrder);
+    }
+    
+    @Override
+    public List<CustomerOrder> retrieveAllOrders() {
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o");
+        
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<CustomerOrder> retrieveAllTasks() {
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inStatus and o.orderStatus <> :inVoid");
+        query.setParameter("inStatus", OrderStatusEnum.DELIVERED);
+        query.setParameter("inVoid", OrderStatusEnum.VOIDED);
+        
+        return query.getResultList();
     }
 
 }

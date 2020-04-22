@@ -1,13 +1,19 @@
 package ejb.session.stateless;
 
+import entity.CustomerOrder;
 import entity.LineItem;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.exception.CustomerOrderNotFoundException;
 import util.exception.LineItemNotFoundException;
 
 @Stateless
 public class LineItemSessionBean implements LineItemSessionBeanLocal {
+
+    @EJB(name = "CustomerOrderSessionBeanLocal")
+    private CustomerOrderSessionBeanLocal customerOrderSessionBeanLocal;
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")
     private EntityManager em;
@@ -31,4 +37,14 @@ public class LineItemSessionBean implements LineItemSessionBeanLocal {
         }
     }
     
+    @Override
+    public void deleteLineItemById(Long lineItemId, Long orderId) throws LineItemNotFoundException, CustomerOrderNotFoundException {
+        LineItem lineItemToDelete = em.find(LineItem.class, lineItemId);
+        
+        CustomerOrder customerOrder = customerOrderSessionBeanLocal.retrieveCustomerOrderById(orderId, true);
+        customerOrder.getLineItems().remove(lineItemToDelete);
+        
+        em.remove(lineItemToDelete);
+    }
+
 }
