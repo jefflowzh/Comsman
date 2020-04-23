@@ -27,6 +27,7 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { FooterComponent } from './footer/footer.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
+import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CustomerCartComponent } from './customer-cart/customer-cart.component';
     CustomerLoginComponent,
     CustomerRegistrationComponent,
     FooterComponent,
-    CustomerCartComponent
+    CustomerCartComponent,
+    CustomerDetailsComponent
   ],
   imports: [
     BrowserModule,

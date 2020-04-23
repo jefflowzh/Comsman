@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
@@ -27,6 +28,8 @@ import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
+import ws.restful.model.CustomerUpdateReq;
+import ws.restful.model.CustomerUpdateRsp;
 
 /**
  * REST Web Service
@@ -80,6 +83,23 @@ public class CustomerResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerUpdate(CustomerUpdateReq customerUpdateReq){
+        try{
+            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), null, null);
+            Customer updatedCustomer = this.customerSessionBean.retrieveCustomerById(customerUpdateReq.getCustomer().getUserId(), true , true);
+            CustomerUpdateRsp cur =  new CustomerUpdateRsp(updatedCustomer);
+            return Response.status(Status.OK).entity(cur).build();
+        }
+        catch(Exception ex){
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {

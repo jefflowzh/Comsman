@@ -13,19 +13,19 @@ export class SessionService {
   }
 
   getIsLogin(): boolean {
-    return sessionStorage.isLogin == "true";
+    return localStorage.isLogin == "true";
   }
 
   setIsLogin(isLogin: boolean): void {
-    sessionStorage.isLogin = isLogin;
+    localStorage.isLogin = isLogin;
   }
 
   getCurrentCustomer(): Customer {
-    return JSON.parse(sessionStorage.currentCustomer);
+    return JSON.parse(localStorage.currentCustomer);
   }
 
   setCurrentCustomer(currentCustomer: Customer): void {
-    sessionStorage.currentCustomer = JSON.stringify(currentCustomer);
+    localStorage.currentCustomer = JSON.stringify(currentCustomer);
   }
 
 }
