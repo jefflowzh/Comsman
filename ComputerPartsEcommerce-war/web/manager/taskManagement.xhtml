@@ -125,7 +125,7 @@
 
                         <p:messages id="messages" redisplay="false" />
                         
-                        <p:dataTable id="dataTableAllTasks" widgetVar="dataTableAllComputerSets" value="#{taskManagementManagedBean.computerSets}" var="computerSet" rowKey="#{computerSet.computerSetId}" rowIndexVar="row"
+                        <p:dataTable id="dataTableAllComputerSets" widgetVar="dataTableAllComputerSets" value="#{taskManagementManagedBean.computerSets}" var="computerSet" rowKey="#{computerSet.computerSetId}" rowIndexVar="row"
                                  rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
                             <p:column headerText="Computer Set ID" sortBy="#{computerSet.computerSetId}">
                                 <h:outputText value="#{computerSet.computerSetId}" />
@@ -134,7 +134,7 @@
                                 <h:outputText value="#{computerSet.assemblyAssignedTo.firstName} #{computerSet.assemblyAssignedTo.lastName}" rendered="#{computerSet.assemblyAssignedTo != null}"/>
                             </p:column>
                             <p:column headerText="Assign to">
-                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" appendTo="dataTableAllTasks">
+                                <p:selectOneMenu id="assignedStaff" value="#{taskManagementManagedBean.temporaryHoldingStaffId}" appendTo="dataTableAllComputerSets">
                                     <p:ajax listener="#{taskManagementManagedBean.doMatchComputerSetWithStaffId(computerSet)}"/>
                                     <f:selectItem value="#{null}" itemLabel="--Select One--" itemValue="#{null}"/>
                                     <f:selectItem itemLabel="Unassign Staff" itemValue="#{taskManagementManagedBean.negativeOne}" itemDisabled="#{computerSet.assemblyAssignedTo == null}"/>

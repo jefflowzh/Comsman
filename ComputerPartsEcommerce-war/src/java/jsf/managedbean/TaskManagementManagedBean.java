@@ -92,7 +92,7 @@ public class TaskManagementManagedBean implements Serializable {
             temporaryHoldingStaffId = null;
             customerOrderSessionBeanLocal.updateOrderStatus(selectedOrderId);
             tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets assigned!", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets for order " + selectedOrderId + " assigned!", null));
         } catch (StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff does not exist!", null));
         } catch (CustomerOrderNotFoundException ex) {
@@ -123,7 +123,7 @@ public class TaskManagementManagedBean implements Serializable {
             customerOrderSessionBeanLocal.updateCustomerOrder(orderToAssignDelivery, null, temporaryHoldingStaffId, null, null);
             temporaryHoldingStaffId = null;
             tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Order delivery assigned!", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Order " + orderToAssignDelivery.getCustomerOrderId() + " delivery assigned!", null));
         } catch (CouponNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Coupon does not exist!", null));
         } catch (CustomerNotFoundException ex) {

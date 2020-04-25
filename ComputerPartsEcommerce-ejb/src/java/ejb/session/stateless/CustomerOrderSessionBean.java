@@ -71,6 +71,21 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             throw new CustomerOrderNotFoundException("Customer Order ID " + customerOrderId + " does not exist!");
         }
     }
+    
+    @Override
+    public List<CustomerOrder> retrieveCustomerOrdersByDeliveryStaff(Long staffId, Boolean loadLineItems) {
+        Query query = em.createQuery("SELECT c FROM CustomerOrder c WHERE c.deliveryAssignedTo.userId = :inStaffId");
+        query.setParameter("inStaffId", staffId);
+        List<CustomerOrder> customerOrders = query.getResultList();
+        
+        if (loadLineItems) {
+            for (CustomerOrder order : customerOrders) {
+                order.getLineItems().size();
+            }
+        }
+        
+        return customerOrders;
+    }
 
     @Override
     public void updateCustomerOrder(CustomerOrder customerOrder, Long customerId, Long staffId, Long couponId, LineItem lineItem) throws CustomerNotFoundException, StaffNotFoundException, CouponNotFoundException {
