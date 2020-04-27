@@ -52,7 +52,7 @@ public class ProductManagementManagedBean implements Serializable {
     private List<? extends Product> products;
     private List<? extends Product> filteredProducts;
 
-    private Product newProduct;
+    private Product newProduct;   
 
     private Product selectedProductToUpdate;
     private Product selectedProductImage;

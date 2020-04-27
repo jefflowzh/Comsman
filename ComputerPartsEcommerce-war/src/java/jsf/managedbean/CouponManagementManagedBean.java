@@ -34,11 +34,12 @@ public class CouponManagementManagedBean implements Serializable {
     private CouponTypeEnum[] couponTypes;
 
     public CouponManagementManagedBean() {
-        newCoupon = new Coupon();
     }
     
     @PostConstruct
     public void postConstruct() {
+        newCoupon = new Coupon();
+        selectedCouponToUpdate = new Coupon();
         setCouponTypes(CouponTypeEnum.values());
         setCoupons(couponSessionBeanLocal.retrieveAllCoupons());
     }
@@ -75,7 +76,12 @@ public class CouponManagementManagedBean implements Serializable {
     }
     
     public void updateCoupon(ActionEvent event) {
-        getSelectedCouponToUpdate().setCouponType(getTempEnum());
+        if (selectedCouponToUpdate.getCouponType() != CouponTypeEnum.FLAT_AMOUNT) {
+            selectedCouponToUpdate.setFlatAmount(null);
+        }
+        if (selectedCouponToUpdate.getCouponType() != CouponTypeEnum.PERCENTAGE) {
+            selectedCouponToUpdate.setRate(null);
+        }
         couponSessionBeanLocal.updateCoupon(getSelectedCouponToUpdate());
         setSelectedCouponToUpdate(new Coupon());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon updated successfully", null));

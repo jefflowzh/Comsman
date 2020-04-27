@@ -40,11 +40,15 @@
                         </p:column>
 
                         <p:column headerText="Start Date" sortBy="#{coupon.startDate}" filterBy="#{coupon.startDate}" filterMatchMode="contains">
-                            <h:outputText value="#{coupon.startDate}" />
+                            <h:outputText value="#{coupon.startDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="End Date" sortBy="#{coupon.endDate}" filterBy="#{coupon.endDate}" filterMatchMode="contains" >
-                            <h:outputText value="#{coupon.endDate}" />
+                            <h:outputText value="#{coupon.endDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="Loyalty Points" sortBy="#{coupon.loyaltyPointRequired}" filterBy="#{coupon.loyaltyPointRequired}" filterMatchMode="contains">
@@ -56,8 +60,10 @@
                         </p:column>
                         
                         <p:column headerText="Discount (if applicable)" filterMatchMode="contains">
-                            <h:outputText rendered="#{coupon.couponType.name() eq 'PERCENTAGE'}" value="#{coupon.rate}%" />
-                            <h:outputText rendered="#{coupon.couponType.name() eq 'FLAT_AMOUNT'}" value="$#{coupon.flatAmount}" />
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'PERCENTAGE'}" value="#{coupon.getFormattedRate()}%">
+                                <f:convertNumber type="percent" pattern="#0.00" />
+                            </h:outputText>
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'FLAT_AMOUNT'}" value="$#{coupon.getFormattedFlatAmount()}" />
                         </p:column>
 
                         <p:column headerText="Action">
@@ -95,8 +101,8 @@
                                 <p:column>
                                     <p:selectOneMenu id="couponType" value="#{couponManagementManagedBean.newCoupon.couponType}" appendTo="@this">
                                         <p:ajax update="formCreateCoupon:sidebarCreateCoupon" oncomplete="PF('sidebarCreateCoupon').show()" />
-                                        <f:selectItem itemValue="#{null}" itemLabel="[Select One]" />
-                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type.name()}" itemLabel="#{type}" />
+                                        <f:selectItem itemValue="#{null}" itemLabel="--Select One--" />
+                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type}" itemLabel="#{type}" />
                                     </p:selectOneMenu>
                                 </p:column>
                             </p:row>
@@ -117,8 +123,8 @@
                                     <p:outputLabel for="startDate" value="Start Date: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.newCoupon.startDate}" showIcon="true" required="true" requiredMessage="Start date required">
-                                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.newCoupon.startDate}" showIcon="true" required="true" requiredMessage="Start date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:datePicker>
                                 </p:column>
                             </p:row>
@@ -128,8 +134,8 @@
                                     <p:outputLabel for="endDate" value="End Date: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.newCoupon.endDate}" showIcon="true" required="true" requiredMessage="End date required">
-                                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.newCoupon.endDate}" showIcon="true" required="true" requiredMessage="End date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:datePicker>
                                 </p:column>
                             </p:row>
@@ -189,11 +195,12 @@
                                 <p:column>
                                     <p:selectOneMenu id="couponType" value="#{couponManagementManagedBean.selectedCouponToUpdate.couponType}" appendTo="@this">
                                         <p:ajax update="formUpdateCoupon:sidebarUpdateCoupon" oncomplete="PF('sidebarUpdateCoupon').show()" />
-                                        <f:selectItem itemValue="0" itemLabel="[Select One]" />
-                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type.name()}" itemLabel="#{type}" />
+                                        <f:selectItem itemValue="#{null}" itemLabel="--Select One--" />
+                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type}" itemLabel="#{type}" />
                                     </p:selectOneMenu>
                                 </p:column>
                             </p:row>
+
                             
                             <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
                                 <p:column>
@@ -209,8 +216,8 @@
                                     <p:outputLabel for="startDate" value="Start Date: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.startDate}" showIcon="true" required="true" requiredMessage="Start date required">
-                                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.startDate}" showIcon="true" required="true" requiredMessage="Start date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:datePicker>
                                 </p:column>
                             </p:row>
@@ -220,8 +227,8 @@
                                     <p:outputLabel for="endDate" value="End Date: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.endDate}" showIcon="true" required="true" requiredMessage="End date required">
-                                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.endDate}" showIcon="true" required="true" requiredMessage="End date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:datePicker>
                                 </p:column>
                             </p:row>
