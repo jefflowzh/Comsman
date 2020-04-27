@@ -217,7 +217,7 @@
                                 <p:column>
                                     <p:selectOneMenu id="selectRole" value="#{staffManagementManagedBean.tempEnum}" appendTo="@this">
                                         <f:selectItem itemValue="0" itemLabel="[Select One]" />
-                                        <f:selectItems value="#{staffManagementManagedBean.roles}" var="role" itemValue="#{role}" itemLabel="#{role.name()}" />
+                                        <f:selectItems value="#{staffManagementManagedBean.roles}" var="role" itemValue="#{role.name()}" itemLabel="#{role.name()}" />
                                     </p:selectOneMenu>
                                 </p:column>
                             </p:row>

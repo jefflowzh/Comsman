@@ -39,13 +39,16 @@ public class Coupon implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CouponTypeEnum couponType;
+    @Column
     private Double rate;
+    @Column
     private Double flatAmount;
     @Column(nullable = false)
     @NotNull
     private Boolean isDisabled;
 
     public Coupon() {
+        this.isDisabled = false;
     }
 
     public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointRequired, CouponTypeEnum couponType) {

@@ -168,7 +168,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         return query.getResultList();
     }
     
-    public List<Staff> retrieveAllStaffsIncludingDisabled() {
+    private List<Staff> retrieveAllStaffsIncludingDisabled() {
         Query query = em.createQuery("SELECT s FROM Staff s");
         
         return query.getResultList();

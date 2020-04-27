@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
 import ejb.session.stateless.StaffSessionBeanLocal;
@@ -23,10 +18,6 @@ import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
 import util.security.CryptographicHelper;
 
-/**
- *
- * @author weidonglim
- */
 @Named(value = "staffManagementManagedBean")
 @ViewScoped
 public class StaffManagementManagedBean implements Serializable {
@@ -63,11 +54,11 @@ public class StaffManagementManagedBean implements Serializable {
 
     public StaffManagementManagedBean() {
         newStaffEntity = new Staff();
-        roles = StaffAccessRightEnum.values();
     }
 
     @PostConstruct
     public void postConstruct() {
+        roles = StaffAccessRightEnum.values();
         staffEntities = staffSessionBeanLocal.retrieveAllStaffs();
     }
 
