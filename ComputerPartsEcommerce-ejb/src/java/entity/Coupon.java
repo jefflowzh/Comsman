@@ -2,6 +2,7 @@ package entity;
 
 import util.enumeration.CouponTypeEnum;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +27,11 @@ public class Coupon implements Serializable {
     private String code;
     @Column(nullable = false)
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     @Column(nullable = false)
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     @Column(nullable = false)
     @NotNull
@@ -39,13 +40,16 @@ public class Coupon implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CouponTypeEnum couponType;
+    @Column
     private Double rate;
+    @Column
     private Double flatAmount;
     @Column(nullable = false)
     @NotNull
     private Boolean isDisabled;
 
     public Coupon() {
+        this.isDisabled = false;
     }
 
     public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointRequired, CouponTypeEnum couponType) {
@@ -109,6 +113,11 @@ public class Coupon implements Serializable {
     public Double getRate() {
         return rate;
     }
+    
+    public String getFormattedRate() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(rate);
+    }
 
     public void setRate(Double rate) {
         this.rate = rate;
@@ -116,6 +125,11 @@ public class Coupon implements Serializable {
 
     public Double getFlatAmount() {
         return flatAmount;
+    }
+    
+    public String getFormattedFlatAmount() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(flatAmount);
     }
 
     public void setFlatAmount(Double flatAmount) {

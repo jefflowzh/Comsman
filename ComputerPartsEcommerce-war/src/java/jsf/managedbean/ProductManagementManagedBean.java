@@ -312,7 +312,7 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
-    public void createNewProduct(ActionEvent event) {
+    public void doCreateNewProduct(ActionEvent event) {
         if (selectedProduct.equals("CPU")) {
             newProduct = new CPU();
         } else if (selectedProduct.equals("MotherBoard")) {
@@ -334,7 +334,9 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("CPUAirCooler")) {
             newProduct = new CPUAirCooler();
         }
+    }
 
+    public void createNewProduct(ActionEvent event) {
         try {
             String fileName = uploadedFile.getFileName();
 

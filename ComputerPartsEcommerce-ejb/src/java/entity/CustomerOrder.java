@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -30,6 +31,12 @@ public class CustomerOrder implements Serializable {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date completeBy;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deliverBy;
     @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fulfilledDate;
@@ -89,6 +96,12 @@ public class CustomerOrder implements Serializable {
         
         System.out.println("********************" + this.totalPrice);
         this.orderDate = orderDate;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(orderDate);
+        calendar.add(Calendar.DATE, 10);
+        completeBy = calendar.getTime();
+        calendar.add(Calendar.DATE, 4);
+        deliverBy = calendar.getTime();
         this.requiresDelivery = requiresDelivery;
         this.billingAddress = billingAddress;
         this.lineItems = lineItems;
@@ -108,6 +121,22 @@ public class CustomerOrder implements Serializable {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+    
+    public Date getCompleteBy() {
+        return completeBy;
+    }
+
+    public void setCompleteBy(Date completeBy) {
+        this.completeBy = completeBy;
+    }
+
+    public Date getDeliverBy() {
+        return deliverBy;
+    }
+
+    public void setDeliverBy(Date deliverBy) {
+        this.deliverBy = deliverBy;
     }
 
     public Date getFulfilledDate() {

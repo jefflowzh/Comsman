@@ -17,6 +17,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import util.exception.CouponNotFoundException;
+import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.StaffNotFoundException;
 
@@ -41,6 +43,8 @@ public class TaskManagementManagedBean implements Serializable {
     private List<ComputerSet> computerSets;
     private List<Staff> assignableStaff;
     
+    private CustomerOrder orderToAssignDelivery;
+    
     private Long selectedOrderId;
     private Long temporaryHoldingStaffId;
     private Long negativeOne;
@@ -54,10 +58,10 @@ public class TaskManagementManagedBean implements Serializable {
     public void postConstruct() {
         // those voided / delivered will not be shown
         tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
+        negativeOne = new Long(-1);
     }
     
     public void loadComputerSetsOfOrder(ActionEvent event) {
-        negativeOne = new Long(-1);
         selectedOrderId = (Long) event.getComponent().getAttributes().get("selectedOrderId");
         setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByOrderId(getSelectedOrderId(), Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE));
         computerSetsWithStaff = new HashMap<>();
@@ -88,14 +92,47 @@ public class TaskManagementManagedBean implements Serializable {
             temporaryHoldingStaffId = null;
             customerOrderSessionBeanLocal.updateOrderStatus(selectedOrderId);
             tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets assigned!", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer sets for order " + selectedOrderId + " assigned!", null));
         } catch (StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff does not exist!", null));
         } catch (CustomerOrderNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer order does not exist!", null));
         }
     }
+    
+    public void doAssignDelivery(ActionEvent event) {
+        selectedOrderId = (Long) event.getComponent().getAttributes().get("selectedOrderId");
+        setAssignableStaff(staffSessionBeanLocal.retrieveAllStaffs());
+        try {
+            orderToAssignDelivery = customerOrderSessionBeanLocal.retrieveCustomerOrderById(selectedOrderId, Boolean.FALSE);
+        } catch (CustomerOrderNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer order does not exist!", null));
+        }
+    }
 
+    public void assignDelivery(ActionEvent event) {
+        System.out.println("**********" + temporaryHoldingStaffId);
+        if (temporaryHoldingStaffId == null || (orderToAssignDelivery.getDeliveryAssignedTo()!= null && temporaryHoldingStaffId.equals(orderToAssignDelivery.getDeliveryAssignedTo().getUserId()))) {
+            System.out.println("**********null entered");
+            temporaryHoldingStaffId = null; // ensure that no change is made to the deliveryAssignedTo attribute
+        } else if (temporaryHoldingStaffId.equals(Long.valueOf(-1))) {
+            System.out.println("**********-1 entered");
+            temporaryHoldingStaffId = orderToAssignDelivery.getDeliveryAssignedTo().getUserId();
+        }
+        try {
+            customerOrderSessionBeanLocal.updateCustomerOrder(orderToAssignDelivery, null, temporaryHoldingStaffId, null, null);
+            temporaryHoldingStaffId = null;
+            tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Order " + orderToAssignDelivery.getCustomerOrderId() + " delivery assigned!", null));
+        } catch (CouponNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Coupon does not exist!", null));
+        } catch (CustomerNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer does not exist!", null));
+        } catch (StaffNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff does not exist!", null));
+        }
+    }
+    
     public CustomerOrderSessionBeanLocal getCustomerOrderSessionBeanLocal() {
         return customerOrderSessionBeanLocal;
     }
@@ -142,6 +179,14 @@ public class TaskManagementManagedBean implements Serializable {
 
     public void setAssignableStaff(List<Staff> assignableStaff) {
         this.assignableStaff = assignableStaff;
+    }
+    
+    public CustomerOrder getOrderToAssignDelivery() {
+        return orderToAssignDelivery;
+    }
+
+    public void setOrderToAssignDelivery(CustomerOrder orderToAssignDelivery) {
+        this.orderToAssignDelivery = orderToAssignDelivery;
     }
     
     public Long getSelectedOrderId() {

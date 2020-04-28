@@ -21,9 +21,6 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     private LineItemSessionBeanLocal lineItemSessionBeanLocal;
 
     @EJB
-    private ComputerPartSessionBeanLocal computerPartSessionBeanLocal;
-
-    @EJB
     private StaffSessionBeanLocal staffSessionBeanLocal;
 
     @PersistenceContext(unitName = "ComputerPartsEcommerce-ejbPU")

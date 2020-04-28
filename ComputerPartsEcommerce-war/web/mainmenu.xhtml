@@ -24,7 +24,7 @@
 
                     <p:submenu label="Tasks" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER' || sessionScope.currentStaffEntity.role == 'TECHNICIAN'}">
                         <p:menuitem value="Computer Building" outcome="/general/computerBuildingTasks" icon="fa fa-tv" />
-                        <p:menuitem value="Deliveries" outcome="/index" icon="fa fa-truck" />
+                        <p:menuitem value="Deliveries" outcome="/general/deliveryTasks" icon="fa fa-truck" />
                     </p:submenu>
 
                     <p:submenu label="System Adminstration" rendered="#{sessionScope.currentStaffEntity.role == 'MANAGER'}">
@@ -33,6 +33,7 @@
                         <p:menuitem value="Order Management" outcome="/manager/orderManagement" icon="fa fa-clipboard" />
                         <p:menuitem value="Task Management" outcome="/manager/taskManagement" icon="fa fa-tasks" />
                         <p:menuitem value="Customer Management" outcome="/manager/customerManagement" icon="fa fa-users" />
+                        <p:menuitem value="Coupon Management" outcome="/manager/couponManagement" icon="fa fa-tag" />
                     </p:submenu>
 
                     <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />

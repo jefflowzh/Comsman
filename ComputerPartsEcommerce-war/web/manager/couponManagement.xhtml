@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/defaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <div class="layout-content">
+
+            <h2>
+                Coupon Management
+                <p:commandButton value="Create Coupon" onclick="PF('sidebarCreateCoupon').show()" icon="fa fa-plus" />
+            </h2>
+
+            <div class="layout-subcontent">
+
+                <h:form id="formAllCoupons">
+                    <p:growl id="growl" sticky="false" life="1000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dataTable id="dataTableAllCoupons" widgetVar="dataTableAllCoupons" value="#{couponManagementManagedBean.coupons}" var="coupon" rowKey="#{coupon.couponId}" rowIndexVar="row"
+                                 filteredValue="#{couponManagementManagedBean.filteredCoupons}"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search : " />
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllCoupons').filter()" style="width: 700px;" placeholder="Enter Keyword" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="Coupon ID" sortBy="#{coupon.couponId}" filterBy="#{coupon.couponId}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.couponId}" />
+                        </p:column>
+
+                        <p:column headerText="Code" sortBy="#{coupon.code}" filterBy="#{coupon.code}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.code}" />
+                        </p:column>
+
+                        <p:column headerText="Start Date" sortBy="#{coupon.startDate}" filterBy="#{coupon.startDate}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.startDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="End Date" sortBy="#{coupon.endDate}" filterBy="#{coupon.endDate}" filterMatchMode="contains" >
+                            <h:outputText value="#{coupon.endDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Loyalty Points" sortBy="#{coupon.loyaltyPointRequired}" filterBy="#{coupon.loyaltyPointRequired}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.loyaltyPointRequired}" />
+                        </p:column>
+                        
+                        <p:column headerText="Type" sortBy="#{coupon.couponType.toString()}" filterBy="#{coupon.couponType.toString()}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.couponType.toString()}" />
+                        </p:column>
+                        
+                        <p:column headerText="Discount (if applicable)" filterMatchMode="contains">
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'PERCENTAGE'}" value="#{coupon.getFormattedRate()}%">
+                                <f:convertNumber type="percent" pattern="#0.00" />
+                            </h:outputText>
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'FLAT_AMOUNT'}" value="$#{coupon.getFormattedFlatAmount()}" />
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <div class="actionButton">
+                                <p:commandButton actionListener="#{couponManagementManagedBean.doUpdateCoupon}"  update="formUpdateCoupon" oncomplete="PF('sidebarUpdateCoupon').show()" icon="fa fa-pencil" title="Update Coupon">
+                                    <f:attribute name="selectedCouponToUpdate" value="#{coupon}" />
+                                </p:commandButton>
+                                <p:commandButton actionListener="#{couponManagementManagedBean.deleteCoupon}" icon="fa fa-trash" title="Delete Coupon" update="formAllCoupons:dataTableAllCoupons formAllCoupons:messages">
+                                    <p:confirm header="Confirm Deletion" message="Confirm deletion?" icon="pi pi-exclamation-triangle"/>
+                                    <f:attribute name="selectedCouponToDelete" value="#{coupon}" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+                
+                <p:confirmDialog global="true" id="dialogConfirmDeletion">                       
+                        <p:commandButton type="button" value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton type="button" value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />                        
+                </p:confirmDialog>
+
+                <h:form id="formCreateCoupon">
+                    <p:sidebar id="sidebarCreateCoupon" widgetVar="sidebarCreateCoupon" position="right" baseZIndex="10000" style="width: 30%;">
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateCoupon').hide()"/>
+
+                        <p:messages id="messagesCreateNewCoupon" redisplay="false" />
+
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="couponType" value="Coupon Type: " style="font-weight: bold;" />
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="couponType" value="#{couponManagementManagedBean.newCoupon.couponType}" appendTo="@this">
+                                        <p:ajax update="formCreateCoupon:sidebarCreateCoupon" oncomplete="PF('sidebarCreateCoupon').show()" />
+                                        <f:selectItem itemValue="#{null}" itemLabel="--Select One--" />
+                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type}" itemLabel="#{type}" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="code" value="Code: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="code" value="#{couponManagementManagedBean.newCoupon.code}" required="true" requiredMessage="Code is required" >
+                                        <p:ajax listener="#{couponManagementManagedBean.test()}"/>
+                                    </p:inputText>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="startDate" value="Start Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.newCoupon.startDate}" showIcon="true" required="true" requiredMessage="Start date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:datePicker>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="endDate" value="End Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.newCoupon.endDate}" showIcon="true" required="true" requiredMessage="End date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:datePicker>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="loyaltyPoints" value="Loyalty Points: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.newCoupon.loyaltyPointRequired}" required="true" requiredMessage="Loyalty points required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType.name() eq 'PERCENTAGE'}">
+                                <p:column>
+                                    <p:outputLabel for="rate" value="Rate (%): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="rate" value="#{couponManagementManagedBean.newCoupon.rate}" required="true" requiredMessage="Rate is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType.name() eq 'FLAT_AMOUNT'}">
+                                <p:column>
+                                    <p:outputLabel for="amount" value="Amount ($): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="amount" value="#{couponManagementManagedBean.newCoupon.flatAmount}" required="true" requiredMessage="Amount is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.newCoupon.couponType != null}">
+                                <p:column colspan="3">
+                                    <p:commandButton type="reset" value="Clear" />&nbsp;
+                                    <p:commandButton value="Create New Coupon" update="@form formAllCoupons:dataTableAllCoupons formAllCoupons:messages" actionListener="#{couponManagementManagedBean.createNewCoupon}" oncomplete="PF('sidebarCreateCoupon').hide();" />
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+
+                    </p:sidebar>
+
+                </h:form>
+                
+                <h:form id="formUpdateCoupon">
+                    <p:sidebar id="sidebarUpdateCoupon" widgetVar="sidebarUpdateCoupon" position="right" baseZIndex="10000" style="width: 30%;">
+                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarUpdateCoupon').hide()"/>
+
+                        <p:messages id="messagesUpdateCoupon" redisplay="false" />
+
+                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel for="couponType" value="Coupon Type: " style="font-weight: bold;" />
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="couponType" value="#{couponManagementManagedBean.selectedCouponToUpdate.couponType}" appendTo="@this">
+                                        <p:ajax update="formUpdateCoupon:sidebarUpdateCoupon" oncomplete="PF('sidebarUpdateCoupon').show()" />
+                                        <f:selectItem itemValue="#{null}" itemLabel="--Select One--" />
+                                        <f:selectItems value="#{couponManagementManagedBean.couponTypes}" var="type" itemValue="#{type}" itemLabel="#{type}" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+
+                            
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="code" value="Code: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="code" value="#{couponManagementManagedBean.selectedCouponToUpdate.code}" required="true" requiredMessage="Code is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="startDate" value="Start Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:datePicker id="startDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.startDate}" showIcon="true" required="true" requiredMessage="Start date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:datePicker>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="endDate" value="End Date: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:datePicker id="endDate" value="#{couponManagementManagedBean.selectedCouponToUpdate.endDate}" showIcon="true" required="true" requiredMessage="End date required" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:datePicker>
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
+                                <p:column>
+                                    <p:outputLabel for="loyaltyPoints" value="Loyalty Points: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.selectedCouponToUpdate.loyaltyPointRequired}" required="true" requiredMessage="Loyalty points required" />
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType.name() eq 'PERCENTAGE'}">
+                                <p:column>
+                                    <p:outputLabel for="rate" value="Rate (%): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="rate" value="#{couponManagementManagedBean.selectedCouponToUpdate.rate}" required="true" requiredMessage="Rate is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType.name() eq 'FLAT_AMOUNT'}">
+                                <p:column>
+                                    <p:outputLabel for="amount" value="Amount ($): " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="amount" value="#{couponManagementManagedBean.selectedCouponToUpdate.flatAmount}" required="true" requiredMessage="Amount is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{couponManagementManagedBean.selectedCouponToUpdate.couponType != null}">
+                                <p:column colspan="3">
+                                    <p:commandButton type="reset" value="Clear" />&nbsp;
+                                    <p:commandButton value="Update Coupon" update="@form formAllCoupons:dataTableAllCoupons formAllCoupons:messages" actionListener="#{couponManagementManagedBean.updateCoupon}" oncomplete="PF('sidebarUpdateCoupon').hide();" />
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+
+                    </p:sidebar>
+
+                </h:form>
+
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -25,5 +25,4 @@ public interface StaffSessionBeanLocal {
     public void deleteStaff(Long staffId) throws StaffNotFoundException, CustomerOrderNotFoundException, ComputerSetNotFoundException;
     
     public List<Staff> retrieveAllStaffs();
-    
 }

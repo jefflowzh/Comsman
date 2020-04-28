@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
@@ -19,10 +14,6 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
-/**
- *
- * @author weidonglim
- */
 @Named(value = "orderManagementManagedBean")
 @ViewScoped
 public class OrderManagementManagedBean implements Serializable {
@@ -58,7 +49,13 @@ public class OrderManagementManagedBean implements Serializable {
 
     public void updateOrder(ActionEvent event) {
         try {
-
+            if (selectedOrderEntityToUpdate.getDeliveryAssignedTo() != null && !selectedOrderEntityToUpdate.getRequiresDelivery()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please unassign delivery staff before indicating that a delivery is not required!", null));
+                return;
+            }
+            if (!selectedOrderEntityToUpdate.getRequiresDelivery()) {
+                selectedOrderEntityToUpdate.setDeliveryAddress(null);
+            }
             customerOrderSessionBeanLocal.updateCustomerOrder(selectedOrderEntityToUpdate, null, null, null, null);
 
             selectedOrderEntityToUpdate = new CustomerOrder();

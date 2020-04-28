@@ -133,6 +133,7 @@
                                 </p:column>
                                 <p:column>
                                     <p:selectOneMenu id="selectBoolean" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery}" appendTo="@this">
+                                        <p:ajax update="formUpdateOrder:sidebarUpdateOrder" oncomplete="PF('sidebarUpdateOrder').show()"/>
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -150,7 +151,7 @@
 
                             <p:row>
                                 <p:column colspan="2">
-                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" />
+                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.orderStatus != OrderStatusEnum.DELIVERED}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>

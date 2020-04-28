@@ -37,7 +37,7 @@
             </h:form>
 
             <h:form id="formButtons">
-                <p:commandButton value="Create new CPU"  oncomplete="PF('sidebarCreateNewProduct').show();" icon="fa fa-plus" rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}"/>
+                <p:commandButton value="Create new CPU"  oncomplete="PF('sidebarCreateNewProduct').show();" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}"/>
                 <p:commandButton value="Create new Mother Board"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}"/>
                 <p:commandButton value="Create new RAM" oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}"/>
                 <p:commandButton value="Create new PSU"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}"/>
