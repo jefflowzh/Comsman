@@ -30,6 +30,8 @@ import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
 import ws.restful.model.UpdateCustomerCartReq;
+import ws.restful.model.CustomerUpdateReq;
+import ws.restful.model.CustomerUpdateRsp;
 
 /**
  * REST Web Service
@@ -86,6 +88,23 @@ public class CustomerResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerUpdate(CustomerUpdateReq customerUpdateReq){
+        try{
+            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), null, null);
+            Customer updatedCustomer = this.customerSessionBean.retrieveCustomerById(customerUpdateReq.getCustomer().getUserId(), true , true);
+            CustomerUpdateRsp cur =  new CustomerUpdateRsp(updatedCustomer);
+            return Response.status(Status.OK).entity(cur).build();
+        }
+        catch(Exception ex){
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
 
 //    @Path("updateCustomerCart")
 //    @POST

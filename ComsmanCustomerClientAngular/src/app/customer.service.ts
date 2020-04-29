@@ -87,4 +87,11 @@ export class CustomerService {
 
     return throwError(errorMessage);
   }
+
+  customerUpdate(currentCustomer: Customer): Observable<any>{
+    let customerUpdateReq = {"customer" : currentCustomer};
+
+    return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
+  }
+
 }
