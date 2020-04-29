@@ -3,25 +3,21 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class CouponService {
 
-  baseUrl: string = "/api/Product";
+  baseUrl: string = "/api/Coupon";
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) { }
 
-  retrieveAllPeripherals(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllPeripherals").pipe
-      (
-        catchError(this.handleError)
-      );
-  }
-
-  retrieveAllComputerCases(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllComputerCases").pipe
+  checkCouponByCode(code: String): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/checkCouponByCode?code=" + code).pipe
       (
         catchError(this.handleError)
       );
@@ -41,4 +37,5 @@ export class ProductService {
 
     return throwError(errorMessage);
   }
+
 }

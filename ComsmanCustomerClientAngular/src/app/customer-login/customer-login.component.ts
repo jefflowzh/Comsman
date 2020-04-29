@@ -41,7 +41,9 @@ export class CustomerLoginComponent implements OnInit {
       this.customerService.customerLogin(this.email, this.password).subscribe(
         response => {
           let customer: Customer = response.customer;
+
           if (customer != null) {
+
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
             this.loginError = false;
@@ -49,10 +51,12 @@ export class CustomerLoginComponent implements OnInit {
             this.router.navigate(["/index"]);
           } else {
             this.loginError = true;
+            this.errorMessage = "Null customer error";
           }
         }, error => {
           this.loginError = true;
-          this.errorMessage = error;
+          console.log('********** CustomerLoginComponent.ts customerLogin(): ' + error);
+          this.errorMessage = "Error: " + error.slice(37);
         }
       );
     }

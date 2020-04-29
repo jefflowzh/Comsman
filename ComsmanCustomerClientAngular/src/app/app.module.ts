@@ -13,6 +13,8 @@ import { CardModule } from 'primeng/card';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
+import { SpinnerModule } from 'primeng/spinner';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
@@ -27,6 +29,7 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { FooterComponent } from './footer/footer.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
+import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { CustomerCartComponent } from './customer-cart/customer-cart.component';
     CustomerLoginComponent,
     CustomerRegistrationComponent,
     FooterComponent,
-    CustomerCartComponent
+    CustomerCartComponent,
+    ViewAllComputerCasesComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +60,9 @@ import { CustomerCartComponent } from './customer-cart/customer-cart.component';
     DataViewModule,
     DropdownModule,
     PanelModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SpinnerModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

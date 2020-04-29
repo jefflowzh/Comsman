@@ -48,11 +48,10 @@
                 </div>
             </div>
 
-        </div>
+            <div class="ui-g-12 ui-md-9" *ngIf="loginError == true" style="color: crimson;">
+                {{errorMessage}}
+            </div>
 
-
-        <div *ngIf="loginError == true" style="text-align: center; color: crimson;">
-            {{errorMessage}}
         </div>
 
         <br>

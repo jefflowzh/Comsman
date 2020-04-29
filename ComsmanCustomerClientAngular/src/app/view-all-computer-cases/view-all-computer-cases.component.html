@@ -1,0 +1,37 @@
+<div class="ui-g">
+
+    <div class="ui-g-2">
+        <br>
+
+        <h4>Filters</h4>
+
+        <br>
+
+        <h5>Manufacturer</h5>
+        <div>
+            <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                (click)="removeManufacturerFilters()"></p-checkbox>
+        </div>
+        <div *ngFor="let manufacturer of manufacturers">
+            <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                (click)="applyFilters()">
+            </p-checkbox>
+        </div>
+
+        <br>
+
+        <h5>Type</h5>
+
+        <br>
+
+        <div *ngFor="let type of types">
+            <p-checkbox value={{type}} label={{type}} [(ngModel)]="selectedTypes" (click)="applyFilters()">
+            </p-checkbox>
+        </div>
+    </div>
+
+    <div class="ui-g-10">
+        <app-view-all-products [productType]="productType" [products]="filteredComputerCases"></app-view-all-products>
+    </div>
+
+</div>

@@ -9,7 +9,7 @@ import { Customer } from '../customer';
 @Component({
   selector: 'app-customer-registration',
   templateUrl: './customer-registration.component.html',
-  styleUrls: ['./customer-registration.component.css']
+  styleUrls: ['./customer-registration.component.css'],
 })
 export class CustomerRegistrationComponent implements OnInit {
 
@@ -19,14 +19,14 @@ export class CustomerRegistrationComponent implements OnInit {
   registrationError: boolean;
   errorMessage: string;
 
-  displayRegistrationSuccessDialog: boolean;
+  displayRegistrationSuccessModal: boolean;
 
   constructor(private router: Router, public sessionService: SessionService,
     private customerService: CustomerService) {
     this.newCustomer = new Customer;
     this.submitted = false;
     this.registrationError = false;
-    this.displayRegistrationSuccessDialog = false;
+    this.displayRegistrationSuccessModal = false;
   }
 
   ngOnInit() {
@@ -38,23 +38,26 @@ export class CustomerRegistrationComponent implements OnInit {
     if (customerRegistrationForm.valid) {
       this.customerService.customerRegistration(this.newCustomer).subscribe(
         response => {
-          let newCustomerId: number = response.customerId;
+          let newCustomerId: number = response.newCustomerId;
           if (newCustomerId != null) {
             this.registrationError = false;
-            this.displayRegistrationSuccessDialog = true;
-
-            this.customerService.customerLogin(this.newCustomer.email, this.newCustomer.password);
-
-            this.router.navigate(["/index"]);
+            this.displayRegistrationSuccessModal = true;
           } else {
             this.registrationError = true;
+            this.errorMessage = "Null customer error";
           }
         }, error => {
           this.registrationError = true;
-          this.errorMessage = error;
+          console.log('********** CustomerRegistrationComponent.ts customerRegistration(): ' + error);
+          this.errorMessage = "Error: " + error.slice(37);
         }
       );
     }
+  }
+
+  confirm() {
+    this.displayRegistrationSuccessModal = false;
+    this.router.navigate(["/index"])
   }
 
 }

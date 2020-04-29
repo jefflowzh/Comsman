@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { SelectItem } from 'primeng/api';
 
 import { ProductService } from '../product.service';
 import { Product } from '../product';
+import { ComputerCase } from '../computer-case';
 
 @Component({
   selector: 'app-view-all-products',
@@ -13,12 +14,13 @@ import { Product } from '../product';
 })
 export class ViewAllProductsComponent implements OnInit {
 
-  products: Product[];
+  @Input() products: Product[];
   sortOptions: SelectItem[];
   sortKey: string;
   sortField: string;
   sortOrder: number;
   header: string;
+  @Input() productType: string;
 
   constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
     this.sortOptions = [
@@ -28,20 +30,8 @@ export class ViewAllProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => this.loadProducts(params["productType"]));
-  }
-
-  loadProducts(productType: string) {
-    if (productType == "Peripheral") {
-      this.header = "Peripherals";
-      this.productService.retrieveAllPeripherals().subscribe(
-        response => {
-          this.products = response.peripherals;
-        },
-        error => {
-          console.log('********** ViewAllPeripheralsComponent.ts: ' + error);
-        }
-      );
+    if (this.productType == "Computer Case") {
+      this.header = "All Computer Cases";
     }
   }
 

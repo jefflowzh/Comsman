@@ -1,8 +1,9 @@
 import { LineItem } from './line-item';
 import { CustomerOrder } from './customer-order';
+import { ComputerPart } from './computer-part'
 
 export class Customer {
-    customerId: number;
+    userId: number;
     firstName: string;
     lastName: string;
     address: string;
@@ -15,10 +16,11 @@ export class Customer {
     cart: LineItem[];
     loyaltyPoints: number;
     orders: CustomerOrder[];
+    currComputerSetParts: ComputerPart[]
 
-    constructor(customerId?: number, firstName?: string, lastName?: string, address?: string, email?: string, password?: string,
+    constructor(userId?: number, firstName?: string, lastName?: string, address?: string, email?: string, password?: string,
         contactNumber?: string, isDisabled?: Boolean, cardNumber?: string, ccv?: string, loyaltyPoints?: number) {
-        this.customerId = customerId;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

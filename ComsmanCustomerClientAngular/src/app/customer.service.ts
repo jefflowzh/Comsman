@@ -3,7 +3,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Customer } from './customer'
+import { SessionService } from './session.service';
+import { Customer } from './customer';
+import { ComputerPart } from './computer-part';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +20,7 @@ export class CustomerService {
 
   customer: Customer;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private sessionService: SessionService) {
   }
 
   customerLogin(email: string, password: string): Observable<any> {
@@ -25,11 +31,47 @@ export class CustomerService {
   }
 
   customerRegistration(newCustomer: Customer): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/customerRegistration?customer=" + newCustomer).pipe
+
+    let customerRegistrationReq = { "newCustomer": newCustomer }
+
+    return this.httpClient.put<any>(this.baseUrl + "/customerRegistration", customerRegistrationReq, httpOptions).pipe
       (
         catchError(this.handleError)
       );
   }
+
+  updateCustomerCart(): Observable<any> {
+
+    let updateCustomerCartReq = {
+      "customerId": this.sessionService.getCurrentCustomer().userId,
+      "updatedCart": this.sessionService.getCurrentCustomer().cart
+    }
+
+    console.log('********* DEBUG 1')
+    console.log(this.sessionService.getCurrentCustomer())
+
+    return this.httpClient.post<any>(this.baseUrl + "/updateCustomerCartReq", updateCustomerCartReq, httpOptions).pipe
+      (
+        catchError(this.handleError)
+      );
+
+  }
+
+  // updateCustomerBuild(updatedCustomer: Customer): Observable<any> {
+
+  //   let updateCustomerReq = {
+  //     "updatedCustomer": updatedCustomer
+  //   }
+
+  //   console.log('********* DEBUG 1')
+  //   console.log(updatedCustomer)
+  //   console.log(updatedCustomer.userId)
+
+  //   return this.httpClient.post<any>(this.baseUrl + "/updateCustomer", updateCustomerReq, httpOptions).pipe
+  //     (
+  //       catchError(this.handleError)
+  //     );
+  // }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";

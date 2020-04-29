@@ -18,7 +18,7 @@ export class IndexComponent implements OnInit {
       label: 'Computer Parts',
       items: [
         { label: 'CPU Cooler', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/CPUCooler'] },
-        { label: 'Computer Case', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/ComputerCase'] },
+        { label: 'Computer Case', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllComputerCases'] },
         { label: 'GPU', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/GPU'] },
         { label: 'HDD', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/HDD'] },
         { label: 'Motherboard', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/Motherboard'] },

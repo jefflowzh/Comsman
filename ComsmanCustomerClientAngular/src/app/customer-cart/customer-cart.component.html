@@ -1,29 +1,103 @@
-<p>customer-cart works!</p>
-
 <div class="container">
+
+    <br>
+
+    <h1>My Cart</h1>
+
     <p-dataView [value]="cart">
-        <ng-template let-lineItem pTemplate="listItem">
-            <div class="ui-g-12">
-                <div class="car-details">
-                    <div>
-                        <!-- <img src="assets/showcase/images/demo/car/{{car.brand}}.png"> -->
-                        {{lineItem.product.image}}
-                        <div class="ui-g">
-                            <div class="ui-g-12">Name: <b>{{lineItem.product.name}}</b></div>
-                            <div class="ui-g-12">Price: <b>{{lineItem.product.price}}</b></div>
-                        </div>
-                    </div>
-                    <button pButton type="button" icon="pi pi-search"></button>
+
+        <p-header>
+            <div class="ui-g">
+                <div class="ui-g-1">No</div>
+                <div class="ui-g-2">Image</div>
+                <div class="ui-g-4">Name</div>
+                <div class="ui-g-1">Price</div>
+                <div class="ui-g-2">Quantity</div>
+                <div class="ui-g-1">Line Total</div>
+            </div>
+        </p-header>
+
+        <ng-template let-lineItem let-index="rowIndex" pTemplate="listItem">
+            <div class="ui-g">
+                <div class="ui-g-1">{{index + 1}}</div>
+                <div class="ui-g-2">{{lineItem.product.image}}</div>
+                <div class="ui-g-4">{{lineItem.product.name}}</div>
+                <div class="ui-g-1">S$ {{(lineItem.product.price).toFixed(2)}}</div>
+                <div class="ui-g-2">
+                    <p-spinner [(ngModel)]="lineItem.quantity" #quanityReverseBind="ngModel"
+                        (onChange)="updateSessionCart()" size="5" min="1">
+                    </p-spinner>
+                    <div *ngIf="quantityReverseBind"></div>
+                </div>
+                <div class="ui-g-1">S$ {{(lineItem.product.price * lineItem.quantity).toFixed(2)}}</div>
+                <div class="ui-g-1">
+                    <button pButton type="button" class="ui-button-secondary" icon="pi pi-times"
+                        (click)="removeLineItem(index)"></button>
                 </div>
             </div>
         </ng-template>
-    </p-dataView>
-</div>
 
-<p-dataView [value]="cart">
-    <ng-template let-lineItem pTemplate="listItem">
-        <div>
-            {{lineItem.lineItemId}}
+    </p-dataView>
+
+    <br>
+
+    <div style="outline: 1px solid #c8c8c8;">
+        <div class="ui-g">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-1"><b>Subtotal: </b></div>
+            <div class="ui-g-3" style="text-align: right;">S$ {{(calculateSubtotal()).toFixed(2)}}</div>
         </div>
-    </ng-template>
-</p-dataView>
+        <div class="ui-g">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-1"><b>Coupon:</b></div>
+            <div class="ui-g-3">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-tags" style="line-height: 1;"></i></span>
+                    <input type="text" pInputText placeholder="Coupon Code" style="width: 100%;"
+                        [(ngModel)]="couponCodeInput">
+                </div>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12" *ngIf="retrieveCouponError == true" style="text-align: right; color: crimson;">
+                {{errorMessage}}</div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12" *ngIf="retrieveCouponError == false && coupon != null"
+                style="text-align: right; color:green;">
+                Coupon applied successfully!</div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-9"></div>
+            <div class="ui-g-3"><button pButton type="button" class="ui-button-secondary" label="Apply"
+                    style="width: 100%;" (click)="checkCouponByCode()"></button></div>
+        </div>
+        <div class="ui-g" *ngIf="isPercentageCoupon || isFlatAmountCoupon">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-2"><b>Discount:</b></div>
+            <div class="ui-g-2" *ngIf="isPercentageCoupon" style="text-align: right; color: green;">-
+                {{coupon.percentageRate * 100}}%</div>
+            <div class="ui-g-2" *ngIf="isFlatAmountCoupon" style="text-align: right; color: green;">-S$
+                {{coupon.flatAmount}}</div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-2"><b>Delivery fee: </b></div>
+            <div class="ui-g-2" *ngIf="!isFreeDeliveryCoupon" style="text-align: right;">S$ {{(deliveryFee).toFixed(2)}}
+            </div>
+            <div class="ui-g-2" *ngIf="isFreeDeliveryCoupon" style="text-align: right; color: green;">S$ 0</div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-1"><b>Total: </b></div>
+            <div class="ui-g-3" style="text-align: right;">S$ {{(calculateTotal()).toFixed(2)}}</div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-8"></div>
+            <div class="ui-g-4"><button pButton type="button" label="Checkout" class="ui-button-success"
+                    style="width: 100%" (click)="createNewCustomerOrder()"></button></div>
+        </div>
+
+    </div>
+
+</div>

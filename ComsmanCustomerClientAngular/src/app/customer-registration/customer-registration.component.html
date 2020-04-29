@@ -17,7 +17,7 @@
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
                     <input id="firstName" name="firstName" #firstNameReverseBind="ngModel"
-                        [(ngModel)]="customer.firstName" type="text" pInputText placeholder="First name"
+                        [(ngModel)]="newCustomer.firstName" type="text" pInputText placeholder="First name"
                         required="true">
                 </div>
             </div>
@@ -32,8 +32,9 @@
                 Last name
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-                    <input id="lastName" name="lastName" #lastNameReverseBind="ngModel" [(ngModel)]="customer.lastName"
-                        type="text" pInputText placeholder="Last name" required="true">
+                    <input id="lastName" name="lastName" #lastNameReverseBind="ngModel"
+                        [(ngModel)]="newCustomer.lastName" type="text" pInputText placeholder="Last name"
+                        required="true">
                 </div>
             </div>
             <div class="ui-g-12 ui-md-5" style="color: crimson;"
@@ -47,8 +48,8 @@
                 Email
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-                    <input id="email" name="email" #emailReverseBind="ngModel" [(ngModel)]="customer.email" type="email"
-                        pInputText placeholder="Email" required="true"
+                    <input id="email" name="email" #emailReverseBind="ngModel" [(ngModel)]="newCustomer.email"
+                        type="email" pInputText placeholder="Email" required="true"
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
                 </div>
             </div>
@@ -66,8 +67,9 @@
                 Password
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-                    <input id="password" name="password" #passwordReverseBind="ngModel" [(ngModel)]="password"
-                        type="password" pInputText placeholder="Password" required="true">
+                    <input id="password" name="password" #passwordReverseBind="ngModel"
+                        [(ngModel)]="newCustomer.password" type="password" pInputText placeholder="Password"
+                        required="true">
                 </div>
             </div>
             <div class="ui-g-12 ui-md-9" style="color: crimson;"
@@ -81,7 +83,7 @@
                 Address
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-                    <input id="address" name="address" #addressReverseBind="ngModel" [(ngModel)]="customer.address"
+                    <input id="address" name="address" #addressReverseBind="ngModel" [(ngModel)]="newCustomer.address"
                         type="text" pInputText placeholder="Address" required="true">
                 </div>
             </div>
@@ -97,7 +99,7 @@
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
                     <input id="contactNumber" name="contactNumber" #contactNumberReverseBind="ngModel"
-                        [(ngModel)]="customer.contactNumber" type="text" pInputText placeholder="Contact Number"
+                        [(ngModel)]="newCustomer.contactNumber" type="text" pInputText placeholder="Contact Number"
                         required="true">
                 </div>
             </div>
@@ -108,11 +110,10 @@
                 </div>
             </div>
 
-        </div>
+            <div class="ui-g-12 ui-md-5" *ngIf="registrationError == true" style="color: crimson;">
+                {{errorMessage}}
+            </div>
 
-
-        <div *ngIf="registrationError == true" style="text-align: center; color: crimson;">
-            {{errorMessage}}
         </div>
 
         <br>
@@ -125,18 +126,14 @@
 
         <br>
 
-        <p-dialog header="Welcome" [(visible)]="displayRegistrationSuccessDialog">
+        <p-dialog header="Registration successful!" [(visible)]="displayRegistrationSuccessModal" [modal]="true">
             <div style="text-align: center;">
-                Registration successful!
-                <button type="button" pButton icon="pi pi-check" (click)="displayRegistrationSuccessDialog=false"
-                    label="Yes"></button>
+                <div>You can now proceed to log in with your new account.</div>
+                <br>
+                <div><button type="button" pButton (click)="confirm()" label="Ok"></button></div>
             </div>
         </p-dialog>
 
     </form>
-
-    <br>
-    <br>
-    <br>
 
 </div>
