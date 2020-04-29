@@ -36,28 +36,25 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException, CustomerOrderNotFoundException {
         System.out.println("ENTER HERE");
         Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId, false, true);
-        
+
         newCustomerOrder.setCustomer(customer);
         customer.getOrders().add(newCustomerOrder);
-        
+
         System.out.println("INSIDE CREATENEWCUSTOMERORDER");
-        
+
         // boolean therescomputerset = false
         // for (lineItem: newcustomerorder.getlineItem) -> lineItem.getComputerSet = not null -> unassigned, setCSflag = true break;
-        
         // if (setCSflag == false) -> status -> completed
-        
-        
         em.persist(newCustomerOrder);
         em.flush();
-        
+
         updateOrderStatus(newCustomerOrder.getCustomerOrderId());
-        
+
         System.out.println("*******************************" + newCustomerOrder.getCustomerOrderId());
-        
+
         return newCustomerOrder.getCustomerOrderId();
     }
-    
+
     @Override
     public CustomerOrder retrieveCustomerOrderById(Long customerOrderId, Boolean loadLineItems) throws CustomerOrderNotFoundException {
         CustomerOrder customerOrder = em.find(CustomerOrder.class, customerOrderId);
@@ -71,19 +68,19 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             throw new CustomerOrderNotFoundException("Customer Order ID " + customerOrderId + " does not exist!");
         }
     }
-    
+
     @Override
     public List<CustomerOrder> retrieveCustomerOrdersByDeliveryStaff(Long staffId, Boolean loadLineItems) {
-        Query query = em.createQuery("SELECT c FROM CustomerOrder c WHERE c.deliveryAssignedTo.userId = :inStaffId");
+        Query query = em.createQuery("SELECT c FROM CustomerOrder c WHERE c.deliveryAssignedTo.userId = :inStaffId and c.delivered = false");
         query.setParameter("inStaffId", staffId);
         List<CustomerOrder> customerOrders = query.getResultList();
-        
+
         if (loadLineItems) {
             for (CustomerOrder order : customerOrders) {
                 order.getLineItems().size();
             }
         }
-        
+
         return customerOrders;
     }
 
@@ -91,29 +88,29 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     public void updateCustomerOrder(CustomerOrder customerOrder, Long customerId, Long staffId, Long couponId, LineItem lineItem) throws CustomerNotFoundException, StaffNotFoundException, CouponNotFoundException {
 
         CustomerOrder updatedCustomerOrder = em.merge(customerOrder);
-        
+
         // When adding or removing the order to/from a customer
         if (customerId != null) {
             Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId, false, true);
-            if(updatedCustomerOrder.getCustomer() == null) {
+            if (updatedCustomerOrder.getCustomer() == null) {
                 // association
                 updatedCustomerOrder.setCustomer(customer);
                 customer.getOrders().add(updatedCustomerOrder);
-            } else if (updatedCustomerOrder.getCustomer() == customer){
+            } else if (updatedCustomerOrder.getCustomer() == customer) {
                 // do disassociation
                 updatedCustomerOrder.setCustomer(null);
                 customer.getOrders().remove(updatedCustomerOrder);
             }
         }
-        
+
         // When need to change order and staff delivery assignments
         if (staffId != null) {
             Staff staff = staffSessionBeanLocal.retrieveStaffById(staffId, true, false);
-            if(updatedCustomerOrder.getDeliveryAssignedTo() == null) {
+            if (updatedCustomerOrder.getDeliveryAssignedTo() == null) {
                 // association
                 updatedCustomerOrder.setDeliveryAssignedTo(staff);
                 staff.getDeliveries().add(updatedCustomerOrder);
-            } else if (updatedCustomerOrder.getDeliveryAssignedTo() == staff){
+            } else if (updatedCustomerOrder.getDeliveryAssignedTo() == staff) {
                 // do disassociation
                 updatedCustomerOrder.setDeliveryAssignedTo(null);
                 staff.getDeliveries().remove(updatedCustomerOrder);
@@ -124,17 +121,17 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
                 staff.getDeliveries().add(updatedCustomerOrder);
             }
         }
-        
+
         if (couponId != null) {
             Coupon coupon = couponSessionBeanLocal.retrieveCouponById(couponId);
             updatedCustomerOrder.setCoupon(coupon);
         }
-        
+
         if (lineItem != null) {
             updatedCustomerOrder.getLineItems().add(lineItem);
         }
     }
-    
+
     public void updateOrderStatus(Long customerOrderId) throws CustomerOrderNotFoundException {
         System.out.println("******** STATUS UPDATED");
         CustomerOrder customerOrder;
@@ -142,19 +139,19 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         Boolean assignedComputerSetsExist = false;
         Boolean unassignedComputerSetsExist = false;
         Boolean incompleteComputerSetsExist = false;
-        
+
         customerOrder = retrieveCustomerOrderById(customerOrderId, Boolean.TRUE);
-        
+
         if (customerOrder.getVoided()) {
             customerOrder.setOrderStatus(OrderStatusEnum.VOIDED);
             return;
         }
-        
+
         if (customerOrder.getDelivered()) {
             customerOrder.setOrderStatus(OrderStatusEnum.DELIVERED);
             return;
         }
-        
+
         List<LineItem> lineItems = customerOrder.getLineItems();
         for (LineItem lineItem : lineItems) {
             if (lineItem.getComputerSet() != null) {
@@ -166,13 +163,13 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
                     System.out.println("******unassigned sets exist");
                     unassignedComputerSetsExist = true;
                 }
-                
+
                 if (!lineItem.getComputerSet().getAssemblyComplete()) {
                     incompleteComputerSetsExist = true;
                 }
             }
         }
-        
+
         if (!haveComputerSets) {
             customerOrder.setOrderStatus(OrderStatusEnum.COMPLETED);
         } else {
@@ -193,12 +190,12 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             }
         }
     }
-    
+
     @Override
     // For deleting orders on the staff interface view
-    public void deleteCustomerOrder(Long customerOrderId) throws CustomerOrderNotFoundException { 
+    public void deleteCustomerOrder(Long customerOrderId) throws CustomerOrderNotFoundException {
         CustomerOrder customerOrder = retrieveCustomerOrderById(customerOrderId, false);
-        
+
         if (customerOrder.getDeliveryAssignedTo() != null) {
             customerOrder.getDeliveryAssignedTo().getDeliveries().remove(customerOrder);
             customerOrder.setDeliveryAssignedTo(null);
@@ -209,20 +206,20 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
         }
         em.remove(customerOrder);
     }
-    
+
     @Override
     public List<CustomerOrder> retrieveAllOrders() {
         Query query = em.createQuery("SELECT o FROM CustomerOrder o");
-        
+
         return query.getResultList();
     }
-    
+
     @Override
     public List<CustomerOrder> retrieveAllTasks() {
         Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inStatus and o.orderStatus <> :inVoid");
         query.setParameter("inStatus", OrderStatusEnum.DELIVERED);
         query.setParameter("inVoid", OrderStatusEnum.VOIDED);
-        
+
         return query.getResultList();
     }
 

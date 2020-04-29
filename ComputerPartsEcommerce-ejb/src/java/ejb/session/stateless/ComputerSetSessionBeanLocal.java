@@ -20,7 +20,7 @@ public interface ComputerSetSessionBeanLocal {
 
 //    public void deleteComputerSet(Long computerSetId) throws ComputerSetNotFoundException;
 
-    public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds);
+    public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds, Boolean fetchCompleted);
 
     public List<ComputerSet> retrieveComputerSetsByOrderId(Long orderId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds);
 

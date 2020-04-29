@@ -27,4 +27,5 @@ public interface CustomerOrderSessionBeanLocal {
     public List<CustomerOrder> retrieveAllOrders();
     
     public List<CustomerOrder> retrieveAllTasks();
+
 }

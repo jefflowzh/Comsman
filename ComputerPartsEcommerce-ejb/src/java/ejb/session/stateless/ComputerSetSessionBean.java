@@ -32,33 +32,59 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
         //Make X line items and computer sets where X is the quantity of lineItem, each line item should contain only 1 computer set as each computer set can only be assigned to 1 staff (i.e. it will be inappropriate to assigned a computer set with quantity 100 to 1 staff.
         Integer quantity = lineItem.getQuantity();
         List<Long> computerSetIds = new ArrayList<>();
-        
+
         for (int computerSet = 0; computerSet < quantity; computerSet++) {
             LineItem newLineItem = lineItemSessionBeanLocal.createNewLineItem(new LineItem(1));
 
             ComputerSet newComputerSet = new ComputerSet();
-            if (computerSetModel.getAirCooler() != null) newComputerSet.setAirCooler(computerSetModel.getAirCooler());
-            if (computerSetModel.getCompCase() != null) newComputerSet.setCompCase(computerSetModel.getCompCase());
-            if (computerSetModel.getCpu() != null) newComputerSet.setCpu(computerSetModel.getCpu());
-            if (computerSetModel.getGpus() != null) newComputerSet.setGpus(computerSetModel.getGpus());
-            if (computerSetModel.getHdds() != null) newComputerSet.setHdds(computerSetModel.getHdds());
-            if (computerSetModel.getIsAmateur()!= null) newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
+            if (computerSetModel.getAirCooler() != null) {
+                newComputerSet.setAirCooler(computerSetModel.getAirCooler());
+            }
+            if (computerSetModel.getCompCase() != null) {
+                newComputerSet.setCompCase(computerSetModel.getCompCase());
+            }
+            if (computerSetModel.getCpu() != null) {
+                newComputerSet.setCpu(computerSetModel.getCpu());
+            }
+            if (computerSetModel.getGpus() != null) {
+                newComputerSet.setGpus(computerSetModel.getGpus());
+            }
+            if (computerSetModel.getHdds() != null) {
+                newComputerSet.setHdds(computerSetModel.getHdds());
+            }
+            if (computerSetModel.getIsAmateur() != null) {
+                newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
+            }
             newComputerSet.setLineItem(newLineItem);
-            if (computerSetModel.getMotherBoard() != null) newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
-            if (computerSetModel.getPrice() != null) newComputerSet.setPrice(computerSetModel.getPrice());
-            if (computerSetModel.getPsu() != null) newComputerSet.setPsu(computerSetModel.getPsu());
-            if (computerSetModel.getRams() != null) newComputerSet.setRams(computerSetModel.getRams());
-            if (computerSetModel.getSsds() != null) newComputerSet.setSsds(computerSetModel.getSsds());
-            if (computerSetModel.getWarrentyLengthInYears() != null) newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
-            if (computerSetModel.getWaterCooler() != null) newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
-            
+            if (computerSetModel.getMotherBoard() != null) {
+                newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
+            }
+            if (computerSetModel.getPrice() != null) {
+                newComputerSet.setPrice(computerSetModel.getPrice());
+            }
+            if (computerSetModel.getPsu() != null) {
+                newComputerSet.setPsu(computerSetModel.getPsu());
+            }
+            if (computerSetModel.getRams() != null) {
+                newComputerSet.setRams(computerSetModel.getRams());
+            }
+            if (computerSetModel.getSsds() != null) {
+                newComputerSet.setSsds(computerSetModel.getSsds());
+            }
+            if (computerSetModel.getWarrentyLengthInYears() != null) {
+                newComputerSet.setWarrentyLengthInYears(computerSetModel.getWarrentyLengthInYears());
+            }
+            if (computerSetModel.getWaterCooler() != null) {
+                newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
+            }
+
             newLineItem.setComputerSet(newComputerSet);
 
             em.persist(newComputerSet);
             em.flush();
             computerSetIds.add(newComputerSet.getComputerSetId());
         }
-        
+
         return computerSetIds;
     }
 
@@ -101,8 +127,15 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     }
 
     @Override
-    public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
-        Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId");
+    public List<ComputerSet> retrieveComputerSetsByStaffAssignedTo(Long staffId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds, Boolean fetchCompleted) {
+        Query query; 
+        
+        if (fetchCompleted) {
+            query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId and c.assemblyComplete = false");
+        } else {
+            query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.assemblyAssignedTo.userId = :inStaffId");
+        }
+        
         query.setParameter("inStaffId", staffId);
         List<ComputerSet> computerSets = query.getResultList();
         if (loadRams) {
@@ -127,7 +160,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
         }
         return computerSets;
     }
-    
+
     @Override
     public List<ComputerSet> retrieveComputerSetsByOrderId(Long orderId, Boolean loadRams, Boolean loadGpus, Boolean loadHdds, Boolean loadSsds) {
         Query query = em.createQuery("SELECT c FROM ComputerSet c WHERE c.lineItem.customerOrder.customerOrderId = :inOrderId");

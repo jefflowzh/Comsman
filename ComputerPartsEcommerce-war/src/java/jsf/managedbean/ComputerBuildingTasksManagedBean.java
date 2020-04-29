@@ -52,7 +52,7 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
     public void postConstruct() {
         System.out.println("********* postConstruct");
         Staff staff = (Staff) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentStaffEntity");
-        setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE));
+        setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE));
         System.out.println("********* computerSets: " + computerSets.size());
     }
     

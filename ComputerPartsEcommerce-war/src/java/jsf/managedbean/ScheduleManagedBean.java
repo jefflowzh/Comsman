@@ -6,6 +6,7 @@ package jsf.managedbean;
  * and open the template in the editor.
  */
 import ejb.session.stateless.ComputerSetSessionBeanLocal;
+import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import entity.ComputerSet;
 import entity.CustomerOrder;
 import entity.Staff;
@@ -39,10 +40,14 @@ import org.primefaces.model.ScheduleModel;
 @ViewScoped
 public class ScheduleManagedBean implements Serializable {
 
+    @EJB(name = "CustomerOrderSessionBeanLocal")
+    private CustomerOrderSessionBeanLocal customerOrderSessionBeanLocal;
+
     @EJB(name = "ComputerSetSessionBeanLocal")
     private ComputerSetSessionBeanLocal computerSetSessionBeanLocal;
 
     private List<ComputerSet> sets;
+    private List<CustomerOrder> deliveries;
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -50,29 +55,27 @@ public class ScheduleManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         Staff staff = (Staff) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentStaffEntity");
-        setSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE));
+        setSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE));
+        setDeliveries(customerOrderSessionBeanLocal.retrieveCustomerOrdersByDeliveryStaff(staff.getUserId(), Boolean.TRUE));
 
         eventModel = new DefaultScheduleModel();
 
         if (sets != null) {
             for (ComputerSet s : sets) {
                 CustomerOrder order = s.getLineItem().getCustomerOrder();
-//                System.out.println("date " + order.getOrderDate());
 
-                Calendar calendarStart = toCalendar(order.getOrderDate());
-                
-                eventModel.addEvent(new DefaultScheduleEvent("Order Id: " + order.getCustomerOrderId() + ", LineItem Id: " + s.getLineItem().getLineItemId() , calendarStart.getTime() , fourteenDaysLater(calendarStart)));
-
+                eventModel.addEvent(new DefaultScheduleEvent("Computer Building - Order Id: " + order.getCustomerOrderId() + ", LineItem Id: " + s.getLineItem().getLineItemId(), order.getOrderDate(), order.getCompleteBy(), "computerbuilding"));
             }
         } else {
             System.out.println("null");
         }
 
-//        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
-//        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-//        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
-//        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
-//        eventModel.addEvent(new DefaultScheduleEvent("Plant blablabla", theDayAfter3Pm(), fourDaysLater3pm()));
+        if (deliveries != null) {
+            for (CustomerOrder c : deliveries) {
+                eventModel.addEvent(new DefaultScheduleEvent("Delivery - Order Id: " + c.getCustomerOrderId() , c.getCompleteBy() , c.getDeliverBy(), "delivery"));
+            }
+        }
+
     }
 
     public ScheduleManagedBean() {
@@ -102,93 +105,6 @@ public class ScheduleManagedBean implements Serializable {
 
     public ScheduleModel getEventModel() {
         return eventModel;
-    }
-    
-    private Date fourteenDaysLater(Calendar c) {
-        Calendar t = (Calendar) c.clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 14);
-        t.set(Calendar.HOUR, 11);
-        t.set(Calendar.MINUTE, 59);
-
-        return t.getTime();
-    }
-
-    private Calendar today() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
-
-        return calendar;
-    }
-
-    private Date previousDay8Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 8);
-
-        return t.getTime();
-    }
-
-    private Date previousDay11Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date today1Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 1);
-
-        return t.getTime();
-    }
-
-    private Date theDayAfter3Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
-    }
-
-    private Date today6Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 6);
-
-        return t.getTime();
-    }
-
-    private Date nextDay9Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 9);
-
-        return t.getTime();
-    }
-
-    private Date nextDay11Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date fourDaysLater3pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
     }
 
     public ScheduleEvent getEvent() {
@@ -240,5 +156,13 @@ public class ScheduleManagedBean implements Serializable {
 
     public void setSets(List<ComputerSet> sets) {
         this.sets = sets;
+    }
+
+    public List<CustomerOrder> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<CustomerOrder> deliveries) {
+        this.deliveries = deliveries;
     }
 }
