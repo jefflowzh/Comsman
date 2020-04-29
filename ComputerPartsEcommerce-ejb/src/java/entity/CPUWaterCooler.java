@@ -23,8 +23,7 @@ import javax.persistence.Id;
 public class CPUWaterCooler extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
-    private String Manufacturer;
+    
     private String colour;
     private Integer noiseLevel;
     // private String[] CPUChipCompatibility;
@@ -36,25 +35,16 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
         CPUChipCompatibility = new ArrayList<>();
     }
 
-    public CPUWaterCooler(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public CPUWaterCooler(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public CPUWaterCooler(String Manufacturer, String colour, Integer noiseLevel, List<String> CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public CPUWaterCooler(String manufacturer, String colour, Integer noiseLevel, List<String> CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.CPUChipCompatibility = CPUChipCompatibility;
         this.RadiatorSize = RadiatorSize;
-    }
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getColour() {

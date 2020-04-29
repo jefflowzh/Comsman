@@ -34,25 +34,16 @@ public class HDD extends ComputerPart implements Serializable {
     public HDD() {
     }
 
-    public HDD(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public HDD(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public HDD(String Manufacturer, String type, Integer Capacity, String formFactor, String Interface, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public HDD(String manufacturer, String type, Integer Capacity, String formFactor, String Interface, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.type = type;
         this.Capacity = Capacity;
         this.formFactor = formFactor;
         this.Interface = Interface;
-    }
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getType() {

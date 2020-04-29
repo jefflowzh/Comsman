@@ -19,22 +19,13 @@ public class Peripheral extends Product implements Serializable {
     public Peripheral() {
     }
 
-    public Peripheral(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public Peripheral(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
     
     public Peripheral(String manufacturer, String description, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.manufacturer = manufacturer;
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.description = description;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public String getDescription() {

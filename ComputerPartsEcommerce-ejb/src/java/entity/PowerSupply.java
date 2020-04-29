@@ -36,13 +36,12 @@ public class PowerSupply extends ComputerPart implements Serializable {
     public PowerSupply() {
     }
 
-    public PowerSupply(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public PowerSupply(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public PowerSupply(String Manufacturer, String formFactor, String efficiency, Integer wattage, String modularity, Integer SATAConnectors, Integer PCIe6plus2, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public PowerSupply(String manufacturer, String formFactor, String efficiency, Integer wattage, String modularity, Integer SATAConnectors, Integer PCIe6plus2, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.formFactor = formFactor;
         this.efficiency = efficiency;
         this.wattage = wattage;
@@ -52,13 +51,13 @@ public class PowerSupply extends ComputerPart implements Serializable {
     }
 
 
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
-    }
+//    public String getManufacturer() {
+//        return Manufacturer;
+//    }
+//
+//    public void setManufacturer(String Manufacturer) {
+//        this.Manufacturer = Manufacturer;
+//    }
 
     public String getFormFactor() {
         return formFactor;

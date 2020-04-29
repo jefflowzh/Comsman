@@ -27,7 +27,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
    //@OneToMany(mappedBy = "compCase")
    //private List<ComputerSet> computerSets;
  
-    private String Manufacturer;
     private String type; //(ATX Mid Tower)
     // private String[] colours;
     @ElementCollection
@@ -48,13 +47,12 @@ public class ComputerCase extends ComputerPart implements Serializable {
         motherBoardFormFactor = new ArrayList<>();
     }
 
-    public ComputerCase(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public ComputerCase(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public ComputerCase(String Manufacturer, String type, List<String> colours, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public ComputerCase(String manufacturer, String type, List<String> colours, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.type = type;
         this.colours = colours;
         this.sidePanelView = sidePanelView;
@@ -64,16 +62,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.topFanSupport = topFanSupport;
         this.frontFanSupport = frontFanSupport;
         this.rearFanSupport = rearFanSupport;
-    }
-
-    
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getType() {

@@ -46,13 +46,12 @@ public class MotherBoard extends ComputerPart implements Serializable {
         suportedMemorySpeed = new ArrayList<>();
     }
 
-    public MotherBoard(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public MotherBoard(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public MotherBoard(String Manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Integer SATA6GB ,Boolean wiFi, List<String> suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public MotherBoard(String manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Integer SATA6GB ,Boolean wiFi, List<String> suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.formFactor = formFactor;
         this.socket = socket;
         this.chipset = chipset;
@@ -64,14 +63,6 @@ public class MotherBoard extends ComputerPart implements Serializable {
         this.SATA6GB = SATA6GB;
         this.wiFi = wiFi;
         this.suportedMemorySpeed = suportedMemorySpeed;
-    }
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getFormFactor() {

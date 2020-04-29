@@ -215,11 +215,14 @@ public class DataInitSessionBean {
         }
 
         LineItem testpartLineItem = new LineItem(testcpu, 3);
+        LineItem testpartLineItemPeri = new LineItem(peripheral, 3);
 
         try {
             lineItemSessionBean.createNewLineItem(testpartLineItem);
+            lineItemSessionBean.createNewLineItem(testpartLineItemPeri);
             List<LineItem> testLineItems4 = new ArrayList<>();
             testLineItems4.add(testpartLineItem);
+            testLineItems4.add(testpartLineItemPeri);
             Date date2 = new Date();
 
             CustomerOrder testCustomerOrder4 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems4);

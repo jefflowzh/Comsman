@@ -32,25 +32,16 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
         CPUChipCompatibility = new ArrayList<>();
     }
 
-    public CPUAirCooler(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public CPUAirCooler(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public CPUAirCooler(String Manufacturer, String colour, Integer noiseLevel, Double Height, List<String> CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public CPUAirCooler(String manufacturer, String colour, Integer noiseLevel, Double Height, List<String> CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.Height = Height;
         this.CPUChipCompatibility = CPUChipCompatibility;
-    }
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getColour() {

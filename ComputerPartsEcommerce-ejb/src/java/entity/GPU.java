@@ -35,13 +35,12 @@ public class GPU extends ComputerPart implements Serializable {
     public GPU() {
     }
 
-    public GPU(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public GPU(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public GPU(String Manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer ExpansionSlotWidth, String externalPower, Integer Memory, String MemoryType, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public GPU(String manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer ExpansionSlotWidth, String externalPower, Integer Memory, String MemoryType, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.chipset = chipset;
         this.Interface = Interface;
         this.length = length;
@@ -50,14 +49,6 @@ public class GPU extends ComputerPart implements Serializable {
         this.externalPower = externalPower;
         this.Memory = Memory;
         this.MemoryType = MemoryType;
-    }
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public String getChipset() {

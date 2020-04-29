@@ -32,19 +32,23 @@ public abstract class Product implements Serializable {
     private String image;
     @Column(nullable = false)
     @NotNull
+    private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private Boolean isDisabled;
 
     public Product() {
         isDisabled = false;
     }
 
-    public Product(String name, Double price, Integer inventoryQuantity, String image) {
+    public Product(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
         this();
         
         this.name = name;
         this.price = price;
         this.inventoryQuantity = inventoryQuantity;
         this.image = image;
+        this.manufacturer = manufacturer;
     }
 
     public Long getProductId() {
@@ -118,6 +122,14 @@ public abstract class Product implements Serializable {
     @Override
     public String toString() {
         return "entity.Product[ id=" + productId + " ]";
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
     
 }

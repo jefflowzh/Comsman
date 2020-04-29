@@ -108,7 +108,7 @@
                 <!-- Create a Product -->
                 <h:form id="formCreateNewProduct" enctype="multipart/form-data">
                     <p:sidebar id="sidebarCreateNewProduct" widgetVar="sidebarCreateNewProduct" position="right" baseZIndex="10000" style="width: 30%; overflow: scroll">
-                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
+                        <p:commandButton value="Close" icon="fa fa-remove" actionListener="#{productManagementManagedBean.doNull}" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
 
                         <p:messages id="messagesCreateNewProduct" redisplay="false" />
 

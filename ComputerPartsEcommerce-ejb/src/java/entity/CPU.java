@@ -20,7 +20,7 @@ public class CPU extends ComputerPart implements Serializable {
    private static final long serialVersionUID = 1L;
    
    
-   private String Manufacturer;
+   // private String Manufacturer;
    private Integer coreCount;
    private Integer TDP;
    private String socket;
@@ -30,28 +30,17 @@ public class CPU extends ComputerPart implements Serializable {
     public CPU() {
     }
 
-    public CPU(String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
+    public CPU(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
+        super(name, price, inventoryQuantity, image, manufacturer);
     }
 
-    public CPU(String Manufacturer, Integer coreCount, Integer TDP, String socket, Boolean hasIntergratedGraphics, Boolean includesCpuCooler, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+    public CPU(String manufacturer, Integer coreCount, Integer TDP, String socket, Boolean hasIntergratedGraphics, Boolean includesCpuCooler, String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image, manufacturer);
         this.coreCount = coreCount;
         this.TDP = TDP;
         this.socket = socket;
         this.hasIntergratedGraphics = hasIntergratedGraphics;
         this.includesCpuCooler = includesCpuCooler;
-    }
-
-   
-
-    public String getManufacturer() {
-        return Manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
     }
 
     public Integer getCoreCount() {

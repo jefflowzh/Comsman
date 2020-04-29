@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
 import datamodel.StringValue;
@@ -110,7 +105,7 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("Peripheral")) {
             products = peripheralSessionBeanLocal.retrieveAllPeripherals();
         }
-        
+
     }
 
     public void doUpdateProduct(ActionEvent event) {
@@ -326,10 +321,15 @@ public class ProductManagementManagedBean implements Serializable {
     }
 
     public void doCreateNewProduct(ActionEvent event) {
+
         if (selectedProduct.equals("CPU")) {
+            System.out.println("hereeeeeeeeeeeeeeeeeeeeee");
             newProduct = new CPU();
+            System.out.println(newProduct.getClass().getName());
         } else if (selectedProduct.equals("MotherBoard")) {
             newProduct = new MotherBoard();
+            System.out.println("MBBBBBBBBBBBBBBBBBB hereeeeeeeeeeeeeeeeeeeeee");
+            System.out.println(newProduct.getClass().getName());
         } else if (selectedProduct.equals("RAM")) {
             newProduct = new RAM();
         } else if (selectedProduct.equals("PowerSupply")) {
@@ -349,6 +349,8 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("Peripheral")) {
             newProduct = new Peripheral();
         }
+        System.out.println(newProduct.getClass().getName());
+
     }
 
     public void createNewProduct(ActionEvent event) {
@@ -441,9 +443,13 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
+    public void doNull(ActionEvent event) {
+        System.out.println("NULLLLLLLLLL");
+    }
+    
     public void changeNull(ActionEvent event) {
         System.out.println("------------- here");
-        newProduct = null;
+        FacesContext.getCurrentInstance().getViewRoot().getViewMap().clear();
     }
 
     public String getSelectedProduct() {
