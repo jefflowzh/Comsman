@@ -49,6 +49,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return cpuWaterCooler.getProductId();
     }
     
+    @Override
     public Long createNewComCase(ComputerCase computerCase) {
         em.persist(computerCase);
         em.flush();
@@ -117,8 +118,9 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         
     }
     
+    @Override
     public List<ComputerCase> retrieveAllComCase() {
-        Query query = em.createQuery("SELECT c FROM ComptuerCase c"); 
+        Query query = em.createQuery("SELECT c FROM ComputerCase c"); 
         return query.getResultList();
         
     }

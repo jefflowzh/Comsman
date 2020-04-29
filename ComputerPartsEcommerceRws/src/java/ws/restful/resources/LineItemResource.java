@@ -55,8 +55,8 @@ public class LineItemResource {
      * @param content representation for the resource
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void putJson(String content) {
     }
 
     private LineItemSessionBeanLocal lookupLineItemSessionBeanLocal() {

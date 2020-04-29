@@ -2,21 +2,21 @@ package ws.restful.model;
 
 public class CustomerRegistrationRsp {
     
-    Long customerId;
+    Long newCustomerId;
 
     public CustomerRegistrationRsp() {
     }
 
-    public CustomerRegistrationRsp(Long customerId) {
-        this.customerId = customerId;
+    public CustomerRegistrationRsp(Long newCustomerId) {
+        this.newCustomerId = newCustomerId;
     }
 
-    public Long getCustomer() {
-        return customerId;
+    public Long getNewCustomerId() {
+        return newCustomerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setNewCustomerId(Long newCustomerId) {
+        this.newCustomerId = newCustomerId;
     }
     
 }

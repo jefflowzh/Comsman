@@ -39,7 +39,7 @@ public class Coupon implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CouponTypeEnum couponType;
-    private Double rate;
+    private Double percentageRate;
     private Double flatAmount;
     @Column(nullable = false)
     @NotNull
@@ -56,6 +56,7 @@ public class Coupon implements Serializable {
         this.endDate = endDate;
         this.loyaltyPointRequired = loyaltyPointRequired;
         this.couponType = couponType;
+        this.isDisabled = false;
     }
 
     public Long getCouponId() {
@@ -106,12 +107,12 @@ public class Coupon implements Serializable {
         this.couponType = couponType;
     }
 
-    public Double getRate() {
-        return rate;
+    public Double getPercentageRate() {
+        return percentageRate;
     }
 
-    public void setRate(Double rate) {
-        this.rate = rate;
+    public void setPercentageRate(Double percentageRate) {
+        this.percentageRate = percentageRate;
     }
 
     public Double getFlatAmount() {

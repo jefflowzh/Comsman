@@ -5,8 +5,10 @@
  */
 package ws.restful.resources;
 
+import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
+import entity.ComputerCase;
 import entity.Peripheral;
 import entity.Product;
 import java.util.List;
@@ -26,7 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllPeripheralsRsp;
-import ws.restful.model.RetrieveAllProductsRsp;
+import ws.restful.model.RetrieveProductsRsp;
 
 /**
  * REST Web Service
@@ -35,6 +37,8 @@ import ws.restful.model.RetrieveAllProductsRsp;
  */
 @Path("Product")
 public class ProductResource {
+
+    ComputerPartSessionBeanLocal computerPartSessionBeanLocal = lookupComputerPartSessionBeanLocal();
 
     PeripheralSessionBeanLocal peripheralSessionBeanLocal = lookupPeripheralSessionBeanLocal();
 
@@ -56,7 +60,7 @@ public class ProductResource {
 //    public Response retrieveAllProducts() {        
 //        try{
 //            List<Product> products = productSessionBean.retrieveAllProducts();      
-//            RetrieveAllProductsRsp retrieveAllProductsRsp = new RetrieveAllProductsRsp(products); 
+//            RetrieveProductsRsp retrieveAllProductsRsp = new RetrieveProductsRsp(products); 
 //            return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
 //        } catch (Exception ex) {
 //            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -77,6 +81,20 @@ public class ProductResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @Path("retrieveAllComputerCases")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllComputerCases() {        
+        try{
+            List<ComputerCase> computerCases = computerPartSessionBeanLocal.retrieveAllComCase();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(computerCases); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
 
     /**
      * PUT method for updating or creating an instance of ProductResource
@@ -84,7 +102,7 @@ public class ProductResource {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putXml(String content) {
+    public void putJson(String content) {
     }
 
     private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
@@ -101,6 +119,16 @@ public class ProductResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (PeripheralSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/PeripheralSessionBean!ejb.session.stateless.PeripheralSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ComputerPartSessionBeanLocal lookupComputerPartSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (ComputerPartSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ComputerPartSessionBean!ejb.session.stateless.ComputerPartSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

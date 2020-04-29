@@ -16,17 +16,20 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import util.exception.CustomerEmailExistException;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
+import ws.restful.model.UpdateCustomerCartReq;
 
 /**
  * REST Web Service
@@ -56,30 +59,52 @@ public class CustomerResource {
         try {
             Customer customer = customerSessionBean.customerLogin(email, password);
             CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
-            return Response.status(Status.OK).entity(customerLoginRsp).build();   
+            return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
-    
+
     @Path("customerRegistration")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response customerRegistration(CustomerRegistrationReq customerRegistrationReq) {
         try {
-            Long newCustomerId = customerSessionBean.createNewCustomer(customerRegistrationReq.getCustomer());
+            Long newCustomerId = customerSessionBean.createNewCustomer(customerRegistrationReq.getNewCustomer());
             CustomerRegistrationRsp customerRegistrationRsp = new CustomerRegistrationRsp(newCustomerId);
-            return Response.status(Status.OK).entity(customerRegistrationRsp).build();   
-        } catch(Exception ex) {
+            return Response.status(Status.OK).entity(customerRegistrationRsp).build();
+        } catch (CustomerEmailExistException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+
+//    @Path("updateCustomerCart")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response updateCustomer(UpdateCustomerCartReq updateCustomerCartReq) {
+//        System.out.println("************************** updateCustomerCart method: " + updateCustomerCartReq.getUpdatedCart());
+//        try {
+//            // check if customer exists
+//            Customer customer = customerSessionBean.retrieveCustomerById(updateCustomerCartReq.getCustomerId(), false, false);
+//
+//            customerSessionBean.updateCustomer(updateCustomerReq.getUpdatedCustomer(), null, null);
+//            return Response.status(Status.OK).build();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+//            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+//        }
+//    }
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {

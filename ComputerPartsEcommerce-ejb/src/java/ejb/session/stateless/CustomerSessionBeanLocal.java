@@ -4,14 +4,16 @@ import entity.Customer;
 import entity.LineItem;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.CustomerEmailExistException;
 import util.exception.CustomerNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.InvalidLoginCredentialException;
+import util.exception.UnknownPersistenceException;
 
 @Local
 public interface CustomerSessionBeanLocal {
 
-    public Long createNewCustomer(Customer newCustomer);
+    public Long createNewCustomer(Customer newCustomer) throws CustomerEmailExistException, UnknownPersistenceException;
 
     public Customer retrieveCustomerById(Long customerId, Boolean loadCart, Boolean loadOrders) throws CustomerNotFoundException;
 

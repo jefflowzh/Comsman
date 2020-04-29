@@ -8,6 +8,7 @@ import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
+import entity.ComputerCase;
 import entity.ComputerPart;
 import entity.ComputerSet;
 import entity.Coupon;
@@ -17,8 +18,12 @@ import entity.CustomerOrder;
 import entity.Peripheral;
 import entity.Staff;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -85,7 +90,6 @@ public class DataInitSessionBean {
         ComputerPart testComputerPart2 = new ComputerPart("Computer Part 2", 100.00, 10, "image");
         computerPartSessionBean.createNewComputerPart(testComputerPart2);
 
-
 //        List<ComputerPart> testComputerParts = new ArrayList<>();
 //        testComputerParts.add(testComputerPart);
 //        ComputerSet testComputerSet = new ComputerSet(testComputerParts, 1, true, testStaff, "Computer Set 1", 1.0, 1, "image");
@@ -94,8 +98,13 @@ public class DataInitSessionBean {
 //        Coupon testCoupon = new Coupon("YAY2020", new Date(), new Date(), 1, CouponTypeEnum.PERCENTAGE);
 //        couponSessionBean.createNewCoupon(testCoupon);
 //        
-        Customer testCustomer = new Customer( "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
-        customerSessionBean.createNewCustomer(testCustomer);
+        Customer testCustomer = new Customer("Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
+        try {
+            customerSessionBean.createNewCustomer(testCustomer);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
 //        
         LineItem testLineItem = new LineItem(testComputerPart, 1);
         lineItemSessionBean.createNewLineItem(testLineItem);
@@ -111,26 +120,23 @@ public class DataInitSessionBean {
             Date date = new Date();
             CustomerOrder testCustomerOrder = new CustomerOrder(new Timestamp(date.getTime()), true, "Billing address", testLineItems);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder, (long) 3);
-            
-            } catch (CustomerNotFoundException ex) {
+
+        } catch (CustomerNotFoundException ex) {
             System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());
         }
-        
-       try {
+
+        try {
             List<LineItem> testLineItems2 = new ArrayList<>();
             testLineItems2.add(testLineItem3);
             Date date2 = new Date();
             CustomerOrder testCustomerOrder2 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems2);
             customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder2, (long) 3);
-            
-            } catch (CustomerNotFoundException ex) {
+
+        } catch (CustomerNotFoundException ex) {
             System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());
         }
-       
-       
-       
-       
-        Peripheral testPeripheral1 = new Peripheral("Peripheral 1", 1.0, 1, "Image 1");
+
+        Peripheral testPeripheral1 = new Peripheral("Peripheral 1", 1.7, 1, "Image 1");
         peripheralSessionBean.createNewPeripheral(testPeripheral1);
         Peripheral testPeripheral2 = new Peripheral("Peripheral 2", 2.0, 2, "Image 2");
         peripheralSessionBean.createNewPeripheral(testPeripheral2);
@@ -172,21 +178,62 @@ public class DataInitSessionBean {
         peripheralSessionBean.createNewPeripheral(testPeripheral20);
         Peripheral testPeripheral21 = new Peripheral("Peripheral 21", 3.0, 3, "Image 3");
         peripheralSessionBean.createNewPeripheral(testPeripheral21);
-        
-        Customer testCustomer1 = new Customer("Jeff", "Low", "NUS", "customer@gmail.com", "password", "12345678");
-        customerSessionBean.createNewCustomer(testCustomer1);
-        
-        Customer testCustomer2 = new Customer("Potato", "27", "NUH", "customer2@gmail.com", "password", "12345678");
-        customerSessionBean.createNewCustomer(testCustomer2);
-        
-        LineItem newLineItem = new LineItem(testPeripheral1, 5);
-        lineItemSessionBean.createNewLineItem(newLineItem);
-        
-        LineItem newLineItem2 = new LineItem(testPeripheral2, 20);
-        lineItemSessionBean.createNewLineItem(newLineItem2);
-        
-        testCustomer.getCart().add(newLineItem);
-        testCustomer.getCart().add(newLineItem2);
+
+        try {
+            Customer testCustomer1 = new Customer("Jeff", "Low", "NUS", "c@gmail.com", "password", "12345678");
+            customerSessionBean.createNewCustomer(testCustomer1);
+
+            Customer testCustomer2 = new Customer("Potato", "27", "NUH", "customer2@gmail.com", "password", "12345678");
+            customerSessionBean.createNewCustomer(testCustomer2);
+
+            LineItem newLineItem = new LineItem(testPeripheral1, 5);
+            lineItemSessionBean.createNewLineItem(newLineItem);
+
+            LineItem newLineItem2 = new LineItem(testPeripheral2, 20);
+            lineItemSessionBean.createNewLineItem(newLineItem2);
+
+            testCustomer1.getCart().add(newLineItem);
+            testCustomer1.getCart().add(newLineItem2);
+            
+            Calendar date = new GregorianCalendar(2020, Calendar.APRIL, 24);
+            Date startDate = date.getTime();
+            date = new GregorianCalendar(2020, Calendar.MAY, 25);
+            Date endDate = date.getTime();
+            
+            // do loyalty points if got time
+            Coupon testCoupon1 = new Coupon("20%", startDate, endDate, 0, CouponTypeEnum.PERCENTAGE);
+            testCoupon1.setPercentageRate(0.2);
+            couponSessionBean.createNewCoupon(testCoupon1);
+            Coupon testCoupon2 = new Coupon("20", startDate, endDate, 0, CouponTypeEnum.FLATAMOUNT);
+            testCoupon2.setFlatAmount(20.0);
+            couponSessionBean.createNewCoupon(testCoupon2);
+            Coupon testCoupon3 = new Coupon("FreeDelivery", startDate, endDate, 0, CouponTypeEnum.FREEDELIVERY);
+            couponSessionBean.createNewCoupon(testCoupon3);
+
+            date = new GregorianCalendar(2020, Calendar.MAY, 30);
+            Date testDate = date.getTime();
+            
+            Coupon testCoupon4 = new Coupon("testBefore", startDate, startDate, 0, CouponTypeEnum.FREEDELIVERY);
+            couponSessionBean.createNewCoupon(testCoupon4);
+            Coupon testCoupon5 = new Coupon("testAfter", endDate, endDate, 0, CouponTypeEnum.FREEDELIVERY);
+            couponSessionBean.createNewCoupon(testCoupon5);
+            
+            String[] colours = new String[]{"white", "black"};
+            String[] motherBoardFormFactor = new String[]{"motherBoardFormFactor1", "motherBoardFormFactor2"};
+            
+            ComputerCase testComputerCase1 = new ComputerCase("Manufacturer1", "type1", colours, "sidePanelView", motherBoardFormFactor, 1, 1.0, 1.0, 1.0, 1.0, "Computer Case 1", 1.0, 1, "image1");
+            computerPartSessionBean.createNewComCase(testComputerCase1);
+            ComputerCase testComputerCase2 = new ComputerCase("Manufacturer2", "type2", colours, "sidePanelView", motherBoardFormFactor, 2, 2.0, 2.0, 2.0, 2.0, "Computer Case 2", 2.0, 2, "image2");
+            computerPartSessionBean.createNewComCase(testComputerCase2);
+            ComputerCase testComputerCase3 = new ComputerCase("Manufacturer3", "type3", colours, "sidePanelView", motherBoardFormFactor, 3, 3.0, 3.0, 3.0, 3.0, "Computer Case 3", 3.0, 3, "image3");
+            computerPartSessionBean.createNewComCase(testComputerCase3);
+            ComputerCase testComputerCase4 = new ComputerCase("Manufacturer4", "type4", colours, "sidePanelView", motherBoardFormFactor, 4, 4.0, 4.0, 4.0, 4.0, "Computer Case 4", 4.0, 4, "image4");
+            computerPartSessionBean.createNewComCase(testComputerCase4);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
-    
+
 }

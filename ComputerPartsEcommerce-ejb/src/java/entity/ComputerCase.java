@@ -25,13 +25,13 @@ public class ComputerCase extends ComputerPart implements Serializable {
    //@OneToMany(mappedBy = "compCase")
    //private List<ComputerSet> computerSets;
  
-    private String Manufacturer;
+    private String manufacturer;
     private String type; //(ATX Mid Tower)
     private String[] colours;
     private String sidePanelView; //tintered tempered glass
-    private String[] MotherBoardFormFactor; //atx micro atx mini itx
+    private String[] motherBoardFormFactor; //atx micro atx mini itx
     private Integer fullHeightExpansionSlot; //7
-    private Double MaxVideoCardLength; //in mm
+    private Double maxVideoCardLength; //in mm
     private Double topFanSupport;
     private Double frontFanSupport;
     private Double rearFanSupport;
@@ -43,28 +43,26 @@ public class ComputerCase extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String Manufacturer, String type, String[] colours, String sidePanelView, String[] MotherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String manufacturer, String type, String[] colours, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = manufacturer;
         this.type = type;
         this.colours = colours;
         this.sidePanelView = sidePanelView;
-        this.MotherBoardFormFactor = MotherBoardFormFactor;
+        this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
-        this.MaxVideoCardLength = MaxVideoCardLength;
+        this.maxVideoCardLength = maxVideoCardLength;
         this.topFanSupport = topFanSupport;
         this.frontFanSupport = frontFanSupport;
         this.rearFanSupport = rearFanSupport;
     }
 
-    
-
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
-    public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public String getType() {
@@ -92,11 +90,11 @@ public class ComputerCase extends ComputerPart implements Serializable {
     }
 
     public String[] getMotherBoardFormFactor() {
-        return MotherBoardFormFactor;
+        return motherBoardFormFactor;
     }
 
-    public void setMotherBoardFormFactor(String[] MotherBoardFormFactor) {
-        this.MotherBoardFormFactor = MotherBoardFormFactor;
+    public void setMotherBoardFormFactor(String[] motherBoardFormFactor) {
+        this.motherBoardFormFactor = motherBoardFormFactor;
     }
 
     public Integer getFullHeightExpansionSlot() {
@@ -108,11 +106,11 @@ public class ComputerCase extends ComputerPart implements Serializable {
     }
 
     public Double getMaxVideoCardLength() {
-        return MaxVideoCardLength;
+        return maxVideoCardLength;
     }
 
-    public void setMaxVideoCardLength(Double MaxVideoCardLength) {
-        this.MaxVideoCardLength = MaxVideoCardLength;
+    public void setMaxVideoCardLength(Double maxVideoCardLength) {
+        this.maxVideoCardLength = maxVideoCardLength;
     }
 
     public Double getTopFanSupport() {
@@ -139,8 +137,4 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.rearFanSupport = rearFanSupport;
     }
 
-   
-
-    
-    
 }
