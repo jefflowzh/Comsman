@@ -7,6 +7,7 @@ package jsf.managedbean;
 
 import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
+import ejb.session.stateless.PeripheralSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
 import entity.CPUWaterCooler;
@@ -14,6 +15,7 @@ import entity.ComputerCase;
 import entity.GPU;
 import entity.HDD;
 import entity.MotherBoard;
+import entity.Peripheral;
 import entity.PowerSupply;
 import entity.Product;
 import entity.RAM;
@@ -42,6 +44,9 @@ import util.exception.ComputerPartNotFoundException;
 @Named(value = "productManagementManagedBean")
 @ViewScoped
 public class ProductManagementManagedBean implements Serializable {
+
+    @EJB(name = "PeripheralSessionBeanLocal")
+    private PeripheralSessionBeanLocal peripheralSessionBeanLocal;
 
     @EJB(name = "ComputerPartSessionBeanLocal")
     private ComputerPartSessionBeanLocal computerPartSessionBeanLocal;
@@ -102,6 +107,8 @@ public class ProductManagementManagedBean implements Serializable {
             products = computerPartSessionBeanLocal.retrieveAllCPUWaterCooler();
         } else if (selectedProduct.equals("CPUAirCooler")) {
             products = computerPartSessionBeanLocal.retrieveAllCPUAirCooler();
+        } else if (selectedProduct.equals("Peripheral")) {
+            products = peripheralSessionBeanLocal.retrieveAllPeripherals();
         }
     }
 
@@ -198,7 +205,6 @@ public class ProductManagementManagedBean implements Serializable {
                 selectedComputerCaseToUpdate.setColours(coloursTemp);
                 selectedComputerCaseToUpdate.setMotherBoardFormFactor(mbffTemp);
                 computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedComputerCaseToUpdate);
-                //computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof GPU) {
                 computerPartSessionBeanLocal.updateGPU((GPU) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof HDD) {
@@ -213,6 +219,8 @@ public class ProductManagementManagedBean implements Serializable {
                 CPUAirCooler selectedCPUAirCoolerToUpdate = (CPUAirCooler) selectedProductToUpdate;
                 selectedCPUAirCoolerToUpdate.setCPUChipCompatibility(temp);
                 computerPartSessionBeanLocal.updateCPUAirCooler((CPUAirCooler) selectedCPUAirCoolerToUpdate);
+            } else if (selectedProductToUpdate instanceof Peripheral) {
+                peripheralSessionBeanLocal.updatePeripheral((Peripheral) selectedProductToUpdate);
             }
 
             selectedProductToUpdate = null;
@@ -232,7 +240,11 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void deleteProduct(ActionEvent event) {
         try {
-            computerPartSessionBeanLocal.deleteProduct(selectedProduct, selectedProductToDelete.getProductId());
+            if (selectedProductToDelete instanceof Peripheral) {
+                peripheralSessionBeanLocal.deletePeripheral(selectedProductToDelete.getProductId());
+            } else {
+                computerPartSessionBeanLocal.deleteProduct(selectedProduct, selectedProductToDelete.getProductId());
+            }
 
             products.remove(selectedProductToDelete);
 
@@ -333,6 +345,8 @@ public class ProductManagementManagedBean implements Serializable {
             newProduct = new CPUWaterCooler();
         } else if (selectedProduct.equals("CPUAirCooler")) {
             newProduct = new CPUAirCooler();
+        } else if (selectedProduct.equals("Peripheral")) {
+            newProduct = new Peripheral();
         }
     }
 
@@ -405,7 +419,10 @@ public class ProductManagementManagedBean implements Serializable {
                     newCPUAirCooler.getCPUChipCompatibility().add(s);
                 }
                 computerPartSessionBeanLocal.createNewCPUAirCooler(newCPUAirCooler);
-
+            } else if (selectedProduct.equals("Peripheral")) {
+                System.out.println("or hehehehhhehehhhhehweheh");
+                Peripheral newPeripheral = (Peripheral) newProduct;
+                peripheralSessionBeanLocal.createNewPeripheral(newPeripheral);
             }
 
             stringEdit = "";
@@ -423,8 +440,8 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
 
-    public void changeNull() {
-        System.out.println("here-----------------");
+    public void changeNull(ActionEvent event) {
+        System.out.println("------------- here");
         newProduct = null;
     }
 

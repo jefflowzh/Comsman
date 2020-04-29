@@ -7,6 +7,7 @@ import ejb.session.stateless.CouponSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
+import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
@@ -21,6 +22,7 @@ import entity.CustomerOrder;
 import entity.GPU;
 import entity.HDD;
 import entity.MotherBoard;
+import entity.Peripheral;
 import entity.PowerSupply;
 import entity.RAM;
 import entity.SSD;
@@ -49,6 +51,8 @@ import util.exception.StaffNotFoundException;
 public class DataInitSessionBean {
 
     @EJB
+    private PeripheralSessionBeanLocal peripheralSessionBeanLocal;
+    @EJB
     private ComputerPartSessionBeanLocal computerPartSessionBean;
     @EJB
     private ComputerSetSessionBeanLocal computerSetSessionBean;
@@ -62,6 +66,7 @@ public class DataInitSessionBean {
     private CustomerOrderSessionBeanLocal customerOrderSessionBean;
     @EJB
     private StaffSessionBeanLocal staffSessionBean;
+    
 
     public DataInitSessionBean() {
     }
@@ -149,6 +154,10 @@ public class DataInitSessionBean {
         CPUAirCooler aircooler = new CPUAirCooler("Manufacturer", "color", 5, 5.5, CPUChipCompatibility, "CPUAirCooler", 100.00, 10, "test.png");
         computerPartSessionBean.createNewCPUAirCooler(aircooler);
 
+        // test peripheral
+        Peripheral peripheral = new Peripheral("manu", "description", "peripheral", 123.0, 10, "test.png");
+        peripheralSessionBeanLocal.createNewPeripheral(peripheral);
+        
         // creat com set
         ComputerSet comset = new ComputerSet(5, false);
         comset.setCpu(testcpu);
