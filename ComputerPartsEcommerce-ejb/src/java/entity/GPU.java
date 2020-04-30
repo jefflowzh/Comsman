@@ -22,15 +22,15 @@ public class GPU extends ComputerPart implements Serializable {
    //@ManyToMany(mappedBy = "gpus")
    //private List<ComputerSet> computerSets;
     
-    private String Manufacturer;
+    private String manufacturer;
     private String chipset; //(GTX 1660)
     private String Interface;  //(PCI-Ex16) matches with motherboard
     private Double length; //in mm
     private Integer TDP;
-    private Integer ExpansionSlotWidth;
+    private Integer expansionSlotWidth;
     private String externalPower;
-    private Integer Memory;
-    private String MemoryType;
+    private Integer memory;
+    private String memoryType;
 
     public GPU() {
     }
@@ -39,25 +39,25 @@ public class GPU extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public GPU(String Manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer ExpansionSlotWidth, String externalPower, Integer Memory, String MemoryType, String name, Double price, Integer inventoryQuantity, String image) {
+    public GPU(String Manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer ExpansionSlotWidth, String externalPower, Integer Memory, String memoryType, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.chipset = chipset;
         this.Interface = Interface;
         this.length = length;
         this.TDP = TDP;
-        this.ExpansionSlotWidth = ExpansionSlotWidth;
+        this.expansionSlotWidth = ExpansionSlotWidth;
         this.externalPower = externalPower;
-        this.Memory = Memory;
-        this.MemoryType = MemoryType;
+        this.memory = Memory;
+        this.memoryType = memoryType;
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getChipset() {
@@ -93,11 +93,11 @@ public class GPU extends ComputerPart implements Serializable {
     }
 
     public Integer getExpansionSlotWidth() {
-        return ExpansionSlotWidth;
+        return expansionSlotWidth;
     }
 
-    public void setExpansionSlotWidth(Integer ExpansionSlotWidth) {
-        this.ExpansionSlotWidth = ExpansionSlotWidth;
+    public void setExpansionSlotWidth(Integer expansionSlotWidth) {
+        this.expansionSlotWidth = expansionSlotWidth;
     }
 
     public String getExternalPower() {
@@ -109,19 +109,19 @@ public class GPU extends ComputerPart implements Serializable {
     }
 
     public Integer getMemory() {
-        return Memory;
+        return memory;
     }
 
     public void setMemory(Integer Memory) {
-        this.Memory = Memory;
+        this.memory = Memory;
     }
 
     public String getMemoryType() {
-        return MemoryType;
+        return memoryType;
     }
 
     public void setMemoryType(String MemoryType) {
-        this.MemoryType = MemoryType;
+        this.memoryType = MemoryType;
     }
 
     

@@ -8,9 +8,9 @@ import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
+import entity.CPU;
 import entity.ComputerCase;
 import entity.ComputerPart;
-import entity.ComputerSet;
 import entity.Coupon;
 import entity.Customer;
 import entity.LineItem;
@@ -18,8 +18,6 @@ import entity.CustomerOrder;
 import entity.Peripheral;
 import entity.Staff;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +25,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -229,6 +226,24 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewComCase(testComputerCase3);
             ComputerCase testComputerCase4 = new ComputerCase("Manufacturer4", "type4", colours, "sidePanelView", motherBoardFormFactor, 4, 4.0, 4.0, 4.0, 4.0, "Computer Case 4", 4.0, 4, "image4");
             computerPartSessionBean.createNewComCase(testComputerCase4);
+            
+            CPU testCpu = new CPU("Intel", 6, 95, "LGA1151", true, false, "Intel Core i5-9600K 3.7 GHz 6-Core Processor", 300.0, 50,"image1");
+            CPU testCpu1 = new CPU("Intel", 8, 95, "LGA1151", true, false, "Intel Core i7-9700K 3.6 GHz 8-Core Processor", 500.0, 50,"image2");
+            CPU testCpu2 = new CPU("Intel", 8, 95, "LGA1151", true, false, "Intel Core i9-9900K 3.6 GHz 8-Core Processor", 700.0, 50,"image3");
+            CPU testCpu3 = new CPU("Intel", 4, 65, "LGA1151", false, false, "Intel Core i3-9100F 3.6 GHz Quad-Core Processor", 100.0, 50,"image4");
+            computerPartSessionBean.createNewCPU(testCpu);
+            computerPartSessionBean.createNewCPU(testCpu1);
+            computerPartSessionBean.createNewCPU(testCpu2);
+            computerPartSessionBean.createNewCPU(testCpu3);
+            
+            CPU testCpu4 = new CPU("AMD", 4, 65, "AM4", true, true, "AMD Ryzen 3 3200G 3.6 GHz Quad-Core Processor", 150.0, 50,"image5");
+            CPU testCpu5 = new CPU("AMD", 6, 65, "AM4", false, true, "AMD Ryzen 5 3600 3.6 GHz 6-Core Processor", 250.0, 50,"image6");
+            CPU testCpu6 = new CPU("AMD", 8, 105, "AM4", false, true, "AMD Ryzen 7 3800X 3.9 GHz 8-Core Processor", 550.0, 50,"image7");
+            CPU testCpu7 = new CPU("AMD", 4, 65, "AM4", false, true, "AMD Ryzen 5 1400 3.2 GHz Quad-Core Processor", 250.0, 50,"image8");
+            computerPartSessionBean.createNewCPU(testCpu4);
+            computerPartSessionBean.createNewCPU(testCpu5);
+            computerPartSessionBean.createNewCPU(testCpu6);
+            computerPartSessionBean.createNewCPU(testCpu7);
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

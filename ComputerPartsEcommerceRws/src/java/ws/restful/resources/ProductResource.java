@@ -8,9 +8,13 @@ package ws.restful.resources;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
+import entity.CPU;
 import entity.ComputerCase;
+import entity.GPU;
+import entity.MotherBoard;
 import entity.Peripheral;
-import entity.Product;
+import entity.PowerSupply;
+import entity.RAM;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,6 +93,74 @@ public class ProductResource {
         try{
             List<ComputerCase> computerCases = computerPartSessionBeanLocal.retrieveAllComCase();     
             RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(computerCases); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    @Path("retrieveAllCpu")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllCpu() {        
+        try{
+            List<CPU> cpus = computerPartSessionBeanLocal.retrieveAllCPU();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(cpus); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    @Path("retrieveAllGpu")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllGpu() {        
+        try{
+            List<GPU> gpus = computerPartSessionBeanLocal.retrieveAllGPU();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(gpus); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllMotherBoard")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllMotherboard() {        
+        try{
+            List<MotherBoard> mbs = computerPartSessionBeanLocal.retrieveAllMotherBoard();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(mbs); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllPowerSupply")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllPowerSupply() {        
+        try{
+            List<PowerSupply> psus = computerPartSessionBeanLocal.retrieveAllPowerSupply();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(psus); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllRam")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllRam() {        
+        try{
+            List<RAM> rams = computerPartSessionBeanLocal.retrieveAllRAM();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(rams); 
             return Response.status(Status.OK).entity(retrieveProductsRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

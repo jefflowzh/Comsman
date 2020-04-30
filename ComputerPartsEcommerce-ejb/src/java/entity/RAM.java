@@ -25,12 +25,12 @@ public class RAM extends ComputerPart implements Serializable {
    //@ManyToMany(mappedBy = "rams")
    //private List<ComputerSet> computerSets;
     
-    private String Manufacturer;
+    private String manufacturer;
     private String speed;
     private String type;
     private Integer sticks; //(2 x 8GB)
     private Integer perStickGB;
-    private Integer CasLatency;
+    private Integer casLatency;
 
     public RAM() {
     }
@@ -41,20 +41,20 @@ public class RAM extends ComputerPart implements Serializable {
 
     public RAM(String Manufacturer, String speed, String type, Integer sticks, Integer perStickGB, Integer CasLatency, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.speed = speed;
         this.type = type;
         this.sticks = sticks;
         this.perStickGB = perStickGB;
-        this.CasLatency = CasLatency;
+        this.casLatency = CasLatency;
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getSpeed() {
@@ -90,11 +90,11 @@ public class RAM extends ComputerPart implements Serializable {
     }
 
     public Integer getCasLatency() {
-        return CasLatency;
+        return casLatency;
     }
 
     public void setCasLatency(Integer CasLatency) {
-        this.CasLatency = CasLatency;
+        this.casLatency = CasLatency;
     }
 
     
