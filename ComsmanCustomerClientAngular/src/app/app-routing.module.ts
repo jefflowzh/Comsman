@@ -6,11 +6,8 @@ import { ViewAllProductsComponent } from './view-all-products/view-all-products.
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
-<<<<<<< HEAD
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
-=======
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
->>>>>>> 825e00ecb6a510033cd750650a2ad7bb5bc9ceae
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },

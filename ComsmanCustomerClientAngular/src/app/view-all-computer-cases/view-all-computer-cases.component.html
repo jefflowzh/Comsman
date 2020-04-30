@@ -21,9 +21,10 @@
         <br>
 
         <h5>Type</h5>
-
-        <br>
-
+        <div>
+            <p-checkbox label="All" [(ngModel)]=" AllTypesCheckbox" binary="true"
+                (click)="removeTypeFilters()"></p-checkbox>
+        </div>
         <div *ngFor="let type of types">
             <p-checkbox value={{type}} label={{type}} [(ngModel)]="selectedTypes" (click)="applyFilters()">
             </p-checkbox>
