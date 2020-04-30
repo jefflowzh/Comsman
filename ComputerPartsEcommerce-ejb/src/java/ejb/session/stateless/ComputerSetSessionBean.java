@@ -1,7 +1,18 @@
 package ejb.session.stateless;
 
+import entity.CPU;
+import entity.CPUAirCooler;
+import entity.CPUWaterCooler;
+import entity.ComputerCase;
+import entity.ComputerPart;
 import entity.ComputerSet;
+import entity.GPU;
+import entity.HDD;
 import entity.LineItem;
+import entity.MotherBoard;
+import entity.PowerSupply;
+import entity.RAM;
+import entity.SSD;
 import entity.Staff;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +21,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.exception.ComputerPartNotFoundException;
 import util.exception.ComputerSetNotFoundException;
-import util.exception.LineItemNotFoundException;
+import util.exception.IncompatiblePartException;
+import util.exception.IncompleteComputerSetException;
 import util.exception.StaffNotFoundException;
 
 @Stateless
@@ -52,10 +65,6 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
             if (computerSetModel.getHdds() != null) {
                 newComputerSet.setHdds(computerSetModel.getHdds());
             }
-            if (computerSetModel.getIsAmateur() != null) {
-                newComputerSet.setIsAmateur(computerSetModel.getIsAmateur());
-            }
-            newComputerSet.setLineItem(newLineItem);
             if (computerSetModel.getMotherBoard() != null) {
                 newComputerSet.setMotherBoard(computerSetModel.getMotherBoard());
             }
@@ -77,7 +86,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
             if (computerSetModel.getWaterCooler() != null) {
                 newComputerSet.setWaterCooler(computerSetModel.getWaterCooler());
             }
-
+            newComputerSet.setLineItem(newLineItem);
             newLineItem.setComputerSet(newComputerSet);
 
             em.persist(newComputerSet);

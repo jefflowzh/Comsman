@@ -21,7 +21,8 @@ public class ComputerSet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long computerSetId;
-    
+    @Column(length = 32)
+    private String name;
     
     /*For a computer set there are mandatory computer parts
     cpu 
@@ -82,9 +83,6 @@ public class ComputerSet implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Integer warrentyLengthInYears;
-    @Column(nullable = false)
-    @NotNull
-    private Boolean isAmateur;
     @ManyToOne
     @JoinColumn
     private Staff assemblyAssignedTo;
@@ -92,7 +90,7 @@ public class ComputerSet implements Serializable {
     @NotNull
     private Boolean assemblyComplete;
     @OneToOne(optional = false)
-    @JoinColumn
+    @JoinColumn (nullable = false)
     private LineItem lineItem;
     @Column(nullable = false)
     @NotNull
@@ -132,9 +130,16 @@ public class ComputerSet implements Serializable {
         this.warrentyLengthInYears = warrentyLengthInYears;
         // assuming warrenty is $100/year
         this.price += (warrentyLengthInYears - 3) * 100; 
-        this.isAmateur = isAmatuer;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public CPU getCpu() {
         return cpu;
     }
@@ -231,14 +236,6 @@ public class ComputerSet implements Serializable {
         this.warrentyLengthInYears = warrentyLengthInYears;
     }
 
-    public Boolean getIsAmateur() {
-        return isAmateur;
-    }
-
-    public void setIsAmateur(Boolean isAmateur) {
-        this.isAmateur = isAmateur;
-    }
-
     public Staff getAssemblyAssignedTo() {
         return assemblyAssignedTo;
     }
@@ -330,6 +327,4 @@ public class ComputerSet implements Serializable {
     public String toString() {
         return "entity.ComputerSet[ id=" + computerSetId + " ]";
     }
-    
-    
 }
