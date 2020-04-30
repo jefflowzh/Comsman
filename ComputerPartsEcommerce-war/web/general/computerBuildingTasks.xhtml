@@ -42,10 +42,6 @@
                             <h:outputText value="#{task.lineItem.customerOrder.completeBy}"/>
                         </p:column>
 
-                        <p:column headerText="Amateur Set" sortBy="#{task.isAmateur}" filterBy="#{task.isAmateur}" filterMatchMode="contains">
-                            <h:outputText value="#{task.isAmateur}"/>
-                        </p:column>
-
                         <p:column headerText="Status" sortBy="#{task.assemblyComplete}" filterBy="#{task.assemblyComplete}" filterMatchMode="contains">
                             <h:outputText value="#{task.assemblyComplete}"/>
                         </p:column>

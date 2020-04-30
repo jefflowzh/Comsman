@@ -8,6 +8,7 @@ import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
+import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
@@ -24,6 +25,7 @@ import entity.HDD;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
+import entity.PreBuiltComputerSetModel;
 import entity.RAM;
 import entity.SSD;
 import entity.Staff;
@@ -38,8 +40,10 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import util.enumeration.CouponTypeEnum;
+import util.enumeration.PreBuiltComputerSetTierEnum;
 import util.enumeration.StaffAccessRightEnum;
 import util.exception.ComputerSetNotFoundException;
+import util.exception.ComputerSetTierAlreadyExistsException;
 import util.exception.CustomerNotFoundException;
 import util.exception.StaffAlreadyExistsException;
 import util.exception.LineItemNotFoundException;
@@ -50,6 +54,8 @@ import util.exception.StaffNotFoundException;
 @Startup
 public class DataInitSessionBean {
 
+    @EJB
+    private PreBuiltComputerSetModelSessionBeanLocal preBuiltComputerSetModelSessionBeanLocal;
     @EJB
     private PeripheralSessionBeanLocal peripheralSessionBeanLocal;
     @EJB
@@ -84,6 +90,14 @@ public class DataInitSessionBean {
     }
 
     private void initializeData() {
+
+//        try {
+//            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM));
+//            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR));
+//            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET));
+//        } catch (ComputerSetTierAlreadyExistsException ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
         try {
             Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
