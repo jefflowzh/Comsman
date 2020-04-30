@@ -6,6 +6,14 @@
     <res-ref-name>computerPartsEcommerceDataSource</res-ref-name>
     <jndi-name>jdbc/computerPartsEcommerce</jndi-name>
   </resource-ref>
+  <resource-ref>
+    <res-ref-name>computerSetDataSource</res-ref-name>
+    <jndi-name>jdbc/computerPartsEcommerce</jndi-name>
+  </resource-ref>
+  <resource-ref>
+    <res-ref-name>computerSetDS</res-ref-name>
+    <jndi-name>jdbc/computerPartsEcommerce</jndi-name>
+  </resource-ref>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">

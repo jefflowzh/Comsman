@@ -321,15 +321,10 @@ public class ProductManagementManagedBean implements Serializable {
     }
 
     public void doCreateNewProduct(ActionEvent event) {
-
         if (selectedProduct.equals("CPU")) {
-            System.out.println("hereeeeeeeeeeeeeeeeeeeeee");
             newProduct = new CPU();
-            System.out.println(newProduct.getClass().getName());
         } else if (selectedProduct.equals("MotherBoard")) {
             newProduct = new MotherBoard();
-            System.out.println("MBBBBBBBBBBBBBBBBBB hereeeeeeeeeeeeeeeeeeeeee");
-            System.out.println(newProduct.getClass().getName());
         } else if (selectedProduct.equals("RAM")) {
             newProduct = new RAM();
         } else if (selectedProduct.equals("PowerSupply")) {
@@ -349,8 +344,7 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("Peripheral")) {
             newProduct = new Peripheral();
         }
-        System.out.println(newProduct.getClass().getName());
-
+//FacesContext.getCurrentInstance().getViewRoot().getViewMap().clear();
     }
 
     public void createNewProduct(ActionEvent event) {

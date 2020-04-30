@@ -26,7 +26,6 @@ public class MotherBoard extends ComputerPart implements Serializable {
 
     //@OneToMany(mappedBy = "motherBoard")
     //private List<ComputerSet> computerSets;
-    private String Manufacturer;
     private String formFactor;
     private String socket;
     private String chipset;

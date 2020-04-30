@@ -178,12 +178,20 @@ public class DataInitSessionBean {
 
         try {
             List<LineItem> testLineItems3 = new ArrayList<>();
-            testLineItems3.add(lineItemSessionBean.retrieveLineItemById((long) 1));
-            testLineItems3.add(lineItemSessionBean.retrieveLineItemById((long) 2));
+            LineItem line1 = lineItemSessionBean.retrieveLineItemById((long) 1);
+            LineItem line2 = lineItemSessionBean.retrieveLineItemById((long) 2);
+            testLineItems3.add(line1);
+            testLineItems3.add(line2);
+            LineItem testpartLineItemCPU = new LineItem(testcpu, 3);
+            lineItemSessionBean.createNewLineItem(testpartLineItemCPU);
+            testLineItems3.add(testpartLineItemCPU);
             Date date2 = new Date();
 
             CustomerOrder testCustomerOrder3 = new CustomerOrder(new Timestamp(date2.getTime()), true, "Billing address", testLineItems3);
-            customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder3, (long) 3);
+            Long orderId = customerOrderSessionBean.createNewCustomerOrder(testCustomerOrder3, (long) 3);
+            CustomerOrder order = customerOrderSessionBean.retrieveCustomerOrderById(orderId, Boolean.TRUE);
+            line1.setCustomerOrder(order);
+            line2.setCustomerOrder(order);
             System.out.println("AAAAAAAAAAAAAAA");
             System.out.println(computerSetIds);
             ComputerSet computerSet = new ComputerSet();
@@ -195,8 +203,8 @@ public class DataInitSessionBean {
             }
             System.out.println(computerSet);
             lineItemToAddToOrder = computerSet.getLineItem();
-            testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
-            lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
+            //testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
+            //lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
 
             try { // for next line item
                 computerSet = computerSetSessionBean.retrieveComputerSetById(computerSetIds.get(1));
@@ -205,8 +213,8 @@ public class DataInitSessionBean {
             }
             System.out.println(computerSet);
             lineItemToAddToOrder = computerSet.getLineItem();
-            testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
-            lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
+            // testCustomerOrder3.getLineItems().add(lineItemToAddToOrder);
+            // lineItemToAddToOrder.setCustomerOrder(testCustomerOrder3);
 
         } catch (CustomerNotFoundException ex) {
             System.out.println("fail to create singleton orders for initial data !! >> " + ex.getMessage());

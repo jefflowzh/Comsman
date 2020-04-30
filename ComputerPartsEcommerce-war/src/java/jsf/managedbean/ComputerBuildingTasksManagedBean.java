@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -33,21 +34,27 @@ import util.exception.StaffNotFoundException;
 @ViewScoped
 public class ComputerBuildingTasksManagedBean implements Serializable {
 
+    @Resource(name = "computerSetDS")
+    private DataSource computerSetDS;
+
     @EJB(name = "CustomerOrderSessionBeanLocal")
     private CustomerOrderSessionBeanLocal customerOrderSessionBeanLocal;
 
     @EJB(name = "ComputerSetSessionBeanLocal")
     private ComputerSetSessionBeanLocal computerSetSessionBeanLocal;
 
-    @Resource(name = "computerPartsEcommerceDataSource")
-    private DataSource computerPartsEcommerceDataSource;
+//    @Resource(name = "computerPartsEcommerceDataSource")
+//    private DataSource computerPartsEcommerceDataSource;
+//    @Resource(name = "computerSetDataSource")
+//    private DataSource computerSetDataSource;
     
+
     private List<ComputerSet> computerSets;
     private List<ComputerSet> filteredSets;
-    
+
     public ComputerBuildingTasksManagedBean() {
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         System.out.println("********* postConstruct");
@@ -55,7 +62,7 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
         setComputerSets(computerSetSessionBeanLocal.retrieveComputerSetsByStaffAssignedTo(staff.getUserId(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE));
         System.out.println("********* computerSets: " + computerSets.size());
     }
-    
+
     public void markAsComplete(ActionEvent event) {
         Long selectedComputerSetId = (Long) event.getComponent().getAttributes().get("selectedComputerSetId");
         try {
@@ -65,7 +72,7 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
             postConstruct();
             customerOrderSessionBeanLocal.updateOrderStatus(selectedComputerSet.getLineItem().getCustomerOrder().getCustomerOrderId());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Computer Set " + selectedComputerSetId + " completed!", null));
-        } catch(StaffNotFoundException ex) {
+        } catch (StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Staff not found!", null));
         } catch (ComputerSetNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer set not found!", null));
@@ -73,18 +80,34 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer order not found!", null));
         }
     }
-    
-    public void generateReport(ActionEvent event) {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().responseReset();
-            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/Invoice_Table_Based.jrxml");
-            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
-            
-            JasperRunManager.runReportToPdfStream(reportStream, outputStream, new HashMap<>(), computerPartsEcommerceDataSource.getConnection());
-        } catch (IOException | JRException | SQLException ex) {
-            Logger.getLogger(ComputerBuildingTasksManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+//    public void generateReport(ActionEvent event) {
+//        try {
+//            FacesContext.getCurrentInstance().getExternalContext().responseReset();
+//            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/Invoice_Table_Based.jrxml");
+//            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
+//            
+//            JasperRunManager.runReportToPdfStream(reportStream, outputStream, new HashMap<>(), computerPartsEcommerceDataSource.getConnection());
+//        } catch (IOException | JRException | SQLException ex) {
+//            Logger.getLogger(ComputerBuildingTasksManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    }
+    public void generateReport(ActionEvent event) {
+        Long selectedComputerSetId = (Long) event.getComponent().getAttributes().get("selectedComputerSetId");
+
+        try {
+            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/combine.jasper");
+            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
+
+            Map parameters = new HashMap();
+
+            parameters.put("input", selectedComputerSetId);
+
+            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
+        } catch (IOException | JRException | SQLException ex) {
+            Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<ComputerSet> getComputerSets() {

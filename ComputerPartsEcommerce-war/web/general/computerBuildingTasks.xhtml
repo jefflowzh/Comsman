@@ -37,7 +37,7 @@
                         <p:column headerText="Order Date" sortBy="#{task.lineItem.customerOrder.customerOrderId}" filterBy="#{task.lineItem.customerOrder.customerOrderId}" filterMatchMode="contains">
                             <h:outputText value="#{task.lineItem.customerOrder.customerOrderId}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Complete By" sortBy="#{task.lineItem.customerOrder.completeBy}" filterBy="#{task.lineItem.customerOrder.completeBy}" filterMatchMode="contains">
                             <h:outputText value="#{task.lineItem.customerOrder.completeBy}"/>
                         </p:column>
@@ -45,14 +45,16 @@
                         <p:column headerText="Amateur Set" sortBy="#{task.isAmateur}" filterBy="#{task.isAmateur}" filterMatchMode="contains">
                             <h:outputText value="#{task.isAmateur}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Status" sortBy="#{task.assemblyComplete}" filterBy="#{task.assemblyComplete}" filterMatchMode="contains">
                             <h:outputText value="#{task.assemblyComplete}"/>
                         </p:column>
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton type="button" icon="fa fa-wpforms" title="Download Computer Order Form" ajax="false" onclick="window.open('http://localhost:8080/ComputerPartsEcommerce-war/general/generatePdf.xhtml?computerSetId=#{task.computerSetId}')" />
+                                <p:commandButton ajax="false"  icon="fa fa-wpforms" title="Download Form" actionListener="#{computerBuildingTasksManagedBean.generateReport}" >
+                                    <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
+                                </p:commandButton>
                                 <p:commandButton icon="fa fa-check" title="Mark as Complete" actionListener="#{computerBuildingTasksManagedBean.markAsComplete}" update="formAllComputerBuildingTasks:dataTableAllComputerBuildingTasks formAllComputerBuildingTasks:messages" rendered="#{!task.assemblyComplete}">
                                     <p:confirm header="Confirmation" message="Mark as Complete?" icon="pi pi-exclamation-triangle" />
                                     <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
@@ -61,7 +63,7 @@
                         </p:column>
 
                     </p:dataTable>
-                    
+
                     <p:confirmDialog global="true" id="dialogConfirmCompletion">                       
                         <p:commandButton type="button" value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton type="button" value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />                        
