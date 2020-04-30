@@ -80,43 +80,43 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             
         }
         else if(currentComputerPart instanceof CPU){
-            CPU currentPart = (CPU) currentComputerPart; 
+            CPU currentPart = (CPU) currentComputerPart;
             flag = cpuCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof MotherBoard){
-            MotherBoard currentPart = (MotherBoard) currentComputerPart; 
+            MotherBoard currentPart = (MotherBoard) currentComputerPart;
             flag = motherBoardCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof RAM){
-            RAM currentPart = (RAM) currentComputerPart; 
+            RAM currentPart = (RAM) currentComputerPart;
             flag = ramCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof GPU){
-            GPU currentPart = (GPU) currentComputerPart; 
+            GPU currentPart = (GPU) currentComputerPart;
             flag = gpuCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof HDD){
-            HDD currentPart = (HDD) currentComputerPart; 
+            HDD currentPart = (HDD) currentComputerPart;
             flag = hddCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof SSD){
-            SSD currentPart = (SSD) currentComputerPart; 
+            SSD currentPart = (SSD) currentComputerPart;
             flag = ssdCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof PowerSupply){
-            PowerSupply currentPart = (PowerSupply) currentComputerPart; 
+            PowerSupply currentPart = (PowerSupply) currentComputerPart;
             flag = psuCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof ComputerCase){
-            ComputerCase currentPart = (ComputerCase) currentComputerPart; 
+            ComputerCase currentPart = (ComputerCase) currentComputerPart;
             flag = caseCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof CPUAirCooler){
-            CPUAirCooler currentPart = (CPUAirCooler) currentComputerPart; 
+            CPUAirCooler currentPart = (CPUAirCooler) currentComputerPart;
             flag = airCoolerCheck(set, currentPart);
         }
         else if(currentComputerPart instanceof CPUWaterCooler){
-            CPUWaterCooler currentPart = (CPUWaterCooler) currentComputerPart; 
+            CPUWaterCooler currentPart = (CPUWaterCooler) currentComputerPart;
             flag = waterCoolerCheck(set, currentPart);
         }
         else{
