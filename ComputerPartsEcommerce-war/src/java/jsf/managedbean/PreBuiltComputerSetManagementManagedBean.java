@@ -24,8 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.primefaces.event.SelectEvent;
-import util.exception.IncompatiblePartException;
+import util.enumeration.PreBuiltComputerSetTierEnum;
 import util.exception.PreBuiltComputerSetModelNotFoundException;
 
 @Named(value = "preBuiltComputerSetManagementManagedBean")
@@ -39,10 +38,22 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private PreBuiltComputerSetModelSessionBeanLocal preBuiltComputerSetModelSessionBeanLocal;
     
     private List<PreBuiltComputerSetModel> models;
-    private PreBuiltComputerSetModel testModel1;
-    private PreBuiltComputerSetModel testModel2;
-    private PreBuiltComputerSetModel testModel3;
     
+    private PreBuiltComputerSetTierEnum currentTier;
+    private Boolean currentIsEnabled;
+    private String currentCpu;
+    private String currentMotherboard;
+    private List<String> currentRams;
+    private String currentPsu;
+    private String currentCompCase;
+    private List<String> currentGpus;
+    private List<String> currentHdds;
+    private List<String> currentSsds;
+    private String currentWaterCooler;
+    private String currentAirCooler;
+    private Double currentPrice;
+    
+    private PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers;
     private List<CPU> cpus;
     private List<MotherBoard> motherboards;
     private List<RAM> rams;
@@ -54,18 +65,13 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private List<CPUWaterCooler> waterCoolers;
     private List<CPUAirCooler> airCoolers;
     
-    private Long selectedComputerPartId;
-    private List<Long> selectedComputerPartIds;
-    
     public PreBuiltComputerSetManagementManagedBean() {
     }
     
     @PostConstruct
     public void postConstruct() {
         setModels(preBuiltComputerSetModelSessionBeanLocal.retrieveAllPreBuiltComputerSetModels());
-        setTestModel1(models.get(0));
-        setTestModel2(models.get(1));
-        setTestModel3(models.get(2));
+        setPreBuiltComputerSetTiers(PreBuiltComputerSetTierEnum.values());
         setCpus(computerPartSessionBeanLocal.retrieveAllCPU());
         setMotherboards(computerPartSessionBeanLocal.retrieveAllMotherBoard());
         setRams(computerPartSessionBeanLocal.retrieveAllRAM());
@@ -92,6 +98,43 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 //        }
     }
     
+    public void changeTier(AjaxBehaviorEvent event) {
+        Integer currentIndex;
+        switch (currentTier) {
+            case PREMIUM:
+                currentIndex = 0;
+                break;
+            case REGULAR:
+                currentIndex = 1;
+                break;
+            default:
+                currentIndex = 2;
+                break;
+        }
+        
+        currentIsEnabled = models.get(currentIndex).getIsEnabled();
+        currentCpu = models.get(currentIndex).getCpu().getName();
+        currentMotherboard = models.get(currentIndex).getMotherboard().getName();
+        currentPsu = models.get(currentIndex).getPsu().getName();
+        currentCompCase = models.get(currentIndex).getCompCase().getName();
+        currentWaterCooler = models.get(currentIndex).getWaterCooler().getName();
+        currentAirCooler = models.get(currentIndex).getAirCooler().getName();
+        currentPrice = models.get(currentIndex).getPrice();
+        for (RAM ram : models.get(currentIndex).getRams()) {
+            currentRams.add(ram.getName());
+        }
+        for (GPU gpu : models.get(currentIndex).getGpus()) {
+            currentGpus.add(gpu.getName());
+        }
+        for (HDD hdd : models.get(currentIndex).getHdds()) {
+            currentHdds.add(hdd.getName());
+        }
+        for (SSD ssd : models.get(currentIndex).getSsds()) {
+            currentSsds.add(ssd.getName());
+        }
+    }
+    
+    // Can be used for SelectCheckboxMenu, the RAMs field is an example which I have already tested, every time an option is clicked, this method triggers.
     public void selectEvent(AjaxBehaviorEvent event) {
         System.out.println("***********selected");
     }
@@ -114,6 +157,118 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         this.models = models;
     }
 
+    public PreBuiltComputerSetTierEnum getCurrentTier() {
+        return currentTier;
+    }
+
+    public void setCurrentTier(PreBuiltComputerSetTierEnum currentTier) {
+        this.currentTier = currentTier;
+    }
+    
+    public Boolean getCurrentIsEnabled() {
+        return currentIsEnabled;
+    }
+
+    public void setCurrentIsEnabled(Boolean currentIsEnabled) {
+        this.currentIsEnabled = currentIsEnabled;
+    }
+
+    public String getCurrentCpu() {
+        return currentCpu;
+    }
+
+    public void setCurrentCpu(String currentCpu) {
+        this.currentCpu = currentCpu;
+    }
+
+    public String getCurrentMotherboard() {
+        return currentMotherboard;
+    }
+
+    public void setCurrentMotherboard(String currentMotherboard) {
+        this.currentMotherboard = currentMotherboard;
+    }
+
+    public List<String> getCurrentRams() {
+        return currentRams;
+    }
+
+    public void setCurrentRams(List<String> currentRams) {
+        this.currentRams = currentRams;
+    }
+
+    public String getCurrentPsu() {
+        return currentPsu;
+    }
+
+    public void setCurrentPsu(String currentPsu) {
+        this.currentPsu = currentPsu;
+    }
+
+    public String getCurrentCompCase() {
+        return currentCompCase;
+    }
+
+    public void setCurrentCompCase(String currentCompCase) {
+        this.currentCompCase = currentCompCase;
+    }
+
+    public List<String> getCurrentGpus() {
+        return currentGpus;
+    }
+
+    public void setCurrentGpus(List<String> currentGpus) {
+        this.currentGpus = currentGpus;
+    }
+
+    public List<String> getCurrentHdds() {
+        return currentHdds;
+    }
+
+    public void setCurrentHdds(List<String> currentHdds) {
+        this.currentHdds = currentHdds;
+    }
+
+    public List<String> getCurrentSsds() {
+        return currentSsds;
+    }
+
+    public void setCurrentSsds(List<String> currentSsds) {
+        this.currentSsds = currentSsds;
+    }
+
+    public String getCurrentWaterCooler() {
+        return currentWaterCooler;
+    }
+
+    public void setCurrentWaterCooler(String currentWaterCooler) {
+        this.currentWaterCooler = currentWaterCooler;
+    }
+
+    public String getCurrentAirCooler() {
+        return currentAirCooler;
+    }
+
+    public void setCurrentAirCooler(String currentAirCooler) {
+        this.currentAirCooler = currentAirCooler;
+    }
+
+    public Double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(Double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+    
+    public PreBuiltComputerSetTierEnum[] getPreBuiltComputerSetTiers() {
+        return preBuiltComputerSetTiers;
+    }
+
+    public void setPreBuiltComputerSetTiers(PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers) {
+        this.preBuiltComputerSetTiers = preBuiltComputerSetTiers;
+    }
+    
     public List<CPU> getCpus() {
         return cpus;
     }
@@ -192,45 +347,5 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public void setAirCoolers(List<CPUAirCooler> airCoolers) {
         this.airCoolers = airCoolers;
-    }
-
-    public PreBuiltComputerSetModel getTestModel1() {
-        return testModel1;
-    }
-
-    public void setTestModel1(PreBuiltComputerSetModel testModel1) {
-        this.testModel1 = testModel1;
-    }
-
-    public PreBuiltComputerSetModel getTestModel2() {
-        return testModel2;
-    }
-
-    public void setTestModel2(PreBuiltComputerSetModel testModel2) {
-        this.testModel2 = testModel2;
-    }
-
-    public PreBuiltComputerSetModel getTestModel3() {
-        return testModel3;
-    }
-
-    public void setTestModel3(PreBuiltComputerSetModel testModel3) {
-        this.testModel3 = testModel3;
-    }
-
-    public Long getSelectedComputerPartId() {
-        return selectedComputerPartId;
-    }
-
-    public void setSelectedComputerPartId(Long selectedComputerPartId) {
-        this.selectedComputerPartId = selectedComputerPartId;
-    }
-
-    public List<Long> getSelectedComputerPartIds() {
-        return selectedComputerPartIds;
-    }
-
-    public void setSelectedComputerPartIds(List<Long> selectedComputerPartIds) {
-        this.selectedComputerPartIds = selectedComputerPartIds;
     }
 }

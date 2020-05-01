@@ -11,8 +11,17 @@
             
             <h2>Pre-Built Computer Set Model Management</h2>
             
+            <h:form>
+                <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="3">
+                    <p:outputLabel value="Select a Tier:" style="font-size: 16px; font-weight: bold"/>
+                    <p:selectOneButton id="tier" value="#{preBuiltComputerSetManagementManagedBean.currentTier}" style="width:155px">
+                        <p:ajax event="change" update="formModel" listener="#{preBuiltComputerSetManagementManagedBean.changeTier}" />
+                        <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.preBuiltComputerSetTiers}" var="tier" itemLabel="#{tier}" itemValue="#{tier}"/>
+                    </p:selectOneButton>
+                </h:panelGrid>
+            </h:form>
             <div class="layout-subcontent">
-                <h:form id="formAllModels">
+                <h:form id="formModel">
                 <p:repeat var="model" value="#{preBuiltComputerSetManagementManagedBean.models}">
                     <h:panelGrid columns="2" style="width:50%; text-align: center">
                         <p:outputPanel style="text-align: center">
