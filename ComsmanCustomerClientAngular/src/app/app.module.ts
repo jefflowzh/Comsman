@@ -31,6 +31,11 @@ import { FooterComponent } from './footer/footer.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { ViewAllCPUComponent } from './view-all-cpu/view-all-cpu.component';
+import { ViewAllGPUComponent } from './view-all-gpu/view-all-gpu.component';
+import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-motherboard.component';
+import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
+import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,12 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
     FooterComponent,
     CustomerCartComponent,
     ViewAllComputerCasesComponent,
-    CustomerDetailsComponent
+    CustomerDetailsComponent,
+    ViewAllCPUComponent,
+    ViewAllGPUComponent,
+    ViewAllMotherboardComponent,
+    ViewAllPowerSupplyComponent,
+    ViewAllRAMComponent
   ],
   imports: [
     BrowserModule,

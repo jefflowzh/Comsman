@@ -17,13 +17,14 @@ export class IndexComponent implements OnInit {
     this.sidenavItems = [{
       label: 'Computer Parts',
       items: [
+        { label: 'CPU', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllCPU'] },
         { label: 'CPU Cooler', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/CPUCooler'] },
         { label: 'Computer Case', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllComputerCases'] },
-        { label: 'GPU', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/GPU'] },
+        { label: 'GPU', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllGPU'] },
         { label: 'HDD', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/HDD'] },
-        { label: 'Motherboard', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/Motherboard'] },
-        { label: 'Power Supply', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/PowerSupply'] },
-        { label: 'RAM', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/RAM'] },
+        { label: 'Motherboard', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllMotherboard'] },
+        { label: 'Power Supply', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllPowerSupply'] },
+        { label: 'RAM', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllRAM'] },
         { label: 'SSD', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/SSD'] }
       ]
     },
