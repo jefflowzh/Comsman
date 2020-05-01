@@ -1,12 +1,11 @@
 <br>
 
-<div class="container" style="outline: thin solid lightgray; border-radius:50px;">
+<div style="outline: thin solid lightgray; padding-left: 15px; padding-right: 15px;">
 
     <br>
 
-    Possibly breadcrumb here
+    <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
 
-    <br>
     <br>
 
     <h1>{{header}}</h1>
@@ -42,13 +41,16 @@
 
                     <div><b>Price</b>: {{product.price}}</div>
                     <p-footer style="display: block;">
-                        <div style="text-align:center">
-                            <button pButton type="button" label="View details" style="margin-right: 5%"
+                        <div style="text-align:center; margin-bottom: 3%;">
+                            <button pButton type="button" label="View details" style="margin-right: 3%"
                                 [routerLink]="['/viewProduct', product.productId]"></button>
-                            <button pButton type="button" label="Add to Cart"></button>
-                            <button pButton type="button" label="Add to Build"></button>
                         </div>
-
+                        <div style="text-align:center">
+                            <button pButton type="button" class="ui-button-rounded ui-button-secondary"
+                                label="Add to Build" style="margin-right: 3%;"></button>
+                            <button pButton type="button" class="ui-button-rounded ui-button-secondary"
+                                label="Add to Cart"></button>
+                        </div>
                     </p-footer>
                 </p-card>
             </div>

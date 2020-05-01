@@ -15,6 +15,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { SpinnerModule } from 'primeng/spinner';
 import { CheckboxModule } from 'primeng/checkbox';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
@@ -66,7 +67,8 @@ import { ViewProductComponent } from './view-product/view-product.component';
     PanelModule,
     FontAwesomeModule,
     SpinnerModule,
-    CheckboxModule
+    CheckboxModule,
+    BreadcrumbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

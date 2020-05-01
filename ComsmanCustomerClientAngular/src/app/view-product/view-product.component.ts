@@ -47,4 +47,7 @@ export class ViewProductComponent implements OnInit {
   //   console.log("pushed")
   // }
 
+  // addToBuild() {
+  // }
+
 }

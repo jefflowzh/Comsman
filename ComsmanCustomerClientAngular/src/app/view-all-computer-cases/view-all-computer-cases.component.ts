@@ -16,7 +16,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
   filteredComputerCases: ComputerCase[];
 
   // manufacturers: string[] = ['Manufacturer1', 'Manufacturer2', 'Manufacturer3', 'Manufacturer4'];
-  manufacturers: string[] =[]
+  manufacturers: string[] = []
   selectedManufacturers: string[] = []
 
   //types: string[] = ['type1', 'type2', 'type3', 'type4'];
@@ -57,7 +57,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
   //AllMaxVideoHeightLength: boolean = true;
   AllTopFanSupportCheckbox: boolean = true;
   AllFrontFanSupportCheckbox: boolean = true;
-  AllRearFanSupportCheckbox: boolean = true;   
+  AllRearFanSupportCheckbox: boolean = true;
 
 
   constructor(private productService: ProductService) {
@@ -70,59 +70,59 @@ export class ViewAllComputerCasesComponent implements OnInit {
       response => {
         this.allComputerCases = response.products;
         this.filteredComputerCases = this.allComputerCases;
-       
-        for(let computerCase of this.allComputerCases){
-          
-          if(this.manufacturers.length == 0 || this.manufacturers.indexOf(computerCase.manufacturer) < 0){        
+
+        for (let computerCase of this.allComputerCases) {
+
+          if (this.manufacturers.length == 0 || this.manufacturers.indexOf(computerCase.manufacturer) < 0) {
             this.manufacturers.push(computerCase.manufacturer)
           }
-    
-    
-          if(this.types.length == 0 || !this.types.includes(computerCase.type)){
+
+
+          if (this.types.length == 0 || !this.types.includes(computerCase.type)) {
             this.types.push(computerCase.type)
           }
-    
+
           //!computerCase.colours.some(r => this.selectedColours.includes(r)
-          for (let c of computerCase.colours){
-            if(this.colours.length == 0 || !this.colours.includes(c)){
+          for (let c of computerCase.colours) {
+            if (this.colours.length == 0 || !this.colours.includes(c)) {
               this.colours.push(c)
             }
           }
-    
+
           //sidePanelViews: string[]
-          if(this.sidePanelViews.length == 0 || !this.sidePanelViews.includes(computerCase.sidePanelView)){
+          if (this.sidePanelViews.length == 0 || !this.sidePanelViews.includes(computerCase.sidePanelView)) {
             this.sidePanelViews.push(computerCase.sidePanelView)
           }
-    
+
           //motherboardFormFactors: string[]
-          for (let c of computerCase.motherBoardFormFactor){
-            if(this.motherboardFormFactors.length == 0 || !this.motherboardFormFactors.includes(c)){
+          for (let c of computerCase.motherBoardFormFactor) {
+            if (this.motherboardFormFactors.length == 0 || !this.motherboardFormFactors.includes(c)) {
               this.motherboardFormFactors.push(c)
             }
           }
-    
+
           //fullHeightExpansionSlot: number[]
-          if(this.fullHeightExpansionSlot.length == 0 || !this.fullHeightExpansionSlot.includes(computerCase.fullHeightExpansionSlot.toString())){
+          if (this.fullHeightExpansionSlot.length == 0 || !this.fullHeightExpansionSlot.includes(computerCase.fullHeightExpansionSlot.toString())) {
             this.fullHeightExpansionSlot.push(computerCase.fullHeightExpansionSlot.toString())
           }
-    
+
           //maxVideoheightLength: number[]
-          if(this.maxVideoheightLength.length == 0 || !this.maxVideoheightLength.includes(computerCase.maxVideoCardLength.toString())){
+          if (this.maxVideoheightLength.length == 0 || !this.maxVideoheightLength.includes(computerCase.maxVideoCardLength.toString())) {
             this.maxVideoheightLength.push(computerCase.maxVideoCardLength.toString())
           }
-    
+
           //topFanSupport: number[]
-          if(this.topFanSupport.length == 0 || !this.topFanSupport.includes(computerCase.topFanSupport.toString())){
+          if (this.topFanSupport.length == 0 || !this.topFanSupport.includes(computerCase.topFanSupport.toString())) {
             this.topFanSupport.push(computerCase.topFanSupport.toString())
           }
-    
+
           //frontFanSupport: number[]
-          if(this.frontFanSupport.length == 0 || !this.frontFanSupport.includes(computerCase.frontFanSupport.toString())){
+          if (this.frontFanSupport.length == 0 || !this.frontFanSupport.includes(computerCase.frontFanSupport.toString())) {
             this.frontFanSupport.push(computerCase.frontFanSupport.toString())
           }
-    
+
           //rearFanSupport: number[]
-          if(this.rearFanSupport.length == 0 || !this.rearFanSupport.includes(computerCase.rearFanSupport.toString())){
+          if (this.rearFanSupport.length == 0 || !this.rearFanSupport.includes(computerCase.rearFanSupport.toString())) {
             this.rearFanSupport.push(computerCase.rearFanSupport.toString())
           }
         }
@@ -210,7 +210,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllRearFanSupportCheckbox = true;
       return;
     }
-  
+
     // this.AllManufacturersCheckbox = false;
     // this.AllTypesCheckbox = false;
     // this.AllColourCheckbox = false;
@@ -226,7 +226,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
     this.updateFilters();
   }
 
-  updateFilters(){
+  updateFilters() {
     for (let computerCase of this.allComputerCases) {
       if (!this.selectedManufacturers.includes(computerCase.manufacturer)) {
         continue;
@@ -234,7 +234,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
       if (!this.selectedTypes.includes(computerCase.type) && this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
-      if (!computerCase.colours.some(r => this.selectedColours.includes(r)) && this.filteredComputerCases.indexOf(computerCase) < 0){
+      if (!computerCase.colours.some(r => this.selectedColours.includes(r)) && this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
       if (!this.selectedSidePanelViews.includes(computerCase.sidePanelView) && this.filteredComputerCases.indexOf(computerCase) < 0) {

@@ -18,7 +18,7 @@ public abstract class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-    @Column(nullable = false, length = 32, unique = true)
+    @Column(nullable = false, unique = true)
     @NotNull
     private String name;
     @Column(nullable = false)
