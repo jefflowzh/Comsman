@@ -24,14 +24,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import util.exception.CustomerEmailExistException;
+import util.exception.CustomerNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
-import ws.restful.model.UpdateCustomerCartReq;
-import ws.restful.model.CustomerUpdateReq;
-import ws.restful.model.CustomerUpdateRsp;
+import ws.restful.model.UpdateCustomerReq;
+import ws.restful.model.UpdateCustomerRsp;
 
 /**
  * REST Web Service
@@ -89,14 +89,42 @@ public class CustomerResource {
         }
     }
     
+    @Path("updateCustomerCart")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response customerUpdate(CustomerUpdateReq customerUpdateReq){
+    public Response updateCustomerCart(UpdateCustomerReq updateCustomerReq) {
+        try {
+            customerSessionBean.updateCustomer(updateCustomerReq.getCustomer(), false, false, true, false);
+            return Response.status(Status.OK).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+//    @Path("updateCustomerCurrComputerBuild")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response updateCustomerCurrComputerBuild(UpdateCustomerReq updateCustomerReq) {
+//        try {
+//            customerSessionBean.updateCustomer(updateCustomerReq.getCustomer(), false, false, false, true);
+//            return Response.status(Status.OK).build();
+//        } catch (Exception ex) {
+//            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+//            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+//        }
+//    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerUpdate(UpdateCustomerReq customerUpdateReq){
         try{
-            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), null, null);
+            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), true, false, false, false);
             Customer updatedCustomer = this.customerSessionBean.retrieveCustomerById(customerUpdateReq.getCustomer().getUserId(), true , true);
-            CustomerUpdateRsp cur =  new CustomerUpdateRsp(updatedCustomer);
+            UpdateCustomerRsp cur =  new UpdateCustomerRsp(updatedCustomer);
             return Response.status(Status.OK).entity(cur).build();
         }
         catch(Exception ex){
@@ -104,26 +132,6 @@ public class CustomerResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
-    
-
-//    @Path("updateCustomerCart")
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response updateCustomer(UpdateCustomerCartReq updateCustomerCartReq) {
-//        System.out.println("************************** updateCustomerCart method: " + updateCustomerCartReq.getUpdatedCart());
-//        try {
-//            // check if customer exists
-//            Customer customer = customerSessionBean.retrieveCustomerById(updateCustomerCartReq.getCustomerId(), false, false);
-//
-//            customerSessionBean.updateCustomer(updateCustomerReq.getUpdatedCustomer(), null, null);
-//            return Response.status(Status.OK).build();
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-//            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
-//        }
-//    }
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {

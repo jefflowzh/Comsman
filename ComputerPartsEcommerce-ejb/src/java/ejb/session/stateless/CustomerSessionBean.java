@@ -104,32 +104,69 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         return customers;
     }
 
+//    @Override
+//    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException {
+//        if (customer == null || customer.getUserId() == null) {
+//            throw new CustomerNotFoundException("Customer does not exist!");
+//        }
+//        Customer updatedCustomer = em.merge(customer);
+//
+//        // When adding or removing an order to/from a customer
+//        if (customerOrderId != null) {
+//            CustomerOrder customerOrder = customerOrderSessionBeanLocal.retrieveCustomerOrderById(customerOrderId, false);
+//            if (!updatedCustomer.getOrders().contains(customerOrder)) {
+//                // association
+//                updatedCustomer.getOrders().add(customerOrder);
+//                customerOrder.setCustomer(updatedCustomer);
+//            } else {
+//                // do disassociation
+//                updatedCustomer.getOrders().remove(customerOrder);
+//                customerOrder.setCustomer(null);
+//            }
+//        }
+//
+//        if (lineItem != null) {
+//            updatedCustomer.getCart().add(lineItem);
+//        }
+//    }
+
     @Override
-    public void updateCustomer(Customer customer, Long customerOrderId, LineItem lineItem) throws CustomerNotFoundException, CustomerOrderNotFoundException {
+    public void updateCustomer(Customer customer, Boolean updateDetails, Boolean updatePassword, Boolean updateCart, Boolean updateCurrComputerBuild) throws CustomerNotFoundException {
+        
         if (customer == null || customer.getUserId() == null) {
-            throw new CustomerNotFoundException("Customer does not exist!");
+            throw new CustomerNotFoundException("Customer to be updated not provided");
         }
-        Customer updatedCustomer = em.merge(customer);
-
-        // When adding or removing an order to/from a customer
-        if (customerOrderId != null) {
-            CustomerOrder customerOrder = customerOrderSessionBeanLocal.retrieveCustomerOrderById(customerOrderId, false);
-            if (!updatedCustomer.getOrders().contains(customerOrder)) {
-                // association
-                updatedCustomer.getOrders().add(customerOrder);
-                customerOrder.setCustomer(updatedCustomer);
-            } else {
-                // do disassociation
-                updatedCustomer.getOrders().remove(customerOrder);
-                customerOrder.setCustomer(null);
-            }
+        
+        Customer customerToUpdate = retrieveCustomerById(customer.getUserId(), true, true);
+ 
+        // Update customer details other than password
+        if (updateDetails) {
+        customerToUpdate.setAddress(customer.getAddress());
+        customerToUpdate.setCardNumber(customer.getCardNumber());
+        customerToUpdate.setCcv(customer.getCcv());
+        customerToUpdate.setContactNumber(customer.getContactNumber());
+        customerToUpdate.setEmail(customer.getEmail());
+        customerToUpdate.setFirstName(customer.getFirstName());
+        customerToUpdate.setLastName(customer.getLastName());
         }
-
-        if (lineItem != null) {
-            updatedCustomer.getCart().add(lineItem);
+        
+        // update password
+        if (updatePassword) {
+            customerToUpdate.setPassword(customer.getPassword());
         }
+        
+        // Update cart
+        if (updateCart) {
+            customerToUpdate.setCart(customer.getCart());
+        }
+        
+        // Update customer current computer build
+        if (updateCurrComputerBuild) {
+            customerToUpdate.setCurrComputerBuild(customer.getCurrComputerBuild());
+        }
+       
     }
-
+    
     @Override
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customer = retrieveCustomerById(customerId, false, false);

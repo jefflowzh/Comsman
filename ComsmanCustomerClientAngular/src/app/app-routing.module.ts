@@ -13,6 +13,7 @@ import { ViewAllGPUComponent } from './view-all-gpu/view-all-gpu.component';
 import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-motherboard.component';
 import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
 import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'customerLogin', component: CustomerLoginComponent },
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
   { path: 'customerCart', component: CustomerCartComponent },
-  { path: 'customerDetails', component: CustomerDetailsComponent }
+  { path: 'customerDetails', component: CustomerDetailsComponent },
+  { path: 'viewProduct/:productId', component: ViewProductComponent }
 ];
 
 @NgModule({

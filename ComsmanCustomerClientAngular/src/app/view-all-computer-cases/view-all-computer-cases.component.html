@@ -1,122 +1,132 @@
-<div class="ui-g">
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
 
-    <div class="ui-g-2">
-        <br>
+        <div class="ui-g-2">
 
-        <h4>Filters</h4>
+            <br>
+            <br>
 
-        <br>
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
 
-        <h5>Manufacturer</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
-                (click)="removeManufacturerFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let manufacturer of manufacturers">
-            <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
-                (click)="applyFilters()">
-            </p-checkbox>
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Type</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllTypesCheckbox" binary="true" (click)="removeTypeFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let type of types">
+                <p-checkbox value={{type}} label={{type}} [(ngModel)]="selectedTypes" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <h5>Colours</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllColourCheckbox" binary="true" (click)="removeColourFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let colour of colours">
+                <p-checkbox value={{colour}} label={{colour}} [(ngModel)]="selectedColours" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Side Panel</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSidePanelViewCheckbox" binary="true"
+                    (click)="removeSidePanelFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let sidePanelView of sidePanelViews">
+                <p-checkbox value={{sidePanelView}} label={{sidePanelView}} [(ngModel)]="selectedSidePanelViews"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Motherboard Form</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllMotherboardFormFactorsCheckbox" binary="true"
+                    (click)="removeFormFactorFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let form of motherboardFormFactors">
+                <p-checkbox value={{form}} label={{form}} [(ngModel)]="selectedMotherboardFormFactors"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Expansion Slots</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllFullHeightExpansionSlotCheckbox" binary="true"
+                    (click)="removeExpansionSlotFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let expansion of fullHeightExpansionSlot">
+                <p-checkbox value={{expansion}} label={{expansion}} [(ngModel)]="selectedFullHeightExpansionSlot"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Top Fan Support</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllTopFanSupportCheckbox" binary="true"
+                    (click)="removeTopFanFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let top of topFanSupport">
+                <p-checkbox value={{top}} label={{top}} [(ngModel)]="selectedTopFanSupport" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Rear Fan Support</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllRearFanSupportCheckbox" binary="true"
+                    (click)="removeRearFanFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let rear of rearFanSupport">
+                <p-checkbox value={{rear}} label={{rear}} [(ngModel)]="selectedRearFanSupport" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Front Fan Support</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllFrontFanSupportCheckbox" binary="true"
+                    (click)="removeFrontFanFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let front of frontFanSupport">
+                <p-checkbox value={{front}} label={{front}} [(ngModel)]="selectedFrontFanSupport"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
         </div>
 
-        <br>
-
-        <h5>Type</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllTypesCheckbox" binary="true"
-                (click)="removeTypeFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let type of types">
-            <p-checkbox value={{type}} label={{type}} [(ngModel)]="selectedTypes" (click)="applyFilters()">
-            </p-checkbox>
-        </div>
-        <br>
-
-        <h5>Colours</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllColourCheckbox" binary="true"
-                (click)="removeColourFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let colour of colours">
-            <p-checkbox value={{colour}} label={{colour}} [(ngModel)]="selectedColours"
-                (click)="applyFilters()">
-            </p-checkbox>
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredComputerCases">
+            </app-view-all-products>
         </div>
 
-          <br>
-
-        <h5>Side Panel</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllSidePanelViewCheckbox" binary="true"
-                (click)="removeSidePanelFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let sidePanelView of sidePanelViews">
-            <p-checkbox value={{sidePanelView}} label={{sidePanelView}} [(ngModel)]="selectedSidePanelViews" (click)="applyFilters()">
-            </p-checkbox>
-        </div> 
-        <br>
-        <h5>Motherboard Form</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllMotherboardFormFactorsCheckbox" binary="true"
-                (click)="removeFormFactorFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let form of motherboardFormFactors">
-            <p-checkbox value={{form}} label={{form}} [(ngModel)]="selectedMotherboardFormFactors"
-                (click)="applyFilters()">
-            </p-checkbox>
-        </div>
-
-        <br>
-
-        <h5>Expansion Slots</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllFullHeightExpansionSlotCheckbox" binary="true"
-                (click)="removeExpansionSlotFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let expansion of fullHeightExpansionSlot">
-            <p-checkbox value={{expansion}} label={{expansion}} [(ngModel)]="selectedFullHeightExpansionSlot" (click)="applyFilters()">
-            </p-checkbox>
-        </div>
-        <br>
-        <h5>Top Fan Support</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllTopFanSupportCheckbox" binary="true"
-                (click)="removeTopFanFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let top of topFanSupport">
-            <p-checkbox value={{top}} label={{top}} [(ngModel)]="selectedTopFanSupport"
-                (click)="applyFilters()">
-            </p-checkbox>
-        </div>
-
-        <br>
-
-        <h5>Rear Fan Support</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllRearFanSupportCheckbox" binary="true"
-                (click)="removeRearFanFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let rear of rearFanSupport">
-            <p-checkbox value={{rear}} label={{rear}} [(ngModel)]="selectedRearFanSupport" (click)="applyFilters()">
-            </p-checkbox>
-        </div>
-        <br>
-
-        <h5>Front Fan Support</h5>
-        <div>
-            <p-checkbox label="All" [(ngModel)]="AllFrontFanSupportCheckbox" binary="true"
-                (click)="removeFrontFanFilters()"></p-checkbox>
-        </div>
-        <div *ngFor="let front of frontFanSupport">
-            <p-checkbox value={{front}} label={{front}} [(ngModel)]="selectedFrontFanSupport" (click)="applyFilters()">
-            </p-checkbox>
-        </div> 
-        
-
-        
     </div>
-
-    <div class="ui-g-10">
-        <app-view-all-products [productType]="productType" [products]="filteredComputerCases"></app-view-all-products>
-    </div>
-
 </div>

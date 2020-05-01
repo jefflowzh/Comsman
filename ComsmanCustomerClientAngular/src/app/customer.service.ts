@@ -42,15 +42,32 @@ export class CustomerService {
 
   updateCustomerCart(): Observable<any> {
 
-    let updateCustomerCartReq = {
-      "customerId": this.sessionService.getCurrentCustomer().userId,
-      "updatedCart": this.sessionService.getCurrentCustomer().cart
+    console.log(this.sessionService.getCurrentCustomer())
+    // let customer = {
+    //   address: "NUS",
+    //   cart: [],
+    //   contactNumber: "12345678",
+    //   currComputerBuild: [],
+    //   email: "c@gmail.com",
+    //   firstName: "Jeff",
+    //   isDisabled: false,
+    //   lastName: "Low",
+    //   loyaltyPoints: 0,
+    //   orders: [],
+    //   password: "c5344cd99287b3a73c245f06c58739c3",
+    //   salt: "NH2V8HWFWi3I4di0TrFVkpfawlBIPy3l",
+    //   userId: 4,
+    // }
+
+    // let updateCustomerReq = {
+    //   "customer": customer
+    // }
+
+    let updateCustomerReq = {
+      "customer": this.sessionService.getCurrentCustomer()
     }
 
-    console.log('********* DEBUG 1')
-    console.log(this.sessionService.getCurrentCustomer())
-
-    return this.httpClient.post<any>(this.baseUrl + "/updateCustomerCartReq", updateCustomerCartReq, httpOptions).pipe
+    return this.httpClient.post<any>(this.baseUrl + "/updateCustomerCart", updateCustomerReq, httpOptions).pipe
       (
         catchError(this.handleError)
       );
@@ -58,19 +75,6 @@ export class CustomerService {
   }
 
   // updateCustomerBuild(updatedCustomer: Customer): Observable<any> {
-
-  //   let updateCustomerReq = {
-  //     "updatedCustomer": updatedCustomer
-  //   }
-
-  //   console.log('********* DEBUG 1')
-  //   console.log(updatedCustomer)
-  //   console.log(updatedCustomer.userId)
-
-  //   return this.httpClient.post<any>(this.baseUrl + "/updateCustomer", updateCustomerReq, httpOptions).pipe
-  //     (
-  //       catchError(this.handleError)
-  //     );
   // }
 
   private handleError(error: HttpErrorResponse) {
@@ -88,8 +92,8 @@ export class CustomerService {
     return throwError(errorMessage);
   }
 
-  customerUpdate(currentCustomer: Customer): Observable<any>{
-    let customerUpdateReq = {"customer" : currentCustomer};
+  customerUpdate(currentCustomer: Customer): Observable<any> {
+    let customerUpdateReq = { "customer": currentCustomer };
 
     return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
   }

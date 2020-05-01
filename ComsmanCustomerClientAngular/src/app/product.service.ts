@@ -13,6 +13,13 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {
   }
 
+  retrieveProductById(productId: string): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveProductById?productId=" + productId).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   retrieveAllPeripherals(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrieveAllPeripherals").pipe
       (

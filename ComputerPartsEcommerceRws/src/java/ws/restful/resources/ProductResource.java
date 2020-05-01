@@ -14,6 +14,7 @@ import entity.GPU;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
+import entity.Product;
 import entity.RAM;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,11 +28,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import util.exception.ProductNotFoundException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.RetrieveAllPeripheralsRsp;
+import ws.restful.model.RetrieveIndividualProductRsp;
 import ws.restful.model.RetrieveProductsRsp;
 
 /**
@@ -58,19 +62,23 @@ public class ProductResource {
     public ProductResource() {
     }
 
-//    @Path("retrieveAllProducts")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response retrieveAllProducts() {        
-//        try{
-//            List<Product> products = productSessionBean.retrieveAllProducts();      
-//            RetrieveProductsRsp retrieveAllProductsRsp = new RetrieveProductsRsp(products); 
-//            return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
-//        } catch (Exception ex) {
-//            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-//            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
-//        }
-//    }
+    @Path("retrieveProductById")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerLogin(@QueryParam("productId") String productId) {
+        try {
+            Product product = productSessionBeanLocal.retrieveProductById(Long.parseLong(productId)); 
+            RetrieveIndividualProductRsp retrieveProductByIdRsp = new RetrieveIndividualProductRsp(product);
+            return Response.status(Status.OK).entity(retrieveProductByIdRsp).build();
+        } catch (ProductNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
     
     @Path("retrieveAllPeripherals")
     @GET
@@ -78,8 +86,8 @@ public class ProductResource {
     public Response retrieveAllPeripherals() {        
         try{
             List<Peripheral> peripherals = peripheralSessionBeanLocal.retrieveAllPeripherals();      
-            RetrieveAllPeripheralsRsp retrieveAllPeripheralsRsp = new RetrieveAllPeripheralsRsp(peripherals); 
-            return Response.status(Status.OK).entity(retrieveAllPeripheralsRsp).build();
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(peripherals); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
@@ -99,6 +107,7 @@ public class ProductResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
     @Path("retrieveAllCpu")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

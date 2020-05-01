@@ -15,6 +15,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { SpinnerModule } from 'primeng/spinner';
 import { CheckboxModule } from 'primeng/checkbox';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
@@ -36,6 +37,7 @@ import { ViewAllGPUComponent } from './view-all-gpu/view-all-gpu.component';
 import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-motherboard.component';
 import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
 import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
     ViewAllGPUComponent,
     ViewAllMotherboardComponent,
     ViewAllPowerSupplyComponent,
-    ViewAllRAMComponent
+    ViewAllRAMComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
     PanelModule,
     FontAwesomeModule,
     SpinnerModule,
-    CheckboxModule
+    CheckboxModule,
+    BreadcrumbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
 
 import { SelectItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
-import { ProductService } from '../product.service';
 import { Product } from '../product';
-import { ComputerCase } from '../computer-case';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-view-all-products',
@@ -13,6 +12,9 @@ import { ComputerCase } from '../computer-case';
   styleUrls: ['./view-all-products.component.css']
 })
 export class ViewAllProductsComponent implements OnInit {
+
+  home: MenuItem;
+  breadcrumbItems: MenuItem[];
 
   @Input() products: Product[];
   sortOptions: SelectItem[];
@@ -22,7 +24,9 @@ export class ViewAllProductsComponent implements OnInit {
   header: string;
   @Input() productType: string;
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
+  constructor() {
+    this.home = { icon: 'pi pi-home', routerLink: "/index" };
+
     this.sortOptions = [
       { label: 'Lowest Price', value: 'price' },
       { label: 'Highest Price', value: '!price' },
@@ -32,6 +36,7 @@ export class ViewAllProductsComponent implements OnInit {
   ngOnInit() {
     if (this.productType == "Computer Case") {
       this.header = "All Computer Cases";
+      this.breadcrumbItems = [{ label: 'Computer Cases' }]
     }
   }
 

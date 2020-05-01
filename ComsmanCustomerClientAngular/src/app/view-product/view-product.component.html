@@ -1,0 +1,39 @@
+<br>
+
+<div class="container" style="outline: thin solid lightgray;">
+    <br>
+
+    <h1>View Product</h1>
+
+    <br>
+
+    <div class="ui-g">
+
+        <div class="ui-g-4">{{product.image}}</div>
+
+        <div class="ui-g-8">
+            <div class="ui-g-12">
+                <h2>{{product.name}}</h2>
+            </div>
+            <div class="ui-g-12"><b>Description:</b></div>
+            <div class="ui-g-12">{{description}}</div>
+            <div class="ui-g-12"><b>Price:</b> S$ {{product.price.toFixed(2)}}</div>
+            <div class="ui-g-12">
+                <b>Quantity:</b>
+                <p-spinner [(ngModel)]="quantitySelected" size="5" min="1" max={{product.inventoryQuantity}}
+                    style="margin-left: 2%;">
+                </p-spinner><span style="color: gray; margin-left: 1%;">{{product.inventoryQuantity}} items left!</span>
+            </div>
+            <div class="ui-g-12" style="margin-top: 5%;">
+                <button pButton type="button" label="Add to Build" style="width: 150px; margin-right: 2%;"
+                    class="ui-button-secondary" (click)="addToBuild()"></button>
+                <button pButton type="button" label="Add to Cart" style="width: 150px" (click)="addToCart()"></button>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+
+</div>
