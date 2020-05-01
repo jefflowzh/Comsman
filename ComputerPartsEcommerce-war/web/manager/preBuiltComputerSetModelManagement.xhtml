@@ -8,39 +8,38 @@
 
     <ui:define name="content">
         <div class="layout-content">
-            
+
             <h2>Pre-Built Computer Set Model Management</h2>
-            
+
             <div class="layout-subcontent">
                 <p:repeat var="model" value="#{preBuiltComputerSetManagementManagedBean.models}">
-                    <h:panelGrid columns="2" style="width:50%" columnClasses="logo,detail">
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <f:facet name="header">
-                                    <h:outputText value="#{model.preBuiltComputerSetTier}"/>
-                                </f:facet>
-                                <h:outputText value="Tier:" />
-                                <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-weight: bold"/>
+                    <h:form id="tierForm">
+                        <h:panelGrid columns="2" style="width:50%; text-align: center">
+                            <p:outputPanel style="text-align: center">
+                                <h:panelGrid id="panelGridTier" columns="3" cellpadding="5" style="align-content: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-size: 20px"/>
+                                    </f:facet>
 
-                                <h:outputText value="CPU:" />
-                                <p:selectOneMenu>
-                                    <f:selectItem itemLabel="test"/>
-                                </p:selectOneMenu>
+                                    <h:outputLabel for="enabled" value="Tier Enabled:" />
+                                    <p:toggleSwitch id="enabled" value="#{model.isEnabled}"/>
+                                    <p:message id="blank" for="enabled"/>
 
-                                <h:outputText value="Motherboard:" />
-                                <p:inputSwitch value="test"/>
-                            </h:panelGrid>
-                        </p:outputPanel>
-                    </h:panelGrid>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <hr />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
+                                    <h:outputLabel for="cpu" value="CPU:" />
+                                    <p:selectOneMenu id="cpu" value="#{preBuiltComputerSetManagementManagedBean.selectedCPU}" style="width: 200px">
+                                        <p:ajax event="change" update="tierForm"
+                                                listener="#{preBuiltComputerSetManagementManagedBean.subjectSelectionChanged}" />
+                                        <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu}" itemLabel="#{cpu.name}"/>
+                                    </p:selectOneMenu>
+                                    <p:message id="cpuMessage" for="cpu"/>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>
+                        <br />
+                        <hr />
+                        <br />
+                    </h:form>
                 </p:repeat>
             </div>
         </div>

@@ -105,7 +105,6 @@ public class ProductManagementManagedBean implements Serializable {
         } else if (selectedProduct.equals("Peripheral")) {
             products = peripheralSessionBeanLocal.retrieveAllPeripherals();
         }
-
     }
 
     public void doUpdateProduct(ActionEvent event) {
