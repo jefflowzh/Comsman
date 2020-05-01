@@ -1,11 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
 
 import { SelectItem } from 'primeng/api';
 
-import { ProductService } from '../product.service';
 import { Product } from '../product';
-import { ComputerCase } from '../computer-case';
 
 @Component({
   selector: 'app-view-all-products',
@@ -22,7 +19,7 @@ export class ViewAllProductsComponent implements OnInit {
   header: string;
   @Input() productType: string;
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
+  constructor() {
     this.sortOptions = [
       { label: 'Lowest Price', value: 'price' },
       { label: 'Highest Price', value: '!price' },

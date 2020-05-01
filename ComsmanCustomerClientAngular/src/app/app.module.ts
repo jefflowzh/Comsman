@@ -29,11 +29,9 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { FooterComponent } from './footer/footer.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
-<<<<<<< HEAD
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
-=======
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
->>>>>>> 825e00ecb6a510033cd750650a2ad7bb5bc9ceae
+import { ViewProductComponent } from './view-product/view-product.component';
 
 @NgModule({
   declarations: [
@@ -47,11 +45,9 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
     CustomerRegistrationComponent,
     FooterComponent,
     CustomerCartComponent,
-<<<<<<< HEAD
-    ViewAllComputerCasesComponent
-=======
-    CustomerDetailsComponent
->>>>>>> 825e00ecb6a510033cd750650a2ad7bb5bc9ceae
+    ViewAllComputerCasesComponent,
+    CustomerDetailsComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,

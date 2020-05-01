@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Customer } from './Customer';
+import { Product } from './product';
 
 @Injectable({
   providedIn: 'root'
 })
+
+// probably should be LocalService
 export class SessionService {
 
   constructor() {

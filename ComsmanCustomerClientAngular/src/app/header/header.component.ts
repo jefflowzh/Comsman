@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
   customerLogout(): void {
     this.displayLoading = true;
     setTimeout(() => this.cleanup(), 1000)
-
   }
 
   cleanup(): void {

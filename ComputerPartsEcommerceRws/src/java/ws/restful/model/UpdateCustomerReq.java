@@ -11,14 +11,14 @@ import entity.Customer;
  *
  * @author zeplh
  */
-public class CustomerUpdateRsp {
+public class UpdateCustomerReq {
     
-    Customer customer;
+    private Customer customer;
 
-    public CustomerUpdateRsp() {
+    public UpdateCustomerReq() {
     }
 
-    public CustomerUpdateRsp(Customer customer) {
+    public UpdateCustomerReq(Customer customer) {
         this.customer = customer;
     }
 
@@ -29,7 +29,5 @@ public class CustomerUpdateRsp {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
-    
     
 }

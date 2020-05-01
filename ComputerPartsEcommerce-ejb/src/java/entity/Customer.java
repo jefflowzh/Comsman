@@ -30,6 +30,9 @@ public class Customer extends User implements Serializable {
     @OneToMany
     @NotNull
     private List<LineItem> cart;
+    @OneToMany
+    @NotNull
+    private List<ComputerPart> currComputerBuild;
     @Column(nullable = false)
     @NotNull
     private Integer loyaltyPoints;
@@ -49,6 +52,7 @@ public class Customer extends User implements Serializable {
         cart = new ArrayList<>();
         loyaltyPoints = 0;
         orders = new ArrayList<>();
+        currComputerBuild = new ArrayList<>();
     }
     
     public String getCardNumber() {
@@ -90,5 +94,13 @@ public class Customer extends User implements Serializable {
     public void setOrders(List<CustomerOrder> orders) {
         this.orders = orders;
     }
-    
+
+    public List<ComputerPart> getCurrComputerBuild() {
+        return currComputerBuild;
+    }
+
+    public void setCurrComputerBuild(List<ComputerPart> currComputerBuild) {
+        this.currComputerBuild = currComputerBuild;
+    }
+
 }

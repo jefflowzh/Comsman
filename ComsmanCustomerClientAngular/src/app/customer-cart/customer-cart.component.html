@@ -24,10 +24,9 @@
                 <div class="ui-g-4">{{lineItem.product.name}}</div>
                 <div class="ui-g-1">S$ {{(lineItem.product.price).toFixed(2)}}</div>
                 <div class="ui-g-2">
-                    <p-spinner [(ngModel)]="lineItem.quantity" #quanityReverseBind="ngModel"
-                        (onChange)="updateSessionCart()" size="5" min="1">
+                    <p-spinner [(ngModel)]="lineItem.quantity" (onChange)="updateSessionCart()" size=5 min=1
+                        max={{lineItem.product.inventoryQuantity}}>
                     </p-spinner>
-                    <div *ngIf="quantityReverseBind"></div>
                 </div>
                 <div class="ui-g-1">S$ {{(lineItem.product.price * lineItem.quantity).toFixed(2)}}</div>
                 <div class="ui-g-1">

@@ -21,6 +21,5 @@ public class RetrieveProductsRsp {
     public void setProducts(List<? extends Product> products) {
         this.products = products;
     }
-  
     
 }

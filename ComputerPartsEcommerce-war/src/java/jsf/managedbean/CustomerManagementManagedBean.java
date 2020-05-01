@@ -74,11 +74,9 @@ public class CustomerManagementManagedBean implements Serializable
     
     public void updateCustomer(ActionEvent event) {
         try {
-            customerSessionBeanLocal.updateCustomer(selectedCustomerEntityToUpdate, null, null);
+            customerSessionBeanLocal.updateCustomer(selectedCustomerEntityToUpdate, true, false, false, false);
             setSelectedCustomerEntityToUpdate(null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Customer updated successfully", null));
-        } catch (CustomerOrderNotFoundException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer order not found", null));
         } catch (CustomerNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Customer not found", null));
         } catch (Exception ex) {

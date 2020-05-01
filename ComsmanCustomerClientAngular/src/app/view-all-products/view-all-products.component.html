@@ -42,8 +42,13 @@
 
                     <div><b>Price</b>: {{product.price}}</div>
                     <p-footer style="display: block;">
-                        <button pButton type="button" label="View details"
-                            style="display: block; margin-left: auto; margin-right: auto"></button>
+                        <div style="text-align:center">
+                            <button pButton type="button" label="View details" style="margin-right: 5%"
+                                [routerLink]="['/viewProduct', product.productId]"></button>
+                            <button pButton type="button" label="Add to Cart"></button>
+                            <button pButton type="button" label="Add to Build"></button>
+                        </div>
+
                     </p-footer>
                 </p-card>
             </div>
