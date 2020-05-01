@@ -161,7 +161,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long cpuId = Long.parseLong(currentCpu);
             currentModel.setCpu(computerPartSessionBeanLocal.retrieveCPUById(cpuId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error: No computer part exists");
         }
@@ -171,8 +171,8 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long motherboardId = Long.parseLong(currentMotherboard);
             currentModel.setMotherboard(computerPartSessionBeanLocal.retrieveMotherBoardById(motherboardId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
-            System.out.println("---------------- " + currentModel.getMotherboard().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error message: " + ex);
         }
@@ -182,9 +182,9 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long psuId = Long.parseLong(currentPsu);
             currentModel.setPsu(computerPartSessionBeanLocal.retrievePowerSupplyById(psuId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
-            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-            System.out.println("---------------- " + currentModel.getPsu().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
+//            System.out.println("---------------- " + currentModel.getPsu().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error message: " + ex);
         }
@@ -194,10 +194,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long compCaseId = Long.parseLong(currentCompCase);
             currentModel.setCompCase(computerPartSessionBeanLocal.retrieveComputerCaseById(compCaseId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
-            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-            System.out.println("---------------- " + currentModel.getPsu().getName());
-            System.out.println("---------------- " + currentModel.getCompCase().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
+//            System.out.println("---------------- " + currentModel.getPsu().getName());
+//            System.out.println("---------------- " + currentModel.getCompCase().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error message: " + ex);
         }
@@ -207,11 +207,11 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long waterCoolerId = Long.parseLong(currentWaterCooler);
             currentModel.setWaterCooler(computerPartSessionBeanLocal.retrieveCPUWaterCoolerById(waterCoolerId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
-            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-            System.out.println("---------------- " + currentModel.getPsu().getName());
-            System.out.println("---------------- " + currentModel.getCompCase().getName());
-            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
+//            System.out.println("---------------- " + currentModel.getPsu().getName());
+//            System.out.println("---------------- " + currentModel.getCompCase().getName());
+//            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error message: " + ex);
         }
@@ -221,12 +221,12 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         try {
             Long airCoolerId = Long.parseLong(currentAirCooler);
             currentModel.setAirCooler(computerPartSessionBeanLocal.retrieveCPUAirCoolerById(airCoolerId));
-            System.out.println("---------------- " + currentModel.getCpu().getName());
-            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-            System.out.println("---------------- " + currentModel.getPsu().getName());
-            System.out.println("---------------- " + currentModel.getCompCase().getName());
-            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
-            System.out.println("---------------- " + currentModel.getAirCooler().getName());
+//            System.out.println("---------------- " + currentModel.getCpu().getName());
+//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
+//            System.out.println("---------------- " + currentModel.getPsu().getName());
+//            System.out.println("---------------- " + currentModel.getCompCase().getName());
+//            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
+//            System.out.println("---------------- " + currentModel.getAirCooler().getName());
         } catch (ComputerPartNotFoundException ex) {
             System.out.println("Error message: " + ex);
         }
