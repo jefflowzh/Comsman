@@ -1,1 +1,96 @@
-<p>view-all-ram works!</p>
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>RAM Speed</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSpeedCheckbox" binary="true" (click)="removeSpeedFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let sp of speed">
+                <p-checkbox value={{sp}} label={{sp}} [(ngModel)]="selectedSpeed" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <!-- <h5>TYPE</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllTypeCheckbox" binary="true" (click)="removeTypeFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let ty of type">
+                <p-checkbox value={{ty}} label={{ty}} [(ngModel)]="selectedType" (click)="applyFilters()">
+                </p-checkbox>
+            </div> -->
+
+
+            <h5>Sticks</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSticksCheckbox" binary="true"
+                    (click)="removeSticksFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let stick of sticks">
+                <p-checkbox value={{stick}} label={{stick}} [(ngModel)]="selectedSticks"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>GB per Stick</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllPerStickGBCheckbox" binary="true"
+                    (click)="removePerStickGBFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let per of perStickGB">
+                <p-checkbox value={{per}} label={{per}} [(ngModel)]="selectedPerStickGB"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>CasLatency</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllCasLatencyCheckbox" binary="true"
+                    (click)="removeCasLatencyFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let cas of casLatency">
+                <p-checkbox value={{cas}} label={{cas}} [(ngModel)]="selectedCasLatency"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredRAM">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>
+
+

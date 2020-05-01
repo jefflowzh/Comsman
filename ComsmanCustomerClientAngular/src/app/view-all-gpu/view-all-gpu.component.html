@@ -1,1 +1,132 @@
-<p>view-all-gpu works!</p>
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Chipset</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllChipsetCheckbox" binary="true" (click)="removeChipsetFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let chip of chipset">
+                <p-checkbox value={{chip}} label={{chip}} [(ngModel)]="selectedChipset" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <!-- <h5>Interface</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllInterfaceCheckbox" binary="true" (click)="removeInterfaceFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let i of Interface">
+                <p-checkbox value={{i}} label={{i}} [(ngModel)]="selectedInterface" (click)="applyFilters()">
+                </p-checkbox>
+            </div> -->
+
+            <hr>
+
+            <h5>Length(mm)</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllLengthCheckbox" binary="true"
+                    (click)="removeLengthFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let len of length">
+                <p-checkbox value={{len}} label={{len}} [(ngModel)]="selectedLength"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>TDP</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllTDPCheckbox" binary="true"
+                    (click)="removeTDPFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let tdp of TDP">
+                <p-checkbox value={{tdp}} label={{tdp}} [(ngModel)]="selectedTDP"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Required Expansion Slots</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllExpansionSlotWidthCheckbox" binary="true"
+                    (click)="removeExpansionSlotWidthFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let expansion of expansionSlotWidth">
+                <p-checkbox value={{expansion}} label={{expansion}} [(ngModel)]="selectedExpansionSlotWidth"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>External Power</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllExternalPowerCheckbox" binary="true"
+                    (click)="removeExternalPowerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let power of externalPower">
+                <p-checkbox value={{power}} label={{power}} [(ngModel)]="selectedExternalPower" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Memory Size</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllMemoryCheckbox" binary="true"
+                    (click)="removeMemoryFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let mem of memory">
+                <p-checkbox value={{mem}} label={{mem}} [(ngModel)]="selectedMemory" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Memory Type</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllMemoryTypeCheckbox" binary="true"
+                    (click)="removeMemoryTypeFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let mt of memoryType">
+                <p-checkbox value={{mt}} label={{mt}} [(ngModel)]="selectedMemoryType"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredGPU">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>

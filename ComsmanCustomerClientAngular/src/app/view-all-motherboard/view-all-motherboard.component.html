@@ -1,1 +1,156 @@
-<p>view-all-motherboard works!</p>
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Form Factor</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllFormFactorCheckbox" binary="true" (click)="removeFormFactorFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let ffactor of formFactor">
+                <p-checkbox value={{ffactor}} label={{ffactor}} [(ngModel)]="selectedFormFactor" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <h5>Socket</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true" (click)="removeSocketFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let soc of socket">
+                <p-checkbox value={{soc}} label={{soc}} [(ngModel)]="selectedSocket" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Chipset</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllChipsetCheckbox" binary="true"
+                    (click)="removeChipsetFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let chip of chipset">
+                <p-checkbox value={{chip}} label={{chip}} [(ngModel)]="selectedChipset"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Memory Slots</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllMemorySlotCheckbox" binary="true"
+                    (click)="removeMemorySlotFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let ms of memorySlot">
+                <p-checkbox value={{ms}} label={{ms}} [(ngModel)]="selectedMemorySlot"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Colour</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllColourCheckbox" binary="true"
+                    (click)="removeColourFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let col of colour">
+                <p-checkbox value={{col}} label={{col}} [(ngModel)]="selectedColour"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>CrossFire Capable</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSLICrossFireCheckbox" binary="true"
+                    (click)="removeSLICrossFireFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let cross of SLICrossFire">
+                <p-checkbox value={{cross}} label={{cross}} [(ngModel)]="selectedSLICrossFire" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>PCIe-16 Slots</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllPCIEx16Checkbox" binary="true"
+                    (click)="removePCIEx16Filters()"></p-checkbox>
+            </div>
+            <div *ngFor="let count of PCIEx16">
+                <p-checkbox value={{count}} label={{count}} [(ngModel)]="selectedPCIEx16" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>m.2 Slots</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllM2SlotCheckbox" binary="true"
+                    (click)="removeM2SlotFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let count of m2Slot">
+                <p-checkbox value={{count}} label={{count}} [(ngModel)]="selectedM2Slot"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+            <h5>Build in WiFi</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllWiFiCheckbox" binary="true"
+                    (click)="removeWiFiFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let wi of wiFi">
+                <p-checkbox value={{wi}} label={{wi}} [(ngModel)]="selectedWiFi"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+            <h5>Supported Memory Speeds</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSupportedMemorySpeedCheckbox" binary="true"
+                    (click)="removeSupportedMemorySpeedFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let speed of supportedMemorySpeed">
+                <p-checkbox value={{speed}} label={{speed}} [(ngModel)]="selectedSupportedMemorySpeed"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredMotherboard">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>

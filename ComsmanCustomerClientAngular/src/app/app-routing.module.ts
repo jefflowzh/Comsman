@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'viewAllGPU', component: ViewAllGPUComponent },
   { path: 'viewAllMotherboard', component: ViewAllMotherboardComponent },
   { path: 'viewAllPowerSupply', component: ViewAllPowerSupplyComponent },
-  { path: 'viewAllRam', component: ViewAllRAMComponent },
+  { path: 'viewAllRAM', component: ViewAllRAMComponent },
   { path: 'viewAllProducts/:productType', component: ViewAllProductsComponent },
   { path: 'customerLogin', component: CustomerLoginComponent },
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
