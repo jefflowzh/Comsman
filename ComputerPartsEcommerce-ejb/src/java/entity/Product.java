@@ -121,7 +121,7 @@ public abstract class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Product[ id=" + productId + " ]";
+        return this.name;
     }
 
     public String getManufacturer() {

@@ -86,7 +86,6 @@ public class RAM extends ComputerPart implements Serializable {
     public void setCasLatency(Integer CasLatency) {
         this.CasLatency = CasLatency;
     }
-
     
     
 }

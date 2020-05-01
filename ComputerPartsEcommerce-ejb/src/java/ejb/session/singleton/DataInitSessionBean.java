@@ -72,7 +72,6 @@ public class DataInitSessionBean {
     private CustomerOrderSessionBeanLocal customerOrderSessionBean;
     @EJB
     private StaffSessionBeanLocal staffSessionBean;
-    
 
     public DataInitSessionBean() {
     }
@@ -98,7 +97,6 @@ public class DataInitSessionBean {
 //        } catch (ComputerSetTierAlreadyExistsException ex) {
 //            System.out.println(ex.getMessage());
 //        }
-
         try {
             Staff testStaff = new Staff(StaffAccessRightEnum.MANAGER, "StaffFN", "StaffLN", "Staff Address", "wd@email.com", "password", "12345");
             staffSessionBean.createNewStaff(testStaff);
@@ -116,15 +114,6 @@ public class DataInitSessionBean {
         //create cpu
         CPU testcpu = new CPU("Manufacturer", 3, 3, "socket", true, true, "cpu", 100.00, 5, "test.png");
         computerPartSessionBean.createNewCPU(testcpu);
-        PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM);
-        p1.setCpu(testcpu);
-        try {
-            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(p1);
-            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR));
-            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET));
-        } catch (ComputerSetTierAlreadyExistsException ex) {
-            System.out.println(ex.getMessage());
-        }
         //create mb
         // String[] suportedMemorySpeed = {"222", "111"};
         List<String> suportedMemorySpeed = new ArrayList<>();
@@ -135,8 +124,11 @@ public class DataInitSessionBean {
         // create ram
         List<RAM> rams = new ArrayList<>();
         RAM testram = new RAM("Manufacturer", "speed", "type", 4, 3, 5, "ram", 100.00, 5, "test.png");
+        RAM testram2 = new RAM("Manufacturer2", "speed2", "type2", 4, 3, 5, "ram2", 100.00, 5, "test.png");
         computerPartSessionBean.createNewRAM(testram);
+        computerPartSessionBean.createNewRAM(testram2);
         rams.add(testram);
+        rams.add(testram2);
         // create psu
         PowerSupply powersupply = new PowerSupply("Manufacturer", "formFactor", "efficiency", 5, "modularity", 5, 5, "psu", 100.00, 5, "test.png");
         computerPartSessionBean.createNewPowerSupply(powersupply);
@@ -145,7 +137,7 @@ public class DataInitSessionBean {
         List<String> colours = new ArrayList<>();
         colours.add("red");
         colours.add("white");
-        
+
         List<String> motherBoardFormFactor = new ArrayList<>();
         motherBoardFormFactor.add("mbff1");
         motherBoardFormFactor.add("mbff2");
@@ -180,7 +172,22 @@ public class DataInitSessionBean {
         // test peripheral
         Peripheral peripheral = new Peripheral("manu", "description", "peripheral", 123.0, 10, "test.png");
         peripheralSessionBeanLocal.createNewPeripheral(peripheral);
-        
+
+        PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM);
+        p1.setCpu(testcpu);
+        p1.setMotherboard(testMB);
+        p1.getRams().add(testram);
+        p1.getRams().add(testram2);
+        p1.setPrice(2.1);
+        p1.setIsEnabled(true);
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(p1);
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR));
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET));
+        } catch (ComputerSetTierAlreadyExistsException ex) {
+            System.out.println(ex.getMessage());
+        }
+
         // creat com set
         ComputerSet comset = new ComputerSet(5, false);
         comset.setCpu(testcpu);

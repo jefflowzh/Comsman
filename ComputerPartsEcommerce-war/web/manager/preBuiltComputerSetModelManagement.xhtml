@@ -11,36 +11,132 @@
 
             <h2>Pre-Built Computer Set Model Management</h2>
 
+            <h:form>
+                <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="3">
+                    <p:outputLabel value="Select a Tier:" style="font-size: 16px; font-weight: bold"/>
+                    <p:selectOneMenu id="tier" value="#{preBuiltComputerSetManagementManagedBean.currentTierString}" style="width:155px">
+                        <p:ajax event="change" update="formModel"
+                                listener="#{preBuiltComputerSetManagementManagedBean.subjectSelectionChanged}" />
+
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Premium" itemValue="PREMIUM" />
+                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                        <f:selectItem itemLabel="Budget" itemValue="BUDGET" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
+
             <div class="layout-subcontent">
-                <p:repeat var="model" value="#{preBuiltComputerSetManagementManagedBean.models}">
-                    <h:form id="tierForm">
-                        <h:panelGrid columns="2" style="width:50%; text-align: center">
-                            <p:outputPanel style="text-align: center">
-                                <h:panelGrid id="panelGridTier" columns="3" cellpadding="5" style="align-content: center">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-size: 20px"/>
-                                    </f:facet>
 
-                                    <h:outputLabel for="enabled" value="Tier Enabled:" />
-                                    <p:toggleSwitch id="enabled" value="#{model.isEnabled}"/>
-                                    <p:message id="blank" for="enabled"/>
+                <h:form id="formModel">
+                    <p:growl id="growl" sticky="false" life="1000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+                    <h:panelGrid style="text-align: center" rendered="#{(preBuiltComputerSetManagementManagedBean.currentTierString eq 'PREMIUM') or (preBuiltComputerSetManagementManagedBean.currentTierString eq 'REGULAR') or (preBuiltComputerSetManagementManagedBean.currentTierString eq 'BUDGET')}">
+                        <p:outputPanel style="text-align: center">
+                            <h:panelGrid columns="4" cellpadding="5" style="align-content: center">
 
-                                    <h:outputLabel for="cpu" value="CPU:" />
-                                    <p:selectOneMenu id="cpu" value="#{preBuiltComputerSetManagementManagedBean.selectedCPU}" style="width: 200px">
-                                        <p:ajax event="change" update="tierForm"
-                                                listener="#{preBuiltComputerSetManagementManagedBean.subjectSelectionChanged}" />
-                                        <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu}" itemLabel="#{cpu.name}"/>
-                                    </p:selectOneMenu>
-                                    <p:message id="cpuMessage" for="cpu"/>
+                                <f:facet name="header">
+                                    <h:outputText value="#{preBuiltComputerSetManagementManagedBean.currentModel.preBuiltComputerSetTier} Tier" style="font-size: 20px"/>
+                                </f:facet>
 
-                                </h:panelGrid>
-                            </p:outputPanel>
-                        </h:panelGrid>
-                        <br />
-                        <hr />
-                        <br />
-                    </h:form>
-                </p:repeat>
+                                <h:outputLabel for="cpu" value="CPU:" />
+                                <p:selectOneMenu id="cpu" value="#{preBuiltComputerSetManagementManagedBean.currentCpu}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxCPU}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu.productId}" itemLabel="#{cpu.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has CPU: #{preBuiltComputerSetManagementManagedBean.existingTierCPU.name}" />
+                                <p:message id="cpuMessage" for="cpu"/>
+                                
+                                <h:outputLabel for="motherboard" value="Motherboard:" />
+                                <p:selectOneMenu id="motherboard" value="#{preBuiltComputerSetManagementManagedBean.currentMotherboard}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxMotherboard}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.motherboards}" var="motherboard" itemValue="#{motherboard.productId}" itemLabel="#{motherboard.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has Motherboard: #{preBuiltComputerSetManagementManagedBean.existingTierMotherboard.name}" />
+                                <p:message id="motherboardMessage" for="motherboard"/>
+
+                                <h:outputLabel for="psu" value="Power Supply:" />
+                                <p:selectOneMenu id="psu" value="#{preBuiltComputerSetManagementManagedBean.currentPsu}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxPSU}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.psus}" var="psu" itemValue="#{psu.productId}" itemLabel="#{psu.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has PSU: #{preBuiltComputerSetManagementManagedBean.existingTierPowerSupply}" />
+                                <p:message id="psuMessage" for="psu"/>
+
+                                <h:outputLabel for="computerCase" value="Computer Case:" />
+                                <p:selectOneMenu id="computerCase" value="#{preBuiltComputerSetManagementManagedBean.currentCompCase}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxCompCase}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.compCases}" var="compCase" itemValue="#{compCase.productId}" itemLabel="#{compCase.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has Computer Case: #{preBuiltComputerSetManagementManagedBean.existingTierComputerCase}" />
+                                <p:message id="computerCaseMessage" for="computerCase"/>
+
+                                <h:outputLabel for="waterCooler" value="Water Cooler:" />
+                                <p:selectOneMenu id="waterCooler" value="#{preBuiltComputerSetManagementManagedBean.currentWaterCooler}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxWaterCooler}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.waterCoolers}" var="waterCooler" itemValue="#{waterCooler.productId}" itemLabel="#{waterCooler.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has Water Cooler: #{preBuiltComputerSetManagementManagedBean.existingTierCPUWaterCooler}" />
+                                <p:message id="waterCoolerMessage" for="waterCooler"/>
+
+                                <h:outputLabel for="airCooler" value="Air Cooler:" />
+                                <p:selectOneMenu id="airCooler" value="#{preBuiltComputerSetManagementManagedBean.currentAirCooler}" style="width: 200px" appendTo="@this">
+                                    <p:ajax event="change" update="formModel"
+                                            listener="#{preBuiltComputerSetManagementManagedBean.setAjaxAirCooler}" />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.airCoolers}" var="airCooler" itemValue="#{airCooler.productId}" itemLabel="#{airCooler.name}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Current tier has Air Cooler: #{preBuiltComputerSetManagementManagedBean.existingTierCPUAirCooler}" />
+                                <p:message id="airCoolerMessage" for="airCooler"/>
+
+                                <h:outputLabel for="rams" value="Ram (select multiple):" />
+                                <p:selectCheckboxMenu id="rams" value="#{preBuiltComputerSetManagementManagedBean.currentRams}" label="Select RAMs" multiple="true" panelStyle="width:200px">
+                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.rams}" var="ram" itemValue="#{ram.productId}" itemLabel="#{ram.name}"/>
+                                </p:selectCheckboxMenu>
+                                <h:outputLabel value="Current tier has RAM(s): #{preBuiltComputerSetManagementManagedBean.existingTierRAMs}" />
+                                <p:message id="ramsMessage" for="rams"/>
+
+                                <h:outputLabel for="gpus" value="GPU (select multiple):" />
+                                <p:selectCheckboxMenu id="gpus" value="#{preBuiltComputerSetManagementManagedBean.currentGpus}" label="Select GPUs" multiple="true" panelStyle="width:200px">
+                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.gpus}" var="gpu" itemValue="#{gpu.productId}" itemLabel="#{gpu.name}"/>
+                                </p:selectCheckboxMenu>
+                                <h:outputLabel value="Current tier has GPU(s): " />
+                                <p:message id="gpusMessage" for="gpus"/>
+
+                                <h:outputLabel for="hdds" value="HDD (select multiple):" />
+                                <p:selectCheckboxMenu id="hdds" value="#{preBuiltComputerSetManagementManagedBean.currentHdds}" label="Select HDDs" multiple="true" panelStyle="width:200px">
+                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.hdds}" var="hdd" itemValue="#{hdd.productId}" itemLabel="#{hdd.name}"/>
+                                </p:selectCheckboxMenu>
+                                <h:outputLabel value="Current tier has HDD(s): " />
+                                <p:message id="hddsMessage" for="hdds"/>
+
+                                <h:outputLabel for="ssds" value="SSD (select multiple):" />
+                                <p:selectCheckboxMenu id="ssds" value="#{preBuiltComputerSetManagementManagedBean.currentSsds}" label="Select SSDs" multiple="true" panelStyle="width:200px">
+                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.ssds}" var="ssd" itemValue="#{ssd.productId}" itemLabel="#{ssd.name}"/>
+                                </p:selectCheckboxMenu>
+                                <h:outputLabel value="Current tier has SSD(s): " />
+                                <p:message id="ssdsMessage" for="ssds"/>
+
+                                <p:commandButton value="Update Tier" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                </h:form>
+
             </div>
         </div>
     </ui:define>
