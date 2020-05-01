@@ -118,7 +118,7 @@
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="code" value="#{couponManagementManagedBean.newCoupon.code}" required="true" requiredMessage="Code is required" >
-                                        <p:ajax listener="#{couponManagementManagedBean.test()}"/>
+                                        <p:ajax listener="#{couponManagementManagedBean.test(component)}"/>
                                     </p:inputText>
                                 </p:column>
                             </p:row>

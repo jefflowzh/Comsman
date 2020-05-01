@@ -118,6 +118,8 @@ public class DataInitSessionBean {
         computerPartSessionBean.createNewCPU(testcpu);
         PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM);
         p1.setCpu(testcpu);
+        p1.setPrice(2.1);
+        p1.setIsEnabled(true);
         try {
             preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(p1);
             preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR));

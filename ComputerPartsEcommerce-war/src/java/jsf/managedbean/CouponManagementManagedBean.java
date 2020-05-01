@@ -70,6 +70,7 @@ public class CouponManagementManagedBean implements Serializable {
     
     public void test(UIComponent component) {
         System.out.println("****TEST" + component.getChildCount());
+        System.out.println("****TEST" + newCoupon.getCode());
         FacesContext.getCurrentInstance().addMessage("formAllCoupons:test123", new FacesMessage(FacesMessage.SEVERITY_INFO, "testing123", "testing12"));
     }
     
@@ -166,13 +167,5 @@ public class CouponManagementManagedBean implements Serializable {
 
     public void setCouponTypes(CouponTypeEnum[] couponTypes) {
         this.couponTypes = couponTypes;
-    }
-
-    public UIComponent getComponent() {
-        return component;
-    }
-
-    public void setComponent(UIComponent component) {
-        this.component = component;
     }
 }

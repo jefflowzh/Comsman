@@ -12,21 +12,25 @@
             <h2>Pre-Built Computer Set Model Management</h2>
             
             <div class="layout-subcontent">
+                <h:form id="formAllModels">
                 <p:repeat var="model" value="#{preBuiltComputerSetManagementManagedBean.models}">
                     <h:panelGrid columns="2" style="width:50%; text-align: center">
                         <p:outputPanel style="text-align: center">
                             <h:panelGrid id="panelGridTier" columns="3" cellpadding="5" style="align-content: center">
                                 <f:facet name="header">
-                                    <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-size: 20"/>
+                                    <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-size: 20px"/>
                                 </f:facet>
                                 
                                 <h:outputLabel for="enabled" value="Tier Enabled:" />
-                                <p:toggleSwitch id="enabled" value="#{model.isEnabled}"/>
+                                <p:toggleSwitch id="enabled" value="#{model.isEnabled}">
+                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.checkSingleComputerPartUpdate(model, null, component)}" update="formAllModels"/>
+                                </p:toggleSwitch>
                                 <p:message id="blank" for="enabled"/>
                                 
                                 <h:outputLabel for="cpu" value="CPU:" />
                                 <p:selectOneMenu id="cpu" value="#{model.cpu}" style="width: 200px">
-                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.checkSingleComputerPartUpdate(model, model.cpu, component)}" update="panelGridTier"/>
+                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.checkSingleComputerPartUpdate(model, model.cpu, component)}" update="formAllModels"/>
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
                                     <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu}" itemLabel="#{cpu.name}"/>
                                 </p:selectOneMenu>
                                 <p:message id="cpuMessage" for="cpu"/>
@@ -69,6 +73,7 @@
                                 
                                 <h:outputLabel for="rams" value="RAM (select multiple):" />
                                 <p:selectCheckboxMenu id="rams" value="#{model.rams}" label="Select RAMs" style="width: 200px">
+                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.selectEvent}"/>
                                     <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.rams}" var="ram" itemValue="#{ram}" itemLabel="#{ram.name}"/>
                                 </p:selectCheckboxMenu>
                                 <p:message id="ramsMessage" for="rams"/>
@@ -92,7 +97,9 @@
                                 <p:message id="ssdsMessage" for="ssds"/>
                                 
                                 <p:outputLabel for="price" value="Price: "/>
-                                <h:outputText id="price" value="$#{model.price}"/>
+                                <h:inputText id="price" value="#{model.price}">
+                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.checkSingleComputerPartUpdate(model, null, component)}"/>
+                                </h:inputText>
                                 
                             </h:panelGrid>
                             <p:staticMessage severity="error" summary="MODEL INCOMPLETE"/>
@@ -103,6 +110,8 @@
                     <hr />
                     <br />
                 </p:repeat>
+                </h:form>
+                
             </div>
         </div>
     </ui:define>
