@@ -25,7 +25,7 @@ public class PowerSupply extends ComputerPart implements Serializable {
    // @OneToMany(mappedBy = "psu")
   // private List<ComputerSet> computerSets;
 
-    private String Manufacturer;
+    private String manufacturer;
     private String formFactor;// (micro atx)
     private String efficiency;
     private Integer wattage;
@@ -42,7 +42,7 @@ public class PowerSupply extends ComputerPart implements Serializable {
 
     public PowerSupply(String Manufacturer, String formFactor, String efficiency, Integer wattage, String modularity, Integer SATAConnectors, Integer PCIe6plus2, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.formFactor = formFactor;
         this.efficiency = efficiency;
         this.wattage = wattage;
@@ -53,11 +53,11 @@ public class PowerSupply extends ComputerPart implements Serializable {
 
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getFormFactor() {

@@ -15,6 +15,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   customer: Customer;
   success: boolean;
+  submitted: boolean = false;
   updateError: boolean = false;
   updateSuccess: boolean = false;
 
@@ -27,9 +28,9 @@ export class CustomerDetailsComponent implements OnInit {
     this.customer = this.sessionService.getCurrentCustomer();
   }
 
-  updateCustomer(){
-
-    if(true){
+  updateCustomer(customerForm: NgForm){
+    this.submitted = true;
+    if(customerForm.valid){
       this.customerService.customerUpdate(this.customer).subscribe(
        response => {
         let customer: Customer = response.customer;
@@ -46,6 +47,9 @@ export class CustomerDetailsComponent implements OnInit {
     );
       
     }
+  }
+
+  else(){
 
   }
 

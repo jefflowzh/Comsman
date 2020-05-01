@@ -34,6 +34,39 @@ export class ProductService {
       );
   }
 
+  retrieveAllCpu(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllCpu").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+  retrieveAllGpu(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllGpu").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+  retrieveAllMotherBoard(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllMotherBoard").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  retrieveAllPowerSupply(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllPowerSupply").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  retrieveAllRam(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllRam").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

@@ -25,12 +25,12 @@ public class MotherBoard extends ComputerPart implements Serializable {
     //@OneToMany(mappedBy = "motherBoard")
    //private List<ComputerSet> computerSets;
     
-    private String Manufacturer;
+    private String manufacturer;
     private String formFactor;
     private String socket;
     private String chipset;
     private Integer memorySlot;
-    private String Colour;
+    private String colour;
     //private String[] Interfaces;
     private Boolean SLICrossFire;
     private Integer PCIEx16;
@@ -50,12 +50,12 @@ public class MotherBoard extends ComputerPart implements Serializable {
 
     public MotherBoard(String Manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Boolean wiFi, String[] suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.formFactor = formFactor;
         this.socket = socket;
         this.chipset = chipset;
         this.memorySlot = memorySlot;
-        this.Colour = Colour;
+        this.colour = Colour;
         this.SLICrossFire = SLICrossFire;
         this.PCIEx16 = PCIEx16;
         this.m2Slot = m2Slot;
@@ -66,11 +66,11 @@ public class MotherBoard extends ComputerPart implements Serializable {
     
     
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getFormFactor() {
@@ -106,11 +106,11 @@ public class MotherBoard extends ComputerPart implements Serializable {
     }
 
     public String getColour() {
-        return Colour;
+        return colour;
     }
 
     public void setColour(String Colour) {
-        this.Colour = Colour;
+        this.colour = Colour;
     }
 
     public Boolean getSLICrossFire() {
