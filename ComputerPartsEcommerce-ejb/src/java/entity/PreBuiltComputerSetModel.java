@@ -29,6 +29,9 @@ public class PreBuiltComputerSetModel implements Serializable {
     @Column(nullable = false, unique = true)
     @NotNull
     private PreBuiltComputerSetTierEnum preBuiltComputerSetTier;
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isEnabled;
 
     @ManyToOne
     @JoinColumn
@@ -36,7 +39,7 @@ public class PreBuiltComputerSetModel implements Serializable {
     
     @ManyToOne
     @JoinColumn
-    private MotherBoard motherBoard;
+    private MotherBoard motherboard;
     
     @ManyToMany
     @JoinColumn
@@ -71,6 +74,7 @@ public class PreBuiltComputerSetModel implements Serializable {
         this.hdds = new ArrayList<>();
         this.ssds = new ArrayList<>();
         price = 0.0;
+        isEnabled = false;
     }
 
     public PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum preBuiltComputerSetTier) {
@@ -135,6 +139,14 @@ public class PreBuiltComputerSetModel implements Serializable {
         this.preBuiltComputerSetTier = preBuiltComputerSetTier;
     }
 
+    public Boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(Boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+    
     public CPU getCpu() {
         return cpu;
     }
@@ -143,12 +155,12 @@ public class PreBuiltComputerSetModel implements Serializable {
         this.cpu = cpu;
     }
 
-    public MotherBoard getMotherBoard() {
-        return motherBoard;
+    public MotherBoard getMotherboard() {
+        return motherboard;
     }
 
-    public void setMotherBoard(MotherBoard motherBoard) {
-        this.motherBoard = motherBoard;
+    public void setMotherboard(MotherBoard motherboard) {
+        this.motherboard = motherboard;
     }
 
     public List<RAM> getRams() {

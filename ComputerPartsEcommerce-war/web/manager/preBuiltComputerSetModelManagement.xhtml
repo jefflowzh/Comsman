@@ -13,33 +13,94 @@
             
             <div class="layout-subcontent">
                 <p:repeat var="model" value="#{preBuiltComputerSetManagementManagedBean.models}">
-                    <h:panelGrid columns="2" style="width:50%" columnClasses="logo,detail">
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGrid columns="2" style="width:50%; text-align: center">
+                        <p:outputPanel style="text-align: center">
+                            <h:panelGrid id="panelGridTier" columns="3" cellpadding="5" style="align-content: center">
                                 <f:facet name="header">
-                                    <h:outputText value="#{model.preBuiltComputerSetTier}"/>
+                                    <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-size: 20"/>
                                 </f:facet>
-                                <h:outputText value="Tier:" />
-                                <h:outputText value="#{model.preBuiltComputerSetTier}" style="font-weight: bold"/>
-
-                                <h:outputText value="CPU:" />
-                                <p:selectOneMenu>
-                                    <f:selectItem itemLabel="test"/>
+                                
+                                <h:outputLabel for="enabled" value="Tier Enabled:" />
+                                <p:toggleSwitch id="enabled" value="#{model.isEnabled}"/>
+                                <p:message id="blank" for="enabled"/>
+                                
+                                <h:outputLabel for="cpu" value="CPU:" />
+                                <p:selectOneMenu id="cpu" value="#{model.cpu}" style="width: 200px">
+                                    <p:ajax listener="#{preBuiltComputerSetManagementManagedBean.checkSingleComputerPartUpdate(model, model.cpu, component)}" update="panelGridTier"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu}" itemLabel="#{cpu.name}"/>
                                 </p:selectOneMenu>
-
-                                <h:outputText value="Motherboard:" />
-                                <p:inputSwitch value="test"/>
+                                <p:message id="cpuMessage" for="cpu"/>
+                                
+                                <h:outputLabel for="motherboard" value="Motherboard:" />
+                                <p:selectOneMenu id="motherboard" value="#{model.motherboard}" style="width: 200px">
+                                    <p:ajax />
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.motherboards}" var="motherboard" itemValue="#{motherboard}" itemLabel="#{motherboard.name}"/>
+                                </p:selectOneMenu>
+                                <p:message id="motherboardMessage" for="motherboard"/>
+                                
+                                <h:outputLabel for="psu" value="Power Supply:" />
+                                <p:selectOneMenu id="psu" value="#{model.psu}" style="width: 200px">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.psus}" var="psu" itemValue="#{psu}" itemLabel="#{psu.name}"/>
+                                </p:selectOneMenu>
+                                <p:message id="psuMessage" for="psu"/>
+                                
+                                <h:outputLabel for="computerCase" value="Computer Case:" />
+                                <p:selectOneMenu id="computerCase" value="#{model.compCase}" style="width: 200px">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.compCases}" var="compCase" itemValue="#{compCase}" itemLabel="#{compCase.name}"/>
+                                </p:selectOneMenu>
+                                <p:message id="computerCaseMessage" for="computerCase"/>
+                                
+                                <h:outputLabel for="waterCooler" value="Water Cooler:" />
+                                <p:selectOneMenu id="waterCooler" value="#{model.waterCooler}" style="width: 200px">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.waterCoolers}" var="waterCooler" itemValue="#{waterCooler}" itemLabel="#{waterCooler.name}"/>
+                                </p:selectOneMenu>
+                                <p:message id="waterCoolerMessage" for="waterCooler"/>
+                                
+                                <h:outputLabel for="airCooler" value="Air Cooler:" />
+                                <p:selectOneMenu id="airCooler" value="#{model.airCooler}" style="width: 200px">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.waterCoolers}" var="airCooler" itemValue="#{airCooler}" itemLabel="#{airCooler.name}"/>
+                                </p:selectOneMenu>
+                                <p:message id="airCoolerMessage" for="airCooler"/>
+                                
+                                <h:outputLabel for="rams" value="RAM (select multiple):" />
+                                <p:selectCheckboxMenu id="rams" value="#{model.rams}" label="Select RAMs" style="width: 200px">
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.rams}" var="ram" itemValue="#{ram}" itemLabel="#{ram.name}"/>
+                                </p:selectCheckboxMenu>
+                                <p:message id="ramsMessage" for="rams"/>
+                                
+                                <h:outputLabel for="gpus" value="GPU (select multiple):" />
+                                <p:selectCheckboxMenu id="gpus" value="#{model.gpus}" label="Select GPUs" style="width: 200px">
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.gpus}" var="gpu" itemValue="#{gpu}" itemLabel="#{gpu.name}"/>
+                                </p:selectCheckboxMenu>
+                                <p:message id="gpusMessage" for="gpus"/>
+                                
+                                <h:outputLabel for="hdds" value="HDD (select multiple):" />
+                                <p:selectCheckboxMenu id="hdds" value="#{model.hdds}" label="Select HDDs" style="width: 200px">
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.hdds}" var="hdd" itemValue="#{hdd}" itemLabel="#{hdd.name}"/>
+                                </p:selectCheckboxMenu>
+                                <p:message id="hddsMessage" for="hdds"/>
+                                
+                                <p:outputLabel for="ssds" value="SSD (select multiple):" />
+                                <p:selectCheckboxMenu id="ssds" value="#{model.ssds}" label="Select SSDs" style="width: 200px">
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.ssds}" var="ssd" itemValue="#{ssd}" itemLabel="#{ssd.name}"/>
+                                </p:selectCheckboxMenu>
+                                <p:message id="ssdsMessage" for="ssds"/>
+                                
+                                <p:outputLabel for="price" value="Price: "/>
+                                <h:outputText id="price" value="$#{model.price}"/>
+                                
                             </h:panelGrid>
+                            <p:staticMessage severity="error" summary="MODEL INCOMPLETE"/>
+                            <p:staticMessage severity="info" summary="MODEL COMPLETE"/>
                         </p:outputPanel>
                     </h:panelGrid>
                     <br />
-                    <br />
-                    <br />
-                    <br />
                     <hr />
-                    <br />
-                    <br />
-                    <br />
                     <br />
                 </p:repeat>
             </div>

@@ -116,6 +116,15 @@ public class DataInitSessionBean {
         //create cpu
         CPU testcpu = new CPU("Manufacturer", 3, 3, "socket", true, true, "cpu", 100.00, 5, "test.png");
         computerPartSessionBean.createNewCPU(testcpu);
+        PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM);
+        p1.setCpu(testcpu);
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(p1);
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR));
+            preBuiltComputerSetModelSessionBeanLocal.createNewPreBuiltComputerSetModel(new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET));
+        } catch (ComputerSetTierAlreadyExistsException ex) {
+            System.out.println(ex.getMessage());
+        }
         //create mb
         // String[] suportedMemorySpeed = {"222", "111"};
         List<String> suportedMemorySpeed = new ArrayList<>();

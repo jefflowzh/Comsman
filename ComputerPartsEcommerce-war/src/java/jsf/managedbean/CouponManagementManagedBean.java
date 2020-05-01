@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
@@ -32,7 +33,7 @@ public class CouponManagementManagedBean implements Serializable {
     private CouponTypeEnum tempEnum;
     
     private CouponTypeEnum[] couponTypes;
-
+    
     public CouponManagementManagedBean() {
     }
     
@@ -67,8 +68,9 @@ public class CouponManagementManagedBean implements Serializable {
         }
     }
     
-    public void test() {
-        System.out.println("******** " + newCoupon.getCouponType());
+    public void test(UIComponent component) {
+        System.out.println("****TEST" + component.getChildCount());
+        FacesContext.getCurrentInstance().addMessage("formAllCoupons:test123", new FacesMessage(FacesMessage.SEVERITY_INFO, "testing123", "testing12"));
     }
     
     public void doUpdateCoupon(ActionEvent event) {
@@ -164,5 +166,13 @@ public class CouponManagementManagedBean implements Serializable {
 
     public void setCouponTypes(CouponTypeEnum[] couponTypes) {
         this.couponTypes = couponTypes;
+    }
+
+    public UIComponent getComponent() {
+        return component;
+    }
+
+    public void setComponent(UIComponent component) {
+        this.component = component;
     }
 }
