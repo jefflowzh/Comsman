@@ -48,7 +48,7 @@
                         </p:column>
 
                         <p:column headerText="Status" sortBy="#{task.orderStatus}" filterBy="#{task.orderStatus}" filterMatchMode="contains">
-                            <h:outputText value="#{task.orderStatus}" />
+                            <h:outputText value="#{task.orderStatus.toString()}" />
                         </p:column>
 
                         <p:column headerText="Action">

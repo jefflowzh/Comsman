@@ -59,7 +59,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private Boolean currentIsEnabled;
     private String currentCpu;
     private String currentMotherboard;
-    private List<Long> currentRams;
+    private List<String> currentRams;
     private String currentPsu;
     private String currentCompCase;
     private List<Long> currentGpus;
@@ -405,7 +405,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
                 preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, partToAdd.getProductId());
             }
         } catch (IncompatiblePartException ex) {
-            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incompatible: " + ex.getMessage(), null));
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
         } catch (ComputerPartNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
@@ -413,6 +413,35 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
         System.out.println(" set switch if need");
     }
+    
+    /*public void updateModelCollection(AjaxBehaviorEvent event, UIComponent component) {
+        List<String> computerPartNames;
+        Field field;
+        Class thisClass = PreBuiltComputerSetManagementManagedBean.class;
+        String clientId = component.getClientId();
+        String fieldName = clientId.substring(clientId.indexOf(':') + 1);
+        try {
+            field = thisClass.getDeclaredField(fieldName);
+            System.out.println("*************field name: " + field.getName());
+            computerPartNames = (List<String>) field.get(this);
+            System.out.println("*************par tname: " + computerPartName);
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error occured: " + ex.getMessage(), null));
+        }
+    }*/
+    /*public void updateModelRAM(UIComponent component) {
+        RAM ram = computerPartSessionBeanLocal.retrieveComputerPartByName(addRAM);
+        currentModel.getRams().add(ram);
+        preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
+        updatePrice();
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, ram.getProductId());
+        } catch (IncompatiblePartException ex) {
+            FacesContext.getCurrentInstance().addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+        } catch (ComputerPartNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
+        }
+    }*/
     
     private void updatePrice() {
         currentPrice = 0.0;

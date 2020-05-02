@@ -51,11 +51,12 @@
                         </p:column>
 
                         <p:column headerText="Requires Delivery" sortBy="#{orderEntity.requiresDelivery}" filterBy="#{orderEntity.requiresDelivery}" filterMatchMode="contains">
-                            <h:outputText value="#{orderEntity.requiresDelivery}" />
+                            <h:outputText rendered="#{orderEntity.requiresDelivery}" value="Yes" />
+                            <h:outputText rendered="#{!orderEntity.requiresDelivery}" value="No" />
                         </p:column>
 
                         <p:column headerText="Status" sortBy="#{orderEntity.orderStatus}" filterBy="#{orderEntity.orderStatus}" filterMatchMode="contains">
-                            <h:outputText value="#{orderEntity.orderStatus}" />
+                            <h:outputText value="#{orderEntity.orderStatus.toString()}" />
                         </p:column>
 
                         <p:column headerText="Action">

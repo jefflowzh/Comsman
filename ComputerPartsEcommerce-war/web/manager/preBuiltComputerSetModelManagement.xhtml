@@ -29,16 +29,14 @@
             <div class="layout-subcontent">
 
                 <h:form id="formModel">
-                    <p:growl id="growl" sticky="false" life="1000" />
-                    <p:messages id="messages" redisplay="false" closable="true" />
+                    <p:messages id="messages" redisplay="false" closable="true" globalOnly="true" />
                     <h:panelGrid style="text-align: center" rendered="#{(preBuiltComputerSetManagementManagedBean.currentTierString eq 'PREMIUM') or (preBuiltComputerSetManagementManagedBean.currentTierString eq 'REGULAR') or (preBuiltComputerSetManagementManagedBean.currentTierString eq 'BUDGET')}">
                         <p:outputPanel style="text-align: center">
                             <h:panelGrid columns="3" cellpadding="5" style="align-content: center">
 
-                                <f:facet name="header">
-                                    <h:outputText value="#{preBuiltComputerSetManagementManagedBean.currentModel.preBuiltComputerSetTier} Tier" style="font-size: 20px"/>
-                                </f:facet>
-
+                                    <h:outputText value="#{preBuiltComputerSetManagementManagedBean.currentModel.preBuiltComputerSetTier} Tier" style="font-size: 30px; font-weight: bold"/>
+                                    <h:outputText/>
+                                    <h:outputText/>
                                 <h:outputLabel for="currentCpu" value="CPU:" />
                                 <p:selectOneMenu id="currentCpu" value="#{preBuiltComputerSetManagementManagedBean.currentCpu}" style="width: 200px" appendTo="@this">
                                     <p:ajax event="change" update="formModel" listener="#{preBuiltComputerSetManagementManagedBean.updateModelSinglePart(event, component)}" />
@@ -116,7 +114,9 @@
                                 <p:message id="ssdsMessage" for="ssds"/>
                                 
                                 <h:outputLabel for="currentPrice" value="Price:" />
-                                <h:outputLabel id="currentPrice" value="#{preBuiltComputerSetManagementManagedBean.currentPrice}"/>
+                                <h:outputLabel id="currentPrice" value="#{preBuiltComputerSetManagementManagedBean.currentPrice}">
+                                    <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" minFractionDigits="2" />
+                                </h:outputLabel>
 
                                 <p:commandButton value="Update Tier" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
                             </h:panelGrid>
