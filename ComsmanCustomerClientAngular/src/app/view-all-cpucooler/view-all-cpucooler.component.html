@@ -22,68 +22,67 @@
 
             <hr>
 
-            <h5>Core Count</h5>
+            <!-- <h5>Colour</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllCoreCountCheckbox" binary="true"
-                    (click)="removeCoreCountFilters()">
+                <p-checkbox label="All" [(ngModel)]="AllColoursCheckbox" binary="true" (click)="removeColourFilters()">
                 </p-checkbox>
             </div>
-            <div *ngFor="let core of coreCount">
-                <p-checkbox value={{core}} label={{core}} [(ngModel)]="selectedCoreCount" (click)="applyFilters()">
+            <div *ngFor="let colour of colours">
+                <p-checkbox value={{colour}} label={{colour}} [(ngModel)]="selectedColours" (click)="applyFilters()">
                 </p-checkbox>
             </div>
             <hr>
 
-            <h5>TDP</h5>
+            <h5>CPU Chip Compatibility</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllTDPCheckbox" binary="true" (click)="removeTDPFilters()">
+                <p-checkbox label="All" [(ngModel)]="AllCompatibleCPUChipsCheckbox" binary="true" (click)="removeCompatibleCPUChipFilters()">
                 </p-checkbox>
             </div>
-            <div *ngFor="let tdp of TDP">
+            <div *ngFor="let compatibleCPUChips of compatibleCPUChips">
                 <p-checkbox value={{tdp}} label={{tdp}} [(ngModel)]="selectedTDP" (click)="applyFilters()">
                 </p-checkbox>
             </div>
 
             <hr>
 
-            <h5>Socket</h5>
+            <h5>Noise Level (dB)</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true" (click)="removeSocketFilters()">
-                </p-checkbox>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
             </div>
             <div *ngFor="let s of socket">
-                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket" (click)="applyFilters()">
-                </p-checkbox>
-            </div>
-
-            <hr>
-
-            <h5>Intergrated Graphics</h5>
-            <div>
-                <p-checkbox label="All" [(ngModel)]="AllHasIntergratedGraphicsCheckbox" binary="true"
-                    (click)="removeHasIntergratedGraphicsFilters()"></p-checkbox>
-            </div>
-            <div *ngFor="let has of hasIntergratedGraphics">
-                <p-checkbox value={{has}} label={{has}} [(ngModel)]="selectedHasIntergratedGraphics"
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
                     (click)="applyFilters()">
                 </p-checkbox>
             </div>
 
             <hr>
 
-            <h5>Includes Cooler</h5>
+            <h5>Height (mm)</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllIncludesCpuCoolerCheckbox" binary="true"
-                    (click)="removeIncludesCpuCoolerFilters()"></p-checkbox>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
             </div>
-            <div *ngFor="let inc of includesCpuCooler">
-                <p-checkbox value={{inc}} label={{inc}} [(ngModel)]="selectedIncludesCpuCooler"
+            <div *ngFor="let s of socket">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
                     (click)="applyFilters()">
                 </p-checkbox>
             </div>
-
+            
             <hr>
 
+            <h5>Radiator Size (mm)</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let s of socket">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            
+            <hr> -->
 
         </div>
 

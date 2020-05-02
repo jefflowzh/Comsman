@@ -5,9 +5,9 @@ export class Product {
     price: number;
     inventoryQuantity: number;
     image: string;
-    isDisabled: Boolean
+    isDisabled: boolean
 
-    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: Boolean) {
+    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: boolean) {
         this.productId = productId;
         this.name = name;
         this.price = price;

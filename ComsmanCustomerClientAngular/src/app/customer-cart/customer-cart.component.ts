@@ -18,9 +18,9 @@ export class CustomerCartComponent implements OnInit {
   retrieveCouponError: boolean;
   errorMessage: string;
   deliveryFee: number;
-  isPercentageCoupon: Boolean;
-  isFlatAmountCoupon: Boolean;
-  isFreeDeliveryCoupon: Boolean;
+  isPercentageCoupon: boolean;
+  isFlatAmountCoupon: boolean;
+  isFreeDeliveryCoupon: boolean;
   total: number;
 
   constructor(public sessionService: SessionService, public couponService: CouponService) {

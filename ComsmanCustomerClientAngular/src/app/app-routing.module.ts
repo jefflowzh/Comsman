@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent } from './index/index.component';
-import { ViewAllProductsComponent } from './view-all-products/view-all-products.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
@@ -17,6 +16,8 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
+import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
+import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -27,7 +28,6 @@ const routes: Routes = [
   { path: 'viewAllMotherboard', component: ViewAllMotherboardComponent },
   { path: 'viewAllPowerSupply', component: ViewAllPowerSupplyComponent },
   { path: 'viewAllRAM', component: ViewAllRAMComponent },
-  { path: 'viewAllProducts/:productType', component: ViewAllProductsComponent },
   { path: 'customerLogin', component: CustomerLoginComponent },
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
   { path: 'customerCart', component: CustomerCartComponent },
@@ -35,7 +35,9 @@ const routes: Routes = [
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
   { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },
-  { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent }
+  { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
+  { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
+  { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent }
 ];
 
 @NgModule({

@@ -23,10 +23,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
-import { ViewCustomerProfileComponent } from './view-customer-profile/view-customer-profile.component';
 import { ViewAllProductsComponent } from './view-all-products/view-all-products.component';
 import { HeaderComponent } from './header/header.component';
-import { ViewCustomerAccountComponent } from './view-customer-account/view-customer-account.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { FooterComponent } from './footer/footer.component';
@@ -42,15 +40,15 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
+import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
+import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
-    ViewCustomerProfileComponent,
     ViewAllProductsComponent,
     HeaderComponent,
-    ViewCustomerAccountComponent,
     CustomerLoginComponent,
     CustomerRegistrationComponent,
     FooterComponent,
@@ -65,7 +63,9 @@ import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advance
     ViewProductComponent,
     AmateurSetMainPageComponent,
     AmateurSetBuildPageComponent,
-    AdvancedSetBuildPageComponent
+    AdvancedSetBuildPageComponent,
+    ViewAllCPUCoolerComponent,
+    ViewAllInternalStorageComponent
   ],
   imports: [
     BrowserModule,

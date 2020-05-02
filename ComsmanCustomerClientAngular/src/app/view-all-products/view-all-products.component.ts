@@ -21,7 +21,6 @@ export class ViewAllProductsComponent implements OnInit {
   sortKey: string;
   sortField: string;
   sortOrder: number;
-  header: string;
   @Input() productType: string;
 
   constructor() {
@@ -34,10 +33,7 @@ export class ViewAllProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.productType == "Computer Case") {
-      this.header = "All Computer Cases";
-      this.breadcrumbItems = [{ label: 'Computer Cases' }]
-    }
+    this.breadcrumbItems = [{ label: this.productType }]
   }
 
   onSortChange(event) {

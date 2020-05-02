@@ -12,17 +12,17 @@ export class ViewAllGPUComponent implements OnInit {
   allGPU: GPU[];
   filteredGPU: GPU[];
 
-  // private String manufacturer;
-  // private String chipset; //(GTX 1660)
-  // private String Interface;  //(PCI-Ex16) matches with motherboard
+  // private string manufacturer;
+  // private string chipset; //(GTX 1660)
+  // private string Interface;  //(PCI-Ex16) matches with motherboard
   // private Double length; //in mm
   // private Integer TDP;
   // private Integer expansionSlotWidth;
-  // private String externalPower;
+  // private string externalPower;
   // private Integer memory;
-  // private String memoryType;
+  // private string memoryType;
 
- 
+
   // manufacturers: string[] = ['Manufacturer1', 'Manufacturer2', 'Manufacturer3', 'Manufacturer4'];
   manufacturers: string[] = []
   selectedManufacturers: string[] = []
@@ -84,80 +84,80 @@ export class ViewAllGPUComponent implements OnInit {
             this.chipset.push(gpu.chipset)
           }
 
-         
-           
+
+
           if (this.Interface.length == 0 || !this.Interface.includes(gpu.Interface)) {
             this.Interface.push(gpu.Interface)
           }
-          
 
-      
+
+
           if (this.length.length == 0 || !this.length.includes(gpu.length.toString())) {
             this.length.push(gpu.length.toString())
           }
 
-       
-        
+
+
           if (this.TDP.length == 0 || !this.TDP.includes(gpu.TDP.toString())) {
             this.TDP.push(gpu.TDP.toString())
           }
-          
 
-        
+
+
           if (this.expansionSlotWidth.length == 0 || !this.expansionSlotWidth.includes(gpu.expansionSlotWidth.toString())) {
             this.expansionSlotWidth.push(gpu.expansionSlotWidth.toString())
           }
 
-          
+
           if (this.externalPower.length == 0 || !this.externalPower.includes(gpu.externalPower.toString())) {
             this.externalPower.push(gpu.externalPower.toString())
           }
 
-          
+
           if (this.memory.length == 0 || !this.memory.includes(gpu.memory.toString())) {
             this.memory.push(gpu.memory.toString())
           }
 
-         
+
           if (this.memoryType.length == 0 || !this.memoryType.includes(gpu.memoryType)) {
             this.memoryType.push(gpu.memoryType)
           }
 
           this.manufacturers.sort();
-          
+
           this.chipset.sort();
-        
+
           this.Interface.sort();
-          
+
           this.length.sort();
-          
+
           this.TDP.sort();
-          
+
           this.expansionSlotWidth.sort();
-          
+
           this.externalPower.sort();
-          
+
           this.memory.sort();
-        
+
           this.memoryType.sort();
 
-          
+
           this.selectedManufacturers = this.manufacturers;
-          
-          this.selectedChipset= this.chipset;
-        
-          this.selectedInterface =  this.Interface;
-          
+
+          this.selectedChipset = this.chipset;
+
+          this.selectedInterface = this.Interface;
+
           this.selectedLength = this.length;
-          
+
           this.selectedTDP = this.TDP;
-          
+
           this.selectedExpansionSlotWidth = this.expansionSlotWidth
-          
+
           this.selectedExternalPower = this.externalPower
-          
+
           this.selectedMemory = this.memory
-        
+
           this.selectedMemoryType = this.memoryType
         }
       },
@@ -182,7 +182,7 @@ export class ViewAllGPUComponent implements OnInit {
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
     //   this.AllManufacturersCheckbox = false
-      
+
     // }
     //types
     if (this.selectedChipset.length == 0) {
@@ -274,9 +274,9 @@ export class ViewAllGPUComponent implements OnInit {
     // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
     //   this.AllFrontFanSupportCheckbox = false
     // }
-  
 
-  
+
+
 
     // this.AllManufacturersCheckbox = false;
     // this.AllTypesCheckbox = false;
@@ -295,7 +295,7 @@ export class ViewAllGPUComponent implements OnInit {
 
   updateFilters() {
     for (let gpu of this.allGPU) {
-      if (!this.selectedManufacturers.includes(gpu.manufacturer)&& this.filteredGPU.indexOf(gpu) < 0) {
+      if (!this.selectedManufacturers.includes(gpu.manufacturer) && this.filteredGPU.indexOf(gpu) < 0) {
         continue;
       }
       if (!this.selectedChipset.includes(gpu.chipset) && this.filteredGPU.indexOf(gpu) < 0) {
@@ -319,7 +319,7 @@ export class ViewAllGPUComponent implements OnInit {
       if (!this.selectedMemoryType.includes(gpu.memoryType.toString()) && this.filteredGPU.indexOf(gpu) < 0) {
         continue;
       }
-      
+
       this.filteredGPU.push(gpu);
     }
   }
@@ -346,17 +346,17 @@ export class ViewAllGPUComponent implements OnInit {
     this.filteredGPU = [];
     this.updateFilters();
   }
-    removeMemoryTypeFilters() {
-      if (!this.AllMemoryTypeCheckbox) {
-        this.selectedMemoryType = [];
-        return;
-      }
-
-      this.selectedMemoryType = this.memoryType;
-      this.filteredGPU = [];
-      this.updateFilters();
+  removeMemoryTypeFilters() {
+    if (!this.AllMemoryTypeCheckbox) {
+      this.selectedMemoryType = [];
+      return;
     }
-  
+
+    this.selectedMemoryType = this.memoryType;
+    this.filteredGPU = [];
+    this.updateFilters();
+  }
+
   removeMemoryFilters() {
     if (!this.AllMemoryCheckbox) {
       this.selectedMemory = [];

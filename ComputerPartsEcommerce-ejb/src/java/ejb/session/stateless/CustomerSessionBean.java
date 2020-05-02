@@ -157,6 +157,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         
         // Update cart
         if (updateCart) {
+            System.out.println(customer.getCart());
             customerToUpdate.setCart(customer.getCart());
         }
         

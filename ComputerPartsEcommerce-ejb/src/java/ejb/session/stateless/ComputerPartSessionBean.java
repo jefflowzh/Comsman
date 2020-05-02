@@ -28,6 +28,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
 
     
+    @Override
     public Long createNewCPU(CPU cpu) {
         em.persist(cpu);
         em.flush();
@@ -35,6 +36,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return cpu.getProductId();
     }
 
+    @Override
     public Long createNewCPUAirCooler(CPUAirCooler cpuAirCooler) {
         em.persist(cpuAirCooler);
         em.flush();
@@ -42,6 +44,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return cpuAirCooler.getProductId();
     }
     
+    @Override
     public Long createNewCPUWaterCooler(CPUWaterCooler cpuWaterCooler) {
         em.persist(cpuWaterCooler);
         em.flush();
@@ -57,6 +60,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return computerCase.getProductId();
     }
     
+    @Override
     public Long createNewGPU(GPU gpu) {
         em.persist(gpu);
         em.flush();
@@ -64,6 +68,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return gpu.getProductId();
     }
     
+    @Override
     public Long createNewHDD(HDD hdd) {
         em.persist(hdd);
         em.flush();
@@ -71,6 +76,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return hdd.getProductId();
     }
     
+    @Override
     public Long createNewMotherBoard(MotherBoard mb) {
         em.persist(mb);
         em.flush();
@@ -78,6 +84,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return mb.getProductId();
     }
     
+    @Override
     public Long createNewPowerSupply(PowerSupply ps) {
         em.persist(ps);
         em.flush();
@@ -85,6 +92,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return ps.getProductId();
     }
     
+    @Override
     public Long createNewRAM(RAM ram) {
         em.persist(ram);
         em.flush();
@@ -92,6 +100,7 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         return ram.getProductId();
     }
     
+    @Override
     public Long createNewSSD(SSD ssd) {
         em.persist(ssd);
         em.flush();
@@ -100,18 +109,21 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         
     }
     
+    @Override
     public List<CPU> retrieveAllCPU() {
         Query query = em.createQuery("SELECT c FROM CPU c"); 
         return query.getResultList();
         
     }
 
+    @Override
     public List<CPUAirCooler> retrieveAllCPUAirCooler() {
         Query query = em.createQuery("SELECT c FROM CPUAirCooler c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<CPUWaterCooler> retrieveAllCPUWaterCooler() {
         Query query = em.createQuery("SELECT c FROM CPUWaterCooler c"); 
         return query.getResultList();
@@ -125,36 +137,42 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         
     }
     
+    @Override
     public List<GPU> retrieveAllGPU() {
         Query query = em.createQuery("SELECT c FROM GPU c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<HDD> retrieveAllHDD() {
         Query query = em.createQuery("SELECT c FROM HDD c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<MotherBoard> retrieveAllMotherBoard() {
         Query query = em.createQuery("SELECT c FROM MotherBoard c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<PowerSupply> retrieveAllPowerSupply() {
         Query query = em.createQuery("SELECT c FROM PowerSupply c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<RAM> retrieveAllRAM() {
         Query query = em.createQuery("SELECT c FROM RAM c"); 
         return query.getResultList();
         
     }
     
+    @Override
     public List<SSD> retrieveAllSSD() {
         Query query = em.createQuery("SELECT c FROM SSD c"); 
         return query.getResultList();
@@ -173,9 +191,6 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         else{
             throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
         }
-            
-        
-        
     }
 
     public CPUAirCooler retrieveCPUAirCoolerById(Long id) throws ComputerPartNotFoundException {

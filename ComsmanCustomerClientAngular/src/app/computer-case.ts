@@ -13,7 +13,7 @@ export class ComputerCase extends ComputerPart {
     frontFanSupport: number;
     rearFanSupport: number;
 
-    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: Boolean,
+    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: boolean,
         manufacturer?: string, type?: string, colours?: string[], sidePanelView?: string, motherBoardFormFactor?: string[],
         fullHeightExpansionSlot?: number, maxVideoCardLength?: number, topFanSupport?: number, frontFanSupport?: number,
         rearFanSupport?: number) {
