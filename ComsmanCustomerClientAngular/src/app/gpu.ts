@@ -1,6 +1,6 @@
 import { ComputerPart } from './computer-part'
 
-export class Gpu extends ComputerPart {
+export class GPU extends ComputerPart {
 
 
     manufacturer: string;

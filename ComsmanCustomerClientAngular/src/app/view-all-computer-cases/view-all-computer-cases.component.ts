@@ -125,6 +125,37 @@ export class ViewAllComputerCasesComponent implements OnInit {
           if (this.rearFanSupport.length == 0 || !this.rearFanSupport.includes(computerCase.rearFanSupport.toString())) {
             this.rearFanSupport.push(computerCase.rearFanSupport.toString())
           }
+
+          this.manufacturers.sort();
+          this.types.sort();
+          this.colours.sort();
+          this.sidePanelViews.sort();
+          this.motherboardFormFactors.sort();
+          this.fullHeightExpansionSlot.sort();
+          this.maxVideoheightLength.sort();
+          this.topFanSupport.sort();
+          this.frontFanSupport.sort();
+          this.rearFanSupport.sort();
+
+          this.selectedManufacturers = this.manufacturers;
+          
+          this.selectedTypes= this.types;
+        
+          this.selectedColours =  this.colours;
+          
+          this.selectedSidePanelViews = this.sidePanelViews;
+          
+          this.selectedMotherboardFormFactors = this.motherboardFormFactors;
+          
+          this.selectedFullHeightExpansionSlot = this.fullHeightExpansionSlot
+          
+          this.selectedMaxVideoHeightLength = this.maxVideoheightLength
+          
+          this.selectedTopFanSupport = this.topFanSupport
+        
+          this.selectedFrontFanSupport = this.frontFanSupport
+        
+          this.selectedRearFanSupport = this.rearFanSupport
         }
       },
       error => {
@@ -138,12 +169,18 @@ export class ViewAllComputerCasesComponent implements OnInit {
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
+      console.log(this.selectedManufacturers)
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
+      console.log(this.selectedManufacturers)
       return;
     }
+    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
+    //   this.AllManufacturersCheckbox = false
+      
+    // }
     //types
     if (this.selectedTypes.length == 0) {
       this.removeTypeFilters();
@@ -152,6 +189,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllTypesCheckbox = true;
       return;
     }
+    // if (this.selectedTypes.length ! = this.selectedTypes.length){
+    //   this.AllTypesCheckbox = false
+    // }
     //colour
     if (this.selectedColours.length == 0) {
       this.removeColourFilters();
@@ -160,6 +200,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllColourCheckbox = true;
       return;
     }
+    // if (this.selectedColours.length ! = this.colours.length){
+    //   this.AllColourCheckbox = false
+    // }
     //side panel view
     if (this.selectedSidePanelViews.length == 0) {
       this.removeSidePanelFilters();
@@ -168,6 +211,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllSidePanelViewCheckbox = true;
       return;
     }
+    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
+    //   this.AllSidePanelViewCheckbox = false
+    // }
     //motherboard form factor
     if (this.selectedMotherboardFormFactors.length == 0) {
       this.removeFormFactorFilters();
@@ -176,6 +222,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllMotherboardFormFactorsCheckbox = true;
       return;
     }
+    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
+    //   this.AllMotherboardFormFactorsCheckbox = false
+    // }
     //full Height ExpansionSlot 
     if (this.selectedFullHeightExpansionSlot.length == 0) {
       console.log(this.selectedFullHeightExpansionSlot)
@@ -186,6 +235,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllFullHeightExpansionSlotCheckbox = true;
       return;
     }
+    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
+    //   this.AllFullHeightExpansionSlotCheckbox = false
+    // }
     //top fan support
     if (this.selectedTopFanSupport.length == 0) {
       this.removeTopFanFilters();
@@ -194,6 +246,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllTopFanSupportCheckbox = true;
       return;
     }
+    // if (this.selectedTopFanSupport.length ! = this.topFanSupport.length){
+    //   this.AllTopFanSupportCheckbox = false
+    // }
     //front fan support 
     if (this.selectedFrontFanSupport.length == 0) {
       this.removeFrontFanFilters();
@@ -202,6 +257,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllFrontFanSupportCheckbox = true;
       return;
     }
+    // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
+    //   this.AllFrontFanSupportCheckbox = false
+    // }
     //rear fan support 
     if (this.selectedRearFanSupport.length == 0) {
       this.removeRearFanFilters();
@@ -210,6 +268,9 @@ export class ViewAllComputerCasesComponent implements OnInit {
       this.AllRearFanSupportCheckbox = true;
       return;
     }
+    // if (this.selectedRearFanSupport.length ! = this.rearFanSupport.length){
+    //   this.AllRearFanSupportCheckbox = false
+    // }
 
     // this.AllManufacturersCheckbox = false;
     // this.AllTypesCheckbox = false;
@@ -228,7 +289,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
 
   updateFilters() {
     for (let computerCase of this.allComputerCases) {
-      if (!this.selectedManufacturers.includes(computerCase.manufacturer)) {
+      if (!this.selectedManufacturers.includes(computerCase.manufacturer)&& this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
       if (!this.selectedTypes.includes(computerCase.type) && this.filteredComputerCases.indexOf(computerCase) < 0) {

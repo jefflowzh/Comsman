@@ -1,0 +1,107 @@
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Form Factor</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllFormFactorCheckbox" binary="true" (click)="removeFormFactorFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let ffactor of formFactor">
+                <p-checkbox value={{ffactor}} label={{ffactor}} [(ngModel)]="selectedFormFactor" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <h5>Efficiency</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllEfficiencyCheckbox" binary="true" (click)="removeEfficiencyFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let eff of efficiency">
+                <p-checkbox value={{eff}} label={{eff}} [(ngModel)]="selectedEfficiency" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Wattage</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllWattageCheckbox" binary="true"
+                    (click)="removeWattageFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let watt of wattage">
+                <p-checkbox value={{watt}} label={{watt}} [(ngModel)]="selectedWattage"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Modularity</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllModularityCheckbox" binary="true"
+                    (click)="removeModularityFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let mod of modularity">
+                <p-checkbox value={{mod}} label={{mod}} [(ngModel)]="selectedModularity"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>SATA Connectors</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSATAConnectorsCheckbox" binary="true"
+                    (click)="removeSATAConnectorsFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let sata of SATAConnectors">
+                <p-checkbox value={{sata}} label={{sata}} [(ngModel)]="selectedSATAConnectors"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>PCIe6+2 Connectors </h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllPCIe6plus2Checkbox" binary="true"
+                    (click)="removePCIe6plus2Filters()"></p-checkbox>
+            </div>
+            <div *ngFor="let count of PCIe6plus2">
+                <p-checkbox value={{count}} label={{count}} [(ngModel)]="selectedPCIe6plus2" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredPowerSupply">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>
+

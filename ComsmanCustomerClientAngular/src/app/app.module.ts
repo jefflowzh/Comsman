@@ -33,6 +33,11 @@ import { FooterComponent } from './footer/footer.component';
 import { CustomerCartComponent } from './customer-cart/customer-cart.component';
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { ViewAllCPUComponent } from './view-all-cpu/view-all-cpu.component';
+import { ViewAllGPUComponent } from './view-all-gpu/view-all-gpu.component';
+import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-motherboard.component';
+import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
+import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
@@ -52,6 +57,11 @@ import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advance
     CustomerCartComponent,
     ViewAllComputerCasesComponent,
     CustomerDetailsComponent,
+    ViewAllCPUComponent,
+    ViewAllGPUComponent,
+    ViewAllMotherboardComponent,
+    ViewAllPowerSupplyComponent,
+    ViewAllRAMComponent,
     ViewProductComponent,
     AmateurSetMainPageComponent,
     AmateurSetBuildPageComponent,

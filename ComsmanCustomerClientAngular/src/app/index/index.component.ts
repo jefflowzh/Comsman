@@ -19,13 +19,14 @@ export class IndexComponent implements OnInit {
     this.sidenavItems = [{
       label: 'Computer Parts',
       items: [
+        { label: 'CPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllCPU'] },
         { label: 'CPU Cooler', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/CPUCooler'] },
         { label: 'Computer Case', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllComputerCases'] },
-        { label: 'GPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/GPU'] },
+        { label: 'GPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllGPU'] },
         { label: 'Internal Storage (SSD/HDD)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/HDD'] },
-        { label: 'Motherboard', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/Motherboard'] },
-        { label: 'Power Supply', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/PowerSupply'] },
-        { label: 'RAM', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/RAM'] }
+        { label: 'Motherboard', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllMotherboard'] },
+        { label: 'Power Supply', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllPowerSupply'] },
+        { label: 'RAM', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllRAM'] }
       ]
     },
     {

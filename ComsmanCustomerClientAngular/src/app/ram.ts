@@ -1,6 +1,6 @@
 import { ComputerPart } from './computer-part'
 
-export class PowerSupply extends ComputerPart {
+export class RAM extends ComputerPart {
 
 
 manufacturer: string;
@@ -21,6 +21,7 @@ constructor(productId?: number, name?: string, price?: number, inventoryQuantity
     casLatency?: number) {
 
     super(productId, name, price, inventoryQuantity, image, isDisabled);
+    this.manufacturer = manufacturer;
     this.speed = speed;
     this.type = type;
     this.sticks = sticks;

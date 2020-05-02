@@ -15,7 +15,11 @@ import entity.Coupon;
 import entity.Customer;
 import entity.LineItem;
 import entity.CustomerOrder;
+import entity.GPU;
+import entity.MotherBoard;
 import entity.Peripheral;
+import entity.PowerSupply;
+import entity.RAM;
 import entity.Staff;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -244,6 +248,46 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewCPU(testCpu5);
             computerPartSessionBean.createNewCPU(testCpu6);
             computerPartSessionBean.createNewCPU(testCpu7);
+            
+            GPU testGpu = new GPU("MSI", "GeForce GTX 1660 Ti", "PCIe x16", 204.0, 120, 2, "PCIe 8-pin",6, "GDDR6","MSI GeForce GTX 1660 Ti 6 GB VENTUS XS OC Video Card",450.0, 50,"image5");
+            GPU testGpu2 = new GPU("GigaByte", "GeForce RTX 2070 SUPER", "PCIe x16", 280.35, 215, 2, "PCIe 8-pin + 1 PCIe 6-pin",8, "GDDR6","Gigabyte GeForce RTX 2070 SUPER 8 GB WINDFORCE OC 3X Video Card",750.0, 50,"image5");
+            GPU testGpu3 = new GPU("Asus", "GeForce RTX 2080 Ti", "PCIe x16", 304.7, 250, 2, "2 PCIe 8-pin",11, "GDDR6","Asus GeForce RTX 2080 Ti 11 GB ROG Strix Gaming OC Video Card",1800.0, 50,"image5");
+            GPU testGpu4 = new GPU("EVGA", "GeForce GTX 1650 SUPER", "PCIe x16", 202.1, 100, 2, "PCIe 6-pin",4,"GDDR6", "EVGA GeForce GTX 1650 SUPER 4 GB SC ULTRA GAMING Video Card",300.0,50,"image5");
+            computerPartSessionBean.createNewGPU(testGpu);
+            computerPartSessionBean.createNewGPU(testGpu2);
+            computerPartSessionBean.createNewGPU(testGpu3);
+            computerPartSessionBean.createNewGPU(testGpu4);
+            
+            String[] speeds = new String[]{"DDR4-2400","DDR4-2666","DDR4-2800","DDR4-3000","DDR4-3200","DDR4-3600"};
+            MotherBoard testmb = new MotherBoard("MSI", "ATX", "AM4", "AMD B450", 4, "Black", true,2, 1,true,speeds,"MSI B450 TOMAHAWK MAX ATX AM4 Motherboard",450.0, 50,"image5");
+            MotherBoard testmb1 = new MotherBoard("Asus", "ATX", "AM4", "AMD X570", 4, "Black", true,2, 2,true,speeds,"Asus TUF GAMING X570-PLUS (WI-FI) ATX AM4 Motherboard",450.0, 50,"image5");
+            MotherBoard testmb2 = new MotherBoard("MSI", "ATX", "LGA1151", "Intel Z390", 4, "Black", true,2, 2,true,speeds,"MSI Z390-A PRO ATX LGA1151 Motherboard",200.0, 50,"image5");
+            MotherBoard testmb3 = new MotherBoard("ASRock", "Micro ATX", "LGA1151", "Intel B365", 4, "Black", true,2, 3,true,speeds,"ASRock B365M Pro4 Micro ATX LGA1151 Motherboard",150.0, 50,"image5");
+            
+            computerPartSessionBean.createNewMotherBoard(testmb);
+            computerPartSessionBean.createNewMotherBoard(testmb1);
+            computerPartSessionBean.createNewMotherBoard(testmb2);
+            computerPartSessionBean.createNewMotherBoard(testmb3);
+            
+            PowerSupply testPsu = new PowerSupply("Thermaltake", "ATX", "80+", 600,"No",6, 2,"Thermaltake Smart 600 W 80+ Certified ATX Power Supply",100.0, 50,"image5");
+            PowerSupply testPsu1 = new PowerSupply("Corsair", "ATX", "80+ Gold", 750,"Full",10, 2,"Corsair RM (2019) 750 W 80+ Gold Certified Fully Modular ATX Power Supply",150.0, 50,"image5");
+            PowerSupply testPsu2= new PowerSupply("EVGA", "ATX", "80+ Bronze", 450,"No",6, 2,"EVGA BR 450 W 80+ Bronze Certified ATX Power Supply", 75.0, 50,"image5");
+            PowerSupply testPsu3 = new PowerSupply("Cooler Master", "ATX", "80+", 650,"Full",8, 4,"Cooler Master MWE Gold 650 W 80+ Gold Certified Fully Modular ATX Power Supply",150.0, 50,"image5");
+            
+            computerPartSessionBean.createNewPowerSupply(testPsu);
+            computerPartSessionBean.createNewPowerSupply(testPsu1);
+            computerPartSessionBean.createNewPowerSupply(testPsu2);
+            computerPartSessionBean.createNewPowerSupply(testPsu3);
+            
+            RAM testRam = new RAM("Corsair", "DDR4-3200", "288-pin DIMM", 2,8,16,"Corsair Vengeance LPX 16 GB (2 x 8 GB) DDR4-3200 Memory",100.0, 50,"image5");
+            RAM testRam1 = new RAM("G.Skill", "DDR4-3600", "288-pin DIMM", 2,8,16,"G.Skill Ripjaws V 16 GB (2 x 8 GB) DDR4-3600 Memory",140.0, 50,"image5");
+            RAM testRam2 = new RAM("Corsair", "DDR4-3000", "288-pin DIMM", 2,8,15,"Corsair Vengeance LPX 16 GB (2 x 8 GB) DDR4-3000 Memory",120.0, 50,"image5");
+            RAM testRam3 = new RAM("G.Skill", "DDR4-3600", "288-pin DIMM", 2,8,16,"G.Skill Trident Z Neo 32 GB (2 x 16 GB) DDR4-3600 Memory",240.0, 50,"image5");
+            
+            computerPartSessionBean.createNewRAM(testRam);
+            computerPartSessionBean.createNewRAM(testRam1);
+            computerPartSessionBean.createNewRAM(testRam2);
+            computerPartSessionBean.createNewRAM(testRam3);
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
