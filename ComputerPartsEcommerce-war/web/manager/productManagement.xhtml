@@ -111,1193 +111,6 @@
                         <p:commandButton value="Close" icon="fa fa-remove" actionListener="#{productManagementManagedBean.doNull}" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
 
                         <p:messages id="messagesCreateNewProduct" redisplay="false" />
-
-                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="name" value="Product Name: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="name" value="#{productManagementManagedBean.newProduct.name}" required="true" requiredMessage="Product Name is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="price" value="Price: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="price" value="#{productManagementManagedBean.newProduct.price}" required="true" requiredMessage="Price is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="quantity" value="Quantity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="quantity" value="#{productManagementManagedBean.newProduct.inventoryQuantity}" required="true" requiredMessage="Quantity is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <h:outputText  value="Image: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:fileUpload id="imageSrc" mode="simple" value="#{productManagementManagedBean.uploadedFile}" skinSimple="true"/>
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="manufacturer" value="Manufacturer: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="manufacturer" value="#{productManagementManagedBean.newProduct.manufacturer}" required="true" requiredMessage="Manufacturer is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}">
-                                <p:column>
-                                    <p:outputLabel for="description" value="Description: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="description" value="#{productManagementManagedBean.newProduct.description}" required="true" requiredMessage="Description is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <p:outputLabel for="coreCount" value="Core Count: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="coreCount" value="#{productManagementManagedBean.newProduct.coreCount}" required="true" requiredMessage="Core Count is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPU') or (productManagementManagedBean.selectedProduct eq 'GPU')}">
-                                <p:column>
-                                    <p:outputLabel for="TDP" value="TDP: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="TDP" value="#{productManagementManagedBean.newProduct.TDP}" required="true" requiredMessage="TDP is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPU') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
-                                <p:column>
-                                    <p:outputLabel for="socket" value="Socket: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="socket" value="#{productManagementManagedBean.newProduct.socket}" required="true" requiredMessage="Socket is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanGraphics" value='Integrated Graphics: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanGraphics" value="#{productManagementManagedBean.newProduct.hasIntergratedGraphics}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanCooler" value='CPU Cooler: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanCooler" value="#{productManagementManagedBean.newProduct.includesCpuCooler}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or productManagementManagedBean.selectedProduct eq 'PowerSupply' or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="formFactor" value="Form Factor: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="formFactor" value="#{productManagementManagedBean.newProduct.formFactor}" required="true" requiredMessage="Form Factor is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'GPU')}">
-                                <p:column>
-                                    <p:outputLabel for="chipset" value="Chipset: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="chipset" value="#{productManagementManagedBean.newProduct.chipset}" required="true" requiredMessage="Chipset is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="memorySlot" value="Memory Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="memorySlot" value="#{productManagementManagedBean.newProduct.memorySlot}" required="true" requiredMessage="Memory Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
-                                <p:column>
-                                    <p:outputLabel for="colour" value="Colour: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="colour" value="#{productManagementManagedBean.newProduct.colour}" required="true" requiredMessage="Colour is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanSLICrossFire" value='SLI / CrossFire: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanSLICrossFire" value="#{productManagementManagedBean.newProduct.SLICrossFire}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="PCIEx16" value="PCIEx16: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="PCIEx16" value="#{productManagementManagedBean.newProduct.PCIEx16}" required="true" requiredMessage="PCIEx16 is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="m2Slot" value="M2 Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="m2Slot" value="#{productManagementManagedBean.newProduct.m2Slot}" required="true" requiredMessage="M2 Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="SATA6GB" value="SATA 6GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.newProduct.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanWifi" value='WIFI: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanWifi" value="#{productManagementManagedBean.newProduct.wiFi}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="SuportedMemorySpeed" value="Suported Memory Speed: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SuportedMemorySpeed" value="#{productManagementManagedBean.stringEdit}" required="true" requiredMessage="Suported Memory Speed is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'RAM')}">
-                                <p:column>
-                                    <p:outputLabel for="speed" value="Speed: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="speed" value="#{productManagementManagedBean.newProduct.speed}" required="true" requiredMessage="Speed is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM' or (productManagementManagedBean.selectedProduct eq 'ComputerCase') or (productManagementManagedBean.selectedProduct eq 'HDD')  or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="type" value="Type: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="type" value="#{productManagementManagedBean.newProduct.type}" required="true" requiredMessage="Type is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="sticks" value="Sticks: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="sticks" value="#{productManagementManagedBean.newProduct.sticks}" required="true" requiredMessage="Sticks is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="perStickGB" value="Per Stick GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="perStickGB" value="#{productManagementManagedBean.newProduct.perStickGB}" required="true" requiredMessage="Per Stick GB is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="CasLatency" value="CAS Latency: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="CasLatency" value="#{productManagementManagedBean.newProduct.casLatency}" required="true" requiredMessage="CAS Latency is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="efficiency" value="Efficiency: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="efficiency" value="#{productManagementManagedBean.newProduct.efficiency}" required="true" requiredMessage="Efficiency is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="wattage" value="Wattage: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="wattage" value="#{productManagementManagedBean.newProduct.wattage}" required="true" requiredMessage="Wattage is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="modularity" value="Modularity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="modularity" value="#{productManagementManagedBean.newProduct.modularity}" required="true" requiredMessage="Modularity is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="SATAConnectors" value="SATA Connectors: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATAConnectors" value="#{productManagementManagedBean.newProduct.SATAConnectors}" required="true" requiredMessage="SATA Connectors is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="PCIe6plus2" value="PCIe6plus2: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="PCIe6plus2" value="#{productManagementManagedBean.newProduct.PCIe6plus2}" required="true" requiredMessage="PCIe6plus2 is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="sidePanelView" value="Side Panel View: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="sidePanelView" value="#{productManagementManagedBean.newProduct.sidePanelView}" required="true" requiredMessage="Side Panel View is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="fullHeightExpansionSlot" value="Full Height Expansion Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="fullHeightExpansionSlot" value="#{productManagementManagedBean.newProduct.fullHeightExpansionSlot}" required="true" requiredMessage="Full Height Expansion Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="MaxVideoCardLength" value="Max Video Card Length: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="MaxVideoCardLength" value="#{productManagementManagedBean.newProduct.maxVideoCardLength}" required="true" requiredMessage="Max Video Card Length is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="topFanSupport" value="Top Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="topFanSupport" value="#{productManagementManagedBean.newProduct.topFanSupport}" required="true" requiredMessage="Top Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="frontFanSupport" value="Front Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="frontFanSupport" value="#{productManagementManagedBean.newProduct.frontFanSupport}" required="true" requiredMessage="Front Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="rearFanSupport" value="Rear Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="rearFanSupport" value="#{productManagementManagedBean.newProduct.rearFanSupport}" required="true" requiredMessage="Rear Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="colours" value="Colours: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="colours" value="#{productManagementManagedBean.stringEdit}" required="true" requiredMessage="Colours is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="MBFF" value="MBFF: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="MBFF" value="#{productManagementManagedBean.stringEdit2}" required="true" requiredMessage="MBFFform is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU' or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="Interface" value="Interface: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Interface" value="#{productManagementManagedBean.newProduct.interface}" required="true" requiredMessage="Interface is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="Length" value="Length: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Length" value="#{productManagementManagedBean.newProduct.length}" required="true" requiredMessage="Length is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="ExpansionSlotWidth" value="Expansion Slot Width: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="ExpansionSlotWidth" value="#{productManagementManagedBean.newProduct.expansionSlotWidth}" required="true" requiredMessage="Expansion Slot Width is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="externalPower" value="External Power: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="externalPower" value="#{productManagementManagedBean.newProduct.externalPower}" required="true" requiredMessage="External Power is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="Memory" value="Memory: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Memory" value="#{productManagementManagedBean.newProduct.memory}" required="true" requiredMessage="Memory is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="MemoryType" value="Memory Type: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="MemoryType" value="#{productManagementManagedBean.newProduct.memoryType}" required="true" requiredMessage="Memory Type is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'HDD' or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="Capacity" value="Capacity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Capacity" value="#{productManagementManagedBean.newProduct.capacity}" required="true" requiredMessage="Capacity is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'SSD'}">
-                                <p:column>
-                                    <h:outputLabel for="NVME" value='NVME: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="NVME" value="#{productManagementManagedBean.newProduct.NVME}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
-                                <p:column>
-                                    <p:outputLabel for="noiseLevel" value="Noise Level: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="noiseLevel" value="#{productManagementManagedBean.newProduct.noiseLevel}" required="true" requiredMessage="Noise Level is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler'}">
-                                <p:column>
-                                    <p:outputLabel for="RadiatorSize" value="Radiator Size: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="RadiatorSize" value="#{productManagementManagedBean.newProduct.radiatorSize}" required="true" requiredMessage="Radiator Size is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}">
-                                <p:column>
-                                    <p:outputLabel for="Height" value="Height: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Height" value="#{productManagementManagedBean.newProduct.height}" required="true" requiredMessage="Height is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
-                                <p:column>
-                                    <p:outputLabel for="CPUChipCompat" value="CPU Chip Compat: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="CPUChipCompat" value="#{productManagementManagedBean.stringEdit}" required="true" requiredMessage="CPU Chip Compat is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="2"> 
-                                    <p:commandButton value="Create New Product" update="@form formAllProducts:dataTableAllProducts" actionListener="#{productManagementManagedBean.createNewProduct}" oncomplete="PF('sidebarCreateNewProduct').hide();" ajax="false" />
-                                </p:column>
-                            </p:row>
-
-                        </p:panelGrid>
-
-                    </p:sidebar>
-
-                </h:form>
-
-                <!-- Update of Product -->
-                <h:form id="formUpdateProduct">
-                    <p:sidebar id="sidebarUpdateProduct" widgetVar="sidebarUpdateProduct" position="right" baseZIndex="10000" style="width: 35%; overflow: scroll">
-
-                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarUpdateProduct').hide()"/>
-
-                        <p:messages id="messagesUpdateProduct" redisplay="false" />
-
-                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
-
-                            <p:row>
-                                <p:column>
-                                    <h:outputLabel value="Product ID: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="#{productManagementManagedBean.selectedProductToUpdate.productId}" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="name" value="Product Name: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="name" value="#{productManagementManagedBean.selectedProductToUpdate.name}" required="true" requiredMessage="Product Name is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="price" value="Price: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="price" value="#{productManagementManagedBean.selectedProductToUpdate.price}" required="true" requiredMessage="Price is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="quantity" value="Quantity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="quantity" value="#{productManagementManagedBean.selectedProductToUpdate.inventoryQuantity}" required="true" requiredMessage="Quantity is required" />
-                                </p:column>
-                            </p:row>  
-
-                            <p:row>
-                                <p:column>
-                                    <p:outputLabel for="manufacturer" value="Manufacturer: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="manufacturer" value="#{productManagementManagedBean.selectedProductToUpdate.manufacturer}" required="true" requiredMessage="Manufacturer is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}">
-                                <p:column>
-                                    <p:outputLabel for="description" value="Description: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="description" value="#{productManagementManagedBean.selectedProductToUpdate.description}" required="true" requiredMessage="Description is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <p:outputLabel for="coreCount" value="Core Count: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="coreCount" value="#{productManagementManagedBean.selectedProductToUpdate.coreCount}" required="true" requiredMessage="Core Count is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU' or (productManagementManagedBean.selectedProduct eq 'GPU')}">
-                                <p:column>
-                                    <p:outputLabel for="TDP" value="TDP: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="TDP" value="#{productManagementManagedBean.selectedProductToUpdate.TDP}" required="true" requiredMessage="TDP is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPU') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
-                                <p:column>
-                                    <p:outputLabel for="socket" value="Socket: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="socket" value="#{productManagementManagedBean.selectedProductToUpdate.socket}" required="true" requiredMessage="Socket is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanGraphics" value='Integrated Graphics: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanGraphics" value="#{productManagementManagedBean.selectedProductToUpdate.hasIntergratedGraphics}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanCooler" value='CPU Cooler: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanCooler" value="#{productManagementManagedBean.selectedProductToUpdate.includesCpuCooler}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or productManagementManagedBean.selectedProduct eq 'PowerSupply' or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="formFactor" value="Form Factor: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="formFactor" value="#{productManagementManagedBean.selectedProductToUpdate.formFactor}" required="true" requiredMessage="Form Factor is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'GPU')}">
-                                <p:column>
-                                    <p:outputLabel for="chipset" value="Chipset: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="chipset" value="#{productManagementManagedBean.selectedProductToUpdate.chipset}" required="true" requiredMessage="Chipset is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="memorySlot" value="Memory Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="memorySlot" value="#{productManagementManagedBean.selectedProductToUpdate.memorySlot}" required="true" requiredMessage="Memory Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
-                                <p:column>
-                                    <p:outputLabel for="colour" value="Colour: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="colour" value="#{productManagementManagedBean.selectedProductToUpdate.colour}" required="true" requiredMessage="Colour is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanSLICrossFire" value='SLI / CrossFire: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanSLICrossFire" value="#{productManagementManagedBean.selectedProductToUpdate.SLICrossFire}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="PCIEx16" value="PCIEx16: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="PCIEx16" value="#{productManagementManagedBean.selectedProductToUpdate.PCIEx16}" required="true" requiredMessage="PCIEx16 is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="m2Slot" value="M2 Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="m2Slot" value="#{productManagementManagedBean.selectedProductToUpdate.m2Slot}" required="true" requiredMessage="M2 Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="SATA6GB" value="SATA 6GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.selectedProductToUpdate.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <h:outputLabel for="selectBooleanWifi" value='WIFI: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="selectBooleanWifi" value="#{productManagementManagedBean.selectedProductToUpdate.wiFi}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'RAM')}">
-                                <p:column>
-                                    <p:outputLabel for="speed" value="Speed: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="speed" value="#{productManagementManagedBean.selectedProductToUpdate.speed}" required="true" requiredMessage="Speed is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM' or (productManagementManagedBean.selectedProduct eq 'ComputerCase') or (productManagementManagedBean.selectedProduct eq 'HDD')  or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="type" value="Type: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="type" value="#{productManagementManagedBean.selectedProductToUpdate.type}" required="true" requiredMessage="Type is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="sticks" value="Sticks: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="sticks" value="#{productManagementManagedBean.selectedProductToUpdate.sticks}" required="true" requiredMessage="Sticks is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="perStickGB" value="Per Stick GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="perStickGB" value="#{productManagementManagedBean.selectedProductToUpdate.perStickGB}" required="true" requiredMessage="Per Stick GB is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}">
-                                <p:column>
-                                    <p:outputLabel for="CasLatency" value="CAS Latency: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="CasLatency" value="#{productManagementManagedBean.selectedProductToUpdate.casLatency}" required="true" requiredMessage="CAS Latency is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="efficiency" value="Efficiency: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="efficiency" value="#{productManagementManagedBean.selectedProductToUpdate.efficiency}" required="true" requiredMessage="Efficiency is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="wattage" value="Wattage: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="wattage" value="#{productManagementManagedBean.selectedProductToUpdate.wattage}" required="true" requiredMessage="Wattage is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="modularity" value="Modularity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="modularity" value="#{productManagementManagedBean.selectedProductToUpdate.modularity}" required="true" requiredMessage="Modularity is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="SATAConnectors" value="SATA Connectors: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATAConnectors" value="#{productManagementManagedBean.selectedProductToUpdate.SATAConnectors}" required="true" requiredMessage="SATA Connectors is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}">
-                                <p:column>
-                                    <p:outputLabel for="PCIe6plus2" value="PCIe6plus2: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="PCIe6plus2" value="#{productManagementManagedBean.selectedProductToUpdate.PCIe6plus2}" required="true" requiredMessage="PCIe6plus2 is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="sidePanelView" value="Side Panel View: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="sidePanelView" value="#{productManagementManagedBean.selectedProductToUpdate.sidePanelView}" required="true" requiredMessage="Side Panel View is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="fullHeightExpansionSlot" value="Full Height Expansion Slot: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="fullHeightExpansionSlot" value="#{productManagementManagedBean.selectedProductToUpdate.fullHeightExpansionSlot}" required="true" requiredMessage="Full Height Expansion Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="MaxVideoCardLength" value="Max Video Card Length: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="MaxVideoCardLength" value="#{productManagementManagedBean.selectedProductToUpdate.maxVideoCardLength}" required="true" requiredMessage="Max Video Card Length is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="topFanSupport" value="Top Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="topFanSupport" value="#{productManagementManagedBean.selectedProductToUpdate.topFanSupport}" required="true" requiredMessage="Top Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="frontFanSupport" value="Front Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="frontFanSupport" value="#{productManagementManagedBean.selectedProductToUpdate.frontFanSupport}" required="true" requiredMessage="Front Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
-                                    <p:outputLabel for="rearFanSupport" value="Rear Fan Support: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="rearFanSupport" value="#{productManagementManagedBean.selectedProductToUpdate.rearFanSupport}" required="true" requiredMessage="Rear Fan Support is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU' or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="Interface" value="Interface: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Interface" value="#{productManagementManagedBean.selectedProductToUpdate.interface}" required="true" requiredMessage="Interface is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="Length" value="Length: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Length" value="#{productManagementManagedBean.selectedProductToUpdate.length}" required="true" requiredMessage="Length is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="ExpansionSlotWidth" value="Expansion Slot Width: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="ExpansionSlotWidth" value="#{productManagementManagedBean.selectedProductToUpdate.expansionSlotWidth}" required="true" requiredMessage="Expansion Slot Width is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="externalPower" value="External Power: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="externalPower" value="#{productManagementManagedBean.selectedProductToUpdate.externalPower}" required="true" requiredMessage="External Power is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="Memory" value="Memory: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Memory" value="#{productManagementManagedBean.selectedProductToUpdate.memory}" required="true" requiredMessage="Memory is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
-                                <p:column>
-                                    <p:outputLabel for="MemoryType" value="Memory Type: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="MemoryType" value="#{productManagementManagedBean.selectedProductToUpdate.memoryType}" required="true" requiredMessage="Memory Type is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'HDD' or (productManagementManagedBean.selectedProduct eq 'SSD')}">
-                                <p:column>
-                                    <p:outputLabel for="Capacity" value="Capacity: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Capacity" value="#{productManagementManagedBean.selectedProductToUpdate.capacity}" required="true" requiredMessage="Capacity is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'SSD'}">
-                                <p:column>
-                                    <h:outputLabel for="NVME" value='NVME: ' style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:selectOneMenu id="NVME" value="#{productManagementManagedBean.selectedProductToUpdate.NVME}" appendTo="@this">
-                                        <f:selectItem itemLabel="true" itemValue="true" />
-                                        <f:selectItem itemLabel="false" itemValue="false" />
-                                    </p:selectOneMenu>
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler')}">
-                                <p:column>
-                                    <p:outputLabel for="noiseLevel" value="Noise Level: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="noiseLevel" value="#{productManagementManagedBean.selectedProductToUpdate.noiseLevel}" required="true" requiredMessage="Noise Level is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler'}">
-                                <p:column>
-                                    <p:outputLabel for="RadiatorSize" value="Radiator Size: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="RadiatorSize" value="#{productManagementManagedBean.selectedProductToUpdate.radiatorSize}" required="true" requiredMessage="Radiator Size is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}">
-                                <p:column>
-                                    <p:outputLabel for="Height" value="Height: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="Height" value="#{productManagementManagedBean.selectedProductToUpdate.height}" required="true" requiredMessage="Height is required" />
-                                </p:column>
-                            </p:row>
-
-                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler' or productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}">
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel value="CPU Chip Compat: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{stringValue.value}" />
-                                    </p:column>
-                                </p:row>
-                            </ui:repeat>
-
-                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel value="Supported Memory Speed: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{stringValue.value}" />
-                                    </p:column>
-                                </p:row>
-                            </ui:repeat>
-
-                            <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel value="Colours: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{stringValue.value}" />
-                                    </p:column>
-                                </p:row>
-                            </ui:repeat>
-
-                            <ui:repeat value="#{productManagementManagedBean.stringValues2}" var="stringValue2" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:row>
-                                    <p:column>
-                                        <p:outputLabel value="MBFF: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{stringValue2.value}" />
-                                    </p:column>
-                                </p:row>
-                            </ui:repeat>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPU') or (productManagementManagedBean.selectedProduct eq 'RAM') or (productManagementManagedBean.selectedProduct eq 'PowerSupply') or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD') or (productManagementManagedBean.selectedProduct eq 'GPU') or (productManagementManagedBean.selectedProduct eq 'Peripheral')}">
-                                <p:column colspan="2">
-                                    <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
-                                <p:column colspan="2">
-                                    <div align="center">
-                                        <p:commandButton value="Add New CCC" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Add New SMS" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'MotherBoard')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
-                                    </div>
-                                </p:column>
-                            </p:row>
-
-                            <!-- asthetic issue -> create another for rendering computercase -->
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
-                                <p:column colspan="2">
-                                    <div align="center">
-                                        <p:commandButton value="Add New Colour" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString2}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
-                                    </div>
-                                </p:column>
-                            </p:row>
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
-                                <p:column colspan="2">
-                                    <div align="center">
-                                        <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
-                                    </div>
-                                </p:column>
-                            </p:row>
-
-                        </p:panelGrid>
-                    </p:sidebar>
-                </h:form>
-
-                <!-- Image Manager -->
-                <h:form id="formImageManager" enctype="multipart/form-data">
-                    <p:sidebar id="sidebarImageManager" widgetVar="sidebarImageManager" position="right" baseZIndex="10000" style="width: 30%;">
-
-                        <p:commandButton value="Close" icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarImageManager').hide()"/>
-
-                        <p:messages id="messagesImageManager" redisplay="false" />
-
-                        <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
-
-                            <div align="center"> 
-                                <h3>Current Image:</h3>
-                                <h:graphicImage value="/images/dynamic/?file=#{productManagementManagedBean.selectedProductImage.image}" height="150" width="150" />
-                                <br/>
-                                <h:outputText value="#{productManagementManagedBean.selectedProductImage.image}" />
-                            </div>
-
-                            <br/>
-
-                            <p:row>
-                                <p:column>
-                                    <div align="center">
-                                        <p:fileUpload id="image" label="Update the Image" mode="simple" value="#{productManagementManagedBean.uploadedFile}" skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style=""/>
-                                    </div>
-                                </p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column style="padding-top: 20px">
-                                    <div align="center">
-                                        <p:commandButton value="Submit" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.imageManager}" oncomplete="PF('sidebarImageManager').hide();" ajax="false"/>
-                                    </div>
-                                </p:column>
-                            </p:row>
-
-                        </p:panelGrid>
-                    </p:sidebar>
-                </h:form>
-
-                <p:confirmDialog header="Warning" id="dialogDeleteProduct" widgetVar="dialogDeleteProduct" message="Are you sure you want to delete?">
-                    <div align="center">
-                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{productManagementManagedBean.deleteProduct}" oncomplete="PF('dialogDeleteProduct').hide()" update="formAllProducts:dataTableAllProducts formAllProducts:messages"/>
-                        <p:commandButton value="No"  icon="pi pi-times" onclick="PF('dialogDeleteProduct').hide()" />
-                    </div>
-                </p:confirmDialog>
-
-
-            </div>
-
-        </div>
-    </ui:define>
-
-</ui:composition>
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="/template/defaultTemplate.xhtml"
-                xmlns:p="http://primefaces.org/ui">
-
-    <ui:define name="content">
-        <div class="layout-content">
-
-            <h2>
-                Product Management
-            </h2>
-
-            <h:form>
-                <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="3">
-                    <p:outputLabel value="Select a Product:" style="font-size: 16px; font-weight: bold"/>
-                    <p:selectOneMenu id="product" value="#{productManagementManagedBean.selectedProduct}" style="width:155px">
-                        <p:ajax event="change" update="formAllProducts formButtons formCreateNewProduct"
-                                listener="#{productManagementManagedBean.subjectSelectionChanged}" />
-
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="CPU" itemValue="CPU" />
-                        <f:selectItem itemLabel="Motherboard" itemValue="MotherBoard" />
-                        <f:selectItem itemLabel="RAM" itemValue="RAM" />
-                        <f:selectItem itemLabel="Power Supply" itemValue="PowerSupply" />
-                        <f:selectItem itemLabel="Computer Case" itemValue="ComputerCase" />
-                        <f:selectItem itemLabel="GPU" itemValue="GPU" />
-                        <f:selectItem itemLabel="HDD" itemValue="HDD" />
-                        <f:selectItem itemLabel="SSD" itemValue="SSD" />
-                        <f:selectItem itemLabel="Water Cooler" itemValue="CPUWaterCooler" />
-                        <f:selectItem itemLabel="Air Cooler" itemValue="CPUAirCooler" />
-                        <f:selectItem itemLabel="Peripheral" itemValue="Peripheral" />
-                    </p:selectOneMenu>
-
-                </h:panelGrid>
-            </h:form>
-
-            <h:form id="formButtons">
-                <p:commandButton value="Create new CPU"  oncomplete="PF('sidebarCreateNewProduct').show();" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}"/>
-                <p:commandButton value="Create new Mother Board"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}"/>
-                <p:commandButton value="Create new RAM" oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'RAM'}"/>
-                <p:commandButton value="Create new PSU"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'PowerSupply'}"/>
-                <p:commandButton value="Create new Computer Case"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}"/>
-                <p:commandButton value="Create new GPU"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}"/>
-                <p:commandButton value="Create new HDD"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'HDD'}"/>
-                <p:commandButton value="Create new SSD"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'SSD'}"/>
-                <p:commandButton value="Create new Water Cooler"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'CPUWaterCooler'}"/>
-                <p:commandButton value="Create new Air Cooler"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}"/>
-                <p:commandButton value="Create new Peripheral"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}"/>
-            </h:form>
-            
-            
-
-            <div class="layout-subcontent">
-                <h:form id="formAllProducts">
-                    <p:growl id="growl" sticky="false" life="1000" />
-                    <p:messages id="messages" redisplay="false" closable="true" />
-
-                    <p:dataTable id="dataTableAllProducts" widgetVar="dataTableAllProducts" value="#{productManagementManagedBean.products}" var="product" rowKey="#{product.productId}" rowIndexVar="row"
-                                 filteredValue="#{productManagementManagedBean.filteredProducts}"
-                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
-
-                        <f:facet name="header">
-                            <p:outputPanel>
-                                <h:outputText value="Search : " />
-                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllProducts').filter()" style="width: 700px;" placeholder="Enter Keyword" />
-                            </p:outputPanel>
-                        </f:facet>
-
-                        <p:column headerText="Product ID" sortBy="#{product.productId}" filterBy="#{product.productId}" filterMatchMode="contains">
-                            <h:outputText value="#{product.productId}" />
-                        </p:column>
-
-                        <p:column headerText="Product Name" sortBy="#{product.name}" filterBy="#{product.name}" filterMatchMode="contains">
-                            <h:outputText value="#{product.name}" />
-                        </p:column>
-
-                        <p:column headerText="Price" sortBy="#{product.price}" filterBy="#{product.price}" filterMatchMode="contains">
-                            <h:outputText value="#{product.price}" />
-                        </p:column>
-
-                        <p:column headerText="Quantity" sortBy="#{product.inventoryQuantity}" filterBy="#{product.inventoryQuantity}" filterMatchMode="contains">
-                            <h:outputText value="#{product.inventoryQuantity}" />
-                        </p:column>
-
-                        <p:column headerText="Image" sortBy="#{product.image}" filterBy="#{product.image}" filterMatchMode="contains" >
-                            <h:outputText value="#{product.image}" />
-                        </p:column>
-
-                        <p:column headerText="Action">
-                            <div class="actionButton">
-                                <p:commandButton actionListener="#{productManagementManagedBean.doUpdateProduct}"  update="formUpdateProduct" oncomplete="PF('sidebarUpdateProduct').show()" icon="fa fa-pencil" title="Update">
-                                    <f:attribute name="productToUpdate" value="#{product}" />
-                                </p:commandButton>
-                                <p:commandButton actionListener="#{productManagementManagedBean.doImageManager}"  update="formImageManager" oncomplete="PF('sidebarImageManager').show()" icon="fa fa-image" title="Manage Image">
-                                    <f:attribute name="productImageManager" value="#{product}" />
-                                </p:commandButton>
-                                <p:commandButton actionListener="#{productManagementManagedBean.doDeleteProduct}" oncomplete="PF('dialogDeleteProduct').show()" icon="fa fa-trash" title="Delete">
-                                    <f:attribute name="productToDelete" value="#{product}" />
-                                </p:commandButton>
-                            </div>
-                        </p:column>
-
-                    </p:dataTable>
-
-                </h:form>
-
-                <!-- Create a Product -->
-                <h:form id="formCreateNewProduct" enctype="multipart/form-data">
-                    <p:sidebar id="sidebarCreateNewProduct" widgetVar="sidebarCreateNewProduct" position="right" baseZIndex="10000" style="width: 30%; overflow: scroll">
-                        <p:commandButton value="Close" icon="fa fa-remove" actionListener="#{productManagementManagedBean.doNull}" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
-
-                        <p:messages id="messagesCreateNewProduct" redisplay="false" />
                       
                         <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
 
@@ -1306,7 +119,7 @@
                                     <p:outputLabel for="name" value="Product Name: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="name" value="#{productManagementManagedBean.newProduct.name}" required="true" requiredMessage="Product Name is required" />
+                                    <p:inputText id="name" value="#{productManagementManagedBean.name}" required="true" requiredMessage="Product Name is required" />
                                 </p:column>
                             </p:row>
 
@@ -1315,7 +128,7 @@
                                     <p:outputLabel for="price" value="Price: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="price" value="#{productManagementManagedBean.newProduct.price}" required="true" requiredMessage="Price is required" />
+                                    <p:inputText id="price" value="#{productManagementManagedBean.price}" required="true" requiredMessage="Price is required" />
                                 </p:column>
                             </p:row>
 
@@ -1324,7 +137,7 @@
                                     <p:outputLabel for="quantity" value="Quantity: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="quantity" value="#{productManagementManagedBean.newProduct.inventoryQuantity}" required="true" requiredMessage="Quantity is required" />
+                                    <p:inputText id="quantity" value="#{productManagementManagedBean.quantity}" required="true" requiredMessage="Quantity is required" />
                                 </p:column>
                             </p:row>
 
@@ -1342,7 +155,7 @@
                                     <p:outputLabel for="manufacturer" value="Manufacturer: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="manufacturer" value="#{productManagementManagedBean.newProduct.manufacturer}" required="true" requiredMessage="Manufacturer is required" />
+                                    <p:inputText id="manufacturer" value="#{productManagementManagedBean.manufacturer}" required="true" requiredMessage="Manufacturer is required" />
                                 </p:column>
                             </p:row>
 
@@ -1351,7 +164,7 @@
                                     <p:outputLabel for="description" value="Description: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="description" value="#{productManagementManagedBean.newProduct.description}" required="true" requiredMessage="Description is required" />
+                                    <p:inputText id="description" value="#{productManagementManagedBean.newPeripheral.description}" required="true" requiredMessage="Description is required" />
                                 </p:column>
                             </p:row>
 
@@ -1360,7 +173,7 @@
                                     <p:outputLabel for="coreCount" value="Core Count: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="coreCount" value="#{productManagementManagedBean.newProduct.coreCount}" required="true" requiredMessage="Core Count is required" />
+                                    <p:inputText id="coreCount" value="#{productManagementManagedBean.coreCount}" required="true" requiredMessage="Core Count is required" />
                                 </p:column>
                             </p:row>
 
@@ -1369,7 +182,7 @@
                                     <p:outputLabel for="TDP" value="TDP: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="TDP" value="#{productManagementManagedBean.newProduct.TDP}" required="true" requiredMessage="TDP is required" />
+                                    <p:inputText id="TDP" value="#{productManagementManagedBean.TDP}" required="true" requiredMessage="TDP is required" />
                                 </p:column>
                             </p:row>
 
@@ -1378,7 +191,7 @@
                                     <p:outputLabel for="socket" value="Socket: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="socket" value="#{productManagementManagedBean.newProduct.socket}" required="true" requiredMessage="Socket is required" />
+                                    <p:inputText id="socket" value="#{productManagementManagedBean.socket}" required="true" requiredMessage="Socket is required" />
                                 </p:column>
                             </p:row>
 
@@ -1387,7 +200,7 @@
                                     <h:outputLabel for="selectBooleanGraphics" value='Integrated Graphics: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="selectBooleanGraphics" value="#{productManagementManagedBean.newProduct.hasIntergratedGraphics}" appendTo="@this">
+                                    <p:selectOneMenu id="selectBooleanGraphics" value="#{productManagementManagedBean.hasIntergratedGraphics}" appendTo="@this">
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -1399,7 +212,7 @@
                                     <h:outputLabel for="selectBooleanCooler" value='CPU Cooler: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="selectBooleanCooler" value="#{productManagementManagedBean.newProduct.includesCpuCooler}" appendTo="@this">
+                                    <p:selectOneMenu id="selectBooleanCooler" value="#{productManagementManagedBean.includesCpuCooler}" appendTo="@this">
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -1411,7 +224,7 @@
                                     <p:outputLabel for="formFactor" value="Form Factor: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="formFactor" value="#{productManagementManagedBean.newProduct.formFactor}" required="true" requiredMessage="Form Factor is required" />
+                                    <p:inputText id="formFactor" value="#{productManagementManagedBean.formFactor}" required="true" requiredMessage="Form Factor is required" />
                                 </p:column>
                             </p:row>
 
@@ -1420,7 +233,7 @@
                                     <p:outputLabel for="chipset" value="Chipset: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="chipset" value="#{productManagementManagedBean.newProduct.chipset}" required="true" requiredMessage="Chipset is required" />
+                                    <p:inputText id="chipset" value="#{productManagementManagedBean.chipset}" required="true" requiredMessage="Chipset is required" />
                                 </p:column>
                             </p:row>
 
@@ -1429,7 +242,7 @@
                                     <p:outputLabel for="memorySlot" value="Memory Slot: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="memorySlot" value="#{productManagementManagedBean.newProduct.memorySlot}" required="true" requiredMessage="Memory Slot is required" />
+                                    <p:inputText id="memorySlot" value="#{productManagementManagedBean.memorySlot}" required="true" requiredMessage="Memory Slot is required" />
                                 </p:column>
                             </p:row>
 
@@ -1438,7 +251,7 @@
                                     <p:outputLabel for="colour" value="Colour: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="colour" value="#{productManagementManagedBean.newProduct.colour}" required="true" requiredMessage="Colour is required" />
+                                    <p:inputText id="colour" value="#{productManagementManagedBean.colour}" required="true" requiredMessage="Colour is required" />
                                 </p:column>
                             </p:row>
 
@@ -1447,7 +260,7 @@
                                     <h:outputLabel for="selectBooleanSLICrossFire" value='SLI / CrossFire: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="selectBooleanSLICrossFire" value="#{productManagementManagedBean.newProduct.SLICrossFire}" appendTo="@this">
+                                    <p:selectOneMenu id="selectBooleanSLICrossFire" value="#{productManagementManagedBean.SLICrossFire}" appendTo="@this">
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -1459,7 +272,7 @@
                                     <p:outputLabel for="PCIEx16" value="PCIEx16: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="PCIEx16" value="#{productManagementManagedBean.newProduct.PCIEx16}" required="true" requiredMessage="PCIEx16 is required" />
+                                    <p:inputText id="PCIEx16" value="#{productManagementManagedBean.PCIEx16}" required="true" requiredMessage="PCIEx16 is required" />
                                 </p:column>
                             </p:row>
 
@@ -1468,7 +281,7 @@
                                     <p:outputLabel for="m2Slot" value="M2 Slot: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="m2Slot" value="#{productManagementManagedBean.newProduct.m2Slot}" required="true" requiredMessage="M2 Slot is required" />
+                                    <p:inputText id="m2Slot" value="#{productManagementManagedBean.m2Slot}" required="true" requiredMessage="M2 Slot is required" />
                                 </p:column>
                             </p:row>
 
@@ -1477,7 +290,7 @@
                                     <p:outputLabel for="SATA6GB" value="SATA 6GB: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.newProduct.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
+                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
                                 </p:column>
                             </p:row>
 
@@ -1486,7 +299,7 @@
                                     <h:outputLabel for="selectBooleanWifi" value='WIFI: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="selectBooleanWifi" value="#{productManagementManagedBean.newProduct.wiFi}" appendTo="@this">
+                                    <p:selectOneMenu id="selectBooleanWifi" value="#{productManagementManagedBean.wiFi}" appendTo="@this">
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -1507,7 +320,7 @@
                                     <p:outputLabel for="speed" value="Speed: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="speed" value="#{productManagementManagedBean.newProduct.speed}" required="true" requiredMessage="Speed is required" />
+                                    <p:inputText id="speed" value="#{productManagementManagedBean.speed}" required="true" requiredMessage="Speed is required" />
                                 </p:column>
                             </p:row>
 
@@ -1516,7 +329,7 @@
                                     <p:outputLabel for="type" value="Type: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="type" value="#{productManagementManagedBean.newProduct.type}" required="true" requiredMessage="Type is required" />
+                                    <p:inputText id="type" value="#{productManagementManagedBean.type}" required="true" requiredMessage="Type is required" />
                                 </p:column>
                             </p:row>
 
@@ -1525,7 +338,7 @@
                                     <p:outputLabel for="sticks" value="Sticks: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="sticks" value="#{productManagementManagedBean.newProduct.sticks}" required="true" requiredMessage="Sticks is required" />
+                                    <p:inputText id="sticks" value="#{productManagementManagedBean.sticks}" required="true" requiredMessage="Sticks is required" />
                                 </p:column>
                             </p:row>
 
@@ -1534,7 +347,7 @@
                                     <p:outputLabel for="perStickGB" value="Per Stick GB: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="perStickGB" value="#{productManagementManagedBean.newProduct.perStickGB}" required="true" requiredMessage="Per Stick GB is required" />
+                                    <p:inputText id="perStickGB" value="#{productManagementManagedBean.perStickGB}" required="true" requiredMessage="Per Stick GB is required" />
                                 </p:column>
                             </p:row>
 
@@ -1543,7 +356,7 @@
                                     <p:outputLabel for="CasLatency" value="CAS Latency: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="CasLatency" value="#{productManagementManagedBean.newProduct.casLatency}" required="true" requiredMessage="CAS Latency is required" />
+                                    <p:inputText id="CasLatency" value="#{productManagementManagedBean.casLatency}" required="true" requiredMessage="CAS Latency is required" />
                                 </p:column>
                             </p:row>
 
@@ -1552,7 +365,7 @@
                                     <p:outputLabel for="efficiency" value="Efficiency: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="efficiency" value="#{productManagementManagedBean.newProduct.efficiency}" required="true" requiredMessage="Efficiency is required" />
+                                    <p:inputText id="efficiency" value="#{productManagementManagedBean.efficiency}" required="true" requiredMessage="Efficiency is required" />
                                 </p:column>
                             </p:row>
 
@@ -1561,7 +374,7 @@
                                     <p:outputLabel for="wattage" value="Wattage: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="wattage" value="#{productManagementManagedBean.newProduct.wattage}" required="true" requiredMessage="Wattage is required" />
+                                    <p:inputText id="wattage" value="#{productManagementManagedBean.wattage}" required="true" requiredMessage="Wattage is required" />
                                 </p:column>
                             </p:row>
 
@@ -1570,7 +383,7 @@
                                     <p:outputLabel for="modularity" value="Modularity: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="modularity" value="#{productManagementManagedBean.newProduct.modularity}" required="true" requiredMessage="Modularity is required" />
+                                    <p:inputText id="modularity" value="#{productManagementManagedBean.modularity}" required="true" requiredMessage="Modularity is required" />
                                 </p:column>
                             </p:row>
 
@@ -1579,7 +392,7 @@
                                     <p:outputLabel for="SATAConnectors" value="SATA Connectors: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="SATAConnectors" value="#{productManagementManagedBean.newProduct.SATAConnectors}" required="true" requiredMessage="SATA Connectors is required" />
+                                    <p:inputText id="SATAConnectors" value="#{productManagementManagedBean.SATAConnectors}" required="true" requiredMessage="SATA Connectors is required" />
                                 </p:column>
                             </p:row>
 
@@ -1588,7 +401,7 @@
                                     <p:outputLabel for="PCIe6plus2" value="PCIe6plus2: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="PCIe6plus2" value="#{productManagementManagedBean.newProduct.PCIe6plus2}" required="true" requiredMessage="PCIe6plus2 is required" />
+                                    <p:inputText id="PCIe6plus2" value="#{productManagementManagedBean.PCIe6plus2}" required="true" requiredMessage="PCIe6plus2 is required" />
                                 </p:column>
                             </p:row>
 
@@ -1597,7 +410,7 @@
                                     <p:outputLabel for="sidePanelView" value="Side Panel View: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="sidePanelView" value="#{productManagementManagedBean.newProduct.sidePanelView}" required="true" requiredMessage="Side Panel View is required" />
+                                    <p:inputText id="sidePanelView" value="#{productManagementManagedBean.sidePanelView}" required="true" requiredMessage="Side Panel View is required" />
                                 </p:column>
                             </p:row>
 
@@ -1606,7 +419,7 @@
                                     <p:outputLabel for="fullHeightExpansionSlot" value="Full Height Expansion Slot: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="fullHeightExpansionSlot" value="#{productManagementManagedBean.newProduct.fullHeightExpansionSlot}" required="true" requiredMessage="Full Height Expansion Slot is required" />
+                                    <p:inputText id="fullHeightExpansionSlot" value="#{productManagementManagedBean.fullHeightExpansionSlot}" required="true" requiredMessage="Full Height Expansion Slot is required" />
                                 </p:column>
                             </p:row>
 
@@ -1615,7 +428,7 @@
                                     <p:outputLabel for="MaxVideoCardLength" value="Max Video Card Length: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="MaxVideoCardLength" value="#{productManagementManagedBean.newProduct.maxVideoCardLength}" required="true" requiredMessage="Max Video Card Length is required" />
+                                    <p:inputText id="MaxVideoCardLength" value="#{productManagementManagedBean.maxVideoCardLength}" required="true" requiredMessage="Max Video Card Length is required" />
                                 </p:column>
                             </p:row>
 
@@ -1624,7 +437,7 @@
                                     <p:outputLabel for="topFanSupport" value="Top Fan Support: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="topFanSupport" value="#{productManagementManagedBean.newProduct.topFanSupport}" required="true" requiredMessage="Top Fan Support is required" />
+                                    <p:inputText id="topFanSupport" value="#{productManagementManagedBean.topFanSupport}" required="true" requiredMessage="Top Fan Support is required" />
                                 </p:column>
                             </p:row>
 
@@ -1633,7 +446,7 @@
                                     <p:outputLabel for="frontFanSupport" value="Front Fan Support: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="frontFanSupport" value="#{productManagementManagedBean.newProduct.frontFanSupport}" required="true" requiredMessage="Front Fan Support is required" />
+                                    <p:inputText id="frontFanSupport" value="#{productManagementManagedBean.frontFanSupport}" required="true" requiredMessage="Front Fan Support is required" />
                                 </p:column>
                             </p:row>
 
@@ -1642,7 +455,7 @@
                                     <p:outputLabel for="rearFanSupport" value="Rear Fan Support: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="rearFanSupport" value="#{productManagementManagedBean.newProduct.rearFanSupport}" required="true" requiredMessage="Rear Fan Support is required" />
+                                    <p:inputText id="rearFanSupport" value="#{productManagementManagedBean.rearFanSupport}" required="true" requiredMessage="Rear Fan Support is required" />
                                 </p:column>
                             </p:row>
 
@@ -1669,7 +482,7 @@
                                     <p:outputLabel for="Interface" value="Interface: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="Interface" value="#{productManagementManagedBean.newProduct.interface}" required="true" requiredMessage="Interface is required" />
+                                    <p:inputText id="Interface" value="#{productManagementManagedBean.interface}" required="true" requiredMessage="Interface is required" />
                                 </p:column>
                             </p:row>
 
@@ -1678,7 +491,7 @@
                                     <p:outputLabel for="Length" value="Length: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="Length" value="#{productManagementManagedBean.newProduct.length}" required="true" requiredMessage="Length is required" />
+                                    <p:inputText id="Length" value="#{productManagementManagedBean.length}" required="true" requiredMessage="Length is required" />
                                 </p:column>
                             </p:row>
 
@@ -1687,7 +500,7 @@
                                     <p:outputLabel for="ExpansionSlotWidth" value="Expansion Slot Width: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="ExpansionSlotWidth" value="#{productManagementManagedBean.newProduct.expansionSlotWidth}" required="true" requiredMessage="Expansion Slot Width is required" />
+                                    <p:inputText id="ExpansionSlotWidth" value="#{productManagementManagedBean.expansionSlotWidth}" required="true" requiredMessage="Expansion Slot Width is required" />
                                 </p:column>
                             </p:row>
 
@@ -1696,7 +509,7 @@
                                     <p:outputLabel for="externalPower" value="External Power: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="externalPower" value="#{productManagementManagedBean.newProduct.externalPower}" required="true" requiredMessage="External Power is required" />
+                                    <p:inputText id="externalPower" value="#{productManagementManagedBean.externalPower}" required="true" requiredMessage="External Power is required" />
                                 </p:column>
                             </p:row>
 
@@ -1705,7 +518,7 @@
                                     <p:outputLabel for="Memory" value="Memory: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="Memory" value="#{productManagementManagedBean.newProduct.memory}" required="true" requiredMessage="Memory is required" />
+                                    <p:inputText id="Memory" value="#{productManagementManagedBean.memory}" required="true" requiredMessage="Memory is required" />
                                 </p:column>
                             </p:row>
 
@@ -1714,7 +527,7 @@
                                     <p:outputLabel for="MemoryType" value="Memory Type: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="MemoryType" value="#{productManagementManagedBean.newProduct.memoryType}" required="true" requiredMessage="Memory Type is required" />
+                                    <p:inputText id="MemoryType" value="#{productManagementManagedBean.memoryType}" required="true" requiredMessage="Memory Type is required" />
                                 </p:column>
                             </p:row>
 
@@ -1723,7 +536,7 @@
                                     <p:outputLabel for="Capacity" value="Capacity: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="Capacity" value="#{productManagementManagedBean.newProduct.capacity}" required="true" requiredMessage="Capacity is required" />
+                                    <p:inputText id="Capacity" value="#{productManagementManagedBean.capacity}" required="true" requiredMessage="Capacity is required" />
                                 </p:column>
                             </p:row>
 
@@ -1732,7 +545,7 @@
                                     <h:outputLabel for="NVME" value='NVME: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="NVME" value="#{productManagementManagedBean.newProduct.NVME}" appendTo="@this">
+                                    <p:selectOneMenu id="NVME" value="#{productManagementManagedBean.NVME}" appendTo="@this">
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -1745,7 +558,7 @@
                                     <p:outputLabel for="noiseLevel" value="Noise Level: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="noiseLevel" value="#{productManagementManagedBean.newProduct.noiseLevel}" required="true" requiredMessage="Noise Level is required" />
+                                    <p:inputText id="noiseLevel" value="#{productManagementManagedBean.noiseLevel}" required="true" requiredMessage="Noise Level is required" />
                                 </p:column>
                             </p:row>
 
@@ -1754,7 +567,7 @@
                                     <p:outputLabel for="RadiatorSize" value="Radiator Size: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="RadiatorSize" value="#{productManagementManagedBean.newProduct.radiatorSize}" required="true" requiredMessage="Radiator Size is required" />
+                                    <p:inputText id="RadiatorSize" value="#{productManagementManagedBean.radiatorSize}" required="true" requiredMessage="Radiator Size is required" />
                                 </p:column>
                             </p:row>
 
@@ -1763,7 +576,7 @@
                                     <p:outputLabel for="Height" value="Height: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="Height" value="#{productManagementManagedBean.newProduct.height}" required="true" requiredMessage="Height is required" />
+                                    <p:inputText id="Height" value="#{productManagementManagedBean.height}" required="true" requiredMessage="Height is required" />
                                 </p:column>
                             </p:row>
 

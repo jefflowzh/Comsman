@@ -25,7 +25,6 @@ public class PowerSupply extends ComputerPart implements Serializable {
    // @OneToMany(mappedBy = "psu")
   // private List<ComputerSet> computerSets;
 
-    private String Manufacturer;
     private String formFactor;// (micro atx)
     private String efficiency;
     private Integer wattage;
