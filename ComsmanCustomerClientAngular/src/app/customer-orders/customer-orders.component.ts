@@ -50,8 +50,8 @@ export class CustomerOrdersComponent implements OnInit {
         
         this.customerOrders.push(this.co);
       }, error => {
-        this.router.navigate(["/customerLogin"]);
-        console.log('********** CustomerLoginComponent.ts customerLogin(): ' + error);
+        // this.router.navigate(["/customerLogin"]);
+        console.log('********** CustomerLoginComponent.ts customerOrders(): ' + error);
         
       }
     );

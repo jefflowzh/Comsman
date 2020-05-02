@@ -112,6 +112,7 @@ export class CustomerService {
   }
 
   customerOrders(email: string): Observable<any> {
+    console.log("end method");
     return this.httpClient.get<any>(this.baseUrl + "/customerOrders?email=" + email).pipe
       (
         catchError(this.handleError)

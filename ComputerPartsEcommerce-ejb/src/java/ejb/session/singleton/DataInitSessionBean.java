@@ -26,6 +26,7 @@ import entity.Staff;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -309,7 +310,22 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler1);
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler2);
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler3);
+            
+            Date today = new Date();
+            LineItem newLineItem3 = new LineItem(testRam, 1);
+            lineItemSessionBean.createNewLineItem(newLineItem3);
 
+            LineItem newLineItem4 = new LineItem(testGpu, 1);
+            lineItemSessionBean.createNewLineItem(newLineItem4);
+            
+            List<LineItem> lineItems = new ArrayList();
+            lineItems.add(newLineItem3);
+            lineItems.add(newLineItem4);
+            
+            CustomerOrder order = new CustomerOrder(today, true, "home", lineItems);
+            customerOrderSessionBean.createNewCustomerOrder(order, testCustomer2.getUserId());
+            
+            
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class CustomerOrdersRsp {
     private List<CustomerOrder> orders;
+    
+        public CustomerOrdersRsp() {
+    }
 
     public CustomerOrdersRsp(List<CustomerOrder> orders) {
         this.orders = orders;
@@ -27,8 +30,7 @@ public class CustomerOrdersRsp {
         this.orders = orders;
     }
 
-    public CustomerOrdersRsp() {
-    }
+
     
     
 }

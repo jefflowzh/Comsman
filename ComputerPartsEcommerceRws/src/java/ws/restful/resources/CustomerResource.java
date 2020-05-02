@@ -8,6 +8,7 @@ package ws.restful.resources;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import entity.Customer;
 import entity.CustomerOrder;
+import entity.LineItem;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,11 +64,21 @@ public class CustomerResource {
     public Response customerLogin(@QueryParam("email") String email, @QueryParam("password") String password) {
         try {
             Customer customer = customerSessionBean.customerLogin(email, password);
+            customer.getOrders().clear();
+//            List<CustomerOrder> orders = customer.getOrders();
+//            for(CustomerOrder o : orders){
+//                o.getCustomer().getOrders().clear();
+//                o.getLineItems().clear();
+//            }
+            
             CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
             return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+        }catch (StackOverflowError ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
@@ -158,15 +169,19 @@ public class CustomerResource {
             Customer customer = customerSessionBean.retrieveCustomerByEmail(email, Boolean.FALSE, Boolean.TRUE);
             List<CustomerOrder> orders = customer.getOrders();
             for(CustomerOrder order : orders){
-                order.getCustomer().getCart().clear();
-                order.getCustomer().getCurrComputerBuild().clear();
-                order.getDeliveryAssignedTo().getAssignedComputerSets().clear();
-                order.getDeliveryAssignedTo().getDeliveries().clear();
-//                for(LineItem line : order.getLineItems()){
-//                    
-//                }
+                  order.getCustomer().getOrders().clear();
+                  System.out.println("get order");
+                  order.getCustomer().getCart().clear();
+                  System.out.println("get cart");
+                  order.getCustomer().getCurrComputerBuild().clear();
+                  System.out.println("get computer build");
+                  //order.getDeliveryAssignedTo().getAssignedComputerSets().clear();
+                  System.out.println("get assigned computer set");
+                  //order.getDeliveryAssignedTo().getDeliveries().clear(); 
+                  System.out.println("get deliveries");
             }
             CustomerOrdersRsp customerOrdersRsp = new CustomerOrdersRsp(orders);
+            System.out.println("go");
             return Response.status(Status.OK).entity(customerOrdersRsp).build();
         } catch (CustomerNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
