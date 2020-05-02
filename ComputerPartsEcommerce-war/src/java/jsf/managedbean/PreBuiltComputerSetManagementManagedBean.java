@@ -64,9 +64,9 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private List<String> currentRams;
     private String currentPsu;
     private String currentCompCase;
-    private List<Long> currentGpus;
-    private List<Long> currentHdds;
-    private List<Long> currentSsds;
+    private List<String> currentGpus;
+    private List<String> currentHdds;
+    private List<String> currentSsds;
     private String currentWaterCooler;
     private String currentAirCooler;
     private Double currentPrice;
@@ -75,6 +75,8 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     private List<StringValue> stringValuesRams;
     private String addRam;
+    private List<StringValue> stringValuesGpus;
+    private String addGpu;
 
     private PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers;
     private List<CPU> cpus;
@@ -105,6 +107,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public PreBuiltComputerSetManagementManagedBean() {
         stringValuesRams = new ArrayList<>();
+        stringValuesGpus = new ArrayList<>();
     }
 
     @PostConstruct
@@ -156,6 +159,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         currentCompCase = null;
         currentWaterCooler = null;
         currentAirCooler = null;
+        currentRams = new ArrayList<>();
+        currentGpus = new ArrayList<>();
+        currentHdds = new ArrayList<>();
+        currentSsds = new ArrayList<>();
 
         // set currentModel parts to models
         if (currentModel.getCpu() != null) {
@@ -176,10 +183,24 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         if (currentModel.getAirCooler() != null) {
             currentAirCooler = currentModel.getAirCooler().getName();
         }
-
+        if (currentModel.getRams() != null) {
+            for (RAM ram : currentModel.getRams()) {
+                currentRams.add(ram.getName());
+            }
+        }
         if (!(currentModel.getRams().isEmpty())) {
             for (RAM r : currentModel.getRams()) {
                 stringValuesRams.add(new StringValue(r.getName()));
+            }
+        }
+        if (currentModel.getGpus() != null) {
+            for (GPU gpu : currentModel.getGpus()) {
+                currentGpus.add(gpu.getName());
+            }
+        }
+        if (!(currentModel.getGpus().isEmpty())) {
+            for (GPU gpu : currentModel.getGpus()) {
+                stringValuesGpus.add(new StringValue(gpu.getName()));
             }
         }
 
@@ -290,9 +311,13 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         System.out.println(addRam);
     }
 
-    public void addRams(ActionEvent event) {
+    public void testAddGpus(final AjaxBehaviorEvent event) {
+        System.out.println(addGpu);
+    }
 
+    public void addRams(ActionEvent event) {
         stringValuesRams.add(new StringValue(getAddRam()));
+        currentRams.add(addRam);
 
         setAddRam(null);
 
@@ -300,10 +325,26 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     }
 
     public void removeRam(final StringValue stringValue) {
-        System.out.println("------- here" + stringValue.getValue());
         stringValuesRams.remove(stringValue);
-        
+        currentRams.remove(stringValue.getValue());
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram removed", null));
+    }
+
+    public void addGpus(ActionEvent event) {
+        stringValuesGpus.add(new StringValue(getAddGpu()));
+        currentGpus.add(addGpu);
+
+        setAddGpu(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu added", null));
+    }
+
+    public void removeGpu(final StringValue stringValue) {
+        stringValuesGpus.remove(stringValue);
+        currentGpus.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu removed", null));
     }
 
 //    public void changeTier(AjaxBehaviorEvent event) {
@@ -357,22 +398,22 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 //                }
             }
             if (!currentGpus.isEmpty()) {
-                currentModel.getGpus().clear();
-                for (Long l : currentGpus) {
-                    currentModel.getGpus().add(computerPartSessionBeanLocal.retrieveGPUById(l));
-                }
+//                currentModel.getGpus().clear();
+//                for (Long l : currentGpus) {
+//                    currentModel.getGpus().add(computerPartSessionBeanLocal.retrieveGPUById(l));
+//                }
             }
             if (!currentHdds.isEmpty()) {
-                currentModel.getHdds().clear();
-                for (Long l : currentHdds) {
-                    currentModel.getHdds().add(computerPartSessionBeanLocal.retrieveHDDById(l));
-                }
+//                currentModel.getHdds().clear();
+//                for (Long l : currentHdds) {
+//                    currentModel.getHdds().add(computerPartSessionBeanLocal.retrieveHDDById(l));
+//                }
             }
             if (!currentSsds.isEmpty()) {
-                currentModel.getSsds().clear();
-                for (Long l : currentSsds) {
-                    currentModel.getSsds().add(computerPartSessionBeanLocal.retrieveSSDById(l));
-                }
+//                currentModel.getSsds().clear();
+//                for (Long l : currentSsds) {
+//                    currentModel.getSsds().add(computerPartSessionBeanLocal.retrieveSSDById(l));
+//                }
             }
 
             preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
@@ -392,9 +433,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Models successfully updated", null));
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
-        } catch (ComputerPartNotFoundException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
         }
+//        catch (ComputerPartNotFoundException ex) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
+//        }
     }
 
     public void updateModelSinglePart(AjaxBehaviorEvent event, UIComponent component) {
@@ -558,27 +600,27 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         this.currentCompCase = currentCompCase;
     }
 
-    public List<Long> getCurrentGpus() {
+    public List<String> getCurrentGpus() {
         return currentGpus;
     }
 
-    public void setCurrentGpus(List<Long> currentGpus) {
+    public void setCurrentGpus(List<String> currentGpus) {
         this.currentGpus = currentGpus;
     }
 
-    public List<Long> getCurrentHdds() {
+    public List<String> getCurrentHdds() {
         return currentHdds;
     }
 
-    public void setCurrentHdds(List<Long> currentHdds) {
+    public void setCurrentHdds(List<String> currentHdds) {
         this.currentHdds = currentHdds;
     }
 
-    public List<Long> getCurrentSsds() {
+    public List<String> getCurrentSsds() {
         return currentSsds;
     }
 
-    public void setCurrentSsds(List<Long> currentSsds) {
+    public void setCurrentSsds(List<String> currentSsds) {
         this.currentSsds = currentSsds;
     }
 
@@ -820,6 +862,22 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public void setAddRam(String addRam) {
         this.addRam = addRam;
+    }
+
+    public List<StringValue> getStringValuesGpus() {
+        return stringValuesGpus;
+    }
+
+    public void setStringValuesGpus(List<StringValue> stringValuesGpus) {
+        this.stringValuesGpus = stringValuesGpus;
+    }
+
+    public String getAddGpu() {
+        return addGpu;
+    }
+
+    public void setAddGpu(String addGpu) {
+        this.addGpu = addGpu;
     }
 
 }
