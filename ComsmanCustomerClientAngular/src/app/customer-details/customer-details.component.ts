@@ -22,35 +22,32 @@ export class CustomerDetailsComponent implements OnInit {
   constructor(private router: Router, public sessionService: SessionService,
     private customerService: CustomerService) {
 
-     }
+  }
 
   ngOnInit() {
     this.customer = this.sessionService.getCurrentCustomer();
   }
 
-  updateCustomer(customerForm: NgForm){
+  updateCustomerDetails(customerForm: NgForm) {
     this.submitted = true;
-    if(customerForm.valid){
+    if (customerForm.valid) {
       this.customerService.customerUpdate(this.customer).subscribe(
-       response => {
-        let customer: Customer = response.customer;
-        if (customer != null) {
-          this.sessionService.setIsLogin(true);
-          this.sessionService.setCurrentCustomer(customer);
-          this.updateError = false;
-          this.updateSuccess = true;
-        } 
-      }, error => {
-        this.updateError = true;
-        this.updateSuccess = false;
-      }
-    );
-      
+        response => {
+          let customer: Customer = response.customer;
+          if (customer != null) {
+            this.sessionService.setIsLogin(true);
+            this.sessionService.setCurrentCustomer(customer);
+            this.updateError = false;
+            this.updateSuccess = true;
+            console.log("update customer details success!!")
+          }
+        }, error => {
+          this.updateError = true;
+          this.updateSuccess = false;
+        }
+      );
+
     }
-  }
-
-  else(){
-
   }
 
 }

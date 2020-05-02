@@ -16,6 +16,7 @@ import { PanelModule } from 'primeng/panel';
 import { SpinnerModule } from 'primeng/spinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { CarouselModule } from 'primeng/carousel';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
@@ -33,6 +34,9 @@ import { CustomerCartComponent } from './customer-cart/customer-cart.component';
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
+import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
+import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,10 @@ import { ViewProductComponent } from './view-product/view-product.component';
     CustomerCartComponent,
     ViewAllComputerCasesComponent,
     CustomerDetailsComponent,
-    ViewProductComponent
+    ViewProductComponent,
+    AmateurSetMainPageComponent,
+    AmateurSetBuildPageComponent,
+    AdvancedSetBuildPageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +75,8 @@ import { ViewProductComponent } from './view-product/view-product.component';
     FontAwesomeModule,
     SpinnerModule,
     CheckboxModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

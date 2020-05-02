@@ -9,6 +9,9 @@ import { CustomerCartComponent } from './customer-cart/customer-cart.component';
 import { ViewAllComputerCasesComponent } from './view-all-computer-cases/view-all-computer-cases.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
+import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
+import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -19,7 +22,10 @@ const routes: Routes = [
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
   { path: 'customerCart', component: CustomerCartComponent },
   { path: 'customerDetails', component: CustomerDetailsComponent },
-  { path: 'viewProduct/:productId', component: ViewProductComponent }
+  { path: 'viewProduct/:productId', component: ViewProductComponent },
+  { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
+  { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },
+  { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent }
 ];
 
 @NgModule({

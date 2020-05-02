@@ -1,15 +1,19 @@
-<div class="row" style="margin-right: 0;">
-    <div class="col-sm">
+<div class="ui-g">
+    <div class="ui-g-3">
         <p-menu [model]="sidenavItems"></p-menu>
     </div>
-    <div class="col-sm">
-        <h2>Our Top Pick this Month</h2>
-        <img src="https://pictures.topspeed.com/IMG/crop_webp/201907/origin-s-big-o-platf-1_1600x0.webp" width="100%">
+    <div class="ui-g-6">
+        <h1 style="margin-left: 6%;">New Arrivals</h1>
+        <p-carousel [value]="carouselItems" [numVisible]="1" [numScroll]="1">
+            <ng-template let-carouselItem pTemplate="item">
+                <div>
+                    <img src="{{carouselItem}}" width="100%" style="max-height: 600px;">
+                </div>
+            </ng-template>
+        </p-carousel>
     </div>
-    <div class="col-sm">
-        One of four columns
-    </div>
-    <div class="col-sm">
-        Promotions?
+    <div class="ui-g-3">
+        <div class="ui-g-12"><img src="app/images-folder/new-user-sign-up-here.JPG" width="100%"></div>
+        <div class="ui-g-12">2</div>
     </div>
 </div>

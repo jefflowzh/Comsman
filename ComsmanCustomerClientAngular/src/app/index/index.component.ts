@@ -10,6 +10,8 @@ import { MenuItem } from 'primeng/api';
 export class IndexComponent implements OnInit {
 
   sidenavItems: MenuItem[];
+  carouselItems: string[] = ["https://pictures.topspeed.com/IMG/crop_webp/201907/origin-s-big-o-platf-1_1600x0.webp",
+    "https://www.sony.com.sg/image/eb0062b3db03748efc7f5ca3fd82ccc5?fmt=pjpeg&wid=330&bgcolor=FFFFFF&bgc=FFFFFF"]
 
   constructor() { }
 
@@ -17,27 +19,26 @@ export class IndexComponent implements OnInit {
     this.sidenavItems = [{
       label: 'Computer Parts',
       items: [
-        { label: 'CPU Cooler', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/CPUCooler'] },
-        { label: 'Computer Case', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllComputerCases'] },
-        { label: 'GPU', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/GPU'] },
-        { label: 'HDD', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/HDD'] },
-        { label: 'Motherboard', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/Motherboard'] },
-        { label: 'Power Supply', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/PowerSupply'] },
-        { label: 'RAM', icon: 'pi pi-fw pi-plus', routerLink: ['/viewAllProducts/RAM'] },
-        { label: 'SSD', icon: 'pi pi-fw pi-download', routerLink: ['/viewAllProducts/SSD'] }
+        { label: 'CPU Cooler', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/CPUCooler'] },
+        { label: 'Computer Case', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllComputerCases'] },
+        { label: 'GPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/GPU'] },
+        { label: 'Internal Storage (SSD/HDD)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/HDD'] },
+        { label: 'Motherboard', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/Motherboard'] },
+        { label: 'Power Supply', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/PowerSupply'] },
+        { label: 'RAM', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/RAM'] }
       ]
     },
     {
       label: 'Peripherals',
       items: [
-        { label: 'View all peripherals', icon: 'pi pi-fw pi-user-plus', routerLink: ['/viewAllProducts/Peripheral'] },
+        { label: 'Peripherals', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/Peripheral'] },
       ]
     },
     {
       label: 'Build My Own Computer Set',
       items: [
-        { label: 'Amateur', icon: 'pi pi-fw pi-user-plus' },
-        { label: 'Advanced', icon: 'pi pi-fw pi-user-minus' }
+        { label: 'Amateur', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/amateurSetMainPage'] },
+        { label: 'Advanced', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/advancedSetBuildPage'] }
       ]
     }];
   }

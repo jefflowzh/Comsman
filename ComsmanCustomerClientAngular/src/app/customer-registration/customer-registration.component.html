@@ -1,9 +1,11 @@
 <div class="container" style="width: 60%; margin-top: 50px;">
     <div>
-        <h2 style="display: inline;">New Customer? Sign up below.</h2>
+        <h2 style="display: inline;">New User? Sign up below.</h2>
+        <span style="float:right; line-height:75px;">Already a user? <a routerLink="/customerLogin">Login
+                here</a></span>
     </div>
-    <p></p>
 
+    <p></p>
 
     <form #customerRegistrationForm="ngForm" (ngSubmit)="customerRegistration(customerRegistrationForm)"
         style="background-color: aliceblue;">

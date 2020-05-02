@@ -10,8 +10,8 @@ export class LineItem {
 
     constructor(lineItemId?: number, product?: Product, computerSet?: ComputerSet, quantity?: number) {
         this.lineItemId = lineItemId;
-        this.product = null;
-        this.computerSet = null;
+        this.product = product;
+        this.computerSet = computerSet;
         this.quantity = quantity;
     }
 }
