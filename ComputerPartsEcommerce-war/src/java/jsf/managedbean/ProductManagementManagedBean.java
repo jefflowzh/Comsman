@@ -81,7 +81,7 @@ public class ProductManagementManagedBean implements Serializable {
 //        stringValues.add(new StringValue("String Three"));
     }
 
-    public void subjectSelectionChanged(final AjaxBehaviorEvent event) {
+    public void subjectSelectionChanged(AjaxBehaviorEvent event) {
         if (selectedProduct.equals("CPU")) {
             products = computerPartSessionBeanLocal.retrieveAllCPU();
         } else if (selectedProduct.equals("MotherBoard")) {

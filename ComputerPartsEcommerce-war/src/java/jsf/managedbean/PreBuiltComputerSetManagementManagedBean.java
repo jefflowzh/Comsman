@@ -77,6 +77,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private String addRam;
     private List<StringValue> stringValuesGpus;
     private String addGpu;
+    private List<StringValue> stringValuesHdds;
+    private String addHdd;
+    private List<StringValue> stringValuesSsds;
+    private String addSsd;
 
     private PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers;
     private List<CPU> cpus;
@@ -108,6 +112,8 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     public PreBuiltComputerSetManagementManagedBean() {
         stringValuesRams = new ArrayList<>();
         stringValuesGpus = new ArrayList<>();
+        stringValuesHdds = new ArrayList<>();
+        stringValuesSsds = new ArrayList<>();
     }
 
     @PostConstruct
@@ -201,6 +207,16 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         if (!(currentModel.getGpus().isEmpty())) {
             for (GPU gpu : currentModel.getGpus()) {
                 stringValuesGpus.add(new StringValue(gpu.getName()));
+            }
+        }
+        if (currentModel.getHdds() != null) {
+            for (HDD hdd : currentModel.getHdds()) {
+                currentHdds.add(hdd.getName());
+            }
+        }
+        if (!(currentModel.getHdds().isEmpty())) {
+            for (HDD hdd : currentModel.getHdds()) {
+                stringValuesHdds.add(new StringValue(hdd.getName()));
             }
         }
 
@@ -345,6 +361,38 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         currentGpus.remove(stringValue.getValue());
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu removed", null));
+    }
+
+    public void addHdds(ActionEvent event) {
+        stringValuesHdds.add(new StringValue(getAddHdd()));
+        currentHdds.add(addHdd);
+
+        setAddHdd(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hdd added", null));
+    }
+
+    public void removeHdd(final StringValue stringValue) {
+        stringValuesHdds.remove(stringValue);
+        currentHdds.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hdd removed", null));
+    }
+
+    public void addSsds(ActionEvent event) {
+        stringValuesSsds.add(new StringValue(getAddSsd()));
+        currentSsds.add(addSsd);
+
+        setAddSsd(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ssd added", null));
+    }
+
+    public void removeSsd(final StringValue stringValue) {
+        stringValuesSsds.remove(stringValue);
+        currentSsds.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ssd removed", null));
     }
 
 //    public void changeTier(AjaxBehaviorEvent event) {
@@ -878,6 +926,38 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public void setAddGpu(String addGpu) {
         this.addGpu = addGpu;
+    }
+
+    public List<StringValue> getStringValuesHdds() {
+        return stringValuesHdds;
+    }
+
+    public void setStringValuesHdds(List<StringValue> stringValuesHdds) {
+        this.stringValuesHdds = stringValuesHdds;
+    }
+
+    public String getAddHdd() {
+        return addHdd;
+    }
+
+    public void setAddHdd(String addHdd) {
+        this.addHdd = addHdd;
+    }
+
+    public List<StringValue> getStringValuesSsds() {
+        return stringValuesSsds;
+    }
+
+    public void setStringValuesSsds(List<StringValue> stringValuesSsds) {
+        this.stringValuesSsds = stringValuesSsds;
+    }
+
+    public String getAddSsd() {
+        return addSsd;
+    }
+
+    public void setAddSsd(String addSsd) {
+        this.addSsd = addSsd;
     }
 
 }

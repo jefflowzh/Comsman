@@ -98,36 +98,41 @@
                                 <h:outputLabel for="gpus" value="GPU: " />
                                 <ui:repeat id="gpus" value="#{preBuiltComputerSetManagementManagedBean.stringValuesGpus}" var="stringValueGpu">   
                                     <p:inputText value="#{stringValueGpu.value}" disabled="true"/> 
-                                    <p:commandButton icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" actionListener="#{preBuiltComputerSetManagementManagedBean.removeRam(stringValueRam)}" update="formModel" />
+                                    <p:commandButton icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" actionListener="#{preBuiltComputerSetManagementManagedBean.removeGpu(stringValueGpu)}" update="formModel" />
                                     &nbsp;
                                 </ui:repeat>
                                 <p:message id="gpusMessage" for="gpus"/>
 
-                                <h:outputLabel for="hdds" value="HDD (select multiple):" />
-                                <p:selectCheckboxMenu id="hdds" value="#{preBuiltComputerSetManagementManagedBean.currentHdds}" label="Select HDDs" multiple="true" panelStyle="width:200px">
-                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
-                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.hdds}" var="hdd" itemValue="#{hdd.productId}" itemLabel="#{hdd.name}"/>
-                                </p:selectCheckboxMenu>
+                                <h:outputLabel for="hdds" value="HDD: " />
+                                <ui:repeat id="hdds" value="#{preBuiltComputerSetManagementManagedBean.stringValuesHdds}" var="stringValueHdd">   
+                                    <p:inputText value="#{stringValueHdd.value}" disabled="true"/> 
+                                    <p:commandButton icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" actionListener="#{preBuiltComputerSetManagementManagedBean.removeHdd(stringValueHdd)}" update="formModel" />
+                                    &nbsp;
+                                </ui:repeat>
                                 <p:message id="hddsMessage" for="hdds"/>
 
-                                <h:outputLabel for="ssds" value="SSD (select multiple):" />
-                                <p:selectCheckboxMenu id="ssds" value="#{preBuiltComputerSetManagementManagedBean.currentSsds}" label="Select SSDs" multiple="true" panelStyle="width:200px">
-                                    <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
-                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.ssds}" var="ssd" itemValue="#{ssd.productId}" itemLabel="#{ssd.name}"/>
-                                </p:selectCheckboxMenu>
-                                <p:message id="ssdsMessage" for="ssds"/>
+                                <h:outputLabel for="ssds" value="SSD: " />
+                                <ui:repeat id="ssds" value="#{preBuiltComputerSetManagementManagedBean.stringValuesSsds}" var="stringValueSsd">   
+                                    <p:inputText value="#{stringValueSsd.value}" disabled="true"/> 
+                                    <p:commandButton icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;" actionListener="#{preBuiltComputerSetManagementManagedBean.removeSsd(stringValueSsd)}" update="formModel" />
+                                    &nbsp;
+                                </ui:repeat>
+                                <p:message id="SsdsMessage" for="ssds"/>
 
                                 <h:outputLabel for="currentPrice" value="Price:" />
                                 <h:outputLabel id="currentPrice" value="#{preBuiltComputerSetManagementManagedBean.currentPrice}"/>
+                                
+                                <p:row>
+                                    <p:column colspan="4">
+                                        <p:commandButton value="Add New Ram" oncomplete="PF('dialogAddRams').show()" />
+                                        <p:commandButton value="Add New Gpu" oncomplete="PF('dialogAddGpus').show()" />
+                                        <p:commandButton value="Add New Hdd" oncomplete="PF('dialogAddHdds').show()" />
+                                        <p:commandButton value="Add New Ssd" oncomplete="PF('dialogAddSsds').show()" />
+                                        <p:commandButton value="Update Tier" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
+                                    </p:column>
+                                </p:row>
 
-                                <p:column colspan="2">
-                                    <div align="center">
-                                        <p:commandButton value="Add New Ram" oncomplete="PF('dialogAddRams').show()" style="margin-right: 10px"/>
-                                        <p:commandButton value="Add New Gpu" oncomplete="PF('dialogAddGpus').show()" style="margin-right: 10px"/>
-                                    </div>
-                                </p:column>
-
-                                <p:commandButton value="Update Tier" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
+                                
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
@@ -166,6 +171,42 @@
                                     <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.gpus}" var="gpu" itemValue="#{gpu.name}" itemLabel="#{gpu.name}"/>
                                 </p:selectOneMenu>
                                 <p:commandButton value="Add Gpu" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.addGpus}" oncomplete="PF('dialogAddGpus').hide()"/>
+                            </h:panelGrid>
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formAddHdds">
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dialog id="dialogAddHdds" widgetVar="dialogAddHdds" header="Add Rams" closable="true" width="450">
+                        <p:message id="addHddMessage" for="addHdd"/>
+                        <div align="center">
+                            <h:panelGrid columns="3" cellpadding="5" style="align-content: center">
+                                <h:outputLabel for="addHdd" value="Add Hdd:" />
+                                <p:selectOneMenu id="addHdd" value="#{preBuiltComputerSetManagementManagedBean.addHdd}" style="width: 200px" appendTo="@this">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.hdds}" var="hdd" itemValue="#{hdd.name}" itemLabel="#{hdd.name}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Add Hdd" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.addHdds}" oncomplete="PF('dialogAddHdds').hide()"/>
+                            </h:panelGrid>
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formAddSsds">
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dialog id="dialogAddSsds" widgetVar="dialogAddSsds" header="Add Ssds" closable="true" width="450">
+                        <p:message id="addSsdMessage" for="addSsd"/>
+                        <div align="center">
+                            <h:panelGrid columns="3" cellpadding="5" style="align-content: center">
+                                <h:outputLabel for="addSsd" value="Add Ssd:" />
+                                <p:selectOneMenu id="addSsd" value="#{preBuiltComputerSetManagementManagedBean.addSsd}" style="width: 200px" appendTo="@this">
+                                    <f:selectItem value="#{null}" itemLabel="NONE"/>
+                                    <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.ssds}" var="ssd" itemValue="#{ssd.name}" itemLabel="#{ssd.name}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Add Ssd" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.addSsds}" oncomplete="PF('dialogAddSsds').hide()"/>
                             </h:panelGrid>
                         </div>
                     </p:dialog>

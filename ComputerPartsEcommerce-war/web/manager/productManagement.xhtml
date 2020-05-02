@@ -50,6 +50,8 @@
                 <p:commandButton value="Create new Air Cooler"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'CPUAirCooler'}"/>
                 <p:commandButton value="Create new Peripheral"  oncomplete="PF('sidebarCreateNewProduct').show()" icon="fa fa-plus" actionListener="#{productManagementManagedBean.doCreateNewProduct}" rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}"/>
             </h:form>
+            
+            
 
             <div class="layout-subcontent">
                 <h:form id="formAllProducts">
@@ -111,7 +113,7 @@
                         <p:commandButton value="Close" icon="fa fa-remove" actionListener="#{productManagementManagedBean.doNull}" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
 
                         <p:messages id="messagesCreateNewProduct" redisplay="false" />
-
+                      
                         <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
 
                             <p:row>
