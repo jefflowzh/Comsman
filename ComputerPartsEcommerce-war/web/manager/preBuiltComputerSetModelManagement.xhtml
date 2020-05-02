@@ -46,7 +46,7 @@
                                     <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.cpus}" var="cpu" itemValue="#{cpu.name}" itemLabel="#{cpu.name}"/>
                                 </p:selectOneMenu>
                                 <p:message id="cpuMessage" for="currentCpu"/>
-                                
+
                                 <h:outputLabel for="currentMotherboard" value="Motherboard:" />
                                 <p:selectOneMenu id="currentMotherboard" value="#{preBuiltComputerSetManagementManagedBean.currentMotherboard}" style="width: 200px" appendTo="@this">
                                     <p:ajax event="change" update="formModel" listener="#{preBuiltComputerSetManagementManagedBean.updateModelSinglePart(event, component)}" />
@@ -101,6 +101,14 @@
                                 </p:selectCheckboxMenu>
                                 <p:message id="gpusMessage" for="gpus"/>
 
+                                <h:outputLabel for="rams" value="Ram: " />
+                                <ui:repeat value="#{preBuiltComputerSetManagementManagedBean.stringValuesRams}" var="stringValueRam">   
+                                    <p:inputText value="#{stringValueRam.value}" disabled="true"/> 
+                                    <p:commandButton icon="fa fa-remove" style="border:none !important; background-color:white !important; color: black;"/>
+                                    &nbsp;
+                                </ui:repeat>
+                                <p:message id="testMessage" for="rams"/>
+
                                 <h:outputLabel for="hdds" value="HDD (select multiple):" />
                                 <p:selectCheckboxMenu id="hdds" value="#{preBuiltComputerSetManagementManagedBean.currentHdds}" label="Select HDDs" multiple="true" panelStyle="width:200px">
                                     <p:ajax event="change" listener="#{preBuiltComputerSetManagementManagedBean.setAjaxTestMulti}" />
@@ -114,14 +122,40 @@
                                     <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.ssds}" var="ssd" itemValue="#{ssd.productId}" itemLabel="#{ssd.name}"/>
                                 </p:selectCheckboxMenu>
                                 <p:message id="ssdsMessage" for="ssds"/>
-                                
+
                                 <h:outputLabel for="currentPrice" value="Price:" />
                                 <h:outputLabel id="currentPrice" value="#{preBuiltComputerSetManagementManagedBean.currentPrice}"/>
+
+                                <p:column colspan="2">
+                                    <div align="center">
+                                        <p:commandButton value="Add New Ram" oncomplete="PF('dialogAddRams').show()" style="margin-right: 10px"/>
+                                        <p:commandButton value="Remove Ram" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
+                                    </div>
+                                </p:column>
 
                                 <p:commandButton value="Update Tier" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.updateModel}" />
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
+                </h:form>
+
+                <h:form id="formAddRams">
+
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dialog id="dialogAddRams" widgetVar="dialogAddRams" header="Add Rams" closable="true" width="1000">
+
+                        <h:outputLabel for="addRam" value="Add Ram:" />
+                        <p:selectOneMenu id="addRam" value="#{preBuiltComputerSetManagementManagedBean.addRam}" style="width: 200px" appendTo="@this">
+                            <p:ajax event="change" update="formModel" listener="#{preBuiltComputerSetManagementManagedBean.testAddRams}" />
+                            <f:selectItem value="#{null}" itemLabel="NONE"/>
+                            <f:selectItems value="#{preBuiltComputerSetManagementManagedBean.rams}" var="ram" itemValue="#{ram.name}" itemLabel="#{ram.name}"/>
+                        </p:selectOneMenu>
+                        <p:message id="addRamMessage" for="addRam"/>
+
+                        <p:commandButton value="Add Ram" update="formModel formModel:messages" actionListener="#{preBuiltComputerSetManagementManagedBean.addRams}" oncomplete="PF('dialogAddRams').hide()"/>
+
+                    </p:dialog>
                 </h:form>
 
             </div>

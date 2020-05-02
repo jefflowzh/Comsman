@@ -1,5 +1,6 @@
 package jsf.managedbean;
 
+import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import entity.CPU;
@@ -16,6 +17,7 @@ import entity.RAM;
 import entity.SSD;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -59,7 +61,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private Boolean currentIsEnabled;
     private String currentCpu;
     private String currentMotherboard;
-    private List<Long> currentRams;
+    private List<String> currentRams;
     private String currentPsu;
     private String currentCompCase;
     private List<Long> currentGpus;
@@ -70,6 +72,9 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private Double currentPrice;
 
     private String stringRams;
+
+    private List<StringValue> stringValuesRams;
+    private String addRam;
 
     private PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers;
     private List<CPU> cpus;
@@ -99,6 +104,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private String existingTierSSDs;
 
     public PreBuiltComputerSetManagementManagedBean() {
+        stringValuesRams = new ArrayList<>();
     }
 
     @PostConstruct
@@ -150,14 +156,33 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         currentCompCase = null;
         currentWaterCooler = null;
         currentAirCooler = null;
-        
+
         // set currentModel parts to models
-        if (currentModel.getCpu() != null) currentCpu = currentModel.getCpu().getName();
-        if (currentModel.getMotherboard()!= null) currentMotherboard = currentModel.getMotherboard().getName();
-        if (currentModel.getPsu()!= null) currentPsu = currentModel.getPsu().getName();
-        if (currentModel.getCompCase()!= null) currentCompCase = currentModel.getCompCase().getName();
-        if (currentModel.getWaterCooler()!= null) currentWaterCooler = currentModel.getWaterCooler().getName();
-        if (currentModel.getAirCooler()!= null) currentAirCooler = currentModel.getAirCooler().getName();
+        if (currentModel.getCpu() != null) {
+            currentCpu = currentModel.getCpu().getName();
+        }
+        if (currentModel.getMotherboard() != null) {
+            currentMotherboard = currentModel.getMotherboard().getName();
+        }
+        if (currentModel.getPsu() != null) {
+            currentPsu = currentModel.getPsu().getName();
+        }
+        if (currentModel.getCompCase() != null) {
+            currentCompCase = currentModel.getCompCase().getName();
+        }
+        if (currentModel.getWaterCooler() != null) {
+            currentWaterCooler = currentModel.getWaterCooler().getName();
+        }
+        if (currentModel.getAirCooler() != null) {
+            currentAirCooler = currentModel.getAirCooler().getName();
+        }
+
+        if (!(currentModel.getRams().isEmpty())) {
+            for (RAM r : currentModel.getRams()) {
+                stringValuesRams.add(new StringValue(r.getName()));
+            }
+        }
+
         setExistingTierRAMs(Arrays.toString(currentModel.getRams().toArray()));
         setExistingTierGPUs(Arrays.toString(currentModel.getGpus().toArray()));
         setExistingTierHDDs(Arrays.toString(currentModel.getHdds().toArray()));
@@ -261,6 +286,26 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     }
 
+    public void testAddRams(final AjaxBehaviorEvent event) {
+        System.out.println(addRam);
+    }
+
+    public void addRams(ActionEvent event) {
+
+        stringValuesRams.add(new StringValue(getAddRam()));
+
+        setAddRam(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram added", null));
+    }
+
+    public void removeRam(final StringValue stringValue) {
+        System.out.println("------- here" + stringValue.getValue());
+        stringValuesRams.remove(stringValue);
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram removed", null));
+    }
+
 //    public void changeTier(AjaxBehaviorEvent event) {
 //        Integer currentIndex;
 //        switch (currentTier) {
@@ -306,10 +351,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             // link those multiple to currentModel
             if (!currentRams.isEmpty()) {
                 // empty current rams attached to the tier
-                currentModel.getRams().clear();
-                for (Long l : currentRams) {
-                    currentModel.getRams().add(computerPartSessionBeanLocal.retrieveRAMById(l));
-                }
+//                currentModel.getRams().clear();
+//                for (Long l : currentRams) {
+//                    currentModel.getRams().add(computerPartSessionBeanLocal.retrieveRAMById(l));
+//                }
             }
             if (!currentGpus.isEmpty()) {
                 currentModel.getGpus().clear();
@@ -351,7 +396,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
         }
     }
-    
+
     public void updateModelSinglePart(AjaxBehaviorEvent event, UIComponent component) {
         String computerPartName = "";
         Field field;
@@ -370,7 +415,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         ComputerPart partToAdd = null;
         if (computerPartName != null) {
             partToAdd = computerPartSessionBeanLocal.retrieveComputerPartByName(computerPartName);
-        
+
             if (partToAdd instanceof CPU) {
                 CPU castedPartToAdd = (CPU) partToAdd;
                 currentModel.setCpu(castedPartToAdd);
@@ -391,12 +436,24 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
                 currentModel.setAirCooler(castedPartToAdd);
             }
         } else {
-            if (currentCpu == null) currentModel.setCpu(null);
-            if (currentMotherboard == null) currentModel.setMotherboard(null);
-            if (currentPsu == null) currentModel.setPsu(null);
-            if (currentCompCase == null) currentModel.setCompCase(null);
-            if (currentWaterCooler == null) currentModel.setWaterCooler(null);
-            if (currentAirCooler == null) currentModel.setAirCooler(null);
+            if (currentCpu == null) {
+                currentModel.setCpu(null);
+            }
+            if (currentMotherboard == null) {
+                currentModel.setMotherboard(null);
+            }
+            if (currentPsu == null) {
+                currentModel.setPsu(null);
+            }
+            if (currentCompCase == null) {
+                currentModel.setCompCase(null);
+            }
+            if (currentWaterCooler == null) {
+                currentModel.setWaterCooler(null);
+            }
+            if (currentAirCooler == null) {
+                currentModel.setAirCooler(null);
+            }
         }
         updatePrice();
         try {
@@ -413,15 +470,27 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
         System.out.println(" set switch if need");
     }
-    
+
     private void updatePrice() {
         currentPrice = 0.0;
-        if (currentModel.getCpu() != null) currentPrice += currentModel.getCpu().getPrice();
-        if (currentModel.getMotherboard() != null) currentPrice += currentModel.getMotherboard().getPrice();
-        if (currentModel.getPsu() != null) currentPrice += currentModel.getPsu().getPrice();
-        if (currentModel.getCompCase() != null) currentPrice += currentModel.getCompCase().getPrice();
-        if (currentModel.getWaterCooler() != null) currentPrice += currentModel.getWaterCooler().getPrice();
-        if (currentModel.getAirCooler() != null) currentPrice += currentModel.getAirCooler().getPrice();
+        if (currentModel.getCpu() != null) {
+            currentPrice += currentModel.getCpu().getPrice();
+        }
+        if (currentModel.getMotherboard() != null) {
+            currentPrice += currentModel.getMotherboard().getPrice();
+        }
+        if (currentModel.getPsu() != null) {
+            currentPrice += currentModel.getPsu().getPrice();
+        }
+        if (currentModel.getCompCase() != null) {
+            currentPrice += currentModel.getCompCase().getPrice();
+        }
+        if (currentModel.getWaterCooler() != null) {
+            currentPrice += currentModel.getWaterCooler().getPrice();
+        }
+        if (currentModel.getAirCooler() != null) {
+            currentPrice += currentModel.getAirCooler().getPrice();
+        }
         currentModel.setPrice(currentPrice);
     }
 
@@ -465,11 +534,11 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         this.currentMotherboard = currentMotherboard;
     }
 
-    public List<Long> getCurrentRams() {
+    public List<String> getCurrentRams() {
         return currentRams;
     }
 
-    public void setCurrentRams(List<Long> currentRams) {
+    public void setCurrentRams(List<String> currentRams) {
         this.currentRams = currentRams;
     }
 
@@ -735,6 +804,22 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public void setExistingTierSSDs(String existingTierSSDs) {
         this.existingTierSSDs = existingTierSSDs;
+    }
+
+    public List<StringValue> getStringValuesRams() {
+        return stringValuesRams;
+    }
+
+    public void setStringValuesRams(List<StringValue> stringValuesRams) {
+        this.stringValuesRams = stringValuesRams;
+    }
+
+    public String getAddRam() {
+        return addRam;
+    }
+
+    public void setAddRam(String addRam) {
+        this.addRam = addRam;
     }
 
 }
