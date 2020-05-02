@@ -107,4 +107,6 @@ public interface ComputerPartSessionBeanLocal {
 
     public List<String> retrieveAllCCStringValue(String type, long productId);
 
+    public ComputerPart retrieveComputerPartByName(String name);
+
 }

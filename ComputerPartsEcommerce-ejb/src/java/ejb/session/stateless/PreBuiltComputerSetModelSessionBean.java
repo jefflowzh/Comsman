@@ -355,7 +355,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         
         if(model.getCompCase() != null){
             if(current.getLength() > model.getCompCase().getMaxVideoCardLength()){
-                throw new IncompatiblePartException("Selected GPU does not fit into selcted case.");
+                throw new IncompatiblePartException("Selected GPU does not fit into selected case.");
             }
             
             //total expansion slots

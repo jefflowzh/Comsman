@@ -299,6 +299,14 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
 
         return (CPUAirCooler) query.getSingleResult();
     }
+    
+    @Override
+    public ComputerPart retrieveComputerPartByName(String name) {
+        Query query = em.createQuery("SELECT c FROM ComputerPart c WHERE c.name = :inName");
+        query.setParameter("inName", name);
+        
+        return (ComputerPart) query.getSingleResult();
+    }
 
     @Override
     public void updateCPU(CPU cpu) throws ComputerPartNotFoundException {

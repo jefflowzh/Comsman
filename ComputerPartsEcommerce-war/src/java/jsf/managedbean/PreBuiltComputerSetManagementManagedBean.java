@@ -15,7 +15,7 @@ import entity.PreBuiltComputerSetModel;
 import entity.RAM;
 import entity.SSD;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,9 +27,9 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.primefaces.event.UnselectEvent;
 import util.enumeration.PreBuiltComputerSetTierEnum;
 import util.exception.ComputerPartNotFoundException;
+import util.exception.IncompatiblePartException;
 import util.exception.PreBuiltComputerSetModelNotFoundException;
 
 @Named(value = "preBuiltComputerSetManagementManagedBean")
@@ -144,17 +144,25 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             System.out.println("----------- " + currentModel.getPreBuiltComputerSetTier());
         }
 
+        currentCpu = null;
+        currentMotherboard = null;
+        currentPsu = null;
+        currentCompCase = null;
+        currentWaterCooler = null;
+        currentAirCooler = null;
+        
         // set currentModel parts to models
-        existingTierCPU = currentModel.getCpu();
-        existingTierMotherboard = currentModel.getMotherboard();
-        existingTierPowerSupply = currentModel.getPsu();
-        existingTierComputerCase = currentModel.getCompCase();
-        existingTierCPUWaterCooler = currentModel.getWaterCooler();
-        existingTierCPUAirCooler = currentModel.getAirCooler();
+        if (currentModel.getCpu() != null) currentCpu = currentModel.getCpu().getName();
+        if (currentModel.getMotherboard()!= null) currentMotherboard = currentModel.getMotherboard().getName();
+        if (currentModel.getPsu()!= null) currentPsu = currentModel.getPsu().getName();
+        if (currentModel.getCompCase()!= null) currentCompCase = currentModel.getCompCase().getName();
+        if (currentModel.getWaterCooler()!= null) currentWaterCooler = currentModel.getWaterCooler().getName();
+        if (currentModel.getAirCooler()!= null) currentAirCooler = currentModel.getAirCooler().getName();
         setExistingTierRAMs(Arrays.toString(currentModel.getRams().toArray()));
         setExistingTierGPUs(Arrays.toString(currentModel.getGpus().toArray()));
         setExistingTierHDDs(Arrays.toString(currentModel.getHdds().toArray()));
         setExistingTierSSDs(Arrays.toString(currentModel.getSsds().toArray()));
+        currentPrice = currentModel.getPrice();
     }
 
     public void setAjaxCPU(final AjaxBehaviorEvent event) {
@@ -342,6 +350,79 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         } catch (ComputerPartNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
         }
+    }
+    
+    public void updateModelSinglePart(AjaxBehaviorEvent event, UIComponent component) {
+        String computerPartName = "";
+        Field field;
+        Class thisClass = PreBuiltComputerSetManagementManagedBean.class;
+        String clientId = component.getClientId();
+        String fieldName = clientId.substring(clientId.indexOf(':') + 1);
+        System.out.println("*********" + fieldName);
+        try {
+            field = thisClass.getDeclaredField(fieldName);
+            System.out.println("*************field name: " + field.getName());
+            computerPartName = (String) field.get(this);
+            System.out.println("*************par tname: " + computerPartName);
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error occured: " + ex.getMessage(), null));
+        }
+        ComputerPart partToAdd = null;
+        if (computerPartName != null) {
+            partToAdd = computerPartSessionBeanLocal.retrieveComputerPartByName(computerPartName);
+        
+            if (partToAdd instanceof CPU) {
+                CPU castedPartToAdd = (CPU) partToAdd;
+                currentModel.setCpu(castedPartToAdd);
+            } else if (partToAdd instanceof MotherBoard) {
+                MotherBoard castedPartToAdd = (MotherBoard) partToAdd;
+                currentModel.setMotherboard(castedPartToAdd);
+            } else if (partToAdd instanceof PowerSupply) {
+                PowerSupply castedPartToAdd = (PowerSupply) partToAdd;
+                currentModel.setPsu(castedPartToAdd);
+            } else if (partToAdd instanceof ComputerCase) {
+                ComputerCase castedPartToAdd = (ComputerCase) partToAdd;
+                currentModel.setCompCase(castedPartToAdd);
+            } else if (partToAdd instanceof CPUWaterCooler) {
+                CPUWaterCooler castedPartToAdd = (CPUWaterCooler) partToAdd;
+                currentModel.setWaterCooler(castedPartToAdd);
+            } else if (partToAdd instanceof CPUAirCooler) {
+                CPUAirCooler castedPartToAdd = (CPUAirCooler) partToAdd;
+                currentModel.setAirCooler(castedPartToAdd);
+            }
+        } else {
+            if (currentCpu == null) currentModel.setCpu(null);
+            if (currentMotherboard == null) currentModel.setMotherboard(null);
+            if (currentPsu == null) currentModel.setPsu(null);
+            if (currentCompCase == null) currentModel.setCompCase(null);
+            if (currentWaterCooler == null) currentModel.setWaterCooler(null);
+            if (currentAirCooler == null) currentModel.setAirCooler(null);
+        }
+        updatePrice();
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
+            if (partToAdd != null) {
+                preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, partToAdd.getProductId());
+            }
+        } catch (IncompatiblePartException ex) {
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incompatible: " + ex.getMessage(), null));
+        } catch (ComputerPartNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
+        } catch (PreBuiltComputerSetModelNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
+        }
+        System.out.println(" set switch if need");
+    }
+    
+    private void updatePrice() {
+        currentPrice = 0.0;
+        if (currentModel.getCpu() != null) currentPrice += currentModel.getCpu().getPrice();
+        if (currentModel.getMotherboard() != null) currentPrice += currentModel.getMotherboard().getPrice();
+        if (currentModel.getPsu() != null) currentPrice += currentModel.getPsu().getPrice();
+        if (currentModel.getCompCase() != null) currentPrice += currentModel.getCompCase().getPrice();
+        if (currentModel.getWaterCooler() != null) currentPrice += currentModel.getWaterCooler().getPrice();
+        if (currentModel.getAirCooler() != null) currentPrice += currentModel.getAirCooler().getPrice();
+        currentModel.setPrice(currentPrice);
     }
 
     public List<PreBuiltComputerSetModel> getModels() {
