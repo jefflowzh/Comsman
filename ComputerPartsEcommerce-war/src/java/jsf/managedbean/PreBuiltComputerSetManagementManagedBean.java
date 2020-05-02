@@ -1,5 +1,6 @@
 package jsf.managedbean;
 
+import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import entity.CPU;
@@ -16,6 +17,7 @@ import entity.RAM;
 import entity.SSD;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -62,14 +64,23 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private List<String> currentRams;
     private String currentPsu;
     private String currentCompCase;
-    private List<Long> currentGpus;
-    private List<Long> currentHdds;
-    private List<Long> currentSsds;
+    private List<String> currentGpus;
+    private List<String> currentHdds;
+    private List<String> currentSsds;
     private String currentWaterCooler;
     private String currentAirCooler;
     private Double currentPrice;
 
     private String stringRams;
+
+    private List<StringValue> stringValuesRams;
+    private String addRam;
+    private List<StringValue> stringValuesGpus;
+    private String addGpu;
+    private List<StringValue> stringValuesHdds;
+    private String addHdd;
+    private List<StringValue> stringValuesSsds;
+    private String addSsd;
 
     private PreBuiltComputerSetTierEnum[] preBuiltComputerSetTiers;
     private List<CPU> cpus;
@@ -99,6 +110,10 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     private String existingTierSSDs;
 
     public PreBuiltComputerSetManagementManagedBean() {
+        stringValuesRams = new ArrayList<>();
+        stringValuesGpus = new ArrayList<>();
+        stringValuesHdds = new ArrayList<>();
+        stringValuesSsds = new ArrayList<>();
     }
 
     @PostConstruct
@@ -150,14 +165,61 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         currentCompCase = null;
         currentWaterCooler = null;
         currentAirCooler = null;
-        
+        currentRams = new ArrayList<>();
+        currentGpus = new ArrayList<>();
+        currentHdds = new ArrayList<>();
+        currentSsds = new ArrayList<>();
+
         // set currentModel parts to models
-        if (currentModel.getCpu() != null) currentCpu = currentModel.getCpu().getName();
-        if (currentModel.getMotherboard()!= null) currentMotherboard = currentModel.getMotherboard().getName();
-        if (currentModel.getPsu()!= null) currentPsu = currentModel.getPsu().getName();
-        if (currentModel.getCompCase()!= null) currentCompCase = currentModel.getCompCase().getName();
-        if (currentModel.getWaterCooler()!= null) currentWaterCooler = currentModel.getWaterCooler().getName();
-        if (currentModel.getAirCooler()!= null) currentAirCooler = currentModel.getAirCooler().getName();
+        if (currentModel.getCpu() != null) {
+            currentCpu = currentModel.getCpu().getName();
+        }
+        if (currentModel.getMotherboard() != null) {
+            currentMotherboard = currentModel.getMotherboard().getName();
+        }
+        if (currentModel.getPsu() != null) {
+            currentPsu = currentModel.getPsu().getName();
+        }
+        if (currentModel.getCompCase() != null) {
+            currentCompCase = currentModel.getCompCase().getName();
+        }
+        if (currentModel.getWaterCooler() != null) {
+            currentWaterCooler = currentModel.getWaterCooler().getName();
+        }
+        if (currentModel.getAirCooler() != null) {
+            currentAirCooler = currentModel.getAirCooler().getName();
+        }
+        if (currentModel.getRams() != null) {
+            for (RAM ram : currentModel.getRams()) {
+                currentRams.add(ram.getName());
+            }
+        }
+        if (!(currentModel.getRams().isEmpty())) {
+            for (RAM r : currentModel.getRams()) {
+                stringValuesRams.add(new StringValue(r.getName()));
+            }
+        }
+        if (currentModel.getGpus() != null) {
+            for (GPU gpu : currentModel.getGpus()) {
+                currentGpus.add(gpu.getName());
+            }
+        }
+        if (!(currentModel.getGpus().isEmpty())) {
+            for (GPU gpu : currentModel.getGpus()) {
+                stringValuesGpus.add(new StringValue(gpu.getName()));
+            }
+        }
+        if (currentModel.getHdds() != null) {
+            for (HDD hdd : currentModel.getHdds()) {
+                currentHdds.add(hdd.getName());
+            }
+        }
+        if (!(currentModel.getHdds().isEmpty())) {
+            for (HDD hdd : currentModel.getHdds()) {
+                stringValuesHdds.add(new StringValue(hdd.getName()));
+            }
+        }
+
         setExistingTierRAMs(Arrays.toString(currentModel.getRams().toArray()));
         setExistingTierGPUs(Arrays.toString(currentModel.getGpus().toArray()));
         setExistingTierHDDs(Arrays.toString(currentModel.getHdds().toArray()));
@@ -261,6 +323,78 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     }
 
+    public void testAddRams(final AjaxBehaviorEvent event) {
+        System.out.println(addRam);
+    }
+
+    public void testAddGpus(final AjaxBehaviorEvent event) {
+        System.out.println(addGpu);
+    }
+
+    public void addRams(ActionEvent event) {
+        stringValuesRams.add(new StringValue(getAddRam()));
+        currentRams.add(addRam);
+
+        setAddRam(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram added", null));
+    }
+
+    public void removeRam(final StringValue stringValue) {
+        stringValuesRams.remove(stringValue);
+        currentRams.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram removed", null));
+    }
+
+    public void addGpus(ActionEvent event) {
+        stringValuesGpus.add(new StringValue(getAddGpu()));
+        currentGpus.add(addGpu);
+
+        setAddGpu(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu added", null));
+    }
+
+    public void removeGpu(final StringValue stringValue) {
+        stringValuesGpus.remove(stringValue);
+        currentGpus.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu removed", null));
+    }
+
+    public void addHdds(ActionEvent event) {
+        stringValuesHdds.add(new StringValue(getAddHdd()));
+        currentHdds.add(addHdd);
+
+        setAddHdd(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hdd added", null));
+    }
+
+    public void removeHdd(final StringValue stringValue) {
+        stringValuesHdds.remove(stringValue);
+        currentHdds.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hdd removed", null));
+    }
+
+    public void addSsds(ActionEvent event) {
+        stringValuesSsds.add(new StringValue(getAddSsd()));
+        currentSsds.add(addSsd);
+
+        setAddSsd(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ssd added", null));
+    }
+
+    public void removeSsd(final StringValue stringValue) {
+        stringValuesSsds.remove(stringValue);
+        currentSsds.remove(stringValue.getValue());
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ssd removed", null));
+    }
+
 //    public void changeTier(AjaxBehaviorEvent event) {
 //        Integer currentIndex;
 //        switch (currentTier) {
@@ -306,28 +440,28 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             // link those multiple to currentModel
             if (!currentRams.isEmpty()) {
                 // empty current rams attached to the tier
-                currentModel.getRams().clear();
-                for (Long l : currentRams) {
-                    currentModel.getRams().add(computerPartSessionBeanLocal.retrieveRAMById(l));
-                }
+//                currentModel.getRams().clear();
+//                for (Long l : currentRams) {
+//                    currentModel.getRams().add(computerPartSessionBeanLocal.retrieveRAMById(l));
+//                }
             }
             if (!currentGpus.isEmpty()) {
-                currentModel.getGpus().clear();
-                for (Long l : currentGpus) {
-                    currentModel.getGpus().add(computerPartSessionBeanLocal.retrieveGPUById(l));
-                }
+//                currentModel.getGpus().clear();
+//                for (Long l : currentGpus) {
+//                    currentModel.getGpus().add(computerPartSessionBeanLocal.retrieveGPUById(l));
+//                }
             }
             if (!currentHdds.isEmpty()) {
-                currentModel.getHdds().clear();
-                for (Long l : currentHdds) {
-                    currentModel.getHdds().add(computerPartSessionBeanLocal.retrieveHDDById(l));
-                }
+//                currentModel.getHdds().clear();
+//                for (Long l : currentHdds) {
+//                    currentModel.getHdds().add(computerPartSessionBeanLocal.retrieveHDDById(l));
+//                }
             }
             if (!currentSsds.isEmpty()) {
-                currentModel.getSsds().clear();
-                for (Long l : currentSsds) {
-                    currentModel.getSsds().add(computerPartSessionBeanLocal.retrieveSSDById(l));
-                }
+//                currentModel.getSsds().clear();
+//                for (Long l : currentSsds) {
+//                    currentModel.getSsds().add(computerPartSessionBeanLocal.retrieveSSDById(l));
+//                }
             }
 
             preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
@@ -347,11 +481,12 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Models successfully updated", null));
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
-        } catch (ComputerPartNotFoundException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
         }
+//        catch (ComputerPartNotFoundException ex) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Part does not exist!", null));
+//        }
     }
-    
+
     public void updateModelSinglePart(AjaxBehaviorEvent event, UIComponent component) {
         String computerPartName = "";
         Field field;
@@ -370,7 +505,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         ComputerPart partToAdd = null;
         if (computerPartName != null) {
             partToAdd = computerPartSessionBeanLocal.retrieveComputerPartByName(computerPartName);
-        
+
             if (partToAdd instanceof CPU) {
                 CPU castedPartToAdd = (CPU) partToAdd;
                 currentModel.setCpu(castedPartToAdd);
@@ -391,12 +526,24 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
                 currentModel.setAirCooler(castedPartToAdd);
             }
         } else {
-            if (currentCpu == null) currentModel.setCpu(null);
-            if (currentMotherboard == null) currentModel.setMotherboard(null);
-            if (currentPsu == null) currentModel.setPsu(null);
-            if (currentCompCase == null) currentModel.setCompCase(null);
-            if (currentWaterCooler == null) currentModel.setWaterCooler(null);
-            if (currentAirCooler == null) currentModel.setAirCooler(null);
+            if (currentCpu == null) {
+                currentModel.setCpu(null);
+            }
+            if (currentMotherboard == null) {
+                currentModel.setMotherboard(null);
+            }
+            if (currentPsu == null) {
+                currentModel.setPsu(null);
+            }
+            if (currentCompCase == null) {
+                currentModel.setCompCase(null);
+            }
+            if (currentWaterCooler == null) {
+                currentModel.setWaterCooler(null);
+            }
+            if (currentAirCooler == null) {
+                currentModel.setAirCooler(null);
+            }
         }
         updatePrice();
         try {
@@ -443,14 +590,27 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
     }*/
     
+
     private void updatePrice() {
         currentPrice = 0.0;
-        if (currentModel.getCpu() != null) currentPrice += currentModel.getCpu().getPrice();
-        if (currentModel.getMotherboard() != null) currentPrice += currentModel.getMotherboard().getPrice();
-        if (currentModel.getPsu() != null) currentPrice += currentModel.getPsu().getPrice();
-        if (currentModel.getCompCase() != null) currentPrice += currentModel.getCompCase().getPrice();
-        if (currentModel.getWaterCooler() != null) currentPrice += currentModel.getWaterCooler().getPrice();
-        if (currentModel.getAirCooler() != null) currentPrice += currentModel.getAirCooler().getPrice();
+        if (currentModel.getCpu() != null) {
+            currentPrice += currentModel.getCpu().getPrice();
+        }
+        if (currentModel.getMotherboard() != null) {
+            currentPrice += currentModel.getMotherboard().getPrice();
+        }
+        if (currentModel.getPsu() != null) {
+            currentPrice += currentModel.getPsu().getPrice();
+        }
+        if (currentModel.getCompCase() != null) {
+            currentPrice += currentModel.getCompCase().getPrice();
+        }
+        if (currentModel.getWaterCooler() != null) {
+            currentPrice += currentModel.getWaterCooler().getPrice();
+        }
+        if (currentModel.getAirCooler() != null) {
+            currentPrice += currentModel.getAirCooler().getPrice();
+        }
         currentModel.setPrice(currentPrice);
     }
 
@@ -494,11 +654,11 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         this.currentMotherboard = currentMotherboard;
     }
 
-    public List<Long> getCurrentRams() {
+    public List<String> getCurrentRams() {
         return currentRams;
     }
 
-    public void setCurrentRams(List<Long> currentRams) {
+    public void setCurrentRams(List<String> currentRams) {
         this.currentRams = currentRams;
     }
 
@@ -518,27 +678,27 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         this.currentCompCase = currentCompCase;
     }
 
-    public List<Long> getCurrentGpus() {
+    public List<String> getCurrentGpus() {
         return currentGpus;
     }
 
-    public void setCurrentGpus(List<Long> currentGpus) {
+    public void setCurrentGpus(List<String> currentGpus) {
         this.currentGpus = currentGpus;
     }
 
-    public List<Long> getCurrentHdds() {
+    public List<String> getCurrentHdds() {
         return currentHdds;
     }
 
-    public void setCurrentHdds(List<Long> currentHdds) {
+    public void setCurrentHdds(List<String> currentHdds) {
         this.currentHdds = currentHdds;
     }
 
-    public List<Long> getCurrentSsds() {
+    public List<String> getCurrentSsds() {
         return currentSsds;
     }
 
-    public void setCurrentSsds(List<Long> currentSsds) {
+    public void setCurrentSsds(List<String> currentSsds) {
         this.currentSsds = currentSsds;
     }
 
@@ -764,6 +924,70 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
 
     public void setExistingTierSSDs(String existingTierSSDs) {
         this.existingTierSSDs = existingTierSSDs;
+    }
+
+    public List<StringValue> getStringValuesRams() {
+        return stringValuesRams;
+    }
+
+    public void setStringValuesRams(List<StringValue> stringValuesRams) {
+        this.stringValuesRams = stringValuesRams;
+    }
+
+    public String getAddRam() {
+        return addRam;
+    }
+
+    public void setAddRam(String addRam) {
+        this.addRam = addRam;
+    }
+
+    public List<StringValue> getStringValuesGpus() {
+        return stringValuesGpus;
+    }
+
+    public void setStringValuesGpus(List<StringValue> stringValuesGpus) {
+        this.stringValuesGpus = stringValuesGpus;
+    }
+
+    public String getAddGpu() {
+        return addGpu;
+    }
+
+    public void setAddGpu(String addGpu) {
+        this.addGpu = addGpu;
+    }
+
+    public List<StringValue> getStringValuesHdds() {
+        return stringValuesHdds;
+    }
+
+    public void setStringValuesHdds(List<StringValue> stringValuesHdds) {
+        this.stringValuesHdds = stringValuesHdds;
+    }
+
+    public String getAddHdd() {
+        return addHdd;
+    }
+
+    public void setAddHdd(String addHdd) {
+        this.addHdd = addHdd;
+    }
+
+    public List<StringValue> getStringValuesSsds() {
+        return stringValuesSsds;
+    }
+
+    public void setStringValuesSsds(List<StringValue> stringValuesSsds) {
+        this.stringValuesSsds = stringValuesSsds;
+    }
+
+    public String getAddSsd() {
+        return addSsd;
+    }
+
+    public void setAddSsd(String addSsd) {
+        this.addSsd = addSsd;
     }
 
 }

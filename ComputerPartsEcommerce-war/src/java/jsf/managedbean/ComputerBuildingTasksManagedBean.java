@@ -97,6 +97,9 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
         Long selectedComputerSetId = (Long) event.getComponent().getAttributes().get("selectedComputerSetId");
 
         try {
+            
+            FacesContext.getCurrentInstance().getExternalContext().responseReset();
+            FacesContext.getCurrentInstance().getExternalContext().setResponseHeader("Content-Disposition", "filename=\"test.pdf\"");
             InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/combine.jasper");
             OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
 
