@@ -24,7 +24,8 @@
 
             <h5>Core Count</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllCoreCountCheckbox" binary="true" (click)="removeCoreCountFilters()">
+                <p-checkbox label="All" [(ngModel)]="AllCoreCountCheckbox" binary="true"
+                    (click)="removeCoreCountFilters()">
                 </p-checkbox>
             </div>
             <div *ngFor="let core of coreCount">
@@ -47,12 +48,11 @@
 
             <h5>Socket</h5>
             <div>
-                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
-                    (click)="removeSocketFilters()"></p-checkbox>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true" (click)="removeSocketFilters()">
+                </p-checkbox>
             </div>
             <div *ngFor="let s of socket">
-                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
-                    (click)="applyFilters()">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket" (click)="applyFilters()">
                 </p-checkbox>
             </div>
 
@@ -84,7 +84,7 @@
 
             <hr>
 
-            
+
         </div>
 
         <div class="ui-g-10">

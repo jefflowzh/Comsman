@@ -16,7 +16,7 @@ export class CouponService {
 
   constructor(private httpClient: HttpClient) { }
 
-  checkCouponByCode(code: String): Observable<any> {
+  checkCouponByCode(code: string): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/checkCouponByCode?code=" + code).pipe
       (
         catchError(this.handleError)

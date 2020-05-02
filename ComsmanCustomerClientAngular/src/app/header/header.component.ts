@@ -12,7 +12,7 @@ import { CustomerService } from '../customer.service';
 export class HeaderComponent implements OnInit {
 
   searchQuery: string;
-  displayLoading: Boolean;
+  displayLoading: boolean;
 
   constructor(private router: Router, public sessionService: SessionService, private customerService: CustomerService) {
     this.displayLoading = false;

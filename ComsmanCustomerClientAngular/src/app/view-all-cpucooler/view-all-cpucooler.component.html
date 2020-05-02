@@ -1,0 +1,95 @@
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <!-- <h5>Colour</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllColoursCheckbox" binary="true" (click)="removeColourFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let colour of colours">
+                <p-checkbox value={{colour}} label={{colour}} [(ngModel)]="selectedColours" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+            <h5>CPU Chip Compatibility</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllCompatibleCPUChipsCheckbox" binary="true" (click)="removeCompatibleCPUChipFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let compatibleCPUChips of compatibleCPUChips">
+                <p-checkbox value={{tdp}} label={{tdp}} [(ngModel)]="selectedTDP" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Noise Level (dB)</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let s of socket">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Height (mm)</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let s of socket">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            
+            <hr>
+
+            <h5>Radiator Size (mm)</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllSocketCheckbox" binary="true"
+                    (click)="removeSocketFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let s of socket">
+                <p-checkbox value={{s}} label={{s}} [(ngModel)]="selectedSocket"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            
+            <hr> -->
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredCPU">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>

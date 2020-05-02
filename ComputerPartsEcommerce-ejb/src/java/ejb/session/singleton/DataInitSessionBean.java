@@ -9,6 +9,8 @@ import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.CPU;
+import entity.CPUAirCooler;
+import entity.CPUWaterCooler;
 import entity.ComputerCase;
 import entity.ComputerPart;
 import entity.Coupon;
@@ -288,6 +290,26 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewRAM(testRam1);
             computerPartSessionBean.createNewRAM(testRam2);
             computerPartSessionBean.createNewRAM(testRam3);
+            
+            String[] compatibleCPUChips1 = new String[]{"compatibleCPUChip1", "compatibleCPUChip2"};
+            CPUAirCooler testCPUAirCooler1 = new CPUAirCooler("Manufacturer1", "Red", 1, 1.0, compatibleCPUChips1, "CPUAirCooler1", 1.0, 1, "image1");
+            String[] compatibleCPUChips2 = new String[]{"compatibleCPUChip1", "compatibleCPUChip3"};
+            CPUAirCooler testCPUAirCooler2 = new CPUAirCooler("Manufacturer2", "Yellow", 2, 2.0, compatibleCPUChips2, "CPUAirCooler2", 2.0, 2, "image2");
+            String[] compatibleCPUChips3 = new String[]{"compatibleCPUChip2", "compatibleCPUChip3"};
+            CPUAirCooler testCPUAirCooler3 = new CPUAirCooler("Manufacturer3", "Green", 3, 3.0, compatibleCPUChips3, "CPUAirCooler3", 3.0, 3, "image3");
+            
+            computerPartSessionBean.createNewCPUAirCooler(testCPUAirCooler1);
+            computerPartSessionBean.createNewCPUAirCooler(testCPUAirCooler2);
+            computerPartSessionBean.createNewCPUAirCooler(testCPUAirCooler3);
+            
+            CPUWaterCooler testCPUWaterCooler1 = new CPUWaterCooler("Manufacturer1", "Red", 1, compatibleCPUChips1, 1.0, "CPUWaterCooler1", 1.0, 1, "image1");
+            CPUWaterCooler testCPUWaterCooler2 = new CPUWaterCooler("Manufacturer1", "Yellow", 2, compatibleCPUChips2, 2.0, "CPUWaterCooler2", 2.0, 2, "image2");
+            CPUWaterCooler testCPUWaterCooler3 = new CPUWaterCooler("Manufacturer1", "Green", 3, compatibleCPUChips3, 3.0, "CPUWaterCooler3", 3.0, 3, "image3");
+            
+            computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler1);
+            computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler2);
+            computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler3);
+
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

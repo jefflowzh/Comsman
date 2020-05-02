@@ -92,6 +92,20 @@ public class CustomerResource {
         }
     }
     
+    @Path("updateCustomerDetails")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomerDetails(UpdateCustomerReq updateCustomerReq) {
+        try {
+            customerSessionBean.updateCustomer(updateCustomerReq.getCustomer(), true, false, false, false);
+            return Response.status(Status.OK).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
     @Path("updateCustomerCart")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

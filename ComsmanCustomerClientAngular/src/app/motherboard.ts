@@ -1,6 +1,6 @@
-    import { ComputerPart } from './computer-part'
+import { ComputerPart } from './computer-part'
 
-    export class MotherBoard extends ComputerPart {
+export class MotherBoard extends ComputerPart {
 
 
     manufacturer: string;
@@ -16,8 +16,8 @@
     suportedMemorySpeed: string[];
 
 
-    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: Boolean,
-        manufacturer?: string, 
+    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: boolean,
+        manufacturer?: string,
         formFactor?: string,
         socket?: string,
         chipset?: string,
@@ -34,7 +34,7 @@
         this.formFactor = formFactor
         this.socket = socket
         this.chipset = chipset
-        this.memorySlot =  memorySlot
+        this.memorySlot = memorySlot
         this.colour = colour
         this.SLICrossFire = SLICrossFire
         this.PCIEx16 = PCIEx16
@@ -43,4 +43,4 @@
         this.suportedMemorySpeed = suportedMemorySpeed
     }
 
-    }
+}

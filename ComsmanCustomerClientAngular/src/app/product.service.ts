@@ -67,6 +67,13 @@ export class ProductService {
       );
   }
 
+  retrieveAllCPUCoolers(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllCPUCoolers").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

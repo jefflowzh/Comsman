@@ -12,17 +12,17 @@ export class ViewAllMotherboardComponent implements OnInit {
   allMotherboard: MotherBoard[];
   filteredMotherboard: MotherBoard[];
 
-  // private String manufacturer;
-  // private String formFactor;
-  // private String socket;
-  // private String chipset;
+  // private string manufacturer;
+  // private string formFactor;
+  // private string socket;
+  // private string chipset;
   // private Integer memorySlot;
-  // private String colour;
-  // private Boolean SLICrossFire;
+  // private string colour;
+  // private boolean SLICrossFire;
   // private Integer PCIEx16;
   // private Integer m2Slot;
-  // private Boolean wiFi;
-  // private String[] suportedMemorySpeed;
+  // private boolean wiFi;
+  // private string[] suportedMemorySpeed;
 
   manufacturers: string[] = []
   selectedManufacturers: string[] = []
@@ -56,7 +56,7 @@ export class ViewAllMotherboardComponent implements OnInit {
 
   supportedMemorySpeed: string[] = []
   selectedSupportedMemorySpeed: string[] = []
-  
+
 
   AllManufacturersCheckbox: boolean = true;
   AllFormFactorCheckbox: boolean = true;
@@ -75,7 +75,7 @@ export class ViewAllMotherboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productType = "Graphics Card"
+    this.productType = "Motherboard"
 
     this.productService.retrieveAllMotherBoard().subscribe(
       response => {
@@ -93,41 +93,41 @@ export class ViewAllMotherboardComponent implements OnInit {
             this.formFactor.push(mb.formFactor)
           }
 
-         
-           
+
+
           if (this.socket.length == 0 || !this.socket.includes(mb.socket)) {
             this.socket.push(mb.socket)
           }
-          
 
-      
+
+
           if (this.chipset.length == 0 || !this.chipset.includes(mb.chipset.toString())) {
             this.chipset.push(mb.chipset.toString())
           }
 
-       
-        
+
+
           if (this.memorySlot.length == 0 || !this.memorySlot.includes(mb.memorySlot.toString())) {
             this.memorySlot.push(mb.memorySlot.toString())
           }
-          
 
-        
+
+
           if (this.colour.length == 0 || !this.colour.includes(mb.colour.toString())) {
             this.colour.push(mb.colour.toString())
           }
 
-          
+
           if (this.SLICrossFire.length == 0 || !this.SLICrossFire.includes(mb.SLICrossFire.toString())) {
             this.SLICrossFire.push(mb.SLICrossFire.toString())
           }
 
-          
+
           if (this.PCIEx16.length == 0 || !this.PCIEx16.includes(mb.PCIEx16.toString())) {
             this.PCIEx16.push(mb.PCIEx16.toString())
           }
 
-         
+
           if (this.m2Slot.length == 0 || !this.m2Slot.includes(mb.m2Slot.toString())) {
             this.m2Slot.push(mb.m2Slot.toString())
           }
@@ -141,46 +141,46 @@ export class ViewAllMotherboardComponent implements OnInit {
               this.supportedMemorySpeed.push(m)
             }
           }
-           
+
           this.manufacturers.sort();
-          
+
           this.formFactor.sort();
-        
+
           this.socket.sort();
-          
+
           this.chipset.sort();
-          
+
           this.memorySlot.sort();
-          
+
           this.colour.sort();
-          
+
           this.SLICrossFire.sort()
-          
+
           this.PCIEx16.sort()
-        
+
           this.m2Slot.sort()
 
           this.wiFi.sort()
 
           this.supportedMemorySpeed.sort();
 
-          
+
           this.selectedManufacturers = this.manufacturers;
-          
-          this.selectedFormFactor= this.formFactor;
-        
-          this.selectedSocket =  this.socket;
-          
+
+          this.selectedFormFactor = this.formFactor;
+
+          this.selectedSocket = this.socket;
+
           this.selectedChipset = this.chipset;
-          
+
           this.selectedMemorySlot = this.memorySlot;
-          
+
           this.selectedColour = this.colour
-          
+
           this.selectedSLICrossFire = this.SLICrossFire
-          
+
           this.selectedPCIEx16 = this.PCIEx16
-        
+
           this.selectedM2Slot = this.m2Slot
 
           this.selectedWiFi = this.wiFi
@@ -209,7 +209,7 @@ export class ViewAllMotherboardComponent implements OnInit {
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
     //   this.AllManufacturersCheckbox = false
-      
+
     // }
     //types
     if (this.selectedFormFactor.length == 0) {
@@ -315,9 +315,9 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllSupportedMemorySpeedCheckbox = true;
       return;
     }
-  
 
-  
+
+
 
     // this.AllManufacturersCheckbox = false;
     // this.AllTypesCheckbox = false;
@@ -336,7 +336,7 @@ export class ViewAllMotherboardComponent implements OnInit {
 
   updateFilters() {
     for (let mb of this.allMotherboard) {
-      if (!this.selectedManufacturers.includes(mb.manufacturer)&& this.filteredMotherboard.indexOf(mb) < 0) {
+      if (!this.selectedManufacturers.includes(mb.manufacturer) && this.filteredMotherboard.indexOf(mb) < 0) {
         continue;
       }
       if (!this.selectedFormFactor.includes(mb.formFactor) && this.filteredMotherboard.indexOf(mb) < 0) {
@@ -366,7 +366,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       if (!mb.suportedMemorySpeed.some(r => this.selectedSupportedMemorySpeed.includes(r)) && this.filteredMotherboard.indexOf(mb) < 0) {
         continue;
       }
-      
+
       this.filteredMotherboard.push(mb);
     }
   }
@@ -415,17 +415,17 @@ export class ViewAllMotherboardComponent implements OnInit {
     this.filteredMotherboard = [];
     this.updateFilters();
   }
-    removeM2SlotFilters() {
-      if (!this.AllM2SlotCheckbox) {
-        this.selectedM2Slot = [];
-        return;
-      }
-
-      this.selectedM2Slot = this.m2Slot;
-      this.filteredMotherboard = [];
-      this.updateFilters();
+  removeM2SlotFilters() {
+    if (!this.AllM2SlotCheckbox) {
+      this.selectedM2Slot = [];
+      return;
     }
-  
+
+    this.selectedM2Slot = this.m2Slot;
+    this.filteredMotherboard = [];
+    this.updateFilters();
+  }
+
   removePCIEx16Filters() {
     if (!this.AllPCIEx16Checkbox) {
       this.selectedPCIEx16 = [];

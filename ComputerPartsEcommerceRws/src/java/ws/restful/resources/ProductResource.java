@@ -9,13 +9,17 @@ import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import entity.CPU;
+import entity.CPUAirCooler;
+import entity.CPUWaterCooler;
 import entity.ComputerCase;
+import entity.ComputerPart;
 import entity.GPU;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
 import entity.Product;
 import entity.RAM;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,7 +70,7 @@ public class ProductResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response customerLogin(@QueryParam("productId") String productId) {
+    public Response retrieveProductById(@QueryParam("productId") String productId) {
         try {
             Product product = productSessionBeanLocal.retrieveProductById(Long.parseLong(productId)); 
             RetrieveIndividualProductRsp retrieveProductByIdRsp = new RetrieveIndividualProductRsp(product);
@@ -170,6 +174,24 @@ public class ProductResource {
         try{
             List<RAM> rams = computerPartSessionBeanLocal.retrieveAllRAM();     
             RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(rams); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllCPUCoolers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllCPUCoolers() {        
+        try{
+            List<CPUAirCooler> cpuAirCoolers = computerPartSessionBeanLocal.retrieveAllCPUAirCooler();
+            List<CPUWaterCooler> cpuWaterCoolers = computerPartSessionBeanLocal.retrieveAllCPUWaterCooler();
+            List<ComputerPart> cpuCoolers = new ArrayList<>();
+            cpuCoolers.addAll(cpuAirCoolers);
+            cpuCoolers.addAll(cpuWaterCoolers);
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(cpuCoolers); 
             return Response.status(Status.OK).entity(retrieveProductsRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

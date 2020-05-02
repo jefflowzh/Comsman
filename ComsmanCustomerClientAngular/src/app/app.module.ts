@@ -17,16 +17,15 @@ import { SpinnerModule } from 'primeng/spinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
+import { CarouselModule } from 'primeng/carousel';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
-import { ViewCustomerProfileComponent } from './view-customer-profile/view-customer-profile.component';
 import { ViewAllProductsComponent } from './view-all-products/view-all-products.component';
 import { HeaderComponent } from './header/header.component';
-import { ViewCustomerAccountComponent } from './view-customer-account/view-customer-account.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { FooterComponent } from './footer/footer.component';
@@ -41,15 +40,18 @@ import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 
+import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
+import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
+import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
+import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
+import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
-    ViewCustomerProfileComponent,
     ViewAllProductsComponent,
     HeaderComponent,
-    ViewCustomerAccountComponent,
     CustomerLoginComponent,
     CustomerRegistrationComponent,
     FooterComponent,
@@ -62,7 +64,12 @@ import { CustomerOrdersComponent } from './customer-orders/customer-orders.compo
     ViewAllPowerSupplyComponent,
     ViewAllRAMComponent,
     ViewProductComponent,
-    CustomerOrdersComponent
+    CustomerOrdersComponent,
+    AmateurSetMainPageComponent,
+    AmateurSetBuildPageComponent,
+    AdvancedSetBuildPageComponent,
+    ViewAllCPUCoolerComponent,
+    ViewAllInternalStorageComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +90,8 @@ import { CustomerOrdersComponent } from './customer-orders/customer-orders.compo
     SpinnerModule,
     CheckboxModule,
     BreadcrumbModule,
-    TableModule
+    TableModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

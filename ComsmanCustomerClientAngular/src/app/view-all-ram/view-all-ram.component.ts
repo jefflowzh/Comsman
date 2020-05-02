@@ -44,16 +44,16 @@ export class ViewAllRAMComponent implements OnInit {
   AllSticksCheckbox: boolean = true;
   AllPerStickGBCheckbox: boolean = true;
   AllCasLatencyCheckbox: boolean = true;
-  
 
-  
+
+
 
 
   constructor(private productService: ProductService) {
   }
 
   ngOnInit() {
-    this.productType = "Power Supply Unit"
+    this.productType = "RAM"
 
     this.productService.retrieveAllRam().subscribe(
       response => {
@@ -71,26 +71,26 @@ export class ViewAllRAMComponent implements OnInit {
             this.speed.push(ram.speed)
           }
 
-         
-           
+
+
           if (this.type.length == 0 || !this.type.includes(ram.type)) {
             this.type.push(ram.type)
           }
-          
 
-      
+
+
           if (this.sticks.length == 0 || !this.sticks.includes(ram.sticks.toString())) {
             this.sticks.push(ram.sticks.toString())
           }
 
-       
-        
+
+
           if (this.perStickGB.length == 0 || !this.perStickGB.includes(ram.perStickGB.toString())) {
             this.perStickGB.push(ram.perStickGB.toString())
           }
-          
 
-        
+
+
           if (this.casLatency.length == 0 || !this.casLatency.includes(ram.casLatency.toString())) {
             this.casLatency.push(ram.casLatency.toString())
           }
@@ -101,22 +101,22 @@ export class ViewAllRAMComponent implements OnInit {
           this.sticks.sort();
           this.perStickGB.sort();
           this.casLatency.sort();
-          
-          
-          
+
+
+
           this.selectedManufacturers = this.manufacturers;
-          
-          this.selectedSpeed= this.speed;
-        
-          this.selectedType =  this.type;
-          
+
+          this.selectedSpeed = this.speed;
+
+          this.selectedType = this.type;
+
           this.selectedSticks = this.sticks;
-          
+
           this.selectedPerStickGB = this.perStickGB;
-          
+
           this.selectedCasLatency = this.casLatency
 
-          
+
         }
       },
       error => {
@@ -140,7 +140,7 @@ export class ViewAllRAMComponent implements OnInit {
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
     //   this.AllManufacturersCheckbox = false
-      
+
     // }
     //types
     if (this.selectedSpeed.length == 0) {
@@ -199,8 +199,8 @@ export class ViewAllRAMComponent implements OnInit {
     // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
     //   this.AllFullHeightExpansionSlotCheckbox = false
     // }
-    
-    
+
+
     // this.AllManufacturersCheckbox = false;
     // this.AllTypesCheckbox = false;
     // this.AllColourCheckbox = false;
@@ -218,7 +218,7 @@ export class ViewAllRAMComponent implements OnInit {
 
   updateFilters() {
     for (let mb of this.allRAM) {
-      if (!this.selectedManufacturers.includes(mb.manufacturer)&& this.filteredRAM.indexOf(mb) < 0) {
+      if (!this.selectedManufacturers.includes(mb.manufacturer) && this.filteredRAM.indexOf(mb) < 0) {
         continue;
       }
       if (!this.selectedSpeed.includes(mb.speed) && this.filteredRAM.indexOf(mb) < 0) {
@@ -236,7 +236,7 @@ export class ViewAllRAMComponent implements OnInit {
       if (!this.selectedCasLatency.includes(mb.casLatency.toString()) && this.filteredRAM.indexOf(mb) < 0) {
         continue;
       }
-     
+
       this.filteredRAM.push(mb);
     }
   }
@@ -265,7 +265,7 @@ export class ViewAllRAMComponent implements OnInit {
     this.filteredRAM = [];
     this.updateFilters();
   }
-   
+
   removeCasLatencyFilters() {
     if (!this.AllCasLatencyCheckbox) {
       this.selectedCasLatency = [];

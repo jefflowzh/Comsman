@@ -10,7 +10,7 @@ export class Customer {
     email: string;
     password: string;
     contactNumber: string;
-    isDisabled: Boolean;
+    isDisabled: boolean;
     cardNumber: string;
     ccv: string;
     cart: LineItem[];
@@ -19,7 +19,7 @@ export class Customer {
     currComputerSetParts: ComputerPart[]
 
     constructor(userId?: number, firstName?: string, lastName?: string, address?: string, email?: string, password?: string,
-        contactNumber?: string, isDisabled?: Boolean, cardNumber?: string, ccv?: string, loyaltyPoints?: number) {
+        contactNumber?: string, isDisabled?: boolean, cardNumber?: string, ccv?: string, loyaltyPoints?: number) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -40,6 +40,19 @@ export class CustomerService {
       );
   }
 
+  updateCustomerDetails(): Observable<any> {
+
+    let updateCustomerReq = {
+      "customer": this.sessionService.getCurrentCustomer()
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/updateCustomerDetails", updateCustomerReq, httpOptions).pipe
+      (
+        catchError(this.handleError)
+      );
+
+  }
+
   updateCustomerCart(): Observable<any> {
 
     console.log(this.sessionService.getCurrentCustomer())

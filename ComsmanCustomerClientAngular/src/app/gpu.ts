@@ -4,26 +4,26 @@ export class GPU extends ComputerPart {
 
 
     manufacturer: string;
-    chipset : string;
-    Interface : string;
-    length :number;
-    TDP :number;
-    expansionSlotWidth :number;
-    externalPower : string;
-    memory :number;
-    memoryType : string;
+    chipset: string;
+    Interface: string;
+    length: number;
+    TDP: number;
+    expansionSlotWidth: number;
+    externalPower: string;
+    memory: number;
+    memoryType: string;
 
 
-    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: Boolean,
-        manufacturer?: string, 
-        chipset ?: string,
-        Interface? : string,
-        length? :number,
-        TDP? :number,
-        expansionSlotWidth? :number,
-        externalPower? : string,
-        memory? :number,
-        memoryType? : string) {
+    constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: boolean,
+        manufacturer?: string,
+        chipset?: string,
+        Interface?: string,
+        length?: number,
+        TDP?: number,
+        expansionSlotWidth?: number,
+        externalPower?: string,
+        memory?: number,
+        memoryType?: string) {
 
         super(productId, name, price, inventoryQuantity, image, isDisabled);
         this.manufacturer = manufacturer;
