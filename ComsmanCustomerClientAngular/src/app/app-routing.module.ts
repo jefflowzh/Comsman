@@ -14,6 +14,7 @@ import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-mot
 import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
 import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
   { path: 'customerCart', component: CustomerCartComponent },
   { path: 'customerDetails', component: CustomerDetailsComponent },
+  { path: 'customerOrders', component: CustomerOrdersComponent },
   { path: 'viewProduct/:productId', component: ViewProductComponent }
 ];
 

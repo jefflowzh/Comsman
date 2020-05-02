@@ -7,6 +7,8 @@ package ws.restful.resources;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import entity.Customer;
+import entity.CustomerOrder;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -28,6 +30,7 @@ import util.exception.CustomerNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
+import ws.restful.model.CustomerOrdersRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
 import ws.restful.model.UpdateCustomerReq;
@@ -128,6 +131,33 @@ public class CustomerResource {
             return Response.status(Status.OK).entity(cur).build();
         }
         catch(Exception ex){
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    @Path("customerOrders")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerOrders(@QueryParam("email") String email) {
+        try {
+            Customer customer = customerSessionBean.retrieveCustomerByEmail(email, Boolean.FALSE, Boolean.TRUE);
+            List<CustomerOrder> orders = customer.getOrders();
+            for(CustomerOrder order : orders){
+                order.getCustomer().getCart().clear();
+                order.getCustomer().getCurrComputerBuild().clear();
+                order.getDeliveryAssignedTo().getAssignedComputerSets().clear();
+                order.getDeliveryAssignedTo().getDeliveries().clear();
+//                for(LineItem line : order.getLineItems()){
+//                    
+//                }
+            }
+            CustomerOrdersRsp customerOrdersRsp = new CustomerOrdersRsp(orders);
+            return Response.status(Status.OK).entity(customerOrdersRsp).build();
+        } catch (CustomerNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+        } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
