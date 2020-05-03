@@ -227,81 +227,6 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         currentPrice = currentModel.getPrice();
     }
 
-    public void setAjaxCPU(final AjaxBehaviorEvent event) {
-        try {
-            Long cpuId = Long.parseLong(currentCpu);
-            currentModel.setCpu(computerPartSessionBeanLocal.retrieveCPUById(cpuId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error: No computer part exists");
-        }
-    }
-
-    public void setAjaxMotherboard(final AjaxBehaviorEvent event) {
-        try {
-            Long motherboardId = Long.parseLong(currentMotherboard);
-            currentModel.setMotherboard(computerPartSessionBeanLocal.retrieveMotherBoardById(motherboardId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error message: " + ex);
-        }
-    }
-
-    public void setAjaxPSU(final AjaxBehaviorEvent event) {
-        try {
-            Long psuId = Long.parseLong(currentPsu);
-            currentModel.setPsu(computerPartSessionBeanLocal.retrievePowerSupplyById(psuId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-//            System.out.println("---------------- " + currentModel.getPsu().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error message: " + ex);
-        }
-    }
-
-    public void setAjaxCompCase(final AjaxBehaviorEvent event) {
-        try {
-            Long compCaseId = Long.parseLong(currentCompCase);
-            currentModel.setCompCase(computerPartSessionBeanLocal.retrieveComputerCaseById(compCaseId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-//            System.out.println("---------------- " + currentModel.getPsu().getName());
-//            System.out.println("---------------- " + currentModel.getCompCase().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error message: " + ex);
-        }
-    }
-
-    public void setAjaxWaterCooler(final AjaxBehaviorEvent event) {
-        try {
-            Long waterCoolerId = Long.parseLong(currentWaterCooler);
-            currentModel.setWaterCooler(computerPartSessionBeanLocal.retrieveCPUWaterCoolerById(waterCoolerId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-//            System.out.println("---------------- " + currentModel.getPsu().getName());
-//            System.out.println("---------------- " + currentModel.getCompCase().getName());
-//            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error message: " + ex);
-        }
-    }
-
-    public void setAjaxAirCooler(final AjaxBehaviorEvent event) {
-        try {
-            Long airCoolerId = Long.parseLong(currentAirCooler);
-            currentModel.setAirCooler(computerPartSessionBeanLocal.retrieveCPUAirCoolerById(airCoolerId));
-//            System.out.println("---------------- " + currentModel.getCpu().getName());
-//            System.out.println("---------------- " + currentModel.getMotherboard().getName());
-//            System.out.println("---------------- " + currentModel.getPsu().getName());
-//            System.out.println("---------------- " + currentModel.getCompCase().getName());
-//            System.out.println("---------------- " + currentModel.getWaterCooler().getName());
-//            System.out.println("---------------- " + currentModel.getAirCooler().getName());
-        } catch (ComputerPartNotFoundException ex) {
-            System.out.println("Error message: " + ex);
-        }
-    }
-
     // This is for testing multiple to see if its inside the List
     // Those with multiple cannot set first, wait till update then set it
     public void setAjaxTestMulti(final AjaxBehaviorEvent event) {
@@ -334,6 +259,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     public void addRams(ActionEvent event) {
         stringValuesRams.add(new StringValue(getAddRam()));
         currentRams.add(addRam);
+        updateModelCollectionPart("formModel:rams", addRam, true);
 
         setAddRam(null);
 
@@ -344,12 +270,14 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         stringValuesRams.remove(stringValue);
         currentRams.remove(stringValue.getValue());
 
+        updateModelCollectionPart("formModel:rams", stringValue.getValue(), false);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ram removed", null));
     }
 
     public void addGpus(ActionEvent event) {
         stringValuesGpus.add(new StringValue(getAddGpu()));
         currentGpus.add(addGpu);
+        updateModelCollectionPart("formModel:gpus", addGpu, true);
 
         setAddGpu(null);
 
@@ -360,12 +288,14 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         stringValuesGpus.remove(stringValue);
         currentGpus.remove(stringValue.getValue());
 
+        updateModelCollectionPart("formModel:gpus", stringValue.getValue(), false);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gpu removed", null));
     }
 
     public void addHdds(ActionEvent event) {
         stringValuesHdds.add(new StringValue(getAddHdd()));
         currentHdds.add(addHdd);
+        updateModelCollectionPart("formModel:hdds", addHdd, true);
 
         setAddHdd(null);
 
@@ -376,12 +306,14 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         stringValuesHdds.remove(stringValue);
         currentHdds.remove(stringValue.getValue());
 
+        updateModelCollectionPart("formModel:hdds", stringValue.getValue(), false);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hdd removed", null));
     }
 
     public void addSsds(ActionEvent event) {
         stringValuesSsds.add(new StringValue(getAddSsd()));
         currentSsds.add(addSsd);
+        updateModelCollectionPart("formModel:ssds", addSsd, true);
 
         setAddSsd(null);
 
@@ -392,6 +324,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         stringValuesSsds.remove(stringValue);
         currentSsds.remove(stringValue.getValue());
 
+        updateModelCollectionPart("formModel:ssds", stringValue.getValue(), false);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ssd removed", null));
     }
 
@@ -576,19 +509,50 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error occured: " + ex.getMessage(), null));
         }
     }*/
-    /*public void updateModelRAM(UIComponent component) {
-        RAM ram = computerPartSessionBeanLocal.retrieveComputerPartByName(addRAM);
-        currentModel.getRams().add(ram);
-        preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
+    public void updateModelCollectionPart(String componentId, String computerPartName, Boolean isAddition) {
+        System.out.println("**************** part name: " + computerPartName);
+        ComputerPart computerPart = computerPartSessionBeanLocal.retrieveComputerPartByName(computerPartName);
+        if (computerPart instanceof RAM) {
+            RAM castedComputerPart = (RAM) computerPart;
+            if (isAddition) {
+                currentModel.getRams().add(castedComputerPart);
+            } else {
+                currentModel.getRams().remove(castedComputerPart);
+            }
+        } else if (computerPart instanceof GPU) {
+            GPU castedComputerPart = (GPU) computerPart;
+            if (isAddition) {
+                currentModel.getGpus().add(castedComputerPart);
+            } else {
+                currentModel.getGpus().remove(castedComputerPart);
+            }
+        } else if (computerPart instanceof HDD) {
+            HDD castedComputerPart = (HDD) computerPart;
+            if (isAddition) {
+                currentModel.getHdds().add(castedComputerPart);
+            } else {
+                currentModel.getHdds().remove(castedComputerPart);
+            }
+        } else {
+            SSD castedComputerPart = (SSD) computerPart;
+            if (isAddition) {
+                currentModel.getSsds().add(castedComputerPart);
+            } else {
+                currentModel.getSsds().remove(castedComputerPart);
+            }
+        }
         updatePrice();
         try {
-            preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, ram.getProductId());
+            preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
+            if (isAddition) preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, computerPart.getProductId());
         } catch (IncompatiblePartException ex) {
-            FacesContext.getCurrentInstance().addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
+            FacesContext.getCurrentInstance().addMessage(componentId, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
         } catch (ComputerPartNotFoundException ex) {
-            FacesContext.getCurrentInstance().addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
+            FacesContext.getCurrentInstance().addMessage(componentId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
+        } catch (PreBuiltComputerSetModelNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(componentId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
         }
-    }*/
+    }
     
 
     private void updatePrice() {
@@ -610,6 +574,18 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
         if (currentModel.getAirCooler() != null) {
             currentPrice += currentModel.getAirCooler().getPrice();
+        }
+        for (RAM ram : currentModel.getRams()) {
+            currentPrice += ram.getPrice();
+        }
+        for (GPU gpu : currentModel.getGpus()) {
+            currentPrice += gpu.getPrice();
+        }
+        for (HDD hdd : currentModel.getHdds()) {
+            currentPrice += hdd.getPrice();
+        }
+        for (SSD ssd : currentModel.getSsds()) {
+            currentPrice += ssd.getPrice();
         }
         currentModel.setPrice(currentPrice);
     }

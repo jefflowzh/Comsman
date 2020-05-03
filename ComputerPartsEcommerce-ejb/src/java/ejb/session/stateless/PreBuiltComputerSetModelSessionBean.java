@@ -216,7 +216,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 if (currentRamCheck == false){
                     System.out.println("**********RAM CHECK ISSUE");
                     totalRamCheck = false;
-                    throw new IncompatiblePartException("Incompatible with Computer Case, please select another Motherboard or RAM");
+                    throw new IncompatiblePartException("Incompatible with RAM, please select another Motherboard or RAM");
                 }
             }
         }
