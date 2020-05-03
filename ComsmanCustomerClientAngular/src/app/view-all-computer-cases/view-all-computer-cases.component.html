@@ -38,8 +38,8 @@
                 <p-checkbox label="All" [(ngModel)]="AllColourCheckbox" binary="true" (click)="removeColourFilters()">
                 </p-checkbox>
             </div>
-            <div *ngFor="let colour of colours">
-                <p-checkbox value={{colour}} label={{colour}} [(ngModel)]="selectedColours" (click)="applyFilters()">
+            <div *ngFor="let col of colours">
+                <p-checkbox value={{col}} label={{col}} [(ngModel)]="selectedColours" (click)="applyFilters()">
                 </p-checkbox>
             </div>
 

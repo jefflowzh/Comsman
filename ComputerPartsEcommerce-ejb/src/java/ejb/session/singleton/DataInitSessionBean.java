@@ -6,6 +6,7 @@ import ejb.session.stateless.CouponSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
+import ejb.session.stateless.LineItemSessionBean;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
 import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
@@ -14,6 +15,7 @@ import entity.CPUAirCooler;
 import entity.CPUWaterCooler;
 import entity.ComputerCase;
 import entity.ComputerPart;
+import entity.ComputerSet;
 import entity.Coupon;
 import entity.Customer;
 import entity.LineItem;
@@ -30,7 +32,6 @@ import entity.Staff;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -232,13 +233,13 @@ public class DataInitSessionBean {
             String[] colours = new String[]{"white", "black"};
             String[] motherBoardFormFactor = new String[]{"motherBoardFormFactor1", "motherBoardFormFactor2"};
             
-            ComputerCase testComputerCase1 = new ComputerCase("Manufacturer1", "type1", colours, "sidePanelView", motherBoardFormFactor, 1, 1.0, 1.0, 1.0, 1.0, "Computer Case 1", 1.0, 1, "image1");
+            ComputerCase testComputerCase1 = new ComputerCase("Manufacturer1", "type1", "white", "sidePanelView", motherBoardFormFactor, 1, 1.0, 1.0, 1.0, 1.0, "Computer Case 1", 1.0, 1, "image1");
             computerPartSessionBean.createNewComCase(testComputerCase1);
-            ComputerCase testComputerCase2 = new ComputerCase("Manufacturer2", "type2", colours, "sidePanelView", motherBoardFormFactor, 2, 2.0, 2.0, 2.0, 2.0, "Computer Case 2", 2.0, 2, "image2");
+            ComputerCase testComputerCase2 = new ComputerCase("Manufacturer2", "type2", "white", "sidePanelView", motherBoardFormFactor, 2, 2.0, 2.0, 2.0, 2.0, "Computer Case 2", 2.0, 2, "image2");
             computerPartSessionBean.createNewComCase(testComputerCase2);
-            ComputerCase testComputerCase3 = new ComputerCase("Manufacturer3", "type3", colours, "sidePanelView", motherBoardFormFactor, 3, 3.0, 3.0, 3.0, 3.0, "Computer Case 3", 3.0, 3, "image3");
+            ComputerCase testComputerCase3 = new ComputerCase("Manufacturer3", "type3", "black", "sidePanelView", motherBoardFormFactor, 3, 3.0, 3.0, 3.0, 3.0, "Computer Case 3", 3.0, 3, "image3");
             computerPartSessionBean.createNewComCase(testComputerCase3);
-            ComputerCase testComputerCase4 = new ComputerCase("Manufacturer4", "type4", colours, "sidePanelView", motherBoardFormFactor, 4, 4.0, 4.0, 4.0, 4.0, "Computer Case 4", 4.0, 4, "image4");
+            ComputerCase testComputerCase4 = new ComputerCase("Manufacturer4", "type4", "black", "sidePanelView", motherBoardFormFactor, 4, 4.0, 4.0, 4.0, 4.0, "Computer Case 4", 4.0, 4, "image4");
             computerPartSessionBean.createNewComCase(testComputerCase4);
             
             CPU testCpu = new CPU("Intel", 6, 95, "LGA1151", true, false, "Intel Core i5-9600K 3.7 GHz 6-Core Processor", 300.0, 50,"image1");
@@ -348,6 +349,48 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewHDD(testHDD1);
             computerPartSessionBean.createNewHDD(testHDD2);
             computerPartSessionBean.createNewHDD(testHDD3);
+            
+            List<RAM> rams = new ArrayList();
+            List<GPU> gpus = new ArrayList();
+            List<SSD> ssds = new ArrayList();
+            List<HDD> hdds = new ArrayList();
+            
+            rams.add(testRam);
+            rams.add(testRam1);
+            
+            gpus.add(testGpu);
+            gpus.add(testGpu2);
+            
+            ssds.add(testSSD1);
+            ssds.add(testSSD2);
+            
+            hdds.add(testHDD1);
+            hdds.add(testHDD2);
+            //ComputerSet set = new ComputerSet(testCpu4, testmb, rams, testPsu, testComputerCase1,5,false);
+            //computerSetSessionBean.createNewComputerSet(newComputerSet, Long.MIN_VALUE)
+            ComputerSet set = new ComputerSet();
+            set.setCpu(testCpu);
+            set.setCompCase(testComputerCase1);
+            set.getGpus().add(testGpu);
+            set.getGpus().add(testGpu2);
+            set.getHdds().add(testHDD1);
+            set.getHdds().add(testHDD2);
+            set.getSsds().add(testSSD1);
+            set.setMotherBoard(testmb1);
+            set.setPsu(testPsu);
+            set.getRams().add(testRam);
+            set.getRams().add(testRam1);
+            
+            LineItem setItem = new LineItem();
+            setItem.setQuantity(1);
+            setItem.setComputerSet(set);
+            Long setId = lineItemSessionBean.createNewLineItem(setItem);
+            computerSetSessionBean.createNewComputerSet(set,setId);
+            
+            List<LineItem> itemSets = new ArrayList();
+            itemSets.add(setItem);
+            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
+            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
             
             PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET);
             p1.setCpu(testCpu);

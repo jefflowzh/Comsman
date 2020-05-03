@@ -8,22 +8,25 @@ import { MotherBoard } from './motherboard';
 import { PowerSupply } from './powersupply';
 import { RAM } from './ram';
 import { SSD } from './ssd';
+import { LineItem } from './line-item';
+import { Staff } from './staff';
 
 export class ComputerSet {
 
     computerSetId: number;
     warrantyLengthInYears: number;
-    assembyCompleted: boolean;
+    assembyComplete: boolean;
     price: number;
     cpu: CPU;
-    cpuAirCooler: CPUAirCooler;
-    cpuWaterCooler: CPUWaterCooler;
-    computerCase: ComputerCase;
+    CPUAirCooler: CPUAirCooler;
+    CPUWaterCooler: CPUWaterCooler;
+    compCase: ComputerCase;
     gpus: GPU[];
     hdds: HDD[];
     motherBoard: MotherBoard;
-    powerSupply: PowerSupply;
+    psu: PowerSupply;
     rams: RAM[];
     ssds: SSD[];
-
+    lineItem: LineItem;
+    assemblyAssignedTo: Staff;
 }

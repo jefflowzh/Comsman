@@ -27,7 +27,7 @@ public class ComputerCase extends ComputerPart implements Serializable {
  
     private String manufacturer;
     private String type; //(ATX Mid Tower)
-    private String[] colours;
+    private String colour;
     private String sidePanelView; //tintered tempered glass
     private String[] motherBoardFormFactor; //atx micro atx mini itx
     private Integer fullHeightExpansionSlot; //7
@@ -43,11 +43,11 @@ public class ComputerCase extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String manufacturer, String type, String[] colours, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String manufacturer, String type, String colours, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.manufacturer = manufacturer;
         this.type = type;
-        this.colours = colours;
+        this.colour = colours;
         this.sidePanelView = sidePanelView;
         this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
@@ -73,12 +73,12 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.type = type;
     }
 
-    public String[] getColours() {
-        return colours;
+    public String getColour() {
+        return colour;
     }
 
-    public void setColours(String[] colours) {
-        this.colours = colours;
+    public void setColour(String colours) {
+        this.colour = colours;
     }
 
     public String getSidePanelView() {
