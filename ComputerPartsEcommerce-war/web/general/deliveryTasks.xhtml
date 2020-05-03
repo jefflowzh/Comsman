@@ -20,7 +20,7 @@
                     <p:messages id="messages" redisplay="false" closable="true" />
 
                     <p:dataTable id="dataTableAllDeliveryTasks" widgetVar="dataTableAllDeliveryTasks" value="#{deliveryTasksManagedBean.orders}" var="task" rowKey="#{task.customerOrderId}" rowIndexVar="row"
-                                 sortBy="#{task.delivered}" filteredValue="#{deliveryTasksManagedBean.filteredOrders}"
+                                 sortBy="#{task.fulfilled}" filteredValue="#{deliveryTasksManagedBean.filteredOrders}"
                                  rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
 
                         <f:facet name="header">
@@ -42,13 +42,13 @@
                             <h:outputText value="#{task.deliverBy}"/>
                         </p:column>
                         
-                        <p:column headerText="Status" sortBy="#{task.delivered}" filterBy="#{task.delivered}" filterMatchMode="contains">
-                            <h:outputText value="#{task.delivered}"/>
+                        <p:column headerText="Status" sortBy="#{task.fulfilled}" filterBy="#{task.fulfilled}" filterMatchMode="contains">
+                            <h:outputText value="#{task.fulfilled}"/>
                         </p:column>
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton icon="fa fa-check" title="Mark as Delivered" actionListener="#{deliveryTasksManagedBean.markAsDelivered}" update="formAllDeliveryTasks:dataTableAllDeliveryTasks formAllDeliveryTasks:messages" rendered="#{!task.delivered}">
+                                <p:commandButton icon="fa fa-check" title="Mark as Delivered" actionListener="#{deliveryTasksManagedBean.markAsFulfilled}" update="formAllDeliveryTasks:dataTableAllDeliveryTasks formAllDeliveryTasks:messages" rendered="#{!task.fulfilled}">
                                     <p:confirm header="Confirmation" message="Mark as Delivered?" icon="pi pi-exclamation-triangle" />
                                     <f:attribute name="selectedOrderId" value="#{task.customerOrderId}" />
                                 </p:commandButton>

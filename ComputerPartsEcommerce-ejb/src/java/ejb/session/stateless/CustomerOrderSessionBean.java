@@ -71,7 +71,7 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
 
     @Override
     public List<CustomerOrder> retrieveCustomerOrdersByDeliveryStaff(Long staffId, Boolean loadLineItems) {
-        Query query = em.createQuery("SELECT c FROM CustomerOrder c WHERE c.deliveryAssignedTo.userId = :inStaffId and c.delivered = false");
+        Query query = em.createQuery("SELECT c FROM CustomerOrder c WHERE c.deliveryAssignedTo.userId = :inStaffId and c.fulfilled = false");
         query.setParameter("inStaffId", staffId);
         List<CustomerOrder> customerOrders = query.getResultList();
 
@@ -147,8 +147,8 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
             return;
         }
 
-        if (customerOrder.getDelivered()) {
-            customerOrder.setOrderStatus(OrderStatusEnum.DELIVERED);
+        if (customerOrder.getFulfilled()) {
+            customerOrder.setOrderStatus(OrderStatusEnum.FULFILLED);
             return;
         }
 
@@ -217,7 +217,7 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     @Override
     public List<CustomerOrder> retrieveAllTasks() {
         Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inStatus and o.orderStatus <> :inVoid");
-        query.setParameter("inStatus", OrderStatusEnum.DELIVERED);
+        query.setParameter("inStatus", OrderStatusEnum.FULFILLED);
         query.setParameter("inVoid", OrderStatusEnum.VOIDED);
 
         return query.getResultList();

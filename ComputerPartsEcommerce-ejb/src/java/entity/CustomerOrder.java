@@ -48,7 +48,7 @@ public class CustomerOrder implements Serializable {
     private Boolean requiresDelivery;
     @Column(nullable = false)
     @NotNull
-    private Boolean delivered;
+    private Boolean fulfilled;
     @Column(nullable = false)
     @NotNull
     private Boolean voided;
@@ -72,14 +72,11 @@ public class CustomerOrder implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
-   // @OneToOne(mappedBy = "customerOrder")
-   // private ComputerSet computerSet;
-    
 
     public CustomerOrder() {
         this.totalPrice = 0.0;
         this.orderStatus = OrderStatusEnum.UNASSIGNED;
-        this.delivered = false;
+        this.fulfilled = false;
         this.voided = false;
     }
 
@@ -163,12 +160,12 @@ public class CustomerOrder implements Serializable {
         this.requiresDelivery = requiresDelivery;
     }
     
-    public Boolean getDelivered() {
-        return delivered;
+    public Boolean getFulfilled() {
+        return fulfilled;
     }
 
-    public void setDelivered(Boolean delivered) {
-        this.delivered = delivered;
+    public void setFulfilled(Boolean fulfilled) {
+        this.fulfilled = fulfilled;
     }
 
     public Boolean getVoided() {
