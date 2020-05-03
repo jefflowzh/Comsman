@@ -15,12 +15,14 @@ import entity.CPUWaterCooler;
 import entity.ComputerCase;
 import entity.ComputerPart;
 import entity.GPU;
+import entity.HDD;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
 import entity.PreBuiltComputerSetModel;
 import entity.Product;
 import entity.RAM;
+import entity.SSD;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,7 +35,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -195,6 +196,62 @@ public class ProductResource {
             cpuCoolers.addAll(cpuAirCoolers);
             cpuCoolers.addAll(cpuWaterCoolers);
             RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(cpuCoolers); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllCPUAirCoolers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllCPUAirCoolers() {        
+        try{
+            List<CPUAirCooler> cpuAirCoolers = computerPartSessionBeanLocal.retrieveAllCPUAirCooler();   
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(cpuAirCoolers); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllCPUWaterCoolers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllCPUWaterCoolers() {        
+        try{
+             List<CPUWaterCooler> cpuWaterCoolers = computerPartSessionBeanLocal.retrieveAllCPUWaterCooler(); 
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(cpuWaterCoolers); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveAllHDD")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllHDD() {        
+        try{
+            List<HDD> hdd = computerPartSessionBeanLocal.retrieveAllHDD();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(hdd); 
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+     @Path("retrieveAllSSD")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllSSD() {        
+        try{
+            List<SSD> ssd = computerPartSessionBeanLocal.retrieveAllSSD();     
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(ssd); 
             return Response.status(Status.OK).entity(retrieveProductsRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

@@ -1,0 +1,101 @@
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Type</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllTypeCheckbox" binary="true" (click)="removeTypeFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let sp of type">
+                <p-checkbox value={{sp}} label={{sp}} [(ngModel)]="selectedType" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+            <hr>
+
+           
+
+
+            <h5>Capacity</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllCapacityCheckbox" binary="true"
+                    (click)="removeCapacityFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let stick of capacity">
+                <p-checkbox value={{stick}} label={{stick}} [(ngModel)]="selectedCapacity"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Form Factor</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllFormFactorCheckbox" binary="true"
+                    (click)="removeFormFactorFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let per of formFactor">
+                <p-checkbox value={{per}} label={{per}} [(ngModel)]="selectedFormFactor"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Interface Format</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllInterfaceFormCheckbox" binary="true"
+                    (click)="removeInterfaceFormFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let cas of interfaceForm">
+                <p-checkbox value={{cas}} label={{cas}} [(ngModel)]="selectedInterfaceForm"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+             <h5>NVME</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllNVMECheckbox" binary="true" (click)="removeNVMEFilters()">
+                </p-checkbox>
+            </div>
+            <div *ngFor="let ty of NVME">
+                <p-checkbox value={{ty}} label={{ty}} [(ngModel)]="selectedNVME" (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredSSD">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>
+
+
+

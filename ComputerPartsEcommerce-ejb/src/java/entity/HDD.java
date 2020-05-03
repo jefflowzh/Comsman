@@ -25,11 +25,11 @@ public class HDD extends ComputerPart implements Serializable {
     //@ManyToMany(mappedBy = "hdds")
    //private List<ComputerSet> computerSets;
 
-    private String Manufacturer;
+    private String manufacturer;
     private String type; //(RPM)
-    private Integer Capacity; //in GB
+    private Integer capacity; //in GB
     private String formFactor; //(3.5'')
-    private String Interface; //(SATA 6gb/s  SATA 3gb/s )  
+    private String interfaceForm; //(SATA 6gb/s  SATA 3gb/s )  
 
     public HDD() {
     }
@@ -40,19 +40,19 @@ public class HDD extends ComputerPart implements Serializable {
 
     public HDD(String Manufacturer, String type, Integer Capacity, String formFactor, String Interface, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.type = type;
-        this.Capacity = Capacity;
+        this.capacity = Capacity;
         this.formFactor = formFactor;
-        this.Interface = Interface;
+        this.interfaceForm = Interface;
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getType() {
@@ -64,11 +64,11 @@ public class HDD extends ComputerPart implements Serializable {
     }
 
     public Integer getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(Integer Capacity) {
-        this.Capacity = Capacity;
+        this.capacity = Capacity;
     }
 
     public String getFormFactor() {
@@ -79,12 +79,12 @@ public class HDD extends ComputerPart implements Serializable {
         this.formFactor = formFactor;
     }
 
-    public String getInterface() {
-        return Interface;
+    public String getInterfaceForm() {
+        return interfaceForm;
     }
 
-    public void setInterface(String Interface) {
-        this.Interface = Interface;
+    public void setInterfaceForm(String interfaceForm) {
+        this.interfaceForm = interfaceForm;
     }
     
     

@@ -1,0 +1,86 @@
+<div style="margin-left: 5%; margin-right: 5%;">
+    <div class="ui-g">
+
+        <div class="ui-g-2">
+
+            <br>
+            <br>
+
+            <h3>Filters</h3>
+            <hr style="border-color: black;">
+
+            <h5>Manufacturer</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllManufacturersCheckbox" binary="true"
+                    (click)="removeManufacturerFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let manufacturer of manufacturers">
+                <p-checkbox value={{manufacturer}} label={{manufacturer}} [(ngModel)]="selectedManufacturers"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Noise Level</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllNoiseLevelCheckbox" binary="true"
+                    (click)="removeChipsetFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let noise of noiseLevel">
+                <p-checkbox value={{noise}} label={{noise}} [(ngModel)]="selectedNoiseLevel"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Height</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllHeightCheckbox" binary="true"
+                    (click)="removeMemorySlotFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let ms of height">
+                <p-checkbox value={{ms}} label={{ms}} [(ngModel)]="selectedHeight"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+            <h5>Colour</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllColourCheckbox" binary="true"
+                    (click)="removeColourFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let col of colour">
+                <p-checkbox value={{col}} label={{col}} [(ngModel)]="selectedColour"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            
+
+            <hr>
+            <h5>Support CPU Chipset</h5>
+            <div>
+                <p-checkbox label="All" [(ngModel)]="AllCpuChipCompatibilityCheckbox" binary="true"
+                    (click)="removeSupportedMemorySpeedFilters()"></p-checkbox>
+            </div>
+            <div *ngFor="let speed of CPUChipCompatibility">
+                <p-checkbox value={{speed}} label={{speed}} [(ngModel)]="selectedCPUChipCompatibility"
+                    (click)="applyFilters()">
+                </p-checkbox>
+            </div>
+
+            <hr>
+
+        </div>
+
+        <div class="ui-g-10">
+            <app-view-all-products [productType]="productType" [products]="filteredAirCooler">
+            </app-view-all-products>
+        </div>
+
+    </div>
+</div>

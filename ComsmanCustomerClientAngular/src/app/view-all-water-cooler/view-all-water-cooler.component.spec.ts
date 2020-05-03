@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewAllCPUCoolerComponent } from './view-all-cpucooler.component';
+import { ViewAllWaterCoolerComponent } from './view-all-water-cooler.component';
 
-describe('ViewAllCPUCoolerComponent', () => {
-  let component: ViewAllCPUCoolerComponent;
-  let fixture: ComponentFixture<ViewAllCPUCoolerComponent>;
+describe('ViewAllWaterCoolerComponent', () => {
+  let component: ViewAllWaterCoolerComponent;
+  let fixture: ComponentFixture<ViewAllWaterCoolerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewAllCPUCoolerComponent ]
+      declarations: [ ViewAllWaterCoolerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewAllCPUCoolerComponent);
+    fixture = TestBed.createComponent(ViewAllWaterCoolerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

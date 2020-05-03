@@ -20,10 +20,12 @@ export class IndexComponent implements OnInit {
       label: 'Computer Parts',
       items: [
         { label: 'CPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllCPU'] },
-        { label: 'CPU Cooler', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllCPUCooler'] },
+        { label: 'CPU Air Cooler', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllAirCPUCooler'] },
+        { label: 'CPU Water Cooler', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllWaterCPUCooler'] },
         { label: 'Computer Case', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllComputerCases'] },
         { label: 'GPU', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllGPU'] },
-        { label: 'Internal Storage (SSD/HDD)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllInternalStorage'] },
+        { label: 'Internal Storage (HDD)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllHDD'] },
+        { label: 'Internal Storage (SSD)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllSSD'] },
         { label: 'Motherboard', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllMotherboard'] },
         { label: 'Power Supply', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllPowerSupply'] },
         { label: 'RAM', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllRAM'] }

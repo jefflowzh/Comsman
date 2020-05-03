@@ -17,11 +17,15 @@ import { CustomerOrdersComponent } from './customer-orders/customer-orders.compo
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
-import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
-import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
+
+
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
+import { ViewAllAirCoolerComponent } from './view-all-air-cooler/view-all-air-cooler.component';
+import { ViewAllWaterCoolerComponent } from './view-all-water-cooler/view-all-water-cooler.component';
+import { ViewAllHddComponent } from './view-all-hdd/view-all-hdd.component';
+import { ViewAllSsdComponent } from './view-all-ssd/view-all-ssd.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -44,8 +48,12 @@ const routes: Routes = [
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
   { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },
   { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
-  { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
-  { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent },
+  { path: 'viewAllAirCPUCooler', component: ViewAllAirCoolerComponent },
+  { path: 'viewAllWaterCPUCooler', component: ViewAllWaterCoolerComponent },
+  { path: 'viewAllHDD', component: ViewAllHddComponent },
+  { path: 'viewAllSSD', component: ViewAllSsdComponent },
+  
+  
   { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent }
 ];
 
