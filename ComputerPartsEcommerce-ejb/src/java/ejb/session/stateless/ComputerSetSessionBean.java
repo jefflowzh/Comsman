@@ -207,7 +207,7 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
         boolean flag = true;
         
         //check that motherboard and cpu sockets match
-        if(set.getCpu() == null || set.getMotherBoard().getSocket().equals(current.getSocket())){
+        if(set.getCpu() == null || set.getCpu().getSocket().equals(current.getSocket())){
             flag = true;
         }
         else{
