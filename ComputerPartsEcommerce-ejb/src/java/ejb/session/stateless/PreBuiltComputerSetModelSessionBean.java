@@ -167,7 +167,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         boolean flag = true;
         
         //check that motherboard and cpu sockets match
-        if(model.getCpu() == null || model.getMotherboard().getSocket().equals(current.getSocket())){
+        if(model.getCpu() == null || model.getCpu().getSocket().equals(current.getSocket())){
             flag = true;
         }
         else{

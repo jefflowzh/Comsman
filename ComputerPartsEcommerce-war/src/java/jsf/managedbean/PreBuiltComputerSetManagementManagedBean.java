@@ -290,6 +290,19 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
                 currentModel.setAirCooler(null);
             }
         }
+        if (fieldName.equals("currentCpu") && currentModel.getCpu() == null) {
+            currentIsEnabled = false;
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "CPU is required", null));
+        } else if (fieldName.equals("currentMotherboard") && currentModel.getMotherboard() == null) {
+            currentIsEnabled = false;
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Motherboard is required", null));
+        } else if (fieldName.equals("currentCompCase") && currentModel.getCompCase() == null) {
+            currentIsEnabled = false;
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Computer Case is required", null));
+        } else if (fieldName.equals("currentPsu") && currentModel.getPsu() == null) {
+            currentIsEnabled = false;
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Power Supply is required", null));
+        }
         updatePrice();
         try {
             preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
@@ -298,14 +311,12 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             }
         } catch (IncompatiblePartException ex) {
             currentIsEnabled = false;
-            System.out.println("*************** client: " + clientId);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
         } catch (ComputerPartNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
         }
-        System.out.println(" set switch if need");
     }
     
     public void updateModelCollection(AjaxBehaviorEvent event, UIComponent component) {
@@ -356,13 +367,14 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
             }
         }
+        if (fieldName.equals("currentRams") && currentModel.getRams().isEmpty()) {
+            currentIsEnabled = false;
+            FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "RAM is required", null));
+        }
         updatePrice();
         try {
-            System.out.println("***pre persist: " + currentModel.getRams());
             preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
-            System.out.println("***post persist ");
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
-            currentIsEnabled = false;
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
         }
     }
@@ -476,7 +488,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             MotherBoard partToTest = currentModel.getMotherboard();
             currentModel.setMotherboard(null);
             try {
-                preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, currentModel.getMotherboard().getProductId());
+                preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, partToTest.getProductId());
             } catch (IncompatiblePartException ex) {
                 modelValid = false;
                 System.out.println("*****MB CHECK FLAGGED");
