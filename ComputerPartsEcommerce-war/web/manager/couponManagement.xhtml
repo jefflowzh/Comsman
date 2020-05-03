@@ -51,8 +51,8 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column headerText="Loyalty Points" sortBy="#{coupon.loyaltyPointRequired}" filterBy="#{coupon.loyaltyPointRequired}" filterMatchMode="contains">
-                            <h:outputText value="#{coupon.loyaltyPointRequired}" />
+                        <p:column headerText="Loyalty Points" sortBy="#{coupon.loyaltyPointsRequired}" filterBy="#{coupon.loyaltyPointsRequired}" filterMatchMode="contains">
+                            <h:outputText value="#{coupon.loyaltyPointsRequired}" />
                         </p:column>
                         
                         <p:column headerText="Type" sortBy="#{coupon.couponType.toString()}" filterBy="#{coupon.couponType.toString()}" filterMatchMode="contains">
@@ -150,7 +150,7 @@
                                     <p:outputLabel for="loyaltyPoints" value="Loyalty Points: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.newCoupon.loyaltyPointRequired}" required="true" requiredMessage="Loyalty points required" />
+                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.newCoupon.loyaltyPointsRequired}" required="true" requiredMessage="Loyalty points required" />
                                 </p:column>
                             </p:row>
                             
@@ -243,7 +243,7 @@
                                     <p:outputLabel for="loyaltyPoints" value="Loyalty Points: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
-                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.selectedCouponToUpdate.loyaltyPointRequired}" required="true" requiredMessage="Loyalty points required" />
+                                    <h:inputText id="loyaltyPoints" value="#{couponManagementManagedBean.selectedCouponToUpdate.loyaltyPointsRequired}" required="true" requiredMessage="Loyalty points required" />
                                 </p:column>
                             </p:row>
                             

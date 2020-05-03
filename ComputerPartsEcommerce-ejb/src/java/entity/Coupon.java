@@ -35,7 +35,7 @@ public class Coupon implements Serializable {
     private Date endDate;
     @Column(nullable = false)
     @NotNull
-    private Integer loyaltyPointRequired;
+    private Integer loyaltyPointsRequired;
     @Column(nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -52,13 +52,13 @@ public class Coupon implements Serializable {
         this.isDisabled = false;
     }
 
-    public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointRequired, CouponTypeEnum couponType) {
+    public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointsRequired, CouponTypeEnum couponType) {
         this();
         
         this.code = code;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.loyaltyPointRequired = loyaltyPointRequired;
+        this.loyaltyPointsRequired = loyaltyPointsRequired;
         this.couponType = couponType;
     }
 
@@ -94,12 +94,12 @@ public class Coupon implements Serializable {
         this.endDate = endDate;
     }
 
-    public Integer getLoyaltyPointRequired() {
-        return loyaltyPointRequired;
+    public Integer getLoyaltyPointsRequired() {
+        return loyaltyPointsRequired;
     }
 
-    public void setLoyaltyPointRequired(Integer loyaltyPointRequired) {
-        this.loyaltyPointRequired = loyaltyPointRequired;
+    public void setLoyaltyPointsRequired(Integer loyaltyPointsRequired) {
+        this.loyaltyPointsRequired = loyaltyPointsRequired;
     }
 
     public CouponTypeEnum getCouponType() {
