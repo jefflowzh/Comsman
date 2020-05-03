@@ -16,6 +16,7 @@ import { PanelModule } from 'primeng/panel';
 import { SpinnerModule } from 'primeng/spinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TableModule } from 'primeng/table';
 import { CarouselModule } from 'primeng/carousel';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -37,12 +38,16 @@ import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-mot
 import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
 import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
+
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
 
 @NgModule({
   declarations: [
@@ -62,12 +67,15 @@ import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-per
     ViewAllPowerSupplyComponent,
     ViewAllRAMComponent,
     ViewProductComponent,
+    CustomerOrdersComponent,
     AmateurSetMainPageComponent,
     AmateurSetBuildPageComponent,
     AdvancedSetBuildPageComponent,
     ViewAllCPUCoolerComponent,
     ViewAllInternalStorageComponent,
-    ViewAllPeripheralsComponent
+    ViewAllPeripheralsComponent,
+    ViewOrderComponent,
+    CustomerCouponComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +96,7 @@ import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-per
     SpinnerModule,
     CheckboxModule,
     BreadcrumbModule,
+    TableModule,
     CarouselModule
   ],
   providers: [],

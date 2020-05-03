@@ -6,7 +6,7 @@ export class Coupon {
     code: string;
     startDate: Date;
     endDate: Date;
-    loyaltyPointsRequired: number;
+    loyaltyPointRequired: number;
     couponType: CouponTypeEnum;
     percentageRate: number;
     flatAmount: number;

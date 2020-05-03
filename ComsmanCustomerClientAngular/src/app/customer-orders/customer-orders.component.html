@@ -1,0 +1,36 @@
+<div class="row" style="margin-right: 0; width: 100%;">
+    <div class="col-md-2" >
+        <p-menu [model]="sidenavItems"></p-menu>
+    </div>
+    <div class="col-md-10" style = "margin-left: 0;width:90%;">
+        <p-table [value] = "customerOrders">
+            <ng-template pTemplate = "header">
+                <tr>
+                    <th>Order Id</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Billing address</th>
+                    <th>Order Status</th>
+                    <th>View details</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Order>
+                <tr>
+                    <td>{{Order.customerOrderId}}</td>
+                    <td>{{Order.orderDate}}</td>
+                    <td>{{Order.totalPrice}}</td>
+                    <td>{{Order.billingAddress}}</td>
+                    <td>{{Order.orderStatusEnum}}</td>
+                    <td>
+                        <button pButton type="button" label="View Details" 
+                        [routerLink]="['/viewOrder', Order.customerOrderId]"></button>
+                    </td>
+
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+

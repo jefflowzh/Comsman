@@ -1,7 +1,9 @@
 package ejb.session.stateless;
 
 import entity.Coupon;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -34,6 +36,21 @@ public class CouponSessionBean implements CouponSessionBeanLocal {
         } else {
             throw new CouponNotFoundException("Coupon ID " + couponId + " does not exist!");
         }
+    }
+    
+    public List<Coupon> retrieveAllValidCoupon() throws CouponNotFoundException {
+        Query query = em.createQuery("SELECT c FROM Coupon c");
+        List<Coupon> coupons =  query.getResultList();
+        System.out.println("********************************* 1 " + coupons);
+        List<Coupon> validCoupons = new ArrayList();
+        Date currDate = new Date();
+        for(Coupon coupon : coupons){
+            if ((currDate.compareTo(coupon.getStartDate()) >= 0) && (currDate.compareTo(coupon.getEndDate()) <= 0)) {
+                validCoupons.add(coupon);
+            } 
+        }
+        System.out.println("********************************* 2 " + validCoupons);
+        return validCoupons;
     }
     
     @Override

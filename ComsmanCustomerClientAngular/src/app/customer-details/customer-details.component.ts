@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
 import { Customer } from '../customer';
+import { MenuItem } from 'primeng/api/menuitem';
 
 @Component({
   selector: 'app-customer-details',
@@ -18,6 +19,7 @@ export class CustomerDetailsComponent implements OnInit {
   submitted: boolean = false;
   updateError: boolean = false;
   updateSuccess: boolean = false;
+  sidenavItems: MenuItem[];
 
   constructor(private router: Router, public sessionService: SessionService,
     private customerService: CustomerService) {
@@ -26,6 +28,25 @@ export class CustomerDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.customer = this.sessionService.getCurrentCustomer();
+    this.sidenavItems = [{
+      label: 'Manage My Account',
+      items: [
+        { label: 'Account Details', icon: 'pi pi-user', routerLink: ['/customerDetails'] },
+        { label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
+      ]
+    },
+    {
+      label: 'My Orders',
+      items: [
+        { label: 'Past Orders', icon: 'pi pi-file-o', routerLink: ['/customerOrders'] },
+      ]
+    },
+    {
+      label: 'My Reviews',
+      items: [
+        { label: 'Posted Reviews', icon: 'pi pi-pencil' },
+      ]
+    }];
   }
 
   // updateCustomerDetails(customerForm: NgForm) {

@@ -170,4 +170,12 @@ export class CustomerService {
   //   return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
   // }
 
+  customerOrders(email: string): Observable<any> {
+    console.log("end method");
+    return this.httpClient.get<any>(this.baseUrl + "/customerOrders?email=" + email).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
 }

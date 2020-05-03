@@ -7,6 +7,7 @@ package ws.restful.resources;
 
 import ejb.session.stateless.CouponSessionBeanLocal;
 import entity.Coupon;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -26,6 +27,7 @@ import util.exception.CouponInvalidException;
 import util.exception.CouponNotFoundException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CheckCouponByCodeRsp;
+import ws.restful.model.vallidCouponsRsp;
 
 /**
  * REST Web Service
@@ -58,6 +60,20 @@ public class CouponResource {
         } catch (CouponInvalidException | CouponNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("validCoupons")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response validCoupons() {
+        try {
+            List<Coupon> coupons = couponSessionBean.retrieveAllValidCoupon();
+            vallidCouponsRsp valid = new vallidCouponsRsp(coupons);
+            return Response.status(Status.OK).entity(valid).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();

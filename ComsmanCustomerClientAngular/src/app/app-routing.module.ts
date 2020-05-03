@@ -13,12 +13,15 @@ import { ViewAllMotherboardComponent } from './view-all-motherboard/view-all-mot
 import { ViewAllPowerSupplyComponent } from './view-all-power-supply/view-all-power-supply.component';
 import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -33,6 +36,10 @@ const routes: Routes = [
   { path: 'customerRegistration', component: CustomerRegistrationComponent },
   { path: 'customerCart', component: CustomerCartComponent },
   { path: 'customerDetails', component: CustomerDetailsComponent },
+  { path: 'customerOrders', component: CustomerOrdersComponent },
+  { path: 'customerCoupons', component: CustomerCouponComponent },
+  { path: 'viewOrder/:customerOrderId', component: ViewOrderComponent },
+  { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
   { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },

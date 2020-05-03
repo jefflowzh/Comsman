@@ -6,6 +6,7 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
+import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
@@ -17,6 +18,7 @@ import entity.ComputerPart;
 import entity.ComputerSet;
 import entity.Customer;
 import entity.CustomerOrder;
+import entity.LineItem;
 import entity.GPU;
 import entity.HDD;
 import entity.LineItem;
@@ -48,6 +50,8 @@ import util.exception.CustomerNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
+import ws.restful.model.CustomerOrderRsp;
+import ws.restful.model.CustomerOrdersRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
 import ws.restful.model.UpdateCustomerReq;
@@ -68,6 +72,7 @@ public class CustomerResource {
     LineItemSessionBeanLocal lineItemSessionBean = lookupLineItemSessionBeanLocal();
 
     CustomerSessionBeanLocal customerSessionBean = lookupCustomerSessionBeanLocal();
+    CustomerOrderSessionBeanLocal customerOrderSessionBean = lookupCustomerOrderSessionBeanLocal();
     
     
 
@@ -88,11 +93,21 @@ public class CustomerResource {
     public Response customerLogin(@QueryParam("email") String email, @QueryParam("password") String password) {
         try {
             Customer customer = customerSessionBean.customerLogin(email, password);
+            customer.getOrders().clear();
+//            List<CustomerOrder> orders = customer.getOrders();
+//            for(CustomerOrder o : orders){
+//                o.getCustomer().getOrders().clear();
+//                o.getLineItems().clear();
+//            }
+            
             CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
             return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+        }catch (StackOverflowError ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
@@ -261,6 +276,47 @@ public class CustomerResource {
             throw new RuntimeException(ne);
         }
     }
+    @Path("customerOrders")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerOrders(@QueryParam("email") String email) {
+        try {
+            Customer customer = customerSessionBean.retrieveCustomerByEmail(email, Boolean.FALSE, Boolean.TRUE);
+            List<CustomerOrder> orders = customer.getOrders();
+            for(CustomerOrder order : orders){
+                  order.setCustomer(null);
+                  
+            }
+            CustomerOrdersRsp customerOrdersRsp = new CustomerOrdersRsp(orders);
+            System.out.println("go");
+            return Response.status(Status.OK).entity(customerOrdersRsp).build();
+        } catch (CustomerNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.UNAUTHORIZED).entity(errorRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("retrieveOrderById")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerOrder(@QueryParam("CustomerOrderId") String CustomerOrderId) {
+        try {
+            CustomerOrder customerOrder = customerOrderSessionBean.retrieveCustomerOrderById(Long.parseLong(CustomerOrderId), true);
+            List<LineItem> item = customerOrder.getLineItems();
+            
+            CustomerOrderRsp customerOrderRsp = new CustomerOrderRsp(item);
+            System.out.println("go");
+            return Response.status(Status.OK).entity(customerOrderRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
 
     private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
         try {
@@ -276,6 +332,16 @@ public class CustomerResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (ComputerPartSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ComputerPartSessionBean!ejb.session.stateless.ComputerPartSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    
+    private CustomerOrderSessionBeanLocal lookupCustomerOrderSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (CustomerOrderSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/CustomerOrderSessionBean!ejb.session.stateless.CustomerOrderSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
