@@ -228,7 +228,14 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
     public void checkEnabledSwitch(AjaxBehaviorEvent event) {
         if (currentIsEnabled && !finalModelCheck()) {
             currentIsEnabled = false;
-            //FacesContext.getCurrentInstance().addMessage("formModel:currentIsEnabled", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model is incomplete or has incompatibilities", null));
+            currentModel.setIsEnabled(false);
+        } else {
+            currentModel.setIsEnabled(currentIsEnabled);
+        }
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
+        } catch (PreBuiltComputerSetModelNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
         }
     }
 
@@ -292,28 +299,35 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
         if (fieldName.equals("currentCpu") && currentModel.getCpu() == null) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "CPU is required", null));
         } else if (fieldName.equals("currentMotherboard") && currentModel.getMotherboard() == null) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Motherboard is required", null));
         } else if (fieldName.equals("currentCompCase") && currentModel.getCompCase() == null) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Computer Case is required", null));
         } else if (fieldName.equals("currentPsu") && currentModel.getPsu() == null) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "Power Supply is required", null));
         }
         updatePrice();
         try {
-            preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
             if (partToAdd != null) {
                 preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, partToAdd.getProductId());
             }
         } catch (IncompatiblePartException ex) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
         } catch (ComputerPartNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
+        }
+        try {
+            preBuiltComputerSetModelSessionBeanLocal.updatePreBuiltComputerSetModel(currentModel);
         } catch (PreBuiltComputerSetModelNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Model does not exist!", null));
         }
@@ -362,6 +376,8 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
             try {
                 preBuiltComputerSetModelSessionBeanLocal.compatibilityCheck(currentModel, partToAdd.getProductId());
             } catch (IncompatiblePartException ex) {
+                currentIsEnabled = false;
+                currentModel.setIsEnabled(false);
                 FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, ex.getMessage(), null));
             } catch (ComputerPartNotFoundException ex) {
                 FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Computer part does not exist!", null));
@@ -369,6 +385,7 @@ public class PreBuiltComputerSetManagementManagedBean implements Serializable {
         }
         if (fieldName.equals("currentRams") && currentModel.getRams().isEmpty()) {
             currentIsEnabled = false;
+            currentModel.setIsEnabled(false);
             FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(FacesMessage.SEVERITY_WARN, "RAM is required", null));
         }
         updatePrice();
