@@ -23,6 +23,13 @@ export class CouponService {
       );
   }
 
+  validCoupons(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/validCoupons").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

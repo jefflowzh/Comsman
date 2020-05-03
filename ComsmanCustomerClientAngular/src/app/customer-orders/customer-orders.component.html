@@ -21,7 +21,10 @@
                     <td>{{Order.totalPrice}}</td>
                     <td>{{Order.billingAddress}}</td>
                     <td>{{Order.orderStatusEnum}}</td>
-                    <td></td>
+                    <td>
+                        <button pButton type="button" label="View Details" 
+                        [routerLink]="['/viewOrder', Order.customerOrderId]"></button>
+                    </td>
 
                 </tr>
 

@@ -30,6 +30,7 @@ export class ViewProductComponent implements OnInit {
     this.productService.retrieveProductById(productId).subscribe(
       response => {
         this.product = response.product;
+        console.log(this.product);
       },
       error => {
         console.log('********** ViewProductComponent.ts: ' + error);

@@ -5,6 +5,7 @@
  */
 package ws.restful.resources;
 
+import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import entity.Customer;
 import entity.CustomerOrder;
@@ -31,6 +32,7 @@ import util.exception.CustomerNotFoundException;
 import util.exception.InvalidLoginCredentialException;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
+import ws.restful.model.CustomerOrderRsp;
 import ws.restful.model.CustomerOrdersRsp;
 import ws.restful.model.CustomerRegistrationReq;
 import ws.restful.model.CustomerRegistrationRsp;
@@ -46,6 +48,7 @@ import ws.restful.model.UpdateCustomerRsp;
 public class CustomerResource {
 
     CustomerSessionBeanLocal customerSessionBean = lookupCustomerSessionBeanLocal();
+    CustomerOrderSessionBeanLocal customerOrderSessionBean = lookupCustomerOrderSessionBeanLocal();
 
     @Context
     private UriInfo context;
@@ -169,16 +172,8 @@ public class CustomerResource {
             Customer customer = customerSessionBean.retrieveCustomerByEmail(email, Boolean.FALSE, Boolean.TRUE);
             List<CustomerOrder> orders = customer.getOrders();
             for(CustomerOrder order : orders){
-                  order.getCustomer().getOrders().clear();
-                  System.out.println("get order");
-                  order.getCustomer().getCart().clear();
-                  System.out.println("get cart");
-                  order.getCustomer().getCurrComputerBuild().clear();
-                  System.out.println("get computer build");
-                  //order.getDeliveryAssignedTo().getAssignedComputerSets().clear();
-                  System.out.println("get assigned computer set");
-                  //order.getDeliveryAssignedTo().getDeliveries().clear(); 
-                  System.out.println("get deliveries");
+                  order.setCustomer(null);
+                  
             }
             CustomerOrdersRsp customerOrdersRsp = new CustomerOrdersRsp(orders);
             System.out.println("go");
@@ -191,11 +186,39 @@ public class CustomerResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @Path("retrieveOrderById")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response customerOrder(@QueryParam("CustomerOrderId") String CustomerOrderId) {
+        try {
+            CustomerOrder customerOrder = customerOrderSessionBean.retrieveCustomerOrderById(Long.parseLong(CustomerOrderId), true);
+            List<LineItem> item = customerOrder.getLineItems();
+            
+            CustomerOrderRsp customerOrderRsp = new CustomerOrderRsp(item);
+            System.out.println("go");
+            return Response.status(Status.OK).entity(customerOrderRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();
             return (CustomerSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/CustomerSessionBean!ejb.session.stateless.CustomerSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    
+    private CustomerOrderSessionBeanLocal lookupCustomerOrderSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (CustomerOrderSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/CustomerOrderSessionBean!ejb.session.stateless.CustomerOrderSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -19,21 +19,21 @@ export class CustomerOrdersComponent implements OnInit {
   customer: Customer;
   lineitems: LineItem[] = []
   customerOrders: CustomerOrder[] = [];
-  today = new Date()
-  coupon: Coupon = null
-  co:CustomerOrder  = new CustomerOrder(
-    1,
-    this.today,
-    this.today,
-    100,
-    true,
-    "home",
-    "home",
-    this.lineitems,
-    this.customer,
-    this.coupon,
-    OrderStatusEnum.COMPLETED
-  );
+  // today = new Date()
+  // coupon: Coupon = null
+  // co:CustomerOrder  = new CustomerOrder(
+  //   1,
+  //   this.today,
+  //   this.today,
+  //   100,
+  //   true,
+  //   "home",
+  //   "home",
+  //   this.lineitems,
+  //   this.customer,
+  //   this.coupon,
+  //   OrderStatusEnum.COMPLETED
+  // );
   
   sidenavItems: MenuItem[];
 
@@ -47,8 +47,8 @@ export class CustomerOrdersComponent implements OnInit {
       response => {
         this.customerOrders = response.orders;
         console.log(this.customerOrders);
-        
-        this.customerOrders.push(this.co);
+        //this.sessionService.setCurrentOrder(this.customerOrders);
+        //this.customerOrders.push(this.co);
       }, error => {
         // this.router.navigate(["/customerLogin"]);
         console.log('********** CustomerLoginComponent.ts customerOrders(): ' + error);
@@ -60,7 +60,7 @@ export class CustomerOrdersComponent implements OnInit {
       label: 'Manage My Account',
       items: [
         { label: 'Account Details', icon: 'pi pi-user', routerLink: ['/customerDetails'] },
-        { label: 'Redeem Coupon', icon: 'pi pi-ticket', routerLink: ['/customerOrders'] },
+        {  label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
       ]
     },
     {
@@ -78,7 +78,6 @@ export class CustomerOrdersComponent implements OnInit {
 
     
   }
-
   
 
 }

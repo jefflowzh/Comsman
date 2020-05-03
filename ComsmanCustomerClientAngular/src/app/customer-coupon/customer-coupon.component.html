@@ -1,0 +1,36 @@
+<div class="row" style="margin-right: 0; width: 100%;">
+    <div class="col-md-2" >
+        <p-menu [model]="sidenavItems"></p-menu>
+    </div>
+
+
+    <div class="col-md-10">
+        <p-table [value] = "coupons">
+            <ng-template pTemplate = "header">
+                <tr>
+                    <th>Coupon Code</th>
+                    <th>Coupon Start Date</th>
+                    <th>Coupon End Date</th>
+                    <th>Points Required</th>
+                    <th>Coupon Type</th>
+                    <th>View details</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-coupon>
+                <tr>
+                    <td>{{coupon.code}}</td>
+                    <td>{{coupon.startDate}}</td>
+                    <td>{{coupon.endDate}}</td>
+                    <td>{{coupon.loyaltyPointsRequired}}</td>
+                    <td>{{coupon.couponType}}</td>
+                    <td>
+                        <button pButton type="button" label="View Details" 
+                        [routerLink]="['/viewOrder', Order.customerOrderId]"></button>
+                    </td>
+
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+</div>

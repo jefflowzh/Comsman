@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.Coupon;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.CouponInvalidException;
 import util.exception.CouponNotFoundException;
@@ -17,5 +18,7 @@ public interface CouponSessionBeanLocal {
     public void deleteCoupon(Long couponId) throws CouponNotFoundException;
 
     public Coupon checkCouponByCode(String code) throws CouponInvalidException, CouponNotFoundException;
+
+    public List<Coupon> retrieveAllValidCoupon() throws CouponNotFoundException;
   
 }

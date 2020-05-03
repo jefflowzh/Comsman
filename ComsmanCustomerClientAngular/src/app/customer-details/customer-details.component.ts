@@ -32,7 +32,7 @@ export class CustomerDetailsComponent implements OnInit {
       label: 'Manage My Account',
       items: [
         { label: 'Account Details', icon: 'pi pi-user', routerLink: ['/customerDetails'] },
-        { label: 'Redeem Coupon', icon: 'pi pi-ticket', routerLink: ['/customerOrders'] },
+        { label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
       ]
     },
     {

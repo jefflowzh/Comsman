@@ -19,6 +19,8 @@ import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-s
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -34,6 +36,8 @@ const routes: Routes = [
   { path: 'customerCart', component: CustomerCartComponent },
   { path: 'customerDetails', component: CustomerDetailsComponent },
   { path: 'customerOrders', component: CustomerOrdersComponent },
+  { path: 'customerCoupons', component: CustomerCouponComponent },
+  { path: 'viewOrder/:customerOrderId', component: ViewOrderComponent },
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
