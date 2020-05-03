@@ -19,7 +19,8 @@ export class CustomerCouponComponent implements OnInit {
   ngOnInit() {
     this.couponService.validCoupons().subscribe(
       response => {
-        this.coupons = response.valid;
+        // console.logdamn(response.)
+        this.coupons = response.coupons;
         console.log(this.coupons);
         //this.sessionService.setCurrentOrder(this.customerOrders);
         //this.customerOrders.push(this.co);

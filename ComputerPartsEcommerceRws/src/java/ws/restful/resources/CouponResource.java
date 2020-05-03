@@ -68,7 +68,6 @@ public class CouponResource {
     
     @Path("validCoupons")
     @GET
-    @Consumes()
     @Produces(MediaType.APPLICATION_JSON)
     public Response validCoupons() {
         try {

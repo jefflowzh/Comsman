@@ -41,6 +41,7 @@ public class CouponSessionBean implements CouponSessionBeanLocal {
     public List<Coupon> retrieveAllValidCoupon() throws CouponNotFoundException {
         Query query = em.createQuery("SELECT c FROM Coupon c");
         List<Coupon> coupons =  query.getResultList();
+        System.out.println("********************************* 1 " + coupons);
         List<Coupon> validCoupons = new ArrayList();
         Date currDate = new Date();
         for(Coupon coupon : coupons){
@@ -48,6 +49,7 @@ public class CouponSessionBean implements CouponSessionBeanLocal {
                 validCoupons.add(coupon);
             } 
         }
+        System.out.println("********************************* 2 " + validCoupons);
         return validCoupons;
     }
     

@@ -13,7 +13,7 @@
                     <th>Coupon End Date</th>
                     <th>Points Required</th>
                     <th>Coupon Type</th>
-                    <th>View details</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-coupon>
@@ -21,13 +21,17 @@
                     <td>{{coupon.code}}</td>
                     <td>{{coupon.startDate}}</td>
                     <td>{{coupon.endDate}}</td>
-                    <td>{{coupon.loyaltyPointsRequired}}</td>
+                    <td>{{coupon.loyaltyPointRequired}}</td>
                     <td>{{coupon.couponType}}</td>
-                    <td>
-                        <button pButton type="button" label="View Details" 
-                        [routerLink]="['/viewOrder', Order.customerOrderId]"></button>
+                    <td *ngIf="coupon.couponType == 'PERCENTAGE'">
+                        {{coupon.percentageRate}}
                     </td>
-
+                    <td *ngIf="coupon.couponType == 'FLATAMOUNT'">
+                        {{coupon.flatAmount}}
+                    </td>
+                    <td *ngIf="coupon.couponType == 'FREEDELIVERY'">
+                        Free delivery
+                    </td>
                 </tr>
 
             </ng-template>
