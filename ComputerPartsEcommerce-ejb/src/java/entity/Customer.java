@@ -37,6 +37,7 @@ public class Customer extends User implements Serializable {
         cart = new ArrayList<>();
         loyaltyPoints = 0;
         orders = new ArrayList<>();
+        currComputerBuild = new ArrayList<>();
     }
     
     public Customer(String cardNumber, String ccv, String firstName, String lastName, String address, String email, String password, String contactNumber) {
@@ -47,6 +48,7 @@ public class Customer extends User implements Serializable {
         cart = new ArrayList<>();
         loyaltyPoints = 0;
         orders = new ArrayList<>();
+        currComputerBuild = new ArrayList<>();
     }
     
     public String getCardNumber() {
