@@ -81,9 +81,6 @@ public class ComputerSet implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Integer warrentyLengthInYears;
-    @Column(nullable = false)
-    @NotNull
-    private Boolean isAmatuer;
     @ManyToOne
     @JoinColumn
     private Staff assemblyAssignedTo;
@@ -126,7 +123,6 @@ public class ComputerSet implements Serializable {
         this.psu = psu;
         this.compCase = compCase;
         this.warrentyLengthInYears = warrentyLengthInYears;
-        this.isAmatuer = isAmatuer;
         this.assemblyComplete = false;
         this.lineItem = lineItem;
     }
@@ -217,14 +213,6 @@ public class ComputerSet implements Serializable {
 
     public void setWarrentyLengthInYears(Integer warrentyLengthInYears) {
         this.warrentyLengthInYears = warrentyLengthInYears;
-    }
-
-    public Boolean getIsAmatuer() {
-        return isAmatuer;
-    }
-
-    public void setIsAmatuer(Boolean isAmatuer) {
-        this.isAmatuer = isAmatuer;
     }
 
     public Staff getAssemblyAssignedTo() {

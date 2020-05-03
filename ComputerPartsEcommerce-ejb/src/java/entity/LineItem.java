@@ -37,10 +37,17 @@ public class LineItem implements Serializable {
         this.quantity = quantity;
     }
     
-    // In the case of computer set, because you can't create a computer set before creating a line item first
-    public LineItem(Integer quantity) {
+//    // In the case of computer set, because you can't create a computer set before creating a line item first
+//    public LineItem(Integer quantity) {
+//        this();
+//        
+//        this.quantity = quantity;
+//    }
+    
+   public LineItem(ComputerSet computerSet, Integer quantity) {
         this();
         
+        this.computerSet = computerSet;
         this.quantity = quantity;
     }
     

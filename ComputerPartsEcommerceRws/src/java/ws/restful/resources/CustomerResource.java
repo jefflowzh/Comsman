@@ -5,8 +5,28 @@
  */
 package ws.restful.resources;
 
+import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
+import ejb.session.stateless.LineItemSessionBeanLocal;
+import ejb.session.stateless.ProductSessionBeanLocal;
+import entity.CPU;
+import entity.CPUAirCooler;
+import entity.CPUWaterCooler;
+import entity.ComputerCase;
+import entity.ComputerPart;
+import entity.ComputerSet;
 import entity.Customer;
+import entity.CustomerOrder;
+import entity.GPU;
+import entity.HDD;
+import entity.LineItem;
+import entity.MotherBoard;
+import entity.PowerSupply;
+import entity.Product;
+import entity.RAM;
+import entity.SSD;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -41,7 +61,15 @@ import ws.restful.model.UpdateCustomerRsp;
 @Path("Customer")
 public class CustomerResource {
 
+    ComputerPartSessionBeanLocal computerPartSessionBean = lookupComputerPartSessionBeanLocal();
+
+    ProductSessionBeanLocal productSessionBean = lookupProductSessionBeanLocal();
+
+    LineItemSessionBeanLocal lineItemSessionBean = lookupLineItemSessionBeanLocal();
+
     CustomerSessionBeanLocal customerSessionBean = lookupCustomerSessionBeanLocal();
+    
+    
 
     @Context
     private UriInfo context;
@@ -95,7 +123,17 @@ public class CustomerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCustomerDetails(UpdateCustomerReq updateCustomerReq) {
         try {
-            customerSessionBean.updateCustomer(updateCustomerReq.getCustomer(), true, false, false, false);
+            Customer customerToUpdate = customerSessionBean.retrieveCustomerById(updateCustomerReq.getUserId(), false, false);
+
+            customerToUpdate.setFirstName(updateCustomerReq.getFirstName());
+            customerToUpdate.setLastName(updateCustomerReq.getLastName());
+            customerToUpdate.setAddress(updateCustomerReq.getAddress());
+            customerToUpdate.setEmail(updateCustomerReq.getEmail());
+            customerToUpdate.setContactNumber(updateCustomerReq.getContactNumber());
+            customerToUpdate.setCardNumber(updateCustomerReq.getCardNumber());
+            customerToUpdate.setCcv(updateCustomerReq.getCcv());
+
+            customerSessionBean.updateCustomerMerge(customerToUpdate);
             return Response.status(Status.OK).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -109,7 +147,64 @@ public class CustomerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCustomerCart(UpdateCustomerReq updateCustomerReq) {
         try {
-            customerSessionBean.updateCustomer(updateCustomerReq.getCustomer(), false, false, true, false);
+            
+            // Create new cart from all the ids
+            
+            List<LineItem> newCart = new ArrayList<>();
+            
+            // update cart products
+            if (updateCustomerReq.getCartProductIds().size() > 0) {
+                for (int i = 0; i < updateCustomerReq.getCartProductIds().size(); i++) {
+                    Product product = productSessionBean.retrieveProductById(updateCustomerReq.getCartProductIds().get(i));
+                    LineItem newLineItem = new LineItem(product, updateCustomerReq.getCartProductQuantities().get(i));
+                    lineItemSessionBean.createNewLineItem(newLineItem);
+                    newCart.add(newLineItem);
+                }
+            }
+            
+            // update cart computer sets
+            if (updateCustomerReq.getCartComputerSetsPartIds().size() > 0) {
+                // for each list of part ids sent back
+                for (int i = 0; i < updateCustomerReq.getCartComputerSetsPartIds().size(); i++) {
+                    ComputerSet newComputerSet = new ComputerSet();
+                    
+                    // for each partId, retrieve part and put them in a computer set
+                    for (int j = 0; j < updateCustomerReq.getCartComputerSetsPartIds().get(i).size(); j++) {
+                        Long partId = updateCustomerReq.getCartComputerSetsPartIds().get(i).get(j);
+                        ComputerPart computerPart = computerPartSessionBean.retrieveComputerPartById(partId);
+                        if (computerPart instanceof CPU) {
+                            newComputerSet.setCpu((CPU) computerPart);
+                        } else if (computerPart instanceof CPUAirCooler) {
+                            newComputerSet.setAirCooler((CPUAirCooler) computerPart);
+                        } else if (computerPart instanceof CPUWaterCooler) {
+                            newComputerSet.setWaterCooler((CPUWaterCooler) computerPart);
+                        } else if (computerPart instanceof ComputerCase) {
+                            newComputerSet.setCompCase((ComputerCase) computerPart);
+                        } else if (computerPart instanceof GPU) {
+                            newComputerSet.getGpus().add((GPU) computerPart);
+                        } else if (computerPart instanceof HDD) {
+                            newComputerSet.getHdds().add((HDD) computerPart);
+                        } else if (computerPart instanceof MotherBoard) {
+                            newComputerSet.setMotherBoard((MotherBoard) computerPart);
+                        } else if (computerPart instanceof PowerSupply) {
+                            newComputerSet.setPsu((PowerSupply) computerPart);
+                        } else if (computerPart instanceof RAM) {
+                            newComputerSet.getRams().add((RAM) computerPart);
+                        } else if (computerPart instanceof SSD) {
+                            newComputerSet.getSsds().add((SSD) computerPart);
+                        }
+                    }
+                    
+                    LineItem newLineItem = new LineItem(newComputerSet, updateCustomerReq.getCartComputerSetsQuantities().get(i));
+                    lineItemSessionBean.createNewLineItem(newLineItem);
+                    newCart.add(newLineItem);
+                }
+            }
+            
+            Customer customerToUpdate = customerSessionBean.retrieveCustomerById(updateCustomerReq.getUserId(), false, false);
+            customerToUpdate.setCart(newCart);
+            
+            customerSessionBean.updateCustomerMerge(customerToUpdate);
             return Response.status(Status.OK).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -131,26 +226,56 @@ public class CustomerResource {
 //        }
 //    }
     
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response customerUpdate(UpdateCustomerReq customerUpdateReq){
-        try{
-            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), true, false, false, false);
-            Customer updatedCustomer = this.customerSessionBean.retrieveCustomerById(customerUpdateReq.getCustomer().getUserId(), true , true);
-            UpdateCustomerRsp cur =  new UpdateCustomerRsp(updatedCustomer);
-            return Response.status(Status.OK).entity(cur).build();
-        }
-        catch(Exception ex){
-            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
-        }
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response customerUpdate(UpdateCustomerReq customerUpdateReq){
+//        try{
+//            customerSessionBean.updateCustomer(customerUpdateReq.getCustomer(), true, false, false, false);
+//            Customer updatedCustomer = this.customerSessionBean.retrieveCustomerById(customerUpdateReq.getCustomer().getUserId(), true , true);
+//            UpdateCustomerRsp cur =  new UpdateCustomerRsp(updatedCustomer);
+//            return Response.status(Status.OK).entity(cur).build();
+//        }
+//        catch(Exception ex){
+//            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+//            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+//        }
+//    }
 
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();
             return (CustomerSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/CustomerSessionBean!ejb.session.stateless.CustomerSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private LineItemSessionBeanLocal lookupLineItemSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (LineItemSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/LineItemSessionBean!ejb.session.stateless.LineItemSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (ProductSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ProductSessionBean!ejb.session.stateless.ProductSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ComputerPartSessionBeanLocal lookupComputerPartSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (ComputerPartSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ComputerPartSessionBean!ejb.session.stateless.ComputerPartSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

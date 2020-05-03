@@ -7,6 +7,7 @@ package ws.restful.resources;
 
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
+import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
@@ -17,6 +18,7 @@ import entity.GPU;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
+import entity.PreBuiltComputerSetModel;
 import entity.Product;
 import entity.RAM;
 import java.util.ArrayList;
@@ -38,8 +40,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import util.exception.ProductNotFoundException;
 import ws.restful.model.ErrorRsp;
-import ws.restful.model.RetrieveAllPeripheralsRsp;
 import ws.restful.model.RetrieveIndividualProductRsp;
+import ws.restful.model.RetrievePreBuiltComputerModelsRsp;
 import ws.restful.model.RetrieveProductsRsp;
 
 /**
@@ -50,12 +52,13 @@ import ws.restful.model.RetrieveProductsRsp;
 @Path("Product")
 public class ProductResource {
 
+    PreBuiltComputerSetModelSessionBeanLocal preBuiltComputerSetModelSessionBeanLocal = lookupPreBuiltComputerSetModelSessionBeanLocal();
+
     ComputerPartSessionBeanLocal computerPartSessionBeanLocal = lookupComputerPartSessionBeanLocal();
 
     PeripheralSessionBeanLocal peripheralSessionBeanLocal = lookupPeripheralSessionBeanLocal();
 
     ProductSessionBeanLocal productSessionBeanLocal = lookupProductSessionBeanLocal();
-    
 
     @Context
     private UriInfo context;
@@ -199,13 +202,18 @@ public class ProductResource {
         }
     }
 
-    /**
-     * PUT method for updating or creating an instance of ProductResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    @Path("retrievePreBuiltComputerSetModels")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrievePreBuiltComputerSetModels() {        
+        try{
+            List<PreBuiltComputerSetModel> preBuiltComputerSetModels = preBuiltComputerSetModelSessionBeanLocal.retrieveAllPreBuiltComputerSetModels();
+            RetrievePreBuiltComputerModelsRsp retrievePreBuiltComputerModelsRsp = new RetrievePreBuiltComputerModelsRsp(preBuiltComputerSetModels); 
+            return Response.status(Status.OK).entity(retrievePreBuiltComputerModelsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
     }
 
     private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
@@ -232,6 +240,16 @@ public class ProductResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (ComputerPartSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ComputerPartSessionBean!ejb.session.stateless.ComputerPartSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private PreBuiltComputerSetModelSessionBeanLocal lookupPreBuiltComputerSetModelSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (PreBuiltComputerSetModelSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/PreBuiltComputerSetModelSessionBean!ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

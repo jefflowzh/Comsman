@@ -13,8 +13,8 @@ export class ViewAllCPUComponent implements OnInit {
   allCPU: CPU[];
   filteredCPU: CPU[];
 
- 
-  manufacturers: string[] =[]
+
+  manufacturers: string[] = []
   selectedManufacturers: string[] = []
 
   coreCount: string[] = []
@@ -38,7 +38,7 @@ export class ViewAllCPUComponent implements OnInit {
   AllSocketCheckbox: boolean = true;
   AllHasIntergratedGraphicsCheckbox: boolean = true;
   AllIncludesCpuCoolerCheckbox: boolean = true;
-    
+
 
   constructor(private productService: ProductService) { }
 
@@ -61,12 +61,12 @@ export class ViewAllCPUComponent implements OnInit {
             this.coreCount.push(cpu.coreCount.toString())
           }
 
-          
+
           if (this.TDP.length == 0 || !this.TDP.includes(cpu.TDP.toString())) {
             this.TDP.push(cpu.TDP.toString())
           }
 
-          
+
           if (this.socket.length == 0 || !this.socket.includes(cpu.socket.toString())) {
             this.socket.push(cpu.socket.toString())
           }
@@ -89,9 +89,9 @@ export class ViewAllCPUComponent implements OnInit {
           this.selectedManufacturers = this.manufacturers;
           this.selectedCoreCount = this.coreCount
           this.selectedTDP = this.TDP
-          this.selectedSocket =  this.socket
+          this.selectedSocket = this.socket
           this.selectedHasIntergratedGraphics = this.hasIntergratedGraphics
-          this.selectedIncludesCpuCooler = this.includesCpuCooler 
+          this.selectedIncludesCpuCooler = this.includesCpuCooler
         }
       },
       error => {
@@ -115,7 +115,7 @@ export class ViewAllCPUComponent implements OnInit {
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
     //   this.AllManufacturersCheckbox = false
-      
+
     // }
     //corecount
     if (this.selectedCoreCount.length == 0) {
@@ -181,7 +181,7 @@ export class ViewAllCPUComponent implements OnInit {
 
   updateFilters() {
     for (let CPU of this.allCPU) {
-      if (!this.selectedManufacturers.includes(CPU.manufacturer)&& this.filteredCPU.indexOf(CPU) < 0) {
+      if (!this.selectedManufacturers.includes(CPU.manufacturer) && this.filteredCPU.indexOf(CPU) < 0) {
         continue;
       }
       if (!this.selectedCoreCount.includes(CPU.coreCount.toString()) && this.filteredCPU.indexOf(CPU) < 0) {
@@ -266,6 +266,6 @@ export class ViewAllCPUComponent implements OnInit {
     this.filteredCPU = [];
     this.updateFilters();
   }
-  
+
 
 }

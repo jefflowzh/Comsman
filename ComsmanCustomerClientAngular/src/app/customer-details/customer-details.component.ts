@@ -28,19 +28,36 @@ export class CustomerDetailsComponent implements OnInit {
     this.customer = this.sessionService.getCurrentCustomer();
   }
 
+  // updateCustomerDetails(customerForm: NgForm) {
+  //   this.submitted = true;
+  //   if (customerForm.valid) {
+  //     this.customerService.customerUpdate(this.customer).subscribe(
+  //       response => {
+  //         let customer: Customer = response.customer;
+  //         if (customer != null) {
+  //           this.sessionService.setIsLogin(true);
+  //           this.sessionService.setCurrentCustomer(customer);
+  //           this.updateError = false;
+  //           this.updateSuccess = true;
+  //           console.log("update customer details success!!")
+  //         }
+  //       }, error => {
+  //         this.updateError = true;
+  //         this.updateSuccess = false;
+  //       }
+  //     );
+
+  //   }
+  // }
+
   updateCustomerDetails(customerForm: NgForm) {
     this.submitted = true;
     if (customerForm.valid) {
-      this.customerService.customerUpdate(this.customer).subscribe(
+      this.customerService.updateCustomerDetails(this.customer).subscribe(
         response => {
-          let customer: Customer = response.customer;
-          if (customer != null) {
-            this.sessionService.setIsLogin(true);
-            this.sessionService.setCurrentCustomer(customer);
-            this.updateError = false;
-            this.updateSuccess = true;
-            console.log("update customer details success!!")
-          }
+          this.updateError = false;
+          this.updateSuccess = true;
+          console.log("update customer details success!!")
         }, error => {
           this.updateError = true;
           this.updateSuccess = false;

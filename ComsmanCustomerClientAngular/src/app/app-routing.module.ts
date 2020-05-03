@@ -18,6 +18,7 @@ import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-s
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
+import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },
   { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
   { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
-  { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent }
+  { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent },
+  { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent }
 ];
 
 @NgModule({

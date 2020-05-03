@@ -179,7 +179,6 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         
     }
     
-    
     public CPU retrieveCPUById(Long id) throws ComputerPartNotFoundException {
         ComputerPart computerPart = em.find(CPU.class, id);
         if (computerPart != null && computerPart instanceof CPU){
@@ -310,19 +309,17 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
         }
     }
     
-    public ComputerPart retrieveComputerPartById(Long id) throws ComputerPartNotFoundException
-    {
-        ComputerPart computerPart = em.find(SSD.class, id);
-        if (computerPart != null){
+    @Override
+    public ComputerPart retrieveComputerPartById(Long computerPartId) throws ComputerPartNotFoundException {
+        ComputerPart computerPart = em.find(ComputerPart.class, computerPartId);
+
+        if (computerPart != null) {
             return computerPart;
-        }
-        else{
-            throw new ComputerPartNotFoundException("Part Id: " + id + " cannot be found");
+        } else {
+            throw new ComputerPartNotFoundException("Computer Part ID " + computerPartId + " does not exist!");
         }
     }
-    
-  
-    
+   
     @Override
     public Long createNewComputerPart(ComputerPart newComputerPart) {
         em.persist(newComputerPart);

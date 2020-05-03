@@ -8,7 +8,8 @@
     <br>
 
     <div class="ui-g" style="text-align: center;">
-        <div class="ui-g-4">
+
+        <div class="ui-g-4" *ngIf="budgetTierModel && budgetTierModel.isEnabled">
             <h2>Budget</h2>
             <div style="color: gray">"For the frugal"</div>
 
@@ -17,20 +18,26 @@
             <div><img src="https://www.eteknix.com/wp-content/uploads/2016/07/custom-pc-1.png" style="width: 100%;">
             </div>
             <br>
-            <div>CPU</div>
-            <div>CPU COOLER</div>
-            <div>COMPUTER CASE</div>
-            <div>GPU</div>
-            <div>INTERNAL STORAGE</div>
-            <div>MOTHERBOARD</div>
-            <div>POWER SUPPLY</div>
-            <div>RAM</div>
+            <div>{{budgetTierModel.cpu.name}}</div>
+            <div *ngIf="budgetTierModel.waterCooler">{{budgetTierModel.waterCooler.name}}</div>
+            <div *ngIf="budgetTierModel.airCooler">{{budgetTierModel.airCooler.name}}</div>
+            <div>{{budgetTierModel.compCase.name}}</div>
+            <div *ngIf="budgetTierModel.gpus">{{budgetTierModel.gpus[0].name}}</div>
+            <div *ngIf="budgetTierModel.hdds">{{budgetTierModel.hdds[0].name}}</div>
+            <div *ngIf="budgetTierModel.ssds">{{budgetTierModel.ssds[0].name}}</div>
+            <div>{{budgetTierModel.motherboard.name}}</div>
+            <div>{{budgetTierModel.psu.name}}</div>
+            <div *ngIf="budgetTierModel.rams">{{budgetTierModel.rams[0].name}}</div>
+            <br>
+            <div><b>From S${{budgetTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage']"></button>
+            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/budget']"></button>
         </div>
-        <div class="ui-g-4" style="border-left: 3px solid gray; border-right: 3px solid gray;">
+
+        <div class="ui-g-4" style="border-left: 3px solid gray; border-right: 3px solid gray;"
+            *ngIf="regularTierModel && regularTierModel.isEnabled">
             <h2>Regular</h2>
             <div style="color: gray">"All around performance"</div>
 
@@ -40,20 +47,25 @@
                     style="width: 100%; padding-bottom: 3%;">
             </div>
             <br>
-            <div>CPU</div>
-            <div>CPU COOLER</div>
-            <div>COMPUTER CASE</div>
-            <div>GPU</div>
-            <div>INTERNAL STORAGE</div>
-            <div>MOTHERBOARD</div>
-            <div>POWER SUPPLY</div>
-            <div>RAM</div>
+            <div>{{regularTierModel.cpu.name}}</div>
+            <div *ngIf="regularTierModel.waterCooler">{{regularTierModel.waterCooler.name}}</div>
+            <div *ngIf="regularTierModel.airCooler">{{regularTierModel.airCooler.name}}</div>
+            <div>{{regularTierModel.compCase.name}}</div>
+            <div *ngIf="regularTierModel.gpus">{{regularTierModel.gpus[0].name}}</div>
+            <div *ngIf="regularTierModel.hdds">{{regularTierModel.hdds[0].name}}</div>
+            <div *ngIf="regularTierModel.ssds">{{regularTierModel.ssds[0].name}}</div>
+            <div>{{regularTierModel.motherboard.name}}</div>
+            <div>{{regularTierModel.psu.name}}</div>
+            <div *ngIf="regularTierModel.rams">{{regularTierModel.rams[0].name}}</div>
+            <br>
+            <div><b>From S${{regularTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage']"></button>
+            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/regular']"></button>
         </div>
-        <div class="ui-g-4">
+
+        <div class="ui-g-4" *ngIf="premiumTierModel && premiumTierModel.isEnabled">
             <h2>Premium</h2>
             <div style="color: gray">"Going all out"</div>
 
@@ -62,19 +74,24 @@
             <div><img src="https://pictures.topspeed.com/IMG/crop_webp/201907/origin-s-big-o-platf-1_1600x0.webp"
                     style="width: 100%; max-height: 243px;"></div>
             <br>
-            <div>CPU</div>
-            <div>CPU COOLER</div>
-            <div>COMPUTER CASE</div>
-            <div>GPU</div>
-            <div>INTERNAL STORAGE</div>
-            <div>MOTHERBOARD</div>
-            <div>POWER SUPPLY</div>
-            <div>RAM</div>
+            <div>{{premiumTierModel.cpu.name}}</div>
+            <div *ngIf="premiumTierModel.waterCooler">{{premiumTierModel.waterCooler.name}}</div>
+            <div *ngIf="premiumTierModel.airCooler">{{premiumTierModel.airCooler.name}}</div>
+            <div>{{premiumTierModel.compCase.name}}</div>
+            <div *ngIf="premiumTierModel.gpus">{{premiumTierModel.gpus[0].name}}</div>
+            <div *ngIf="premiumTierModel.hdds">{{premiumTierModel.hdds[0].name}}</div>
+            <div *ngIf="premiumTierModel.ssds">{{premiumTierModel.ssds[0].name}}</div>
+            <div>{{premiumTierModel.motherboard.name}}</div>
+            <div>{{premiumTierModel.psu.name}}</div>
+            <div *ngIf="premiumTierModel.rams">{{premiumTierModel.rams[0].name}}</div>
+            <br>
+            <div><b>From S${{premiumTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage']"></button>
+            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/premium']"></button>
         </div>
+
     </div>
 
     <br>

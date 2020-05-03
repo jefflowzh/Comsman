@@ -27,4 +27,6 @@ public interface CustomerSessionBeanLocal {
 
     public Customer customerLogin(String email, String password) throws InvalidLoginCredentialException;
 
+    public void updateCustomerMerge(Customer updatedCustomer);
+
 }

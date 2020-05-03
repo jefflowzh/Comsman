@@ -32,7 +32,7 @@ export class IndexComponent implements OnInit {
     {
       label: 'Peripherals',
       items: [
-        { label: 'Peripherals', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllProducts/Peripheral'] },
+        { label: 'Peripherals', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/viewAllPeripherals'] },
       ]
     },
     {

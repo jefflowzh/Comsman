@@ -19,11 +19,11 @@ export class ComputerSet {
     cpuAirCooler: CPUAirCooler;
     cpuWaterCooler: CPUWaterCooler;
     computerCase: ComputerCase;
-    gpu: GPU;
-    hdd: HDD;
+    gpus: GPU[];
+    hdds: HDD[];
     motherBoard: MotherBoard;
     powerSupply: PowerSupply;
-    ram: RAM;
-    ssd: SSD;
+    rams: RAM[];
+    ssds: SSD[];
 
 }

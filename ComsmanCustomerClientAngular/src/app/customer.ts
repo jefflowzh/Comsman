@@ -16,7 +16,7 @@ export class Customer {
     cart: LineItem[];
     loyaltyPoints: number;
     orders: CustomerOrder[];
-    currComputerSetParts: ComputerPart[]
+    currComputerBuild: ComputerPart[]
 
     constructor(userId?: number, firstName?: string, lastName?: string, address?: string, email?: string, password?: string,
         contactNumber?: string, isDisabled?: boolean, cardNumber?: string, ccv?: string, loyaltyPoints?: number) {

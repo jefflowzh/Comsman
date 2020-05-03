@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     this.displayLoading = false
     this.sessionService.setIsLogin(false);
 
-    // persist changes (if any) of customer cart and currComputerSetParts to database
+    // persist changes (if any) of customer cart to database
     this.customerService.updateCustomerCart().subscribe(
       response => {
         console.log('********** HeaderComponent.ts updateCustomerCart() successful!');
@@ -40,8 +40,8 @@ export class HeaderComponent implements OnInit {
       }
     );
 
-    // // persist changes (if any) of customer currComputerSetParts to database
-    // this.customerService.updateCustomerBuild(this.sessionService.getCurrentCustomer().currComputerSetParts).subscribe(
+    // // persist changes (if any) of customer currComputerBuild to database
+    // this.customerService.updateCustomerBuild(this.sessionService.getCurrentCustomer().currComputerBuild).subscribe(
     //   response => {
     //     console.log('********** HeaderComponent.ts updateCustomerBuild() successful!');
     //   },

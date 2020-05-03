@@ -7,6 +7,7 @@ import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.PeripheralSessionBeanLocal;
+import ejb.session.stateless.PreBuiltComputerSetModelSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.CPU;
 import entity.CPUAirCooler;
@@ -18,10 +19,13 @@ import entity.Customer;
 import entity.LineItem;
 import entity.CustomerOrder;
 import entity.GPU;
+import entity.HDD;
 import entity.MotherBoard;
 import entity.Peripheral;
 import entity.PowerSupply;
+import entity.PreBuiltComputerSetModel;
 import entity.RAM;
+import entity.SSD;
 import entity.Staff;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import util.enumeration.CouponTypeEnum;
+import util.enumeration.PreBuiltComputerSetTierEnum;
 import util.enumeration.StaffAccessRightEnum;
 import util.exception.CustomerNotFoundException;
 import util.exception.StaffAlreadyExistsException;
@@ -45,6 +50,8 @@ import util.exception.StaffNotFoundException;
 @Startup
 public class DataInitSessionBean {
 
+    @EJB
+    private PreBuiltComputerSetModelSessionBeanLocal preBuiltComputerSetModelSessionBean;
     @EJB
     private PeripheralSessionBeanLocal peripheralSessionBean;
     @EJB
@@ -309,7 +316,67 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler1);
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler2);
             computerPartSessionBean.createNewCPUWaterCooler(testCPUWaterCooler3);
-
+            
+            SSD testSSD1 = new SSD("Manufacturer1", "type1", 1, "formFactor1", "Interface1", true, "ssd1", 1.0, 1, "image1");
+            SSD testSSD2 = new SSD("Manufacturer2", "type2", 2, "formFactor2", "Interface2", false, "ssd2", 2.0, 2, "image2");
+            SSD testSSD3 = new SSD("Manufacturer3", "type3", 3, "formFactor3", "Interface3", true, "ssd3", 3.0, 3, "image3");
+            
+            computerPartSessionBean.createNewSSD(testSSD1);
+            computerPartSessionBean.createNewSSD(testSSD2);
+            computerPartSessionBean.createNewSSD(testSSD3);
+            
+            HDD testHDD1 = new HDD("Manufacturer1", "type1", 1, "formFactor1", "Interface1", "hdd1", 1.0, 1, "image1");
+            HDD testHDD2 = new HDD("Manufacturer2", "type2", 2, "formFactor2", "Interface2", "hdd2", 2.0, 2, "image2");
+            HDD testHDD3 = new HDD("Manufacturer3", "type3", 3, "formFactor3", "Interface3", "hdd3", 3.0, 3, "image3");
+            
+            computerPartSessionBean.createNewHDD(testHDD1);
+            computerPartSessionBean.createNewHDD(testHDD2);
+            computerPartSessionBean.createNewHDD(testHDD3);
+            
+            PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET);
+            p1.setCpu(testCpu);
+            p1.setWaterCooler(testCPUWaterCooler1);
+            p1.setCompCase(testComputerCase1);
+            p1.getGpus().add(testGpu);
+            p1.getHdds().add(testHDD1);
+            p1.getSsds().add(testSSD1);
+            p1.setMotherboard(testmb1);
+            p1.setPsu(testPsu);
+            p1.getRams().add(testRam);
+            p1.getRams().add(testRam1);
+            p1.setPrice(800.0);
+            p1.setIsEnabled(true);
+            preBuiltComputerSetModelSessionBean.createNewPreBuiltComputerSetModel(p1);
+            
+            PreBuiltComputerSetModel p2 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.REGULAR);
+            p2.setCpu(testCpu);
+            p2.setWaterCooler(testCPUWaterCooler1);
+            p2.setCompCase(testComputerCase1);
+            p2.getGpus().add(testGpu);
+            p2.getHdds().add(testHDD1);
+            p2.getSsds().add(testSSD1);
+            p2.setMotherboard(testmb1);
+            p2.setPsu(testPsu);
+            p2.getRams().add(testRam);
+            p2.getRams().add(testRam1);
+            p2.setPrice(1500.0);
+            p2.setIsEnabled(true);
+            preBuiltComputerSetModelSessionBean.createNewPreBuiltComputerSetModel(p2);
+            
+            PreBuiltComputerSetModel p3 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.PREMIUM);
+            p3.setCpu(testCpu);
+            p3.setWaterCooler(testCPUWaterCooler1);
+            p3.setCompCase(testComputerCase1);
+            p3.getGpus().add(testGpu);
+            p3.getHdds().add(testHDD1);
+            p3.getSsds().add(testSSD1);
+            p3.setMotherboard(testmb1);
+            p3.setPsu(testPsu);
+            p3.getRams().add(testRam);
+            p3.getRams().add(testRam1);
+            p3.setPrice(3722.0);
+            p3.setIsEnabled(true);
+            preBuiltComputerSetModelSessionBean.createNewPreBuiltComputerSetModel(p3);
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

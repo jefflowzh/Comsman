@@ -168,6 +168,12 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
        
     }
     
+    // merge changes for customer from angular client after being updated in rws class
+    @Override
+    public void updateCustomerMerge(Customer updatedCustomer) {
+        em.merge(updatedCustomer);
+    }
+    
     @Override
     public void deleteCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customer = retrieveCustomerById(customerId, false, false);

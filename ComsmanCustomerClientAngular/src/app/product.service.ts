@@ -74,6 +74,13 @@ export class ProductService {
       );
   }
 
+  retrievePreBuiltComputerSetModels(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrievePreBuiltComputerSetModels").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

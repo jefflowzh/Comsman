@@ -42,6 +42,7 @@ import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-s
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
+import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ViewAllInternalStorageComponent } from './view-all-internal-storage/vie
     AmateurSetBuildPageComponent,
     AdvancedSetBuildPageComponent,
     ViewAllCPUCoolerComponent,
-    ViewAllInternalStorageComponent
+    ViewAllInternalStorageComponent,
+    ViewAllPeripheralsComponent
   ],
   imports: [
     BrowserModule,

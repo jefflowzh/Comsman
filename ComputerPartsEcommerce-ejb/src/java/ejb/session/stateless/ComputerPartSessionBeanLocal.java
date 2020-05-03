@@ -13,6 +13,7 @@ import entity.RAM;
 import entity.SSD;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.ComputerPartNotFoundException;
 
 @Local
 public interface ComputerPartSessionBeanLocal {
@@ -58,5 +59,7 @@ public interface ComputerPartSessionBeanLocal {
     public List<SSD> retrieveAllSSD();
 
     public List<HDD> retrieveAllHDD();
+
+    public ComputerPart retrieveComputerPartById(Long computerPartId) throws ComputerPartNotFoundException;
 
 }

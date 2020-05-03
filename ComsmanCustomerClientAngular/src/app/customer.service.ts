@@ -40,10 +40,17 @@ export class CustomerService {
       );
   }
 
-  updateCustomerDetails(): Observable<any> {
+  updateCustomerDetails(updatedCustomer: Customer): Observable<any> {
 
     let updateCustomerReq = {
-      "customer": this.sessionService.getCurrentCustomer()
+      "userId": updatedCustomer.userId,
+      "firstName": updatedCustomer.firstName,
+      "lastName": updatedCustomer.lastName,
+      "address": updatedCustomer.address,
+      "email": updatedCustomer.email,
+      "contactNumber": updatedCustomer.contactNumber,
+      "cardNumber": updatedCustomer.cardNumber,
+      "ccv": updatedCustomer.ccv
     }
 
     return this.httpClient.post<any>(this.baseUrl + "/updateCustomerDetails", updateCustomerReq, httpOptions).pipe
@@ -55,7 +62,6 @@ export class CustomerService {
 
   updateCustomerCart(): Observable<any> {
 
-    console.log(this.sessionService.getCurrentCustomer())
     // let customer = {
     //   address: "NUS",
     //   cart: [],
@@ -76,9 +82,62 @@ export class CustomerService {
     //   "customer": customer
     // }
 
-    let updateCustomerReq = {
-      "customer": this.sessionService.getCurrentCustomer()
+    let cartProductIds: number[] = [];
+    let cartProductQuantities: number[] = [];
+    let cartComputerSetsPartIds: number[][] = [];
+    let cartComputerSetsQuantities: number[] = [];
+
+    for (let li of this.sessionService.getCurrentCustomer().cart) {
+      if (li.product) {
+        cartProductIds.push(li.product.productId);
+        cartProductQuantities.push(li.quantity);
+      }
+
+      if (li.computerSet) {
+        let computerSetPartIds: number[] = [];
+        computerSetPartIds.push(li.computerSet.computerCase.productId);
+        computerSetPartIds.push(li.computerSet.cpu.productId);
+        if (li.computerSet.cpuAirCooler) {
+          computerSetPartIds.push(li.computerSet.cpuAirCooler.productId);
+        }
+        if (li.computerSet.cpuWaterCooler) {
+          computerSetPartIds.push(li.computerSet.cpuWaterCooler.productId);
+        }
+        for (let gpu of li.computerSet.gpus) {
+          computerSetPartIds.push(gpu.productId);
+        }
+        for (let hdd of li.computerSet.hdds) {
+          computerSetPartIds.push(hdd.productId);
+        }
+        computerSetPartIds.push(li.computerSet.motherBoard.productId);
+        computerSetPartIds.push(li.computerSet.powerSupply.productId);
+        for (let ram of li.computerSet.rams) {
+          computerSetPartIds.push(ram.productId);
+        }
+        for (let ssd of li.computerSet.ssds) {
+          computerSetPartIds.push(ssd.productId);
+        }
+
+        cartComputerSetsPartIds.push(computerSetPartIds);
+        cartComputerSetsQuantities.push(li.quantity);
+      }
+
     }
+
+    let updateCustomerReq = {
+      "userId": this.sessionService.getCurrentCustomer().userId,
+      "cartProductIds": cartProductIds,
+      "cartProductQuantities": cartProductQuantities,
+      "cartComputerSetsPartIds": cartComputerSetsPartIds,
+      "cartComputerSetsQuantities": cartComputerSetsQuantities
+    }
+
+    // console.log('********* DEBUG');
+    // console.log(updateCustomerReq);
+
+    // for (let li of updateCustomerReq.customer.cart) {
+    //   li.product = null;
+    // }
 
     return this.httpClient.post<any>(this.baseUrl + "/updateCustomerCart", updateCustomerReq, httpOptions).pipe
       (
@@ -105,10 +164,10 @@ export class CustomerService {
     return throwError(errorMessage);
   }
 
-  customerUpdate(currentCustomer: Customer): Observable<any> {
-    let customerUpdateReq = { "customer": currentCustomer };
+  // customerUpdate(currentCustomer: Customer): Observable<any> {
+  //   let customerUpdateReq = { "customer": currentCustomer };
 
-    return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
-  }
+  //   return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
+  // }
 
 }
