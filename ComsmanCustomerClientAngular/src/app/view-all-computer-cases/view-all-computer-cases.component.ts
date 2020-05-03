@@ -83,11 +83,11 @@ export class ViewAllComputerCasesComponent implements OnInit {
           }
 
           //!computerCase.colours.some(r => this.selectedColours.includes(r)
-          for (let c of computerCase.colours) {
-            if (this.colours.length == 0 || !this.colours.includes(c)) {
-              this.colours.push(c)
-            }
+          
+          if (this.colours.length == 0 || !this.colours.includes(computerCase.colour)) {
+            this.colours.push(computerCase.colour)
           }
+          
 
           //sidePanelViews: string[]
           if (this.sidePanelViews.length == 0 || !this.sidePanelViews.includes(computerCase.sidePanelView)) {
@@ -295,7 +295,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
       if (!this.selectedTypes.includes(computerCase.type) && this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
-      if (!computerCase.colours.some(r => this.selectedColours.includes(r)) && this.filteredComputerCases.indexOf(computerCase) < 0) {
+      if (!this.selectedColours.includes(computerCase.colour) && this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
       if (!this.selectedSidePanelViews.includes(computerCase.sidePanelView) && this.filteredComputerCases.indexOf(computerCase) < 0) {

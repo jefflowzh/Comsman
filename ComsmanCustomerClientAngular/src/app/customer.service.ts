@@ -95,13 +95,13 @@ export class CustomerService {
 
       if (li.computerSet) {
         let computerSetPartIds: number[] = [];
-        computerSetPartIds.push(li.computerSet.computerCase.productId);
+        computerSetPartIds.push(li.computerSet.compCase.productId);
         computerSetPartIds.push(li.computerSet.cpu.productId);
-        if (li.computerSet.cpuAirCooler) {
-          computerSetPartIds.push(li.computerSet.cpuAirCooler.productId);
+        if (li.computerSet.CPUAirCooler) {
+          computerSetPartIds.push(li.computerSet.CPUAirCooler.productId);
         }
-        if (li.computerSet.cpuWaterCooler) {
-          computerSetPartIds.push(li.computerSet.cpuWaterCooler.productId);
+        if (li.computerSet.CPUWaterCooler) {
+          computerSetPartIds.push(li.computerSet.CPUWaterCooler.productId);
         }
         for (let gpu of li.computerSet.gpus) {
           computerSetPartIds.push(gpu.productId);
@@ -110,7 +110,7 @@ export class CustomerService {
           computerSetPartIds.push(hdd.productId);
         }
         computerSetPartIds.push(li.computerSet.motherBoard.productId);
-        computerSetPartIds.push(li.computerSet.powerSupply.productId);
+        computerSetPartIds.push(li.computerSet.psu.productId);
         for (let ram of li.computerSet.rams) {
           computerSetPartIds.push(ram.productId);
         }

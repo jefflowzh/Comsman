@@ -2,4 +2,52 @@
     <div class="col-md-2" >
         <p-menu [model]="sidenavItems"></p-menu>
     </div>
+
+    
+    <div class="col-md-10">
+        <h5>Products</h5>
+        <p-table [value] = "lines">
+            <ng-template pTemplate = "header">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Quantity</th>
+                    <th>Product Price</th>
+                    <th>Total Amount</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-line>
+                <tr>
+                    <th *ngIf="line.product.name != null">{{line.product.name}}</th>
+                    <th>{{line.quantity}}</th>
+                    <th>{{line.product.price}}</th>
+                    <th>{{line.quantity * line.product.price}}</th>
+                </tr>
+
+            </ng-template>
+        </p-table>
+
+        <hr>
+
+        <h5>Computer Sets</h5>
+        <p-table [value] = "lines" >
+            <ng-template  pTemplate = "header" >
+                <tr *ngIf="!line.computerSet === null">
+                    <th>Product Name</th>
+                    <!-- <th>Product Quantity</th> -->
+                    <th>Product Price</th>
+                    <th>Total Amount</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-line>
+                <tr *ngIf="!line.computerSet === null">
+                    <th >{{line.product.name}}</th>
+                    <!-- <th>{{line.quantity}}</th> -->
+                    <th>{{line.product.price}}</th>
+                    <th>{{line.quantity * line.product.price}}</th>
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+    
 </div>
