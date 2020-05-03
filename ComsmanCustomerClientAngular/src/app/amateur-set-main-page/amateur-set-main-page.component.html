@@ -1,13 +1,13 @@
 <div class="container">
     <br>
 
-    <h1 style="border-bottom: 1px solid gray;">SELECT YOUR TIER.</h1>
+    <h1 style="border-bottom: 1px solid gray;">MAKE YOUR CHOICE.</h1>
     <div style="color: gray">Choose from one of our reccomended builds below</div>
 
     <br>
     <br>
 
-    <div class="ui-g" style="text-align: center;">
+    <div class="ui-g" style="text-align: left;">
 
         <div class="ui-g-4" *ngIf="budgetTierModel && budgetTierModel.isEnabled">
             <h2>Budget</h2>
@@ -29,11 +29,11 @@
             <div>{{budgetTierModel.psu.name}}</div>
             <div *ngIf="budgetTierModel.rams">{{budgetTierModel.rams[0].name}}</div>
             <br>
-            <div><b>From S${{budgetTierModel.price.toFixed(2)}}</b></div>
+            <div><b>Now S${{budgetTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/budget']"></button>
+            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/budget']"></button>
         </div>
 
         <div class="ui-g-4" style="border-left: 3px solid gray; border-right: 3px solid gray;"
@@ -58,11 +58,11 @@
             <div>{{regularTierModel.psu.name}}</div>
             <div *ngIf="regularTierModel.rams">{{regularTierModel.rams[0].name}}</div>
             <br>
-            <div><b>From S${{regularTierModel.price.toFixed(2)}}</b></div>
+            <div><b>Now S${{regularTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/regular']"></button>
+            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/regular']"></button>
         </div>
 
         <div class="ui-g-4" *ngIf="premiumTierModel && premiumTierModel.isEnabled">
@@ -85,11 +85,11 @@
             <div>{{premiumTierModel.psu.name}}</div>
             <div *ngIf="premiumTierModel.rams">{{premiumTierModel.rams[0].name}}</div>
             <br>
-            <div><b>From S${{premiumTierModel.price.toFixed(2)}}</b></div>
+            <div><b>Now S${{premiumTierModel.price.toFixed(2)}}</b></div>
 
             <br>
 
-            <button pButton type="button" label="Select Tier" [routerLink]="['/amateurSetBuildPage/premium']"></button>
+            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/premium']"></button>
         </div>
 
     </div>

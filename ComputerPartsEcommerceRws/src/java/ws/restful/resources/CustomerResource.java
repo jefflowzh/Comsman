@@ -149,6 +149,26 @@ public class CustomerResource {
             customerToUpdate.setCcv(updateCustomerReq.getCcv());
 
             customerSessionBean.updateCustomerMerge(customerToUpdate);
+            
+            Customer updatedCustomer = customerSessionBean.retrieveCustomerById(updateCustomerReq.getUserId(), true, true);
+            UpdateCustomerRsp updateCustomerRsp =  new UpdateCustomerRsp(updatedCustomer);
+            return Response.status(Status.OK).entity(updateCustomerRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("updateCustomerPassword")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomerPassword(UpdateCustomerReq updateCustomerReq) {
+        try {
+            Customer customerToUpdate = customerSessionBean.retrieveCustomerById(updateCustomerReq.getUserId(), false, false);
+            customerToUpdate.setPassword(updateCustomerReq.getPassword());
+            customerSessionBean.updateCustomerMerge(customerToUpdate);
+            
             return Response.status(Status.OK).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

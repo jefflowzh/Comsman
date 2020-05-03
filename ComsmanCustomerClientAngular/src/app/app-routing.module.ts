@@ -22,6 +22,7 @@ import { ViewAllInternalStorageComponent } from './view-all-internal-storage/vie
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
+import { ViewAllSearchResultsComponent } from './view-all-search-results/view-all-search-results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -46,11 +47,14 @@ const routes: Routes = [
   { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
   { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
   { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent },
-  { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent }
+  { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent },
+  { path: 'viewAllSearchResults/:searchTerm', component: ViewAllSearchResultsComponent, runGuardsAndResolvers: 'paramsChange' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -10,11 +10,7 @@ import { CustomerOrder } from './customer-order';
 // probably should be LocalService
 export class SessionService {
 
-  constructor() {
-    // let customer = new Customer(1, "address", "contactNumber", "email", "jefferson", "low")
-    // this.setCurrentCustomer(customer);
-    // this.setIsLogin(true);
-  }
+  constructor() { }
 
   getIsLogin(): boolean {
     return localStorage.isLogin == "true";

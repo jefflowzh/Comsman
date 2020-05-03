@@ -49,42 +49,37 @@ export class CustomerDetailsComponent implements OnInit {
     }];
   }
 
-  // updateCustomerDetails(customerForm: NgForm) {
-  //   this.submitted = true;
-  //   if (customerForm.valid) {
-  //     this.customerService.customerUpdate(this.customer).subscribe(
-  //       response => {
-  //         let customer: Customer = response.customer;
-  //         if (customer != null) {
-  //           this.sessionService.setIsLogin(true);
-  //           this.sessionService.setCurrentCustomer(customer);
-  //           this.updateError = false;
-  //           this.updateSuccess = true;
-  //           console.log("update customer details success!!")
-  //         }
-  //       }, error => {
-  //         this.updateError = true;
-  //         this.updateSuccess = false;
-  //       }
-  //     );
-
-  //   }
-  // }
-
   updateCustomerDetails(customerForm: NgForm) {
     this.submitted = true;
     if (customerForm.valid) {
       this.customerService.updateCustomerDetails(this.customer).subscribe(
         response => {
+          let updatedCustomer = response.customer;
+          this.sessionService.setCurrentCustomer(updatedCustomer);
+          this.customer = this.sessionService.getCurrentCustomer();
           this.updateError = false;
           this.updateSuccess = true;
-          console.log("update customer details success!!")
+          console.log("Update customer details success!!")
         }, error => {
           this.updateError = true;
           this.updateSuccess = false;
         }
       );
+    }
+  }
 
+  updateCustomerPassword(customerForm: NgForm) {
+    if (customerForm.valid) {
+      this.customerService.updateCustomerPassword(this.customer).subscribe(
+        response => {
+          this.updateError = false;
+          this.updateSuccess = true;
+          console.log("Update customer password success!!")
+        }, error => {
+          this.updateError = true;
+          this.updateSuccess = false;
+        }
+      );
     }
   }
 

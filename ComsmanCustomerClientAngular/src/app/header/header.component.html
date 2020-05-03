@@ -7,9 +7,9 @@
 
     <div class="navbar-collapse" id="navbarSupportedContent">
         <div class="mr-auto" style="display: flex">
-            <input type="text" placeholder="Search" pInputText [(ngModel)]="searchQuery" onchange=""
+            <input type="text" placeholder="Search" pInputText [(ngModel)]="searchTerm"
                 style="margin-right:.25em; width:750px;" />
-            <button pButton type=" button" label="Search" icon="pi pi-search" iconPos="left"></button>
+            <button pButton type="button" label="Search" icon="pi pi-search" iconPos="left" (click)="search()"></button>
         </div>
 
         <div *ngIf="sessionService.getIsLogin() == true" style="margin-right: 20px;">

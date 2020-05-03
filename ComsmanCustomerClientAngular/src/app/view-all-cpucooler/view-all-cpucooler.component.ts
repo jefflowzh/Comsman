@@ -57,11 +57,10 @@ export class ViewAllCPUCoolerComponent implements OnInit {
 
         console.log(this.allCPUCoolers[0])
         for (let cpuCooler of this.allCPUCoolers) {
-          console.log(cpuCooler instanceof CPUAirCooler)
-          console.log(cpuCooler instanceof CPUWaterCooler)
-          console.log(cpuCooler instanceof ComputerPart)
-          console.log(cpuCooler instanceof Object)
-          console.log(cpuCooler.toString())
+          // if is air cooler
+
+
+          // if is water cooler
           break;
 
 

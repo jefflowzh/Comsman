@@ -11,7 +11,7 @@ import { CustomerService } from '../customer.service';
 })
 export class HeaderComponent implements OnInit {
 
-  searchQuery: string;
+  searchTerm: string;
   displayLoading: boolean;
 
   constructor(private router: Router, public sessionService: SessionService, private customerService: CustomerService) {
@@ -21,9 +21,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  search() {
+    this.router.navigate(["/viewAllSearchResults/" + this.searchTerm]);
+  }
+
   customerLogout(): void {
     this.displayLoading = true;
-    setTimeout(() => this.cleanup(), 10000)
+    setTimeout(() => this.cleanup(), 1000)
   }
 
   cleanup(): void {

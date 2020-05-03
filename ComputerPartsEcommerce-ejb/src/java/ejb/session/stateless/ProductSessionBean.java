@@ -31,5 +31,13 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         
         return query.getResultList();
     }
+    
+    @Override
+    public List<Product> retrieveProductsBySearchTerm(String searchTerm) {
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.name LIKE :searchTerm");
+        query.setParameter("searchTerm", "%"+searchTerm+"%");
+        
+        return query.getResultList();
+    }
 
 }

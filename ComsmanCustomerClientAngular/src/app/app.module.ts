@@ -48,6 +48,7 @@ import { ViewAllInternalStorageComponent } from './view-all-internal-storage/vie
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
+import { ViewAllSearchResultsComponent } from './view-all-search-results/view-all-search-results.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { CustomerCouponComponent } from './customer-coupon/customer-coupon.compo
     ViewAllInternalStorageComponent,
     ViewAllPeripheralsComponent,
     ViewOrderComponent,
-    CustomerCouponComponent
+    CustomerCouponComponent,
+    ViewAllSearchResultsComponent
   ],
   imports: [
     BrowserModule,
