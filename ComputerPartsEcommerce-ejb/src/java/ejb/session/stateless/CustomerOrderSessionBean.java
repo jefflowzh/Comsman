@@ -209,8 +209,8 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
 
     @Override
     public List<CustomerOrder> retrieveAllOrders() {
-        Query query = em.createQuery("SELECT o FROM CustomerOrder o");
-
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.voided = false");
+        
         return query.getResultList();
     }
 

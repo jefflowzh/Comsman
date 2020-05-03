@@ -64,6 +64,9 @@
                                 <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateOrder}" update="formUpdateOrder" oncomplete="PF('sidebarUpdateOrder').show()" icon="fa fa-pencil" title="Update">
                                     <f:attribute name="orderEntityToUpdate" value="#{orderEntity}" />
                                 </p:commandButton>
+                                <p:commandButton actionListener="#{orderManagementManagedBean.doVoidOrder}" oncomplete="PF('dialogVoidOrder').show()" icon="fa fa-trash" title="Void">
+                                    <f:attribute name="orderEntityToVoid" value="#{orderEntity}" />
+                                </p:commandButton>
                                 <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateLineItems}" update="formViewLineItems" oncomplete="PF('dialogViewLineItems').show()" icon="fa fa-cart-plus" title="View Line Items">
                                     <f:attribute name="lineItemsToUpdate" value="#{orderEntity}" />
                                 </p:commandButton>
@@ -73,6 +76,13 @@
                     </p:dataTable>
 
                 </h:form>
+
+                <p:confirmDialog header="Warning" id="dialogVoidOrder" widgetVar="dialogVoidOrder" message="Are you sure you want to void?">
+                    <div align="center">
+                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{orderManagementManagedBean.voidOrder}" oncomplete="PF('dialogVoidOrder').hide()" update="formAllOrder:dataTableAllOrder formAllOrder:messages"/>
+                        <p:commandButton value="No"  icon="pi pi-times" onclick="PF('dialogVoidOrder').hide()" />
+                    </div>
+                </p:confirmDialog>
 
                 <h:form id="formUpdateOrder">
                     <p:sidebar id="sidebarUpdateOrder" widgetVar="sidebarUpdateOrder" position="right" baseZIndex="10000" style="width: 30%;">

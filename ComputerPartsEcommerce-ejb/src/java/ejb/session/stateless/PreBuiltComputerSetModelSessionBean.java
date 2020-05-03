@@ -167,7 +167,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         boolean flag = true;
         
         //check that motherboard and cpu sockets match
-        if(model.getCpu() == null || model.getMotherboard().getSocket().equals(current.getSocket())){
+        if(model.getCpu() == null || model.getCpu().getSocket().equals(current.getSocket())){
             flag = true;
         }
         else{
@@ -216,7 +216,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 if (currentRamCheck == false){
                     System.out.println("**********RAM CHECK ISSUE");
                     totalRamCheck = false;
-                    throw new IncompatiblePartException("Incompatible with Computer Case, please select another Motherboard or RAM");
+                    throw new IncompatiblePartException("Incompatible with RAM, please select another Motherboard or RAM");
                 }
             }
         }
@@ -498,10 +498,10 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      *this method should be done before the computerset is persisted into the database.
      *the idea is that this does not run coompatibibility checks but ensures that all parts of a computer are indeed there
      *returns true if the computer can be persisted
-     *if it returns false or error, it means there is a necessary part of the computer that has not been selected and the set should not be persisted
+     *if it returns false or error, it means there is a necessary part of the computer that has not been selected and the model should not be persisted
      */
     @Override
-    public boolean finalComputerSetCheck(PreBuiltComputerSetModel set)throws IncompleteComputerSetException{
+    public boolean finalComputerSetCheck(PreBuiltComputerSetModel model) throws IncompleteComputerSetException{
          
     /*
      compulsory parts that must be there. 
@@ -512,23 +512,23 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      RAM
      */
     
-        if(set.getCpu() == null){
+        if(model.getCpu() == null){
             throw new IncompleteComputerSetException("Computer set is missing a CPU");
         }
         
-        if(set.getMotherboard() == null){
+        if(model.getMotherboard() == null){
             throw new IncompleteComputerSetException("Computer set is missing a Motherboard");
         }
         
-        if(set.getCompCase() == null){
+        if(model.getCompCase() == null){
             throw new IncompleteComputerSetException("Computer set is missing a Computer Case");
         }
         
-        if(set.getPsu() == null){
+        if(model.getPsu() == null){
             throw new IncompleteComputerSetException("Computer set is missing a Power Supply Unit");
         }
         
-        if(set.getRams() == null || set.getRams().isEmpty() == true){
+        if(model.getRams() == null || model.getRams().isEmpty() == true){
             throw new IncompleteComputerSetException("Computer set is missing RAM");
         }
         
@@ -540,10 +540,10 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should not be done when a new component is added to the list.
      */
         int requiredPower = 400;
-        for(GPU gpu : set.getGpus()){
+        for(GPU gpu : model.getGpus()){
             requiredPower += gpu.getTDP();
         }
-        if(set.getPsu().getWattage() < requiredPower){
+        if(model.getPsu().getWattage() < requiredPower){
             throw new IncompleteComputerSetException("Computer set's required power is greater than Power Supply Unit output");
         }
      
@@ -552,7 +552,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getGpus() == null || set.getGpus().isEmpty() == true) && set.getCpu().getHasIntergratedGraphics() == false){
+        if((model.getGpus() == null || model.getGpus().isEmpty() == true) && model.getCpu().getHasIntergratedGraphics() == false){
             throw new IncompleteComputerSetException("Computer set requires GPUs");
         }
      
@@ -561,7 +561,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getHdds() == null || set.getHdds().isEmpty() == true) && (set.getSsds() == null || set.getSsds().isEmpty() == true)){
+        if((model.getHdds() == null || model.getHdds().isEmpty() == true) && (model.getSsds() == null || model.getSsds().isEmpty() == true)){
             throw new IncompleteComputerSetException("Computer set requires HDD or SSD storage");
         }
      
@@ -570,7 +570,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getWaterCooler() == null) && (set.getAirCooler() == null ) && (set.getCpu().getHasIntergratedGraphics() == false)){
+        if((model.getWaterCooler() == null) && (model.getAirCooler() == null ) && (model.getCpu().getHasIntergratedGraphics() == false)){
             throw new IncompleteComputerSetException("Computer set requires a Water Cooler or Air Cooler");
         }
      
