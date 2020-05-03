@@ -11,5 +11,7 @@ public interface ProductSessionBeanLocal {
     public List<Product> retrieveAllProducts();
 
     public Product retrieveProductById(Long productId) throws ProductNotFoundException;
+
+    public List<Product> retrieveProductsBySearchTerm(String searchTerm);
     
 }

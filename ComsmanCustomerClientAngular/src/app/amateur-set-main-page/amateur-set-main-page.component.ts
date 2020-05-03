@@ -20,9 +20,7 @@ export class AmateurSetMainPageComponent implements OnInit {
   ngOnInit() {
     this.productService.retrievePreBuiltComputerSetModels().subscribe(
       response => {
-        console.log(response.preBuiltComputerSetModels)
         for (let preBuiltComputerSetModel of response.preBuiltComputerSetModels) {
-          console.log(preBuiltComputerSetModel.preBuiltComputerSetTier)
           if (preBuiltComputerSetModel.preBuiltComputerSetTier == "PREMIUM") {
             this.premiumTierModel = preBuiltComputerSetModel;
           } else if (preBuiltComputerSetModel.preBuiltComputerSetTier == "REGULAR") {

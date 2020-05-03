@@ -52,6 +52,7 @@ import { ViewAllAirCoolerComponent } from './view-all-air-cooler/view-all-air-co
 import { ViewAllWaterCoolerComponent } from './view-all-water-cooler/view-all-water-cooler.component';
 import { ViewAllHddComponent } from './view-all-hdd/view-all-hdd.component';
 import { ViewAllSsdComponent } from './view-all-ssd/view-all-ssd.component';
+import { ViewAllSearchResultsComponent } from './view-all-search-results/view-all-search-results.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { ViewAllSsdComponent } from './view-all-ssd/view-all-ssd.component';
     ViewAllAirCoolerComponent,
     ViewAllWaterCoolerComponent,
     ViewAllHddComponent,
-    ViewAllSsdComponent
+    ViewAllSsdComponent,
+    ViewAllSearchResultsComponent
   ],
   imports: [
     BrowserModule,

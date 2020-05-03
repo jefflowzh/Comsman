@@ -41,6 +41,7 @@ export class CustomerLoginComponent implements OnInit {
       this.customerService.customerLogin(this.email, this.password).subscribe(
         response => {
           let customer: Customer = response.customer;
+          customer.password = "";
 
           if (customer != null) {
 

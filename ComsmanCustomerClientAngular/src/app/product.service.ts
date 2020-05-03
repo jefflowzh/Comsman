@@ -103,6 +103,13 @@ export class ProductService {
       );
   }
 
+  retrieveProductsBySearchTerm(searchTerm: string): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveProductsBySearchTerm?searchTerm=" + searchTerm).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
 

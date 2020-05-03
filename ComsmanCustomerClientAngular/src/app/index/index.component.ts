@@ -40,7 +40,7 @@ export class IndexComponent implements OnInit {
     {
       label: 'Build My Own Computer Set',
       items: [
-        { label: 'Amateur', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/amateurSetMainPage'] },
+        { label: 'Amateur (Pre-Built)', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/amateurSetMainPage'] },
         { label: 'Advanced', icon: 'pi pi-fw pi-chevron-circle-right', routerLink: ['/advancedSetBuildPage'] }
       ]
     }];

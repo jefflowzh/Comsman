@@ -60,6 +60,20 @@ export class CustomerService {
 
   }
 
+  updateCustomerPassword(updatedCustomer: Customer): Observable<any> {
+
+    let updateCustomerReq = {
+      "userId": updatedCustomer.userId,
+      "password": updatedCustomer.password
+    }
+
+    return this.httpClient.post<any>(this.baseUrl + "/updateCustomerPassword", updateCustomerReq, httpOptions).pipe
+      (
+        catchError(this.handleError)
+      );
+
+  }
+
   updateCustomerCart(): Observable<any> {
 
     // let customer = {

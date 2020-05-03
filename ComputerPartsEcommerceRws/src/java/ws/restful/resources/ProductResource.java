@@ -272,6 +272,21 @@ public class ProductResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    @Path("retrieveProductsBySearchTerm")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveProductsBySearchTerm(@QueryParam("searchTerm") String searchTerm) {
+        try {
+            List<Product> results = productSessionBeanLocal.retrieveProductsBySearchTerm(searchTerm);
+            RetrieveProductsRsp retrieveProductsRsp = new RetrieveProductsRsp(results);
+            return Response.status(Status.OK).entity(retrieveProductsRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
 
     private ProductSessionBeanLocal lookupProductSessionBeanLocal() {
         try {
