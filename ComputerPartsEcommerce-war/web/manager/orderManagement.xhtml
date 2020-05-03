@@ -162,7 +162,7 @@
 
                             <p:row>
                                 <p:column colspan="2">
-                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.orderStatus != OrderStatusEnum.DELIVERED}"/>
+                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.orderStatus != OrderStatusEnum.FULFILLED}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>

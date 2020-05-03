@@ -31,10 +31,10 @@ public enum OrderStatusEnum {
             return "Completed";
         }
     },
-    DELIVERED {
+    FULFILLED {
         @Override
         public String toString() {
-            return "Delivered";
+            return "Fulfilled";
         }
     }
 }

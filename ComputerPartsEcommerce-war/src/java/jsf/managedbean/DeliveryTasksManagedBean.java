@@ -36,13 +36,13 @@ public class DeliveryTasksManagedBean implements Serializable {
         setOrders(customerOrderSessionBeanLocal.retrieveCustomerOrdersByDeliveryStaff(staff.getUserId(), Boolean.FALSE));
     }
     
-    public void markAsDelivered(ActionEvent event) {
+    public void markAsFulfilled(ActionEvent event) {
         Long selectedOrderId = (Long) event.getComponent().getAttributes().get("selectedOrderId");
         try {
             System.out.println("**********pre find: " + selectedOrderId);
             CustomerOrder customerOrder = customerOrderSessionBeanLocal.retrieveCustomerOrderById(selectedOrderId, Boolean.FALSE);
             System.out.println("**********post find");
-            customerOrder.setDelivered(Boolean.TRUE);
+            customerOrder.setFulfilled(Boolean.TRUE);
             customerOrderSessionBeanLocal.updateCustomerOrder(customerOrder, null, null, null, null);
             postConstruct();
             customerOrderSessionBeanLocal.updateOrderStatus(selectedOrderId);

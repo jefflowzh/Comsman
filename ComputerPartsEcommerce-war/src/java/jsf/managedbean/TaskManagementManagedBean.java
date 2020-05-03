@@ -56,7 +56,7 @@ public class TaskManagementManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        // those voided / delivered will not be shown
+        // those voided / fulfilled will not be shown
         tasks = customerOrderSessionBeanLocal.retrieveAllTasks();
         negativeOne = new Long(-1);
     }
