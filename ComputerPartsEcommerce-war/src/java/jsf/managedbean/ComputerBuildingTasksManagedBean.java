@@ -25,7 +25,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.StaffNotFoundException;
@@ -47,8 +56,6 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
 //    private DataSource computerPartsEcommerceDataSource;
 //    @Resource(name = "computerSetDataSource")
 //    private DataSource computerSetDataSource;
-    
-
     private List<ComputerSet> computerSets;
     private List<ComputerSet> filteredSets;
 
@@ -97,20 +104,49 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
         Long selectedComputerSetId = (Long) event.getComponent().getAttributes().get("selectedComputerSetId");
 
         try {
-            
-            FacesContext.getCurrentInstance().getExternalContext().responseReset();
-            FacesContext.getCurrentInstance().getExternalContext().setResponseHeader("Content-Disposition", "filename=\"test.pdf\"");
-            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/combine.jasper");
-            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
+            String jrxmlFileLocation = "/Users/weidonglim/Desktop/test/test.jrxml";
+            String outputPDFFile = "/Users/weidonglim/Desktop/test/test.pdf";
+
+//            String jrxmlFileLocation = "/jasperreports/mb.jrxml";
+//            String outputPDFFile = "/jasperreports/test.pdf";
+
+            JasperReport jasperReport = JasperCompileManager.compileReport("/Users/weidonglim/Desktop/test/mb.jrxml");
+//            JasperReport jasperReport = JasperCompileManager.compileReport("/jasperreports/test.jrxml");
+            JasperReport jasperSubReport = JasperCompileManager.compileReport(jrxmlFileLocation);
 
             Map parameters = new HashMap();
-
+            parameters.put("test", jasperSubReport);
             parameters.put("input", selectedComputerSetId);
 
-            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
-        } catch (IOException | JRException | SQLException ex) {
+            JasperPrint document = JasperFillManager.fillReport(jasperReport, parameters, computerSetDS.getConnection());
+
+            JRPdfExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(document));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputPDFFile));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+
+            // JasperExportManager.exportReportToPdfFile(document, outputPDFFile);
+        } catch (JRException | SQLException ex) {
             Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+//        try {
+//            
+//            FacesContext.getCurrentInstance().getExternalContext().responseReset();
+//            FacesContext.getCurrentInstance().getExternalContext().setResponseHeader("Content-Disposition", "filename=\"test.pdf\"");
+//            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/combine.jasper");
+//            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
+//
+//            Map parameters = new HashMap();
+//
+//            parameters.put("input", selectedComputerSetId);
+//
+//            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
+//        } catch (IOException | JRException | SQLException ex) {
+//            Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public List<ComputerSet> getComputerSets() {
