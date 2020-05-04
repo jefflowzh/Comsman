@@ -89,49 +89,8 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
         }
     }
 
-//    public void generateReport(ActionEvent event) {
-//        try {
-//            FacesContext.getCurrentInstance().getExternalContext().responseReset();
-//            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/Invoice_Table_Based.jrxml");
-//            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
-//            
-//            JasperRunManager.runReportToPdfStream(reportStream, outputStream, new HashMap<>(), computerPartsEcommerceDataSource.getConnection());
-//        } catch (IOException | JRException | SQLException ex) {
-//            Logger.getLogger(ComputerBuildingTasksManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
     public void generateReport(ActionEvent event) {
         Long selectedComputerSetId = (Long) event.getComponent().getAttributes().get("selectedComputerSetId");
-//
-//        try {
-//            String jrxmlFileLocation = "/Users/weidonglim/Desktop/test/test.jrxml";
-//            String outputPDFFile = "/Users/weidonglim/Desktop/test/test.pdf";
-//
-////            String jrxmlFileLocation = "/jasperreports/mb.jrxml";
-////            String outputPDFFile = "/jasperreports/test.pdf";
-//
-//            JasperReport jasperReport = JasperCompileManager.compileReport("/Users/weidonglim/Desktop/test/mb.jrxml");
-////            JasperReport jasperReport = JasperCompileManager.compileReport("/jasperreports/test.jrxml");
-//            JasperReport jasperSubReport = JasperCompileManager.compileReport(jrxmlFileLocation);
-//
-//            Map parameters = new HashMap();
-//            parameters.put("test", jasperSubReport);
-//            parameters.put("input", selectedComputerSetId);
-//
-//            JasperPrint document = JasperFillManager.fillReport(jasperReport, parameters, computerSetDS.getConnection());
-//
-//            JRPdfExporter exporter = new JRPdfExporter();
-//            exporter.setExporterInput(new SimpleExporterInput(document));
-//            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputPDFFile));
-//            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
-//            exporter.setConfiguration(configuration);
-//            exporter.exportReport();
-//
-//            // JasperExportManager.exportReportToPdfFile(document, outputPDFFile);
-//        } catch (JRException | SQLException ex) {
-//            Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
         try {
 
@@ -145,9 +104,13 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
 
             Date date = java.util.Calendar.getInstance().getTime();
             
-            JasperRunManager.runReportToPdfFile("/Users/weidonglim/Desktop/test/main.jasper", "/Users/weidonglim/Desktop/test/" + date.toString() + ".pdf", parameters, computerSetDS.getConnection());
+            String path = "/Users/weidonglim/Desktop/test/main.jasper";
+            String exportedTo = "/Users/weidonglim/Desktop/test/";
+
+            JasperRunManager.runReportToPdfFile(path, exportedTo + date.toString() + ".pdf", parameters, computerSetDS.getConnection());
 //            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "PDF Exported to: " + exportedTo + " ", null));
         } catch (JRException | SQLException ex) {
             Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }

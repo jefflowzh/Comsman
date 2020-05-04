@@ -16,7 +16,7 @@
             <div class="layout-subcontent">
 
                 <h:form id="formAllComputerBuildingTasks">
-                    <p:growl id="growl" sticky="false" life="1000" />
+                    <p:growl id="growl" sticky="false" life="4000" />
                     <p:messages id="messages" redisplay="false" closable="true" />
 
                     <p:dataTable id="dataTableAllComputerBuildingTasks" widgetVar="dataTableAllComputerBuildingTasks" value="#{computerBuildingTasksManagedBean.computerSets}" var="task" rowKey="#{task.computerSetId}" rowIndexVar="row"
@@ -48,9 +48,10 @@ s
 
                         <p:column headerText="Action">
                             <div class="actionButton">
-                                <p:commandButton ajax="false"  icon="fa fa-wpforms" title="Download Form" actionListener="#{computerBuildingTasksManagedBean.generateReport}" >
+                                <p:commandButton ajax="false"  icon="fa fa-wpforms" title="Download Form" actionListener="#{computerBuildingTasksManagedBean.generateReport}" update="formAllComputerBuildingTasks:messages" >
                                     <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
                                 </p:commandButton>
+                                
                                 <p:commandButton icon="fa fa-check" title="Mark as Complete" actionListener="#{computerBuildingTasksManagedBean.markAsComplete}" update="formAllComputerBuildingTasks:dataTableAllComputerBuildingTasks formAllComputerBuildingTasks:messages" rendered="#{!task.assemblyComplete}">
                                     <p:confirm header="Confirmation" message="Mark as Complete?" icon="pi pi-exclamation-triangle" />
                                     <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
