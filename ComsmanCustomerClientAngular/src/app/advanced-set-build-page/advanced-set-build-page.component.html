@@ -134,7 +134,7 @@
         <div class="ui-g-3"><b>Power Supply</b></div>
         <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.psu">{{currentComputerSet.psu.name}}</span>
-            <button pButton type="button" label="Add Power Supply" *ngIf = "!currentComputerSet.compCase" [routerLink] = "['/viewAllPowerSupply']"></button>
+            <button pButton type="button" label="Add Power Supply" *ngIf = "!currentComputerSet.PowerSupply" [routerLink] = "['/viewAllPowerSupply']"></button>
         </div>
         <div class="ui-g-2"><div *ngIf = "currentComputerSet.psu">{{currentComputerSet.psu.price}}</div></div>
         <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearPsu()"></button></div>
