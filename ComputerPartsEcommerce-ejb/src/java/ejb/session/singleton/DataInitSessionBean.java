@@ -119,7 +119,7 @@ public class DataInitSessionBean {
         List<String> suportedMemorySpeed = new ArrayList<>();
         suportedMemorySpeed.add("222");
         suportedMemorySpeed.add("111");
-        MotherBoard testMB = new MotherBoard("Manufacturer", "formFactor", "socket", "chipset", 4, "red", true, 5, 5, 6, true, suportedMemorySpeed, "motherboard", 100.00, 5, "test.png");
+        MotherBoard testMB = new MotherBoard("Manufacturer", "formFactor", "socket", "chipset", 4, "red", true, 5, 5, true, suportedMemorySpeed, "motherboard", 100.00, 5, "test.png");
         computerPartSessionBean.createNewMotherBoard(testMB);
         // create ram
         List<RAM> rams = new ArrayList<>();

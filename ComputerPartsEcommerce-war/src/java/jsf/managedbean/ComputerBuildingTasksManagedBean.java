@@ -110,7 +110,7 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
 //            String jrxmlFileLocation = "/jasperreports/mb.jrxml";
 //            String outputPDFFile = "/jasperreports/test.pdf";
 
-            JasperReport jasperReport = JasperCompileManager.compileReport("/Users/weidonglim/Desktop/test/mb.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\bryan\\JaspersoftWorkspace\\MyReports\\mb.jrxml");
 //            JasperReport jasperReport = JasperCompileManager.compileReport("/jasperreports/test.jrxml");
             JasperReport jasperSubReport = JasperCompileManager.compileReport(jrxmlFileLocation);
 

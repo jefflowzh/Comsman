@@ -1,41 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class CPU extends ComputerPart implements Serializable {
 
    private static final long serialVersionUID = 1L;
    
-   
-   // private String Manufacturer;
+   @Column(nullable = false)
+   @NotNull
+   private String manufacturer;
+   @Column(nullable = false)
+   @NotNull
    private Integer coreCount;
+   @Column(nullable = false)
+   @NotNull
    private Integer TDP;
+   @Column(nullable = false)
+   @NotNull
    private String socket;
+   @Column(nullable = false)
+   @NotNull
    private Boolean hasIntergratedGraphics;
+   @Column(nullable = false)
+   @NotNull
    private Boolean includesCpuCooler;
 
     public CPU() {
     }
 
-    public CPU(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+    public CPU(String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image);
     }
 
     public CPU(String manufacturer, Integer coreCount, Integer TDP, String socket, Boolean hasIntergratedGraphics, Boolean includesCpuCooler, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+        super(name, price, inventoryQuantity, image);
+        this.manufacturer = manufacturer;
         this.coreCount = coreCount;
         this.TDP = TDP;
         this.socket = socket;
@@ -43,6 +46,14 @@ public class CPU extends ComputerPart implements Serializable {
         this.includesCpuCooler = includesCpuCooler;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+    
     public Integer getCoreCount() {
         return coreCount;
     }

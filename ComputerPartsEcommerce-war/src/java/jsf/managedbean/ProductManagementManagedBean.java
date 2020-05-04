@@ -98,7 +98,6 @@ public class ProductManagementManagedBean implements Serializable {
     private Boolean SLICrossFire;
     private Integer PCIEx16;
     private Integer m2Slot;
-    private Integer SATA6GB;
     private Boolean wiFi;
 
     // RAM
@@ -467,7 +466,6 @@ public class ProductManagementManagedBean implements Serializable {
                 newMotherboard.setPCIEx16(PCIEx16);
                 newMotherboard.setM2Slot(m2Slot);
                 newMotherboard.setM2Slot(m2Slot);
-                newMotherboard.setSATA6GB(SATA6GB);
                 newMotherboard.setWiFi(wiFi);
 
                 String[] values = stringEdit.trim().split(",");
@@ -986,14 +984,6 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void setM2Slot(Integer m2Slot) {
         this.m2Slot = m2Slot;
-    }
-
-    public Integer getSATA6GB() {
-        return SATA6GB;
-    }
-
-    public void setSATA6GB(Integer SATA6GB) {
-        this.SATA6GB = SATA6GB;
     }
 
     public Boolean getWiFi() {

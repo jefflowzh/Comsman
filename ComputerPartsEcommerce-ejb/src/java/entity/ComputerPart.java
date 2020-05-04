@@ -17,8 +17,8 @@ public class ComputerPart extends Product implements Serializable {
     public ComputerPart() {
     }
 
-    public ComputerPart(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+    public ComputerPart(String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image);
     }
 
 }

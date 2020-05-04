@@ -21,8 +21,6 @@ public class ComputerSet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long computerSetId;
-    @Column(length = 32)
-    private String name;
     
     /*For a computer set there are mandatory computer parts
     cpu 
@@ -61,23 +59,18 @@ public class ComputerSet implements Serializable {
     private ComputerCase compCase;
     
     @ManyToMany
-    //@JoinColumn(name = )
     private List<GPU> gpus;
     
     @ManyToMany
-    //@JoinColumn(name = )
     private List<HDD> hdds;
             
     @ManyToMany
-    //@JoinColumn(name = )
     private List<SSD> ssds;
     
     @ManyToOne
-    //@JoinColumn(name = )
     private CPUWaterCooler waterCooler;
             
     @ManyToOne
-    //@JoinColumn(name = )
     private CPUAirCooler airCooler;
     
     @Column(nullable = false)
@@ -96,10 +89,6 @@ public class ComputerSet implements Serializable {
     @NotNull
     private Double price;
     
-    //@OneToOne
-    //@JoinColumn(nullable = false)
-    //private CustomerOrder customerOrder;
-    
     public ComputerSet(){
         this.rams = new ArrayList<>();
         this.gpus = new ArrayList<>();
@@ -109,35 +98,11 @@ public class ComputerSet implements Serializable {
         this.assemblyComplete = false;
     }
 
-    /* original constructor
-    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmateur, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
-
-
-    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmateur, String name, Double price, Integer inventoryQuantity, String image) {
-
-        super(name, price, inventoryQuantity, image);
-        this.computerParts = computerParts;
-        this.warrentyLengthInYears = warrentyLengthInYears;
-        this.isAmateur = isAmateur;      
-        assemblyComplete = false;
-    }   */
-    
-    // new constructor 
-
-    //public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmateur, LineItem lineItem) {
     public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer) {
         this();
         this.warrentyLengthInYears = warrentyLengthInYears;
         // assuming warrenty is $100/year
         this.price += (warrentyLengthInYears - 3) * 100; 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
     
     public CPU getCpu() {
@@ -277,16 +242,7 @@ public class ComputerSet implements Serializable {
         this.airCooler = airCooler;
         this.price += airCooler.getPrice();
     }
-/*
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
-    }
-
-    public void setCustomerOrder(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
-    }
-    */
-
+    
     public LineItem getLineItem() {
         return lineItem;
     }

@@ -1,45 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class HDD extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
-    //@ManyToMany(mappedBy = "hdds")
-   //private List<ComputerSet> computerSets;
 
-    private String Manufacturer;
+    @Column(nullable = false)
+    @NotNull
+    private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String type; //(RPM)
+    @Column(nullable = false)
+    @NotNull
     private Integer Capacity; //in GB
+    @Column(nullable = false)
+    @NotNull
     private String formFactor; //(3.5'')
+    @Column(nullable = false)
+    @NotNull
     private String Interface; //(SATA 6gb/s  SATA 3gb/s )  
 
     public HDD() {
     }
 
-    public HDD(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+    public HDD(String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image);
     }
 
     public HDD(String manufacturer, String type, Integer Capacity, String formFactor, String Interface, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+        super(name, price, inventoryQuantity, image);
+        this.manufacturer = manufacturer;
         this.type = type;
         this.Capacity = Capacity;
         this.formFactor = formFactor;
@@ -76,6 +72,14 @@ public class HDD extends ComputerPart implements Serializable {
 
     public void setInterface(String Interface) {
         this.Interface = Interface;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
     
     
