@@ -50,7 +50,7 @@ public class CouponManagementManagedBean implements Serializable {
             System.out.println("******** code: " + newCoupon.getCode());
             System.out.println("******** start: " + newCoupon.getStartDate());
             System.out.println("******** end: " + newCoupon.getEndDate());
-            System.out.println("******** points: " + newCoupon.getLoyaltyPointRequired());
+            System.out.println("******** points: " + newCoupon.getLoyaltyPointsRequired());
             System.out.println("******** type: " + newCoupon.getCouponType());
             System.out.println("******** rate: " + newCoupon.getRate());
             System.out.println("******** amount: " + newCoupon.getFlatAmount());

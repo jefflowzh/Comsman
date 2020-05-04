@@ -287,15 +287,6 @@
 
                             <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
                                 <p:column>
-                                    <p:outputLabel for="SATA6GB" value="SATA 6GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
                                     <h:outputLabel for="selectBooleanWifi" value='WIFI: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
@@ -779,15 +770,6 @@
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="m2Slot" value="#{productManagementManagedBean.selectedProductToUpdate.m2Slot}" required="true" requiredMessage="M2 Slot is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard'}">
-                                <p:column>
-                                    <p:outputLabel for="SATA6GB" value="SATA 6GB: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="SATA6GB" value="#{productManagementManagedBean.selectedProductToUpdate.SATA6GB}" required="true" requiredMessage="SATA 6GB is required" />
                                 </p:column>
                             </p:row>
 

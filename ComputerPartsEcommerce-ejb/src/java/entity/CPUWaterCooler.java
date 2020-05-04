@@ -1,46 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
-import datamodel.StringValue;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class CPUWaterCooler extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    @Column(nullable = false)
+    @NotNull
+    private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String colour;
+    @Column(nullable = false)
+    @NotNull
     private Integer noiseLevel;
-    // private String[] CPUChipCompatibility;
     @ElementCollection
+    @NotNull
     private List<String> CPUChipCompatibility;
+    @Column(nullable = false)
+    @NotNull
     private Double RadiatorSize; 
 
     public CPUWaterCooler() {
         CPUChipCompatibility = new ArrayList<>();
     }
 
-    public CPUWaterCooler(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+    public CPUWaterCooler(String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image);
     }
 
     public CPUWaterCooler(String manufacturer, String colour, Integer noiseLevel, List<String> CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+        super(name, price, inventoryQuantity, image);
+        this.manufacturer = manufacturer;
         this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.CPUChipCompatibility = CPUChipCompatibility;
@@ -85,6 +84,14 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
 
     public void setRadiatorSize(Double RadiatorSize) {
         this.RadiatorSize = RadiatorSize;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     

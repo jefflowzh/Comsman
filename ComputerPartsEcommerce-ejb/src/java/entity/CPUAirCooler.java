@@ -1,43 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class CPUAirCooler extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    private String Manufacturer;
+    private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String colour;
+    @Column(nullable = false)
+    @NotNull
     private Integer noiseLevel; // (in dB)
+    @Column(nullable = false)
+    @NotNull
     private Double Height; // (mm) //this one not really useful if its water cooled
     @ElementCollection
+    @NotNull
     private List<String> CPUChipCompatibility;
-// private String[] CPUChipCompatibility;
 
     public CPUAirCooler() {
         CPUChipCompatibility = new ArrayList<>();
     }
 
-    public CPUAirCooler(String name, Double price, Integer inventoryQuantity, String image, String manufacturer) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+    public CPUAirCooler(String name, Double price, Integer inventoryQuantity, String image) {
+        super(name, price, inventoryQuantity, image);
     }
 
     public CPUAirCooler(String manufacturer, String colour, Integer noiseLevel, Double Height, List<String> CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
-        super(name, price, inventoryQuantity, image, manufacturer);
+        super(name, price, inventoryQuantity, image);
+        this.manufacturer = manufacturer;
         this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.Height = Height;
@@ -74,6 +74,14 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
 
     public void setCPUChipCompatibility(List<String> CPUChipCompatibility) {
         this.CPUChipCompatibility = CPUChipCompatibility;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     
