@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,18 +134,20 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
 //        }
 
         try {
-            
+
 //            FacesContext.getCurrentInstance().getExternalContext().responseReset();
 //            FacesContext.getCurrentInstance().getExternalContext().setResponseHeader("Content-Disposition", "filename=\"test.pdf\"");
-//            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/combine.jasper");
+//            InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/main.jasper");
 //            OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
-
             Map parameters = new HashMap();
 
             parameters.put("input", selectedComputerSetId);
 
-            JasperRunManager.runReportToPdfFile("/Users/weidonglim/Desktop/test/main.jasper", "/Users/weidonglim/Desktop/test/main.pdf", parameters, computerSetDS.getConnection());
-            // JasperRunManager. runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
+            Date date = java.util.Calendar.getInstance().getTime();
+            
+            JasperRunManager.runReportToPdfFile("/Users/weidonglim/Desktop/test/main.jasper", "/Users/weidonglim/Desktop/test/" + date.toString() + ".pdf", parameters, computerSetDS.getConnection());
+//            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
+
         } catch (JRException | SQLException ex) {
             Logger.getLogger(GeneratePdfManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
