@@ -26,8 +26,13 @@ public class LineItem implements Serializable {
     private Integer quantity;
     @OneToOne (mappedBy = "lineItem")
     private ComputerSet computerSet;
+    @ManyToOne
+    @JoinColumn
+    private CustomerOrder customerOrder;
 
     public LineItem() {
+        // need instantiate this to null first, for customerLogin() in CustomerResource to work
+        this.computerSet = null;
     }
 
     public LineItem(Product product, Integer quantity) {
@@ -37,19 +42,19 @@ public class LineItem implements Serializable {
         this.quantity = quantity;
     }
     
-//    // In the case of computer set, because you can't create a computer set before creating a line item first
-//    public LineItem(Integer quantity) {
-//        this();
-//        
-//        this.quantity = quantity;
-//    }
-    
-   public LineItem(ComputerSet computerSet, Integer quantity) {
+    // In the case of computer set, because you can't create a computer set before creating a line item first
+    public LineItem(Integer quantity) {
         this();
         
-        this.computerSet = computerSet;
         this.quantity = quantity;
     }
+    
+//   public LineItem(ComputerSet computerSet, Integer quantity) {
+//        this();
+//        
+//        this.computerSet = computerSet;
+//        this.quantity = quantity;
+//    }
     
     public Long getLineItemId() {
         return lineItemId;
@@ -107,5 +112,12 @@ public class LineItem implements Serializable {
     public String toString() {
         return "entity.LineItem[ id=" + lineItemId + " ]";
     }
-    
+
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
+    }
 }

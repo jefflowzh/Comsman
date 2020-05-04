@@ -6,6 +6,7 @@
 package ws.restful.resources;
 
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
+import ejb.session.stateless.ComputerSetSessionBeanLocal;
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.LineItemSessionBeanLocal;
@@ -66,6 +67,8 @@ import ws.restful.model.UpdateCustomerRsp;
 @Path("Customer")
 public class CustomerResource {
 
+    ComputerSetSessionBeanLocal computerSetSessionBean = lookupComputerSetSessionBeanLocal();
+
     ComputerPartSessionBeanLocal computerPartSessionBean = lookupComputerPartSessionBeanLocal();
 
     ProductSessionBeanLocal productSessionBean = lookupProductSessionBeanLocal();
@@ -73,9 +76,8 @@ public class CustomerResource {
     LineItemSessionBeanLocal lineItemSessionBean = lookupLineItemSessionBeanLocal();
 
     CustomerSessionBeanLocal customerSessionBean = lookupCustomerSessionBeanLocal();
+    
     CustomerOrderSessionBeanLocal customerOrderSessionBean = lookupCustomerOrderSessionBeanLocal();
-    
-    
 
     @Context
     private UriInfo context;
@@ -95,9 +97,14 @@ public class CustomerResource {
         try {
             Customer customer = customerSessionBean.customerLogin(email, password);
             customer.getOrders().clear();
-            List<ComputerPart> currentBuild =  customer.getCurrComputerBuild();
-            ComputerSet currComputerBuild = new ComputerSet();
+            for (LineItem li: customer.getCart()) {
+                if (li.getComputerSet() != null) { 
+                    li.getComputerSet().setLineItem(null);
+                }            
+            }
             
+            List<ComputerPart> currentBuild =  customer.getCurrComputerBuild();
+            ComputerSet currComputerBuild = new ComputerSet();          
             
 //            if(currentBuild.isEmpty() == false){
 //                for(ComputerPart currentComputerPart : currentBuild){
@@ -274,8 +281,13 @@ public class CustomerResource {
                         }
                     }
                     
-                    LineItem newLineItem = new LineItem(newComputerSet, updateCustomerReq.getCartComputerSetsQuantities().get(i));
-                    lineItemSessionBean.createNewLineItem(newLineItem);
+                    LineItem li = new LineItem(updateCustomerReq.getCartComputerSetsQuantities().get(i));
+                    LineItem newLineItem = lineItemSessionBean.createNewLineItem(li);
+                    newComputerSet.setWarrantyLengthInYears(updateCustomerReq.getCartComputerSetsWarrantyLengths().get(i));
+                    newComputerSet.setPrice(updateCustomerReq.getCartComputerSetsPrices().get(i));
+                    // dummy value
+                    newComputerSet.setAssemblyComplete(false);
+                    computerSetSessionBean.createNewComputerSet(newComputerSet, newLineItem.getLineItemId());
                     newCart.add(newLineItem);
                 }
             }
@@ -430,6 +442,16 @@ public class CustomerResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (CustomerOrderSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/CustomerOrderSessionBean!ejb.session.stateless.CustomerOrderSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ComputerSetSessionBeanLocal lookupComputerSetSessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (ComputerSetSessionBeanLocal) c.lookup("java:global/ComputerPartsEcommerce/ComputerPartsEcommerce-ejb/ComputerSetSessionBean!ejb.session.stateless.ComputerSetSessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

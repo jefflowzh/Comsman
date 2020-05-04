@@ -5,7 +5,7 @@ public class StaffAlreadyExistsException extends Exception {
     public StaffAlreadyExistsException() {
     }
 
-    public StaffAlreadyExistsException(String message) {
-        super(message);
+    public StaffAlreadyExistsException(String msg) {
+        super(msg);
     }
 }

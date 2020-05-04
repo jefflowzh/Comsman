@@ -74,6 +74,12 @@ public class CouponSessionBean implements CouponSessionBeanLocal {
             throw new CouponNotFoundException("Coupon with code " + code + " does not exist!");
         }
     }
+        
+    @Override
+    public List<Coupon> retrieveAllCoupons() {
+        Query query = em.createQuery("SELECT c FROM Coupon c WHERE c.isDisabled = false");
+        return query.getResultList();
+    }
 
     @Override
     public void updateCoupon(Coupon updatedCoupon) {

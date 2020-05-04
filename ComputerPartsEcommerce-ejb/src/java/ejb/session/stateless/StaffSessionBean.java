@@ -49,7 +49,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
                 }
                 throw new StaffAlreadyExistsException("Staff already exists!");
             }
-        }        
+        }
         em.persist(newStaff);
         em.flush();
 
@@ -102,7 +102,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
             }
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + staff.getSalt()));
             
-            if(staff.getPassword().equals(passwordHash)){
+            if(staff.getPassword().equals(passwordHash)) {
                 // staffEntity.getSaleTransactionEntities().size();                
                 return staff;
             } else {
@@ -168,9 +168,11 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         return query.getResultList();
     }
     
+    @Override
     public List<Staff> retrieveAllStaffsIncludingDisabled() {
         Query query = em.createQuery("SELECT s FROM Staff s");
         
         return query.getResultList();
     }
+    
 }

@@ -22,7 +22,6 @@ public class ComputerSet implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long computerSetId;
     
-    
     /*For a computer set there are mandatory computer parts
     cpu 
     motherboard
@@ -31,8 +30,6 @@ public class ComputerSet implements Serializable {
     powersupply
     storage (HDD or SDD)
     */
-    
-    
     
     @NotNull
     @ManyToOne
@@ -60,28 +57,23 @@ public class ComputerSet implements Serializable {
     private ComputerCase compCase;
     
     @ManyToMany
-    //@JoinColumn(name = )
     private List<GPU> gpus;
     
     @ManyToMany
-    //@JoinColumn(name = )
     private List<HDD> hdds;
             
     @ManyToMany
-    //@JoinColumn(name = )
     private List<SSD> ssds;
     
     @ManyToOne
-    //@JoinColumn(name = )
     private CPUWaterCooler waterCooler;
             
     @ManyToOne
-    //@JoinColumn(name = )
     private CPUAirCooler airCooler;
     
     @Column(nullable = false)
     @NotNull
-    private Integer warrentyLengthInYears;
+    private Integer warrantyLengthInYears;
     @ManyToOne
     @JoinColumn
     private Staff assemblyAssignedTo;
@@ -89,15 +81,11 @@ public class ComputerSet implements Serializable {
     @NotNull
     private Boolean assemblyComplete;
     @OneToOne(optional = false)
-    @JoinColumn
+    @JoinColumn (nullable = false)
     private LineItem lineItem;
     @Column(nullable = false)
     @NotNull
     private Double price;
-    
-    //@OneToOne
-    //@JoinColumn(nullable = false)
-    //private CustomerOrder customerOrder;
     
     public ComputerSet(){
         this.rams = new ArrayList<>();
@@ -108,38 +96,25 @@ public class ComputerSet implements Serializable {
         this.assemblyComplete = false;
     }
 
-    /* original constructor
-    public ComputerSet(List<ComputerPart> computerParts, Integer warrentyLengthInYears, Boolean isAmatuer, Staff assemblyAssignedTo, String name, Double price, Integer inventoryQuantity, String image) {
-
-
-    public ComputerSet(Integer warrentyLengthInYears, Boolean isAmatuer, String name, Double price, Integer inventoryQuantity, String image) {
-
-        super(name, price, inventoryQuantity, image);
-        this.computerParts = computerParts;
-        this.warrentyLengthInYears = warrentyLengthInYears;
-        this.isAmatuer = isAmatuer;      
-        assemblyComplete = false;
-    }   */
-    
-    // new constructor 
-
-    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrantyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+        this();
         this.cpu = cpu;
         this.motherBoard = motherBoard;
         this.rams = rams;
         this.psu = psu;
         this.compCase = compCase;
-        this.warrentyLengthInYears = warrentyLengthInYears;
+        this.warrantyLengthInYears = warrantyLengthInYears;
         this.assemblyComplete = false;
         this.lineItem = lineItem;
     }
-
+    
     public CPU getCpu() {
         return cpu;
     }
 
     public void setCpu(CPU cpu) {
         this.cpu = cpu;
+        this.price += cpu.getPrice();
     }
 
     public MotherBoard getMotherBoard() {
@@ -148,6 +123,7 @@ public class ComputerSet implements Serializable {
 
     public void setMotherBoard(MotherBoard motherBoard) {
         this.motherBoard = motherBoard;
+        this.price += motherBoard.getPrice();
     }
 
     public PowerSupply getPsu() {
@@ -156,6 +132,7 @@ public class ComputerSet implements Serializable {
 
     public void setPsu(PowerSupply psu) {
         this.psu = psu;
+        this.price += psu.getPrice();
     }
 
     public ComputerCase getCompCase() {
@@ -164,6 +141,7 @@ public class ComputerSet implements Serializable {
 
     public void setCompCase(ComputerCase compCase) {
         this.compCase = compCase;
+        this.price += compCase.getPrice();
     }
 
     public List<RAM> getRams() {
@@ -176,6 +154,7 @@ public class ComputerSet implements Serializable {
     
     public void addRam(RAM ram){
         this.rams.add(ram);
+        this.price += ram.getPrice();
     }
 
     public List<GPU> getGpus() {
@@ -188,6 +167,7 @@ public class ComputerSet implements Serializable {
     
     public void addGpu(GPU gpu){
         this.gpus.add(gpu);
+        this.price += gpu.getPrice();
     }
 
     public List<HDD> getHdds() {
@@ -200,6 +180,7 @@ public class ComputerSet implements Serializable {
     
     public void addHdd(HDD hdd){
         this.hdds.add(hdd);
+        this.price += hdd.getPrice();
     }
 
     public List<SSD> getSsds() {
@@ -212,14 +193,15 @@ public class ComputerSet implements Serializable {
 
     public void addSsd(SSD ssd){
         this.ssds.add(ssd);
+        this.price += ssd.getPrice();
     }
     
-    public Integer getWarrentyLengthInYears() {
-        return warrentyLengthInYears;
+    public Integer getWarrantyLengthInYears() {
+        return warrantyLengthInYears;
     }
 
-    public void setWarrentyLengthInYears(Integer warrentyLengthInYears) {
-        this.warrentyLengthInYears = warrentyLengthInYears;
+    public void setWarrantyLengthInYears(Integer warrantyLengthInYears) {
+        this.warrantyLengthInYears = warrantyLengthInYears;
     }
 
     public Staff getAssemblyAssignedTo() {
@@ -252,6 +234,7 @@ public class ComputerSet implements Serializable {
 
     public void setWaterCooler(CPUWaterCooler waterCooler) {
         this.waterCooler = waterCooler;
+        this.price += waterCooler.getPrice();
     }
 
     public CPUAirCooler getAirCooler() {
@@ -260,17 +243,9 @@ public class ComputerSet implements Serializable {
 
     public void setAirCooler(CPUAirCooler airCooler) {
         this.airCooler = airCooler;
+        this.price += airCooler.getPrice();
     }
-/*
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
-    }
-
-    public void setCustomerOrder(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
-    }
-    */
-
+    
     public LineItem getLineItem() {
         return lineItem;
     }
@@ -311,6 +286,4 @@ public class ComputerSet implements Serializable {
     public String toString() {
         return "entity.ComputerSet[ id=" + computerSetId + " ]";
     }
-    
-    
 }

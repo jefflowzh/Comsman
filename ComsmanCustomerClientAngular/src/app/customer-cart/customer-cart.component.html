@@ -4,7 +4,10 @@
 
     <h1>My Cart</h1>
 
-    <p-dataView [value]="cart">
+    <br>
+
+    <h2>Products</h2>
+    <p-dataView [value]="productsCart">
 
         <p-header>
             <div class="ui-g">
@@ -31,7 +34,49 @@
                 <div class="ui-g-1">S$ {{(lineItem.product.price * lineItem.quantity).toFixed(2)}}</div>
                 <div class="ui-g-1">
                     <button pButton type="button" class="ui-button-secondary" icon="pi pi-times"
-                        (click)="removeLineItem(index)"></button>
+                        (click)="removeProductLineItem(index)"></button>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-dataView>
+
+    <br>
+
+    <h2>ComputerSets</h2>
+    <p-dataView [value]="computerSetsCart">
+
+        <p-header>
+            <div class="ui-g">
+                <div class="ui-g-1">No</div>
+                <div class="ui-g-2">Tier</div>
+                <div class="ui-g-4">Name</div>
+                <div class="ui-g-1">Price</div>
+                <div class="ui-g-2">Quantity</div>
+                <div class="ui-g-1">Line Total</div>
+            </div>
+        </p-header>
+
+        <ng-template let-lineItem let-index="rowIndex" pTemplate="listItem">
+            <div class="ui-g">
+                <div class="ui-g-1">{{index + 1}}</div>
+                <div class="ui-g-2">
+                    <span *ngIf="lineItem.computerSet.tier != null">{{lineItem.computerSet.tier}}</span>
+                    <span *ngIf="lineItem.computerSet.tier == null">-</span>
+                </div>
+                <div class="ui-g-4">Computer Set (Warranty: 2 +
+                    {{lineItem.computerSet.warrantyLengthInYears - 2}}
+                    years)
+                </div>
+                <div class="ui-g-1">S$ {{(lineItem.computerSet.price).toFixed(2)}}</div>
+                <div class="ui-g-2">
+                    <p-spinner [(ngModel)]="lineItem.quantity" (onChange)="updateSessionCart()" size=5 min=1 max=5>
+                    </p-spinner>
+                </div>
+                <div class="ui-g-1">S$ {{(lineItem.computerSet.price * lineItem.quantity).toFixed(2)}}</div>
+                <div class="ui-g-1">
+                    <button pButton type="button" class="ui-button-secondary" icon="pi pi-times"
+                        (click)="removeComputerSetLineItem(index)"></button>
                 </div>
             </div>
         </ng-template>
@@ -96,7 +141,6 @@
             <div class="ui-g-4"><button pButton type="button" label="Checkout" class="ui-button-success"
                     style="width: 100%" (click)="createNewCustomerOrder()"></button></div>
         </div>
-
     </div>
 
 </div>

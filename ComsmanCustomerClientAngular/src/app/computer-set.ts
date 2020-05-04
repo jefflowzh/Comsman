@@ -29,17 +29,27 @@ export class ComputerSet {
     assembyComplete: boolean;
     lineItem: LineItem;
     price: number;
-    
-    
-    
-   
-    
-   
-    
-    
-    
-    
-    
-    
-    
+
+    // only in typscript class
+    tier: string;
+
+    constructor() {
+        this.gpus = [];
+        this.hdds = [];
+        this.rams = [];
+        this.ssds = [];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

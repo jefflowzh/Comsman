@@ -17,15 +17,9 @@ import javax.validation.constraints.Size;
 public class Customer extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-//    @Column(nullable = false, length = 16)
-//    @NotNull
     @Column(length = 16)
-//    @Size(min = 16, max = 16)
     private String cardNumber;
-//    @Column(nullable = false, length = 3)
-//    @NotNull
     @Column(length = 3)
-//    @Size(min = 3, max = 3)
     private String ccv;
     @OneToMany
     @NotNull
@@ -44,6 +38,7 @@ public class Customer extends User implements Serializable {
         cart = new ArrayList<>();
         loyaltyPoints = 0;
         orders = new ArrayList<>();
+        currComputerBuild = new ArrayList<>();
     }
     
     public Customer(String firstName, String lastName, String address, String email, String password, String contactNumber) {
@@ -78,6 +73,14 @@ public class Customer extends User implements Serializable {
     public void setCart(List<LineItem> cart) {
         this.cart = cart;
     }
+    
+    public List<ComputerPart> getCurrComputerBuild() {
+        return currComputerBuild;
+    }
+
+    public void setCurrComputerBuild(List<ComputerPart> currComputerBuild) {
+        this.currComputerBuild = currComputerBuild;
+    }
 
     public Integer getLoyaltyPoints() {
         return loyaltyPoints;
@@ -94,13 +97,4 @@ public class Customer extends User implements Serializable {
     public void setOrders(List<CustomerOrder> orders) {
         this.orders = orders;
     }
-
-    public List<ComputerPart> getCurrComputerBuild() {
-        return currComputerBuild;
-    }
-
-    public void setCurrComputerBuild(List<ComputerPart> currComputerBuild) {
-        this.currComputerBuild = currComputerBuild;
-    }
-
 }

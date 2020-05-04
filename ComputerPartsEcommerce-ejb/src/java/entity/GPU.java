@@ -1,35 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class GPU extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
-   //@ManyToMany(mappedBy = "gpus")
-   //private List<ComputerSet> computerSets;
-    
+    @Column(nullable = false)
+    @NotNull
     private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String chipset; //(GTX 1660)
+    @Column(nullable = false)
+    @NotNull
     private String Interface;  //(PCI-Ex16) matches with motherboard
+    @Column(nullable = false)
+    @NotNull
     private Double length; //in mm
+    @Column(nullable = false)
+    @NotNull
     private Integer TDP;
+    @Column(nullable = false)
+    @NotNull
     private Integer expansionSlotWidth;
-    private String externalPower;
-    private Integer memory;
+    @Column(nullable = false)
+    @NotNull
+    private String externalPower; //cable type
+    @Column(nullable = false)
+    @NotNull
+    private Integer memory; //GB
+    @Column(nullable = false)
+    @NotNull
     private String memoryType;
 
     public GPU() {
@@ -39,25 +44,17 @@ public class GPU extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public GPU(String Manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer ExpansionSlotWidth, String externalPower, Integer Memory, String memoryType, String name, Double price, Integer inventoryQuantity, String image) {
+    public GPU(String manufacturer, String chipset, String Interface, Double length, Integer TDP, Integer expansionSlotWidth, String externalPower, Integer memory, String memoryType, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.manufacturer = Manufacturer;
+        this.manufacturer = manufacturer;
         this.chipset = chipset;
         this.Interface = Interface;
         this.length = length;
         this.TDP = TDP;
-        this.expansionSlotWidth = ExpansionSlotWidth;
+        this.expansionSlotWidth = expansionSlotWidth;
         this.externalPower = externalPower;
-        this.memory = Memory;
+        this.memory = memory;
         this.memoryType = memoryType;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.manufacturer = Manufacturer;
     }
 
     public String getChipset() {
@@ -124,5 +121,12 @@ public class GPU extends ComputerPart implements Serializable {
         this.memoryType = MemoryType;
     }
 
-    
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+  
 }

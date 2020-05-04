@@ -1,36 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class PowerSupply extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-   // @OneToMany(mappedBy = "psu")
-  // private List<ComputerSet> computerSets;
 
+    @Column(nullable = false)
+    @NotNull
     private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String formFactor;// (micro atx)
+    @Column(nullable = false)
+    @NotNull
     private String efficiency;
+    @Column(nullable = false)
+    @NotNull
     private Integer wattage;
+    @Column(nullable = false)
+    @NotNull
     private String modularity; //(wires)
+    @Column(nullable = false)
+    @NotNull
     private Integer SATAConnectors;
+    @Column(nullable = false)
+    @NotNull
     private Integer PCIe6plus2;
 
     public PowerSupply() {
@@ -40,24 +39,15 @@ public class PowerSupply extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public PowerSupply(String Manufacturer, String formFactor, String efficiency, Integer wattage, String modularity, Integer SATAConnectors, Integer PCIe6plus2, String name, Double price, Integer inventoryQuantity, String image) {
+    public PowerSupply(String manufacturer, String formFactor, String efficiency, Integer wattage, String modularity, Integer SATAConnectors, Integer PCIe6plus2, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.manufacturer = Manufacturer;
+        this.manufacturer = manufacturer;
         this.formFactor = formFactor;
         this.efficiency = efficiency;
         this.wattage = wattage;
         this.modularity = modularity;
         this.SATAConnectors = SATAConnectors;
         this.PCIe6plus2 = PCIe6plus2;
-    }
-
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.manufacturer = Manufacturer;
     }
 
     public String getFormFactor() {
@@ -107,7 +97,12 @@ public class PowerSupply extends ComputerPart implements Serializable {
     public void setPCIe6plus2(Integer PCIe6plus2) {
         this.PCIe6plus2 = PCIe6plus2;
     }
-    
-    
-    
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 }

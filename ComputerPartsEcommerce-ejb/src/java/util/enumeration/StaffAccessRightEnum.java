@@ -1,6 +1,14 @@
 package util.enumeration;
 
 public enum StaffAccessRightEnum {
-    MANAGER,
-    TECHNICIAN
+    MANAGER {        
+        public String toString() {
+            return "Manager";
+        }
+    },
+    TECHNICIAN {
+        public String toString() {
+            return "Technician";
+        }
+    }
 }

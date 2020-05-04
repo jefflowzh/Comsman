@@ -83,30 +83,12 @@ export class CustomerService {
 
   updateCustomerCart(): Observable<any> {
 
-    // let customer = {
-    //   address: "NUS",
-    //   cart: [],
-    //   contactNumber: "12345678",
-    //   currComputerBuild: [],
-    //   email: "c@gmail.com",
-    //   firstName: "Jeff",
-    //   isDisabled: false,
-    //   lastName: "Low",
-    //   loyaltyPoints: 0,
-    //   orders: [],
-    //   password: "c5344cd99287b3a73c245f06c58739c3",
-    //   salt: "NH2V8HWFWi3I4di0TrFVkpfawlBIPy3l",
-    //   userId: 4,
-    // }
-
-    // let updateCustomerReq = {
-    //   "customer": customer
-    // }
-
     let cartProductIds: number[] = [];
     let cartProductQuantities: number[] = [];
     let cartComputerSetsPartIds: number[][] = [];
     let cartComputerSetsQuantities: number[] = [];
+    let cartComputerSetsWarrantyLengths: number[] = [];
+    let cartComputerSetsPrices: number[] = [];
 
     for (let li of this.sessionService.getCurrentCustomer().cart) {
       if (li.product) {
@@ -141,24 +123,22 @@ export class CustomerService {
 
         cartComputerSetsPartIds.push(computerSetPartIds);
         cartComputerSetsQuantities.push(li.quantity);
+        cartComputerSetsWarrantyLengths.push(li.computerSet.warrantyLengthInYears);
+        console.log(li.computerSet.warrantyLengthInYears);
+        cartComputerSetsPrices.push(li.computerSet.price);
       }
 
     }
-
+    console.log(cartComputerSetsWarrantyLengths);
     let updateCustomerReq = {
       "userId": this.sessionService.getCurrentCustomer().userId,
       "cartProductIds": cartProductIds,
       "cartProductQuantities": cartProductQuantities,
       "cartComputerSetsPartIds": cartComputerSetsPartIds,
-      "cartComputerSetsQuantities": cartComputerSetsQuantities
+      "cartComputerSetsQuantities": cartComputerSetsQuantities,
+      "cartComputerSetsWarrantyLengths": cartComputerSetsWarrantyLengths,
+      "cartComputerSetsPrices": cartComputerSetsPrices
     }
-
-    // console.log('********* DEBUG');
-    // console.log(updateCustomerReq);
-
-    // for (let li of updateCustomerReq.customer.cart) {
-    //   li.product = null;
-    // }
 
     return this.httpClient.post<any>(this.baseUrl + "/updateCustomerCart", updateCustomerReq, httpOptions).pipe
       (
@@ -184,12 +164,6 @@ export class CustomerService {
 
     return throwError(errorMessage);
   }
-
-  // customerUpdate(currentCustomer: Customer): Observable<any> {
-  //   let customerUpdateReq = { "customer": currentCustomer };
-
-  //   return this.httpClient.post<any>(this.baseUrl, customerUpdateReq).pipe();
-  // }
 
   customerOrders(email: string): Observable<any> {
     console.log("end method");

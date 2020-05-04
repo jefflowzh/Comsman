@@ -14,16 +14,24 @@ export class ViewAllSearchResultsComponent implements OnInit {
   productType: string;
   allSearchResults: Product[];
 
+  navigationSubscription;
+
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, private router: Router) { }
 
   ngOnInit() {
     this.productType = "Search Result"
 
-    this.router.events.subscribe((event: any) => {
+    // Get results when the page is first entered
+    this.retrieveProductsBySearchTerm();
+
+    // Get results when they search again on this page.
+    // Subscribe to the router events - storing the subscription so we can unsubscribe later.
+    this.navigationSubscription = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.retrieveProductsBySearchTerm();
       }
     });
+    console.log("after")
   }
 
   retrieveProductsBySearchTerm() {
@@ -37,6 +45,14 @@ export class ViewAllSearchResultsComponent implements OnInit {
         console.log('********** HeaderComponent.ts retrieve error:' + error);
       }
     );
+  }
+
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we don't then we will continue to run our
+    // retrieveProductsBySearchTerm() method on every navigationEnd event.
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }

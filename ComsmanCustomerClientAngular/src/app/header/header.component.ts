@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   displayLoading: boolean;
 
   constructor(private router: Router, public sessionService: SessionService, private customerService: CustomerService) {
+    this.searchTerm = "";
     this.displayLoading = false;
   }
 

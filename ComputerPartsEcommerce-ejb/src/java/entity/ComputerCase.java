@@ -1,53 +1,61 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class ComputerCase extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-   //@OneToMany(mappedBy = "compCase")
-   //private List<ComputerSet> computerSets;
- 
+
+    @Column(nullable = false)
+    @NotNull
     private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String type; //(ATX Mid Tower)
-    private String colour;
+    @Column(nullable = false)
+    @NotNull
     private String sidePanelView; //tintered tempered glass
-    private String[] motherBoardFormFactor; //atx micro atx mini itx
+    @ElementCollection
+    @NotNull
+    private List<String> motherBoardFormFactor;
+    @Column(nullable = false)
+    @NotNull
     private Integer fullHeightExpansionSlot; //7
+    @Column(nullable = false)
+    @NotNull
     private Double maxVideoCardLength; //in mm
+    @Column(nullable = false)
+    @NotNull
     private Double topFanSupport;
+    @Column(nullable = false)
+    @NotNull
     private Double frontFanSupport;
+    @Column(nullable = false)
+    @NotNull
     private Double rearFanSupport;
+    @Column
+    private String colour;
 
     public ComputerCase() {
+        motherBoardFormFactor = new ArrayList<>();
     }
 
     public ComputerCase(String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String manufacturer, String type, String colours, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String manufacturer, String type, String colour, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.manufacturer = manufacturer;
         this.type = type;
-        this.colour = colours;
+        this.colour = colour;
         this.sidePanelView = sidePanelView;
         this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
@@ -55,14 +63,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.topFanSupport = topFanSupport;
         this.frontFanSupport = frontFanSupport;
         this.rearFanSupport = rearFanSupport;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public String getType() {
@@ -73,28 +73,12 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.type = type;
     }
 
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colours) {
-        this.colour = colours;
-    }
-
     public String getSidePanelView() {
         return sidePanelView;
     }
 
     public void setSidePanelView(String sidePanelView) {
         this.sidePanelView = sidePanelView;
-    }
-
-    public String[] getMotherBoardFormFactor() {
-        return motherBoardFormFactor;
-    }
-
-    public void setMotherBoardFormFactor(String[] motherBoardFormFactor) {
-        this.motherBoardFormFactor = motherBoardFormFactor;
     }
 
     public Integer getFullHeightExpansionSlot() {
@@ -135,6 +119,30 @@ public class ComputerCase extends ComputerPart implements Serializable {
 
     public void setRearFanSupport(Double rearFanSupport) {
         this.rearFanSupport = rearFanSupport;
+    }
+
+    public List<String> getMotherBoardFormFactor() {
+        return motherBoardFormFactor;
+    }
+
+    public void setMotherBoardFormFactor(List<String> motherBoardFormFactor) {
+        this.motherBoardFormFactor = motherBoardFormFactor;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
 }
