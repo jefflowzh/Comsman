@@ -2,6 +2,7 @@ package entity;
 
 import util.enumeration.CouponTypeEnum;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,35 +27,38 @@ public class Coupon implements Serializable {
     private String code;
     @Column(nullable = false)
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     @Column(nullable = false)
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     @Column(nullable = false)
     @NotNull
-    private Integer loyaltyPointRequired;
+    private Integer loyaltyPointsRequired;
     @Column(nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
     private CouponTypeEnum couponType;
+    @Column
     private Double percentageRate;
+    @Column
     private Double flatAmount;
     @Column(nullable = false)
     @NotNull
     private Boolean isDisabled;
 
     public Coupon() {
+        this.isDisabled = false;
     }
 
-    public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointRequired, CouponTypeEnum couponType) {
+    public Coupon(String code, Date startDate, Date endDate, Integer loyaltyPointsRequired, CouponTypeEnum couponType) {
         this();
         
         this.code = code;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.loyaltyPointRequired = loyaltyPointRequired;
+        this.loyaltyPointsRequired = loyaltyPointsRequired;
         this.couponType = couponType;
         this.isDisabled = false;
     }
@@ -91,12 +95,12 @@ public class Coupon implements Serializable {
         this.endDate = endDate;
     }
 
-    public Integer getLoyaltyPointRequired() {
-        return loyaltyPointRequired;
+    public Integer getLoyaltyPointsRequired() {
+        return loyaltyPointsRequired;
     }
 
-    public void setLoyaltyPointRequired(Integer loyaltyPointRequired) {
-        this.loyaltyPointRequired = loyaltyPointRequired;
+    public void setLoyaltyPointsRequired(Integer loyaltyPointsRequired) {
+        this.loyaltyPointsRequired = loyaltyPointsRequired;
     }
 
     public CouponTypeEnum getCouponType() {
@@ -110,6 +114,11 @@ public class Coupon implements Serializable {
     public Double getPercentageRate() {
         return percentageRate;
     }
+    
+    public String getFormattedRate() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(percentageRate);
+    }
 
     public void setPercentageRate(Double percentageRate) {
         this.percentageRate = percentageRate;
@@ -117,6 +126,11 @@ public class Coupon implements Serializable {
 
     public Double getFlatAmount() {
         return flatAmount;
+    }
+    
+    public String getFormattedFlatAmount() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(flatAmount);
     }
 
     public void setFlatAmount(Double flatAmount) {

@@ -21,8 +21,6 @@ public class PreBuiltComputerSetModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long preBuiltComputerSetModelId;
-    @Column
-    private Integer warrentyLengthInYears;
     @Column(nullable = false)
     @NotNull
     private Double price;
@@ -113,14 +111,6 @@ public class PreBuiltComputerSetModel implements Serializable {
 
     public void setPreBuiltComputerSetModelId(Long preBuiltComputerSetModelId) {
         this.preBuiltComputerSetModelId = preBuiltComputerSetModelId;
-    }
-
-    public Integer getWarrentyLengthInYears() {
-        return warrentyLengthInYears;
-    }
-
-    public void setWarrentyLengthInYears(Integer warrentyLengthInYears) {
-        this.warrentyLengthInYears = warrentyLengthInYears;
     }
 
     public Double getPrice() {

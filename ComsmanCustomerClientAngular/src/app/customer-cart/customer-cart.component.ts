@@ -130,7 +130,7 @@ export class CustomerCartComponent implements OnInit {
         this.isPercentageCoupon = true;
         this.isFlatAmountCoupon = false;
         this.isFreeDeliveryCoupon = false;
-      } else if (this.coupon.couponType == "FLATAMOUNT") {
+      } else if (this.coupon.couponType == "FLAT_AMOUNT") {
         total = total - this.coupon.flatAmount;
         this.isFlatAmountCoupon = true;
         this.isPercentageCoupon = false;
@@ -138,7 +138,7 @@ export class CustomerCartComponent implements OnInit {
       }
     }
     total += this.deliveryFee;
-    if (this.coupon != null && this.coupon.couponType == "FREEDELIVERY") {
+    if (this.coupon != null && this.coupon.couponType == "FREE_DELIVERY") {
       total -= this.deliveryFee;
       this.isFlatAmountCoupon = false;
       this.isPercentageCoupon = false;

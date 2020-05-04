@@ -1,76 +1,71 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class MotherBoard extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    //@OneToMany(mappedBy = "motherBoard")
-   //private List<ComputerSet> computerSets;
-    
+    @Column(nullable = false)
+    @NotNull
     private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String formFactor;
+    @Column(nullable = false)
+    @NotNull
     private String socket;
+    @Column(nullable = false)
+    @NotNull
     private String chipset;
+    @Column(nullable = false)
+    @NotNull
     private Integer memorySlot;
+    @Column(nullable = false)
+    @NotNull
     private String colour;
-    //private String[] Interfaces;
+    @Column(nullable = false)
+    @NotNull
     private Boolean SLICrossFire;
+    @Column(nullable = false)
+    @NotNull
     private Integer PCIEx16;
+    @Column(nullable = false)
+    @NotNull
     private Integer m2Slot;
-    //private Integer SATA6GB;
+    @Column(nullable = false)
+    @NotNull
     private Boolean wiFi;
-    private String[] suportedMemorySpeed;
-    
-
+    @ElementCollection
+    private List<String> suportedMemorySpeed;
 
     public MotherBoard() {
+        suportedMemorySpeed = new ArrayList<>();
     }
 
     public MotherBoard(String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
     }
 
-    public MotherBoard(String Manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String Colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot, Boolean wiFi, String[] suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
+    public MotherBoard(String manufacturer, String formFactor, String socket, String chipset, Integer memorySlot, String colour, Boolean SLICrossFire, Integer PCIEx16, Integer m2Slot ,Boolean wiFi, List<String> suportedMemorySpeed, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.manufacturer = Manufacturer;
+        this.manufacturer = manufacturer;
         this.formFactor = formFactor;
         this.socket = socket;
         this.chipset = chipset;
         this.memorySlot = memorySlot;
-        this.colour = Colour;
+        this.colour = colour;
         this.SLICrossFire = SLICrossFire;
         this.PCIEx16 = PCIEx16;
         this.m2Slot = m2Slot;
         this.wiFi = wiFi;
         this.suportedMemorySpeed = suportedMemorySpeed;
-    }
-
-    
-    
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.manufacturer = Manufacturer;
     }
 
     public String getFormFactor() {
@@ -145,15 +140,19 @@ public class MotherBoard extends ComputerPart implements Serializable {
         this.wiFi = wiFi;
     }
 
-    public String[] getSuportedMemorySpeed() {
+    public List<String> getSuportedMemorySpeed() {
         return suportedMemorySpeed;
     }
 
-    public void setSuportedMemorySpeed(String[] suportedMemorySpeed) {
+    public void setSuportedMemorySpeed(List<String> suportedMemorySpeed) {
         this.suportedMemorySpeed = suportedMemorySpeed;
     }
-   
-    
-    
-    
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 }

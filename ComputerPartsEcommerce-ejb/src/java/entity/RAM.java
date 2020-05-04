@@ -1,35 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author zeplh
- */
 @Entity
 public class RAM extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
-   //@ManyToMany(mappedBy = "rams")
-   //private List<ComputerSet> computerSets;
-    
+    @Column(nullable = false)
+    @NotNull
     private String manufacturer;
+    @Column(nullable = false)
+    @NotNull
     private String speed;
+    @Column(nullable = false)
+    @NotNull
     private String type;
+    @Column(nullable = false)
+    @NotNull
     private Integer sticks; //(2 x 8GB)
+    @Column(nullable = false)
+    @NotNull
     private Integer perStickGB;
+    @Column(nullable = false)
+    @NotNull
     private Integer casLatency;
 
     public RAM() {
@@ -39,22 +35,14 @@ public class RAM extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public RAM(String Manufacturer, String speed, String type, Integer sticks, Integer perStickGB, Integer CasLatency, String name, Double price, Integer inventoryQuantity, String image) {
+    public RAM(String manufacturer, String speed, String type, Integer sticks, Integer perStickGB, Integer casLatency, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.manufacturer = Manufacturer;
+        this.manufacturer = manufacturer;
         this.speed = speed;
         this.type = type;
         this.sticks = sticks;
         this.perStickGB = perStickGB;
-        this.casLatency = CasLatency;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String Manufacturer) {
-        this.manufacturer = Manufacturer;
+        this.casLatency = casLatency;
     }
 
     public String getSpeed() {
@@ -97,6 +85,12 @@ public class RAM extends ComputerPart implements Serializable {
         this.casLatency = CasLatency;
     }
 
-    
-    
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+     
 }

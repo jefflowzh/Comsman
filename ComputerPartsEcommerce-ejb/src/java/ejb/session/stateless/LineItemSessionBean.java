@@ -19,11 +19,11 @@ public class LineItemSessionBean implements LineItemSessionBeanLocal {
     private EntityManager em;
 
     @Override
-    public Long createNewLineItem(LineItem newLineItem) {       
+    public LineItem createNewLineItem(LineItem newLineItem) {       
         em.persist(newLineItem);
         em.flush();
         
-        return newLineItem.getLineItemId();
+        return newLineItem;
     }
     
     @Override

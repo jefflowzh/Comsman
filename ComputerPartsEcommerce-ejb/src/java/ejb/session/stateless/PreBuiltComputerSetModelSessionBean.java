@@ -57,30 +57,6 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         return models;
     }
     
-//    @Override
-//    public List<PreBuiltComputerSetModel> retrievePreBuiltComputerSetModels(Boolean budget, Boolean regular, Boolean premium) {
-//        if (budget) {
-//            Query query = em.createQuery("SELECT p FROM PreBuiltComputerSetModel p WHERE p.preBuiltComputerSetTier = :tier");
-//            query.setParameter("tier", "PREMIUM");
-//        } else if ()
-//        
-//        try {
-//            PreBuiltComputerSetModel preBuiltComputerSetModel = (PreBuiltComputerSetModel) query.getSingleResult();
-//        
-//        
-//        
-//        
-//        Query query = em.createQuery("SELECT c FROM PreBuiltComputerSetModel c ");
-//        List<PreBuiltComputerSetModel> models = query.getResultList();
-//        for (PreBuiltComputerSetModel model : models) {
-//            model.getRams().size();
-//            model.getGpus().size();
-//            model.getHdds().size();
-//            model.getSsds().size();
-//        }
-//        return models;
-//    }
-//  
     @Override
     public void updatePreBuiltComputerSetModel(PreBuiltComputerSetModel preBuiltComputerSetModel) throws PreBuiltComputerSetModelNotFoundException {
         PreBuiltComputerSetModel model = em.find(PreBuiltComputerSetModel.class, preBuiltComputerSetModel.getPreBuiltComputerSetModelId());
@@ -99,6 +75,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
     
     @Override
     public boolean compatibilityCheck(PreBuiltComputerSetModel model, Long current) throws IncompatiblePartException, ComputerPartNotFoundException{
+        System.out.println("******************Check started");
         boolean flag = true;
         ComputerPart currentComputerPart = em.find(ComputerPart.class, current);
         if(currentComputerPart instanceof CPU){
@@ -145,7 +122,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             flag = waterCoolerCheck(model, currentPart);
         }
         else{
-            throw new ComputerPartNotFoundException("Computer Part Cannot be found. Please try another part.");
+            throw new ComputerPartNotFoundException("Computer part cannot be found. Please try another part.");
         }
         
         
@@ -159,9 +136,8 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         
         if(model.getMotherboard() == null || model.getMotherboard().getSocket().equals(current.getSocket())){
             flag = true;
-        }
-        else{
-            throw new IncompatiblePartException("selected CPU has compatibliity issues with computer set's MotherBoard.");
+        } else {
+            throw new IncompatiblePartException("Incompatible with Motherboard, please select another CPU or Motherboard");
         }
         
         if(model.getAirCooler() != null){
@@ -187,15 +163,15 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
     }
     
     private boolean motherboardCheck(PreBuiltComputerSetModel model, MotherBoard current) throws IncompatiblePartException{
-        
+        System.out.println("****************** moterhboard Check started");
         boolean flag = true;
         
         //check that motherboard and cpu sockets match
-        if(model.getCpu() == null || model.getMotherboard().getSocket().equals(current.getSocket())){
+        if(model.getCpu() == null || model.getCpu().getSocket().equals(current.getSocket())){
             flag = true;
         }
         else{
-            throw new IncompatiblePartException("selected Mother board has compatibliity issues with computer set's CPU.");
+            throw new IncompatiblePartException("Incompatible with CPU, please select another motherboard or CPU");
         }
         
         //check the motherboard and the case form factor
@@ -207,7 +183,8 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 }
             }
             if(formfactor == false){
-                throw new IncompatiblePartException("selected Mother board has compatiblity issues with computer set's case.");
+                System.out.println("*************form factor issue");
+                throw new IncompatiblePartException("Incompatible with Computer Case, please select another Motherboard or Computer Case");
             }
             else{
                 flag = true;
@@ -223,7 +200,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             for (RAM ram : model.getRams()){
                 totalSticks += ram.getSticks();
                 if(totalSticks > current.getMemorySlot()){
-                    throw new IncompatiblePartException("selected Mother board does not have enough RAM slots for selected RAM. Please choose another mother board or reduce the number of memory modules");
+                    throw new IncompatiblePartException("Insufficient RAM slots for selected RAM, please select another Motherboard or reduce the number of RAM modules");
                 }
              }
             
@@ -237,8 +214,9 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                     }
                 }
                 if (currentRamCheck == false){
+                    System.out.println("**********RAM CHECK ISSUE");
                     totalRamCheck = false;
-                    throw new IncompatiblePartException("selected Mother Board has compatibility issues with computer set's case.");
+                    throw new IncompatiblePartException("Incompatible with RAM, please select another Motherboard or RAM");
                 }
             }
         }
@@ -246,7 +224,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         //check the mother board and the GPU
         if(model.getGpus() != null){
             if(model.getGpus().size() > current.getPCIEx16()){
-                throw new IncompatiblePartException("Mother board does not have enough PCIex16 slots. Please choose another mother board or reduce number of GPUs and try again");
+                throw new IncompatiblePartException("Insufficient PCIex16 slots, please select another Motherboard or reduce the number of GPUs");
             }
             else{
                 flag = true;
@@ -263,7 +241,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             }
             
             if(totalNvme > current.getM2Slot()){
-                throw new IncompatiblePartException("MotherBoard does not have enough m.2 slots. Please select another MotherBoard or reduse the amount of NVME SSDs");
+                throw new IncompatiblePartException("Insufficient M.2 slots, please select another MotherBoard or reduce the number of NVME SSDs");
             }
         }
         
@@ -283,7 +261,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             totalSticks += current.getSticks();
             
             if(totalSticks > 8){
-                throw new IncompatiblePartException("Total RAM Sticks exceed 8. Please do select more that 8 RAM modules");
+                throw new IncompatiblePartException("Number of RAM sticks exceeds 8, please reduce the number of RAM sticks");
             }
         } 
         
@@ -291,7 +269,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         // check that the motherBoard supports the RAM speed
         if(model.getMotherboard() != null){
             if(totalSticks > model.getMotherboard().getMemorySlot()){
-                throw new IncompatiblePartException("Selected Mother Board does not have enough RAM slots");
+                throw new IncompatiblePartException("Insufficient RAM slots in Motherboard, please reduce the number of RAM sticks or select another Motherboard");
             }
             
             boolean supportedSpeed = false;
@@ -303,7 +281,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             }
             
             if(supportedSpeed = false){
-                throw new IncompatiblePartException("RAM Speed is not supported by selected motherboard.");
+                throw new IncompatiblePartException("RAM speed not supported by Motherboard, please select another RAM or Motherboard");
             }
         }
         
@@ -328,7 +306,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             }
             
             if (totalStorage > model.getPsu().getSATAConnectors()){
-                throw new IncompatiblePartException("Selected power supply does not have enough SATA power cables to support more storage.");
+                throw new IncompatiblePartException("Insufficient SATA power cables in power supply unit, please select another HDD or Power Supply Unit");
             }
         }
         
@@ -353,7 +331,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             }
             
             if (totalStorage > model.getPsu().getSATAConnectors()){
-                throw new IncompatiblePartException("Selected power supply does not have enough SATA power cables to support more storage.");
+                throw new IncompatiblePartException("Insufficient SATA power cables in power supply unit, please select another SSD or Power Supply Unit");
             }
         }
         else if(model.getMotherboard() != null && current.getNVME() == true){
@@ -366,7 +344,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 }
             }
             if (totalNvme > model.getMotherboard().getM2Slot()){
-                throw new IncompatiblePartException("Mother board does not have enough m.2 slots to support more NVME SSDs.");
+                throw new IncompatiblePartException("Insufficient M.2 slots, please reduce the number of NVME SSDs or select another MotherBoard");
             }
         }
         
@@ -379,7 +357,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
         
         if(model.getCompCase() != null){
             if(current.getLength() > model.getCompCase().getMaxVideoCardLength()){
-                throw new IncompatiblePartException("Selected GPU does not fit into selected case.");
+                throw new IncompatiblePartException("Incompatible with Computer Case, please select another GPU or Computer Case");
             }
             
             //total expansion slots
@@ -389,7 +367,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                     totalExpansionSlot += gpu.getExpansionSlotWidth();
                 }
                 if(totalExpansionSlot > model.getCompCase().getFullHeightExpansionSlot()){
-                    throw new IncompatiblePartException("Selected computer case does not have enough expansion slots to support GPU");
+                    throw new IncompatiblePartException("Insufficient expansion slots to support GPU, please select another GPU or Computer Case");
                 }
             }
         }
@@ -398,7 +376,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             int totalPcie16 = 1;
             totalPcie16 += model.getGpus().size();
             if(model.getMotherboard().getPCIEx16() < totalPcie16){
-                throw new IncompatiblePartException("Selected mother board does not have enough PCIex16 slots.");
+                throw new IncompatiblePartException("Insufficient PCIe x16 slots, please select another Motherboard or GPU");
             }
         }
         
@@ -422,7 +400,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             
             
                 if (totalStorage > current.getSATAConnectors()){
-                    throw new IncompatiblePartException("Selected power supply does not have enough SATA power cables to support more storage.");
+                    throw new IncompatiblePartException("Insufficient SATA power cables to support storage, please select another Power Supply Unit, HDD, or SSD");
                 }
             }
         
@@ -440,7 +418,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                     }
                 }
                 if(formfactor == false){
-                    throw new IncompatiblePartException("selected Mother board has compatiblity issues with computer set's case.");
+                    throw new IncompatiblePartException("Incompatible with Motherboard, please select another Computer Case or Motherboard");
                 }
             }
             
@@ -450,10 +428,10 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 for(GPU gpu : model.getGpus()){
                     totalExpansionLength += gpu.getExpansionSlotWidth();
                     if (gpu.getLength() > current.getMaxVideoCardLength()){
-                        throw new IncompatiblePartException("Selected GPU does not fit into selcted case.");
+                        throw new IncompatiblePartException("Incompatible with GPU, please select another Computer Case or GPU");
                     }
                     if(totalExpansionLength > current.getFullHeightExpansionSlot()){
-                        throw new IncompatiblePartException("Selected computer case does not have enough expansion slots to support GPU");
+                        throw new IncompatiblePartException("Incompatible with GPU, please select another Computer Case or GPU");
                     }
                 }
             }
@@ -461,7 +439,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
             //aio
             if(model.getWaterCooler() != null){
                 if(model.getWaterCooler().getRadiatorSize() > current.getFrontFanSupport() || model.getWaterCooler().getRadiatorSize() > current.getTopFanSupport() || model.getWaterCooler().getRadiatorSize() > current.getRearFanSupport() ){
-                    throw new IncompatiblePartException("Selected case is not compatible with selected water cooler.");
+                    throw new IncompatiblePartException("Incompatible with Water Cooler, pleaser select another Computer Case or Water Cooler");
                 } 
             }
         
@@ -481,7 +459,7 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 }
             }
             if (flag == false){
-                throw new IncompatiblePartException("Air cooler is not compatible with selected cpu chip set.");
+                throw new IncompatiblePartException("Incompatible with CPU, please select another Air Cooler or CPU");
             }
         }
         
@@ -501,13 +479,13 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
                 }
             }
             if (flag == false){
-                throw new IncompatiblePartException("Water cooler is not compatible with selected cpu chip set.");
+                throw new IncompatiblePartException("Incompatible with CPU, please select another Water Cooler or CPU");
             }
         }
         
          if(model.getCompCase() != null){
                 if(current.getRadiatorSize() > model.getCompCase().getFrontFanSupport() || current.getRadiatorSize() > model.getCompCase().getTopFanSupport() || current.getRadiatorSize() > model.getCompCase().getRearFanSupport() ){
-                    throw new IncompatiblePartException("Selected case is not compatible with selected water cooler.");
+                    throw new IncompatiblePartException("Incompatible with Computer Case, please select another Water Cooler or Computer Case");
                 } 
             }
         
@@ -520,10 +498,10 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      *this method should be done before the computerset is persisted into the database.
      *the idea is that this does not run coompatibibility checks but ensures that all parts of a computer are indeed there
      *returns true if the computer can be persisted
-     *if it returns false or error, it means there is a necessary part of the computer that has not been selected and the set should not be persisted
+     *if it returns false or error, it means there is a necessary part of the computer that has not been selected and the model should not be persisted
      */
     @Override
-    public boolean finalComputerSetCheck(PreBuiltComputerSetModel set)throws IncompleteComputerSetException{
+    public boolean finalComputerSetCheck(PreBuiltComputerSetModel model) throws IncompleteComputerSetException{
          
     /*
      compulsory parts that must be there. 
@@ -534,23 +512,23 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      RAM
      */
     
-        if(set.getCpu() == null){
+        if(model.getCpu() == null){
             throw new IncompleteComputerSetException("Computer set is missing a CPU");
         }
         
-        if(set.getMotherboard() == null){
-            throw new IncompleteComputerSetException("Computer set is missing a Mother Board");
+        if(model.getMotherboard() == null){
+            throw new IncompleteComputerSetException("Computer set is missing a Motherboard");
         }
         
-        if(set.getCompCase() == null){
-            throw new IncompleteComputerSetException("Computer set is missing a case");
+        if(model.getCompCase() == null){
+            throw new IncompleteComputerSetException("Computer set is missing a Computer Case");
         }
         
-        if(set.getPsu() == null){
-            throw new IncompleteComputerSetException("Computer set is missing a Power Supply");
+        if(model.getPsu() == null){
+            throw new IncompleteComputerSetException("Computer set is missing a Power Supply Unit");
         }
         
-        if(set.getRams() == null || set.getRams().isEmpty() == true){
+        if(model.getRams() == null || model.getRams().isEmpty() == true){
             throw new IncompleteComputerSetException("Computer set is missing RAM");
         }
         
@@ -562,11 +540,11 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should not be done when a new component is added to the list.
      */
         int requiredPower = 400;
-        for(GPU gpu : set.getGpus()){
+        for(GPU gpu : model.getGpus()){
             requiredPower += gpu.getTDP();
         }
-        if(set.getPsu().getWattage() < requiredPower){
-            throw new IncompleteComputerSetException("Computer set's required power is greater than power supply's output.");
+        if(model.getPsu().getWattage() < requiredPower){
+            throw new IncompleteComputerSetException("Computer set's required power is greater than Power Supply Unit output");
         }
      
      /*
@@ -574,8 +552,8 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getGpus() == null || set.getGpus().isEmpty() == true) && set.getCpu().getHasIntergratedGraphics() == false){
-            throw new IncompleteComputerSetException("Computer set's Does not have graphics.");
+        if((model.getGpus() == null || model.getGpus().isEmpty() == true) && model.getCpu().getHasIntergratedGraphics() == false){
+            throw new IncompleteComputerSetException("Computer set requires GPUs");
         }
      
      /*
@@ -583,8 +561,8 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getHdds() == null || set.getHdds().isEmpty() == true) && (set.getSsds() == null || set.getSsds().isEmpty() == true)){
-            throw new IncompleteComputerSetException("Computer set's Does not have storage.");
+        if((model.getHdds() == null || model.getHdds().isEmpty() == true) && (model.getSsds() == null || model.getSsds().isEmpty() == true)){
+            throw new IncompleteComputerSetException("Computer set requires HDD or SSD storage");
         }
      
      /*
@@ -592,8 +570,8 @@ public class PreBuiltComputerSetModelSessionBean implements PreBuiltComputerSetM
      It should be done at the end and not affect the picking process.
      It should not be done when a new component is added to the list.
      */
-        if((set.getWaterCooler() == null) && (set.getAirCooler() == null ) && (set.getCpu().getHasIntergratedGraphics() == false)){
-            throw new IncompleteComputerSetException("Computer set's Does not have a CPU cooler.");
+        if((model.getWaterCooler() == null) && (model.getAirCooler() == null ) && (model.getCpu().getHasIntergratedGraphics() == false)){
+            throw new IncompleteComputerSetException("Computer set requires a Water Cooler or Air Cooler");
         }
      
      

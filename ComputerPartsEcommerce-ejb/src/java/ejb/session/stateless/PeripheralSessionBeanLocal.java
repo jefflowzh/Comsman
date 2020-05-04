@@ -10,5 +10,11 @@ public interface PeripheralSessionBeanLocal {
     public Long createNewPeripheral(Peripheral newPeripheral);
 
     public List<Peripheral> retrieveAllPeripherals();
+
+    public void updatePeripheral(Peripheral peripheral);
+
+    public Peripheral retrievePeripheralById(Long productId);
+
+    public void deletePeripheral(Long productId);
     
 }

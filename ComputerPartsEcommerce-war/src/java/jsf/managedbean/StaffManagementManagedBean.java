@@ -16,10 +16,19 @@ import util.exception.ComputerSetNotFoundException;
 import util.exception.CustomerOrderNotFoundException;
 import util.exception.StaffAlreadyExistsException;
 import util.exception.StaffNotFoundException;
+import util.security.CryptographicHelper;
 
 @Named(value = "staffManagementManagedBean")
 @ViewScoped
 public class StaffManagementManagedBean implements Serializable {
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 
     @EJB
     private StaffSessionBeanLocal staffSessionBeanLocal;
@@ -27,25 +36,29 @@ public class StaffManagementManagedBean implements Serializable {
     private List<Staff> staffEntities;
     private List<Staff> filteredStaffEntities;
 
+    private Staff selectedStaffEntityToChangePassword;
+    private String oldPassword = "";
+    private String password = "";
+
     private Staff selectedStaffEntityToUpdate;
     private Staff selectedStaffEntityToDelete;
 
     private Staff newStaffEntity;
 
     private Staff currentStaff;
-    
+
     private String tempEnum = "";
     private StaffAccessRightEnum roleEnumUpdate;
-    
+
     private StaffAccessRightEnum[] roles;
 
     public StaffManagementManagedBean() {
         newStaffEntity = new Staff();
-        roles = StaffAccessRightEnum.values();
     }
 
     @PostConstruct
     public void postConstruct() {
+        roles = StaffAccessRightEnum.values();
         staffEntities = staffSessionBeanLocal.retrieveAllStaffs();
     }
 
@@ -53,7 +66,7 @@ public class StaffManagementManagedBean implements Serializable {
         try {
             StaffAccessRightEnum roleEnum = StaffAccessRightEnum.valueOf(tempEnum);
             newStaffEntity.setRole(roleEnum);
-            
+
             Long newStaffId = staffSessionBeanLocal.createNewStaff(newStaffEntity);
             Staff newStaff = staffSessionBeanLocal.retrieveStaffById(newStaffId, true, true);
             staffEntities.add(newStaff);
@@ -71,22 +84,49 @@ public class StaffManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
         }
     }
-    
+
+    public void doChangePassword(ActionEvent event) {
+        setSelectedStaffEntityToChangePassword((Staff) event.getComponent().getAttributes().get("staffEntityToChangePW"));
+    }
+
+    public void changePassword(ActionEvent event) {
+        try {
+
+            String PasswordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(oldPassword + selectedStaffEntityToChangePassword.getSalt()));
+
+            if (PasswordHash.equals(selectedStaffEntityToChangePassword.getPassword())) {
+
+                selectedStaffEntityToChangePassword.setPassword(password);
+
+                staffSessionBeanLocal.updateStaff(selectedStaffEntityToChangePassword, null, null);
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Password changed successfully", null));
+
+                selectedStaffEntityToChangePassword = new Staff();
+                password = null;
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Old password does not match current password. Please try again!", null));
+            }
+
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
+        }
+    }
+
     public void doUpdateStaff(ActionEvent event) {
         setSelectedStaffEntityToUpdate((Staff) event.getComponent().getAttributes().get("staffEntityToUpdate"));
     }
-    
+
     public void updateStaff(ActionEvent event) {
         try {
             selectedStaffEntityToUpdate.setRole(roleEnumUpdate);
-            
-            // verify if its null
+
             staffSessionBeanLocal.updateStaff(selectedStaffEntityToUpdate, null, null);
-            
+
             selectedStaffEntityToUpdate = new Staff();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Staff updated successfully", null));
-            
+
         } catch (ComputerSetNotFoundException | CustomerOrderNotFoundException | StaffNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Not found exception has occurred: " + ex.getMessage(), null));
         } catch (Exception ex) {
@@ -182,6 +222,22 @@ public class StaffManagementManagedBean implements Serializable {
 
     public void setRoleEnumUpdate(StaffAccessRightEnum roleEnumUpdate) {
         this.roleEnumUpdate = roleEnumUpdate;
+    }
+
+    public Staff getSelectedStaffEntityToChangePassword() {
+        return selectedStaffEntityToChangePassword;
+    }
+
+    public void setSelectedStaffEntityToChangePassword(Staff selectedStaffEntityToChangePassword) {
+        this.selectedStaffEntityToChangePassword = selectedStaffEntityToChangePassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

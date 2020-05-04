@@ -26,6 +26,9 @@ public class LineItem implements Serializable {
     private Integer quantity;
     @OneToOne (mappedBy = "lineItem")
     private ComputerSet computerSet;
+    @ManyToOne
+    @JoinColumn
+    private CustomerOrder customerOrder;
 
     public LineItem() {
         // need instantiate this to null first, for customerLogin() in CustomerResource to work
@@ -109,5 +112,12 @@ public class LineItem implements Serializable {
     public String toString() {
         return "entity.LineItem[ id=" + lineItemId + " ]";
     }
-    
+
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
+    }
 }

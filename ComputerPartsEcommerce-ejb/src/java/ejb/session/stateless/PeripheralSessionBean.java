@@ -17,14 +17,33 @@ public class PeripheralSessionBean implements PeripheralSessionBeanLocal {
     public Long createNewPeripheral(Peripheral newPeripheral) {
         em.persist(newPeripheral);
         em.flush();
-        
+
         return newPeripheral.getProductId();
     }
-    
+
     @Override
     public List<Peripheral> retrieveAllPeripherals() {
-        Query query = em.createQuery("SELECT p FROM Peripheral p");
+        Query query = em.createQuery("SELECT p FROM Peripheral p WHERE p.isDisabled = false");
         return query.getResultList();
+    }
+
+    @Override
+    public Peripheral retrievePeripheralById(Long productId) {
+        Query query = em.createQuery("SELECT p FROM Peripheral p WHERE p.productId = :inProductId");
+        query.setParameter("inProductId", productId);
+
+        return (Peripheral) query.getSingleResult();
+    }
+
+    @Override
+    public void updatePeripheral(Peripheral peripheral) {
+        em.merge(peripheral);
+    }
+
+    @Override
+    public void deletePeripheral(Long productId) {
+        Peripheral peripheralToDelete = retrievePeripheralById(productId);
+        peripheralToDelete.setIsDisabled(Boolean.TRUE);
     }
     
 }

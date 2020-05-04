@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/defaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <div class="layout-content">
+
+            <h2>
+                Computer Building Tasks
+            </h2>
+
+            <div class="layout-subcontent">
+
+                <h:form id="formAllComputerBuildingTasks">
+                    <p:growl id="growl" sticky="false" life="4000" />
+                    <p:messages id="messages" redisplay="false" closable="true" />
+
+                    <p:dataTable id="dataTableAllComputerBuildingTasks" widgetVar="dataTableAllComputerBuildingTasks" value="#{computerBuildingTasksManagedBean.computerSets}" var="task" rowKey="#{task.computerSetId}" rowIndexVar="row"
+                                 sortBy="#{task.assemblyComplete}" filteredValue="#{computerBuildingTasksManagedBean.filteredSets}"
+                                 rows="10" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search : "/>
+                                <p:inputText id="globalFilter" onkeyup="PF('dataTableAllComputerBuildingTasks').filter()" style="width: 700px;" placeholder="Enter Keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="Computer Set ID" sortBy="#{task.computerSetId}" filterBy="#{task.computerSetId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.computerSetId}"/>
+                        </p:column>
+
+                        <p:column headerText="Order Date" sortBy="#{task.lineItem.customerOrder.customerOrderId}" filterBy="#{task.lineItem.customerOrder.customerOrderId}" filterMatchMode="contains">
+                            <h:outputText value="#{task.lineItem.customerOrder.customerOrderId}"/>
+                        </p:column>
+
+                        <p:column headerText="Complete By" sortBy="#{task.lineItem.customerOrder.completeBy}" filterBy="#{task.lineItem.customerOrder.completeBy}" filterMatchMode="contains">
+                            <h:outputText value="#{task.lineItem.customerOrder.completeBy}"/>
+                        </p:column>
+s
+                        <p:column headerText="Status" sortBy="#{task.assemblyComplete}" filterBy="#{task.assemblyComplete}" filterMatchMode="contains">
+                            <h:outputText value="#{task.assemblyComplete}"/>
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <div class="actionButton">
+                                <p:commandButton ajax="false"  icon="fa fa-wpforms" title="Download Form" actionListener="#{computerBuildingTasksManagedBean.generateReport}" update="formAllComputerBuildingTasks:messages" >
+                                    <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
+                                </p:commandButton>
+                                
+                                <p:commandButton icon="fa fa-check" title="Mark as Complete" actionListener="#{computerBuildingTasksManagedBean.markAsComplete}" update="formAllComputerBuildingTasks:dataTableAllComputerBuildingTasks formAllComputerBuildingTasks:messages" rendered="#{!task.assemblyComplete}">
+                                    <p:confirm header="Confirmation" message="Mark as Complete?" icon="pi pi-exclamation-triangle" />
+                                    <f:attribute name="selectedComputerSetId" value="#{task.computerSetId}" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true" id="dialogConfirmCompletion">                       
+                        <p:commandButton type="button" value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton type="button" value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />                        
+                    </p:confirmDialog>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

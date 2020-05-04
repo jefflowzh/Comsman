@@ -8,7 +8,7 @@ import util.exception.LineItemNotFoundException;
 @Local
 public interface LineItemSessionBeanLocal {
 
-    public Long createNewLineItem(LineItem newLineItem);
+    public LineItem createNewLineItem(LineItem newLineItem);
 
     public LineItem retrieveLineItemById(Long lineItemId) throws LineItemNotFoundException;
   

@@ -12,6 +12,8 @@ public interface CouponSessionBeanLocal {
     public Long createNewCoupon(Coupon newCoupon);
     
     public Coupon retrieveCouponById(Long couponId) throws CouponNotFoundException;
+    
+    public List<Coupon> retrieveAllCoupons();
 
     public void updateCoupon(Coupon updatedCoupon);
 

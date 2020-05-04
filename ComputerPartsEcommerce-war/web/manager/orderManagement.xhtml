@@ -51,17 +51,21 @@
                         </p:column>
 
                         <p:column headerText="Requires Delivery" sortBy="#{orderEntity.requiresDelivery}" filterBy="#{orderEntity.requiresDelivery}" filterMatchMode="contains">
-                            <h:outputText value="#{orderEntity.requiresDelivery}" />
+                            <h:outputText rendered="#{orderEntity.requiresDelivery}" value="Yes" />
+                            <h:outputText rendered="#{!orderEntity.requiresDelivery}" value="No" />
                         </p:column>
 
                         <p:column headerText="Status" sortBy="#{orderEntity.orderStatus}" filterBy="#{orderEntity.orderStatus}" filterMatchMode="contains">
-                            <h:outputText value="#{orderEntity.orderStatus}" />
+                            <h:outputText value="#{orderEntity.orderStatus.toString()}" />
                         </p:column>
 
                         <p:column headerText="Action">
                             <div class="actionButton">
                                 <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateOrder}" update="formUpdateOrder" oncomplete="PF('sidebarUpdateOrder').show()" icon="fa fa-pencil" title="Update">
                                     <f:attribute name="orderEntityToUpdate" value="#{orderEntity}" />
+                                </p:commandButton>
+                                <p:commandButton actionListener="#{orderManagementManagedBean.doVoidOrder}" oncomplete="PF('dialogVoidOrder').show()" icon="fa fa-trash" title="Void">
+                                    <f:attribute name="orderEntityToVoid" value="#{orderEntity}" />
                                 </p:commandButton>
                                 <p:commandButton actionListener="#{orderManagementManagedBean.doUpdateLineItems}" update="formViewLineItems" oncomplete="PF('dialogViewLineItems').show()" icon="fa fa-cart-plus" title="View Line Items">
                                     <f:attribute name="lineItemsToUpdate" value="#{orderEntity}" />
@@ -72,6 +76,13 @@
                     </p:dataTable>
 
                 </h:form>
+
+                <p:confirmDialog header="Warning" id="dialogVoidOrder" widgetVar="dialogVoidOrder" message="Are you sure you want to void?">
+                    <div align="center">
+                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{orderManagementManagedBean.voidOrder}" oncomplete="PF('dialogVoidOrder').hide()" update="formAllOrder:dataTableAllOrder formAllOrder:messages"/>
+                        <p:commandButton value="No"  icon="pi pi-times" onclick="PF('dialogVoidOrder').hide()" />
+                    </div>
+                </p:confirmDialog>
 
                 <h:form id="formUpdateOrder">
                     <p:sidebar id="sidebarUpdateOrder" widgetVar="sidebarUpdateOrder" position="right" baseZIndex="10000" style="width: 30%;">
@@ -120,10 +131,20 @@
 
                             <p:row>
                                 <p:column>
+                                    <p:outputLabel for="billingAddress" value="Billing Address: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="billingAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.billingAddress}" required="true" requiredMessage="Billing Address is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
                                     <h:outputLabel for="selectBoolean" value='Requires Delivery: ' style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
                                     <p:selectOneMenu id="selectBoolean" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery}" appendTo="@this">
+                                        <p:ajax update="formUpdateOrder:sidebarUpdateOrder" oncomplete="PF('sidebarUpdateOrder').show()"/>
                                         <f:selectItem itemLabel="true" itemValue="true" />
                                         <f:selectItem itemLabel="false" itemValue="false" />
                                     </p:selectOneMenu>
@@ -139,18 +160,9 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.requiresDelivery == true}">
-                                <p:column>
-                                    <p:outputLabel for="billingAddress" value="Billing Address: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="billingAddress" value="#{orderManagementManagedBean.selectedOrderEntityToUpdate.billingAddress}" required="true" requiredMessage="Billing Address is required" />
-                                </p:column>
-                            </p:row>
-
                             <p:row>
                                 <p:column colspan="2">
-                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" />
+                                    <p:commandButton value="Update Order" update="@form formAllOrder:dataTableAllOrder formAllOrder:messages" actionListener="#{orderManagementManagedBean.updateOrder}" oncomplete="PF('sidebarUpdateOrder').hide();" rendered="#{orderManagementManagedBean.selectedOrderEntityToUpdate.orderStatus != OrderStatusEnum.FULFILLED}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -172,8 +184,9 @@
                                 <h:outputText value="#{lineItemEntity.lineItemId}" />
                             </p:column>
 
-                            <p:column headerText="Product Name" sortBy="#{lineItemEntity.product.name}">
-                                <h:outputText value="#{lineItemEntity.product.name}" />
+                            <p:column headerText="Item Name" sortBy="#{lineItemEntity.product.name}">
+                                <h:outputText value="#{lineItemEntity.product.name}" rendered="#{lineItemEntity.product != null}"/>
+                                <h:outputText value="Computer Set" rendered="#{lineItemEntity.product == null}"/>
                             </p:column>
 
                             <p:column headerText="Quantity" sortBy="#{lineItemEntity.quantity}">

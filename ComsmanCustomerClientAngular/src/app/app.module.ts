@@ -74,8 +74,6 @@ import { ViewAllSearchResultsComponent } from './view-all-search-results/view-al
     CustomerOrdersComponent,
     AmateurSetMainPageComponent,
     AdvancedSetBuildPageComponent,
-    
-   
     ViewAllPeripheralsComponent,
     ViewOrderComponent,
     CustomerCouponComponent,

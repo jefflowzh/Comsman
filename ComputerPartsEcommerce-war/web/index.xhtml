@@ -5,26 +5,67 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/template/defaultTemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui">
-    
-    <ui:define name="content">
-        
-        <h:panelGroup>
-            <article>
-                <h3>Welcome</h3>
-                <p>
-                    This version of the retail Point-Of-Sale (POS) system includes the following enhancements:                    
-                </p>
-                <p>
-                    <ul>
-                        <li>Enhancement of existing use cases to meet v5.0 expanded logical data model.</li>
-                        <li>Implementation of new use cases in v5.0 (except customer related use cases).</li>
-                    </ul>
-                </p>
-            </article>
-        </h:panelGroup>
 
+<ui:define name="content">
+
+    <div class="layout-content">
+
+        <div style="padding-top: 15px">
+            <h:outputText value="Welcome #{sessionScope.currentStaffEntity.firstName} #{sessionScope.currentStaffEntity.lastName}!" style="font-size: 20px; font-weight: bold;"/>
+        </div>
         
-    </ui:define>
+        <h3>Your Schedule:</h3>
+
+        <h:form style="width: 69%; height: 50%;" styleClass="custom">
+            <p:growl id="messages" showDetail="true" />
+
+            <h:panelGrid columnClasses="value">
+                <p:schedule id="schedule" value="#{scheduleManagedBean.eventModel}" widgetVar="myschedule">
+
+                    <p:ajax event="dateSelect" listener="#{scheduleManagedBean.onDateSelect}" update="eventDetails" />
+                    <p:ajax event="eventSelect" listener="#{scheduleManagedBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />
+                    <p:ajax event="eventMove" listener="#{scheduleManagedBean.onEventMove}" update="messages" />
+                    <p:ajax event="eventResize" listener="#{scheduleManagedBean.onEventResize}" update="messages" />
+
+                </p:schedule>
+            </h:panelGrid>
+
+            <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                <h:panelGrid id="eventDetails" columns="2">
+                    <row>
+                        <column>
+                            <p:outputLabel for="title" value="Titles:" style="font-weight:bold"/>
+                        </column>
+                        <column>
+                            <p:outputLabel id="title" value="#{scheduleManagedBean.event.title}"/>
+                        </column>
+                    </row>
+
+                    <row>
+                        <column>
+                            <p:outputLabel for="from" value="From:" style="font-weight:bold"/>
+                        </column>
+                        <column>
+                            <p:outputLabel id="from" value="#{scheduleManagedBean.event.startDate}" />
+                        </column>
+                    </row>
+
+                    <row>
+                        <column>
+                            <p:outputLabel for="to" value="To:" style="font-weight:bold"/>
+                        </column>
+                        <column>
+                            <p:outputLabel id="to" value="#{scheduleManagedBean.event.endDate}" />
+                        </column>
+                    </row>
+
+                </h:panelGrid>
+            </p:dialog>    
+
+        </h:form>
+    </div>
+
+</ui:define>
 
 </ui:composition>
 

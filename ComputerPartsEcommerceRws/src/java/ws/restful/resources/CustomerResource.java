@@ -281,13 +281,12 @@ public class CustomerResource {
                     }
                     
                     LineItem li = new LineItem(updateCustomerReq.getCartComputerSetsQuantities().get(i));
-                    Long newLineItemId = lineItemSessionBean.createNewLineItem(li);
-                    newComputerSet.setWarrentyLengthInYears(updateCustomerReq.getCartComputerSetsWarrantyLengths().get(i));
+                    LineItem newLineItem = lineItemSessionBean.createNewLineItem(li);
+                    newComputerSet.setWarrantyLengthInYears(updateCustomerReq.getCartComputerSetsWarrantyLengths().get(i));
                     newComputerSet.setPrice(updateCustomerReq.getCartComputerSetsPrices().get(i));
                     // dummy value
                     newComputerSet.setAssemblyComplete(false);
-                    computerSetSessionBean.createNewComputerSet(newComputerSet, newLineItemId);
-                    LineItem newLineItem = lineItemSessionBean.retrieveLineItemById(newLineItemId);
+                    computerSetSessionBean.createNewComputerSet(newComputerSet, newLineItem.getLineItemId());
                     newCart.add(newLineItem);
                 }
             }

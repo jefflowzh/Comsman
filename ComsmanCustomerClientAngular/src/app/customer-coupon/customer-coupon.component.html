@@ -1,12 +1,12 @@
 <div class="row" style="margin-right: 0; width: 100%;">
-    <div class="col-md-2" >
+    <div class="col-md-2">
         <p-menu [model]="sidenavItems"></p-menu>
     </div>
 
 
     <div class="col-md-10">
-        <p-table [value] = "coupons">
-            <ng-template pTemplate = "header">
+        <p-table [value]="coupons">
+            <ng-template pTemplate="header">
                 <tr>
                     <th>Coupon Code</th>
                     <th>Coupon Start Date</th>
@@ -26,10 +26,10 @@
                     <td *ngIf="coupon.couponType == 'PERCENTAGE'">
                         {{coupon.percentageRate}}
                     </td>
-                    <td *ngIf="coupon.couponType == 'FLATAMOUNT'">
+                    <td *ngIf="coupon.couponType == 'FLAT_AMOUNT'">
                         {{coupon.flatAmount}}
                     </td>
-                    <td *ngIf="coupon.couponType == 'FREEDELIVERY'">
+                    <td *ngIf="coupon.couponType == 'FREE_DELIVERY'">
                         Free delivery
                     </td>
                 </tr>

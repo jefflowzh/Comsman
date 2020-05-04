@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jsf.managedbean;
 
 import ejb.session.stateless.CustomerOrderSessionBeanLocal;
@@ -18,11 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.enumeration.OrderStatusEnum;
 
-/**
- *
- * @author weidonglim
- */
 @Named(value = "orderManagementManagedBean")
 @ViewScoped
 public class OrderManagementManagedBean implements Serializable {
@@ -37,6 +29,8 @@ public class OrderManagementManagedBean implements Serializable {
     private List<CustomerOrder> filteredOrderEntities;
 
     private CustomerOrder selectedOrderEntityToUpdate;
+    private CustomerOrder selectedOrderEntityToVoid;
+    
 
     private LineItem lineEntityToDelete;
 
@@ -52,13 +46,49 @@ public class OrderManagementManagedBean implements Serializable {
         setOrderEntities(customerOrderSessionBeanLocal.retrieveAllOrders());
     }
 
+    public void doVoidOrder(ActionEvent event) {
+        setSelectedOrderEntityToVoid((CustomerOrder) event.getComponent().getAttributes().get("orderEntityToVoid"));
+    }
+
+    public void voidOrder(ActionEvent event) {
+        try {
+            if (selectedOrderEntityToVoid.getDeliveryAssignedTo() != null && !selectedOrderEntityToVoid.getRequiresDelivery()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please unassign delivery staff before indicating that a delivery is not required!", null));
+                return;
+            }
+            if (!selectedOrderEntityToVoid.getRequiresDelivery()) {
+                selectedOrderEntityToVoid.setDeliveryAddress(null);
+            } 
+            
+            selectedOrderEntityToVoid.setVoided(Boolean.TRUE);
+            System.out.println(selectedOrderEntityToVoid.getVoided());
+            selectedOrderEntityToVoid.setOrderStatus(OrderStatusEnum.VOIDED);
+            
+            customerOrderSessionBeanLocal.updateCustomerOrder(selectedOrderEntityToVoid, null, null, null, null);
+
+            orderEntities.remove(selectedOrderEntityToVoid);
+            selectedOrderEntityToVoid = new CustomerOrder();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Order voided", null));
+
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
+        }
+    }
+
     public void doUpdateOrder(ActionEvent event) {
         setSelectedOrderEntityToUpdate((CustomerOrder) event.getComponent().getAttributes().get("orderEntityToUpdate"));
     }
 
     public void updateOrder(ActionEvent event) {
         try {
-
+            if (selectedOrderEntityToUpdate.getDeliveryAssignedTo() != null && !selectedOrderEntityToUpdate.getRequiresDelivery()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please unassign delivery staff before indicating that a delivery is not required!", null));
+                return;
+            }
+            if (!selectedOrderEntityToUpdate.getRequiresDelivery()) {
+                selectedOrderEntityToUpdate.setDeliveryAddress(null);
+            }
             customerOrderSessionBeanLocal.updateCustomerOrder(selectedOrderEntityToUpdate, null, null, null, null);
 
             selectedOrderEntityToUpdate = new CustomerOrder();
@@ -73,11 +103,6 @@ public class OrderManagementManagedBean implements Serializable {
     public void doUpdateLineItems(ActionEvent event) {
         setSelectedOrderEntityToUpdate((CustomerOrder) event.getComponent().getAttributes().get("lineItemsToUpdate"));
         setSelectedLineItemsToUpdate(selectedOrderEntityToUpdate.getLineItems());
-        for (LineItem l : selectedLineItemsToUpdate) {
-            System.out.println(l.getLineItemId());
-            System.out.println(l.getProduct().getName());
-            System.out.println(l.getQuantity());
-        }
     }
 
     public void updateLineItems(ActionEvent event) {
@@ -105,14 +130,14 @@ public class OrderManagementManagedBean implements Serializable {
 
             CustomerOrder updateOrder = customerOrderSessionBeanLocal.retrieveCustomerOrderById(getSelectedOrderEntityToUpdate().getCustomerOrderId(), true);
             double tempTotalPrice = 0;
-            
+
             for (LineItem l : getSelectedLineItemsToUpdate()) {
                 tempTotalPrice += (l.getProduct().getPrice() * l.getQuantity());
             }
 
             selectedOrderEntityToUpdate.setTotalPrice(tempTotalPrice);
             updateOrder.setTotalPrice(tempTotalPrice);
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Line Item deleted successfully", null));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred: " + ex.getMessage(), null));
@@ -165,6 +190,14 @@ public class OrderManagementManagedBean implements Serializable {
 
     public void setLineEntityToDelete(LineItem lineEntityToDelete) {
         this.lineEntityToDelete = lineEntityToDelete;
+    }
+
+    public CustomerOrder getSelectedOrderEntityToVoid() {
+        return selectedOrderEntityToVoid;
+    }
+
+    public void setSelectedOrderEntityToVoid(CustomerOrder selectedOrderEntityToVoid) {
+        this.selectedOrderEntityToVoid = selectedOrderEntityToVoid;
     }
 
 }
