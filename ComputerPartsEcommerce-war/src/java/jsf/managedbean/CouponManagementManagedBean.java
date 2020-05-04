@@ -68,12 +68,6 @@ public class CouponManagementManagedBean implements Serializable {
         }
     }
     
-    public void test(UIComponent component) {
-        System.out.println("****TEST" + component.getChildCount());
-        System.out.println("****TEST" + newCoupon.getCode());
-        FacesContext.getCurrentInstance().addMessage("formAllCoupons:test123", new FacesMessage(FacesMessage.SEVERITY_INFO, "testing123", "testing12"));
-    }
-    
     public void doUpdateCoupon(ActionEvent event) {
         setSelectedCouponToUpdate((Coupon) event.getComponent().getAttributes().get("selectedCouponToUpdate"));
     }

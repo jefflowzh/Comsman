@@ -79,11 +79,7 @@
                         </p:column>
 
                     </p:dataTable>
-                    <p:inputText id="test123">
-                        <p:ajax listener="#{couponManagementManagedBean.test(component)}"/>
-                    </p:inputText>
-                    <p:message id="test1" for="test123"/>
-                    <p:commandButton actionListener="#{couponManagementManagedBean.test(component)}" update="formAllCoupons:test1"/>
+                    
                 </h:form>
                 
                 <p:confirmDialog global="true" id="dialogConfirmDeletion">                       
