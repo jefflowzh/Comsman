@@ -19,7 +19,8 @@ public class LineItemSessionBean implements LineItemSessionBeanLocal {
     private EntityManager em;
 
     @Override
-    public LineItem createNewLineItem(LineItem newLineItem) {       
+    public LineItem createNewLineItem(LineItem newLineItem) {   
+        System.out.println("***** reached sb" );
         em.persist(newLineItem);
         em.flush();
         

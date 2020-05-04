@@ -366,20 +366,30 @@ public class DataInitSessionBean {
         computerSet.getRams().add(testRam1);
         computerSet.setWarrantyLengthInYears(2);
         lineItem4.setComputerSet(computerSet);
-        computerSetSessionBeanLocal.createNewComputerSet(lineItem4);
+        List<Long> ids = computerSetSessionBeanLocal.createNewComputerSet(lineItem4);
+        List<LineItem> tempLineItems = new ArrayList<>();
+        for (Long id : ids) {
+            try {
+                ComputerSet cs = computerSetSessionBeanLocal.retrieveComputerSetById(id);
+                tempLineItems.add(cs.getLineItem());
+            } catch (ComputerSetNotFoundException ex) {
+                System.out.println();
+            }
+        }
 
 //        // create customer orders
-//        lineItemSessionBeanLocal.createNewLineItem(lineItem4);
-//        List<LineItem> lineItems = new ArrayList<>();
-//        lineItems.add(lineItem1);
-//        lineItems.add(lineItem2);
-//        lineItems.add(lineItem4);
-//        CustomerOrder customerOrder1 = new CustomerOrder(new Date(), true, "2 Middle Kent Ridge Road 119933", lineItems);
-//        try {
-//            customerOrderSessionBeanLocal.createNewCustomerOrder(customerOrder1, (long) 1);
-//        } catch (Exception ex) {
-//            System.err.println(ex.getMessage());
-//        }        
+        List<LineItem> lineItems = new ArrayList<>();
+        lineItems.add(lineItem1);
+        lineItems.add(lineItem2);
+        for (LineItem item : tempLineItems) {
+            lineItems.add(item);
+        }
+        CustomerOrder customerOrder1 = new CustomerOrder(new Date(), true, "2 Middle Kent Ridge Road 119933", lineItems);
+        try {
+            customerOrderSessionBeanLocal.createNewCustomerOrder(customerOrder1, (long) 7);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }        
              
     }
 

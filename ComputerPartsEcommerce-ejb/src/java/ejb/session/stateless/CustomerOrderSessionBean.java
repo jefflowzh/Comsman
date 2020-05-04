@@ -36,6 +36,10 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
     public Long createNewCustomerOrder(CustomerOrder newCustomerOrder, Long customerId) throws CustomerNotFoundException, CustomerOrderNotFoundException {
         System.out.println("ENTER HERE");
         Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId, false, true);
+        List<LineItem> lineItems = newCustomerOrder.getLineItems();
+        for (LineItem lineItem : lineItems) {
+            lineItem.setCustomerOrder(newCustomerOrder);
+        }
 
         newCustomerOrder.setCustomer(customer);
         customer.getOrders().add(newCustomerOrder);
