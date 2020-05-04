@@ -46,7 +46,7 @@ export class ViewAllWaterCoolerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productType = "Air Cooler"
+    this.productType = "Water Cooler"
 
     this.productService.retrieveAllCPUWaterCoolers().subscribe(
       response => {

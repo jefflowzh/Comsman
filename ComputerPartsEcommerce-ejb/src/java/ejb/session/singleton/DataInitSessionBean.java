@@ -381,16 +381,16 @@ public class DataInitSessionBean {
             set.getRams().add(testRam);
             set.getRams().add(testRam1);
             
-            LineItem setItem = new LineItem();
-            setItem.setQuantity(1);
-            setItem.setComputerSet(set);
-            Long setId = lineItemSessionBean.createNewLineItem(setItem);
-            computerSetSessionBean.createNewComputerSet(set,setId);
-            
-            List<LineItem> itemSets = new ArrayList();
-            itemSets.add(setItem);
-            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
-            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
+//            LineItem setItem = new LineItem();
+//            setItem.setQuantity(1);
+//            setItem.setComputerSet(set);
+//            Long setId = lineItemSessionBean.createNewLineItem(setItem);
+//            computerSetSessionBean.createNewComputerSet(set,setId);
+//            
+//            List<LineItem> itemSets = new ArrayList();
+//            itemSets.add(setItem);
+//            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
+//            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
             
             PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET);
             p1.setCpu(testCpu);

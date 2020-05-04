@@ -5,6 +5,10 @@ import { NgForm } from '@angular/forms';
 import { SessionService } from '../session.service';
 import { CustomerService } from '../customer.service';
 import { Customer } from '../customer';
+import { ComputerSetService } from '../computer-set.service';
+import { ComputerSet } from '../computer-set';
+import { ComputerPart } from '../computer-part';
+import { CPU } from '../cpu';
 
 @Component({
   selector: 'app-customer-login',
@@ -20,7 +24,7 @@ export class CustomerLoginComponent implements OnInit {
   errorMessage: string;
 
   constructor(private router: Router, public sessionService: SessionService,
-    private customerService: CustomerService) {
+    private customerService: CustomerService, private computerSetService: ComputerSetService) {
     this.submitted = false;
     this.loginError = false;
   }
@@ -42,13 +46,36 @@ export class CustomerLoginComponent implements OnInit {
         response => {
           let customer: Customer = response.customer;
           customer.password = "";
-
+          
           if (customer != null) {
 
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
             this.loginError = false;
+            console.log(customer.currComputerBuild);
+            let currComputerBuild = response.currComputerBuild
+            // if(!currComputerBuild.cpu){
+            //   currComputerBuild.cpu = null;
+            // }
+            // if(!currComputerBuild.compCase){
+            //   currComputerBuild.compCase = null;
+            // }
+            // if(!currComputerBuild.motherBoard){
+            //   currComputerBuild.motherBoard = null;
+            // }
+            // if(!currComputerBuild.psu){
+            //   currComputerBuild.psu = null;
+            // }
+            // if(!currComputerBuild.airCooler){
+            //   currComputerBuild.airCooler = null;
+            // }
+            // if(!currComputerBuild.waterCooler){
+            //   currComputerBuild.waterCooler = null;
 
+            // 
+
+            this.sessionService.setCurrentComputerSet(currComputerBuild);
+            console.log(this.sessionService.getCurrentComputerSet());
             this.router.navigate(["/index"]);
           } else {
             this.loginError = true;

@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -99,6 +100,12 @@ public class ComputerSet implements Serializable {
     //private CustomerOrder customerOrder;
     
     public ComputerSet(){
+        this.rams = new ArrayList<>();
+        this.gpus = new ArrayList<>();
+        this.hdds = new ArrayList<>();
+        this.ssds = new ArrayList<>();
+        this.price = 0.0;
+        this.assemblyComplete = false;
     }
 
     /* original constructor

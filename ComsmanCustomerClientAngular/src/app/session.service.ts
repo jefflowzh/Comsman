@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Customer } from './Customer';
 import { Product } from './product';
 import { CustomerOrder } from './customer-order';
+import { ComputerSet } from './computer-set';
+import { ComputerPart } from './computer-part';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,22 @@ export class SessionService {
 
   setCurrentCustomer(currentCustomer: Customer): void {
     localStorage.currentCustomer = JSON.stringify(currentCustomer);
+  }
+
+  getCurrentComputerSet(): ComputerSet {
+    return JSON.parse(localStorage.currentComputerSet);
+  }
+
+  setCurrentComputerSet(currentComputerSet: ComputerSet): void {
+    localStorage.currentComputerSet = JSON.stringify(currentComputerSet);
+  }
+
+  getLastAddedComputerPart(): ComputerPart {
+    return JSON.parse(localStorage.lastAddedComputerPart);
+  }
+
+  setLastAddedComputerPart(lastAddedComputerPart: ComputerPart): void {
+    localStorage.lastAddedComputerPart = JSON.stringify(lastAddedComputerPart);
   }
 
   // getCurrentOrder(): CustomerOrder[]{

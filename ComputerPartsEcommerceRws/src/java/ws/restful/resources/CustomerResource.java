@@ -48,6 +48,7 @@ import javax.ws.rs.core.Response.Status;
 import util.exception.CustomerEmailExistException;
 import util.exception.CustomerNotFoundException;
 import util.exception.InvalidLoginCredentialException;
+import ws.restful.model.CurrentComputerSetPartsListRsp;
 import ws.restful.model.ErrorRsp;
 import ws.restful.model.CustomerLoginRsp;
 import ws.restful.model.CustomerOrderRsp;
@@ -94,13 +95,55 @@ public class CustomerResource {
         try {
             Customer customer = customerSessionBean.customerLogin(email, password);
             customer.getOrders().clear();
-//            List<CustomerOrder> orders = customer.getOrders();
-//            for(CustomerOrder o : orders){
-//                o.getCustomer().getOrders().clear();
-//                o.getLineItems().clear();
-//            }
+            List<ComputerPart> currentBuild =  customer.getCurrComputerBuild();
+            ComputerSet currComputerBuild = new ComputerSet();
             
-            CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);
+            
+            if(currentBuild.isEmpty() == false){
+                for(ComputerPart currentComputerPart : currentBuild){
+                    if(currentComputerPart instanceof CPU){
+                        CPU currentPart = (CPU) currentComputerPart; 
+                        currComputerBuild.setCpu(currentPart);
+                    }
+                    else if(currentComputerPart instanceof MotherBoard){
+                        MotherBoard currentPart = (MotherBoard) currentComputerPart; 
+                        currComputerBuild.setMotherBoard(currentPart);
+                    }
+                    else if(currentComputerPart instanceof RAM){
+                        RAM currentPart = (RAM) currentComputerPart; 
+                        currComputerBuild.addRam(currentPart);
+                    }
+                    else if(currentComputerPart instanceof GPU){
+                        GPU currentPart = (GPU) currentComputerPart; 
+                        currComputerBuild.addGpu(currentPart);
+                    }
+                    else if(currentComputerPart instanceof HDD){
+                        HDD currentPart = (HDD) currentComputerPart; 
+                       currComputerBuild.addHdd(currentPart);
+                    }
+                    else if(currentComputerPart instanceof SSD){
+                        SSD currentPart = (SSD) currentComputerPart; 
+                       currComputerBuild.addSsd(currentPart);
+                    }
+                    else if(currentComputerPart instanceof PowerSupply){
+                        PowerSupply currentPart = (PowerSupply) currentComputerPart; 
+                        currComputerBuild.setPsu(currentPart);
+                    }
+                    else if(currentComputerPart instanceof ComputerCase){
+                        ComputerCase currentPart = (ComputerCase) currentComputerPart; 
+                        currComputerBuild.setCompCase(currentPart);
+                    }
+                    else if(currentComputerPart instanceof CPUAirCooler){
+                        CPUAirCooler currentPart = (CPUAirCooler) currentComputerPart; 
+                        currComputerBuild.setAirCooler(currentPart);
+                    }
+                    else if(currentComputerPart instanceof CPUWaterCooler){
+                        CPUWaterCooler currentPart = (CPUWaterCooler) currentComputerPart; 
+                        currComputerBuild.setWaterCooler(currentPart);
+                    }
+                }
+            }
+            CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer, currComputerBuild);
             return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -244,6 +287,30 @@ public class CustomerResource {
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+    
+    @Path("CurrentComputerSetPartsList")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response CurrentComputerSetPartsList(@QueryParam("email") String email) {
+        try {
+            Customer customer = customerSessionBean.retrieveCustomerByEmail(email, Boolean.FALSE, Boolean.TRUE);
+            System.out.println("here");
+            List<ComputerPart> currentBuild =  customer.getCurrComputerBuild();
+            if(currentBuild == null){
+                currentBuild = new ArrayList();
+            }
+            CurrentComputerSetPartsListRsp currentCompletedComputerSet = new CurrentComputerSetPartsListRsp(currentBuild);
+            System.out.println("go");
+            return Response.status(Response.Status.OK).entity(currentCompletedComputerSet).build();
+        } catch (CustomerNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity(errorRsp).build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     
