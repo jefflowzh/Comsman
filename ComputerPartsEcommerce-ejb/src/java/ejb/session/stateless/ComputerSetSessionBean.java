@@ -41,8 +41,9 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
 
     @Override
     // create set first, assign staff seperately later
-    public List<Long> createNewComputerSet(ComputerSet computerSetModel, LineItem lineItem) {
+    public List<Long> createNewComputerSet(LineItem lineItem) {
         //Make X line items and computer sets where X is the quantity of lineItem, each line item should contain only 1 computer set as each computer set can only be assigned to 1 staff (i.e. it will be inappropriate to assigned a computer set with quantity 100 to 1 staff.
+        ComputerSet computerSetModel = lineItem.getComputerSet();
         Integer quantity = lineItem.getQuantity();
         List<Long> computerSetIds = new ArrayList<>();
 

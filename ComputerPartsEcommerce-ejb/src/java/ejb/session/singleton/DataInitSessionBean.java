@@ -190,8 +190,9 @@ public class DataInitSessionBean {
         comset.setCompCase(cs);
 
         LineItem testcomsetLineItem = new LineItem(2);
+        testcomsetLineItem.setComputerSet(comset);
 
-        List<Long> computerSetIds = computerSetSessionBean.createNewComputerSet(comset, testcomsetLineItem);
+        List<Long> computerSetIds = computerSetSessionBean.createNewComputerSet(testcomsetLineItem);
 
         Customer testCustomer = new Customer("cardNum", "ccv", "Customer1", "Customer1", "Customer Address", "customer@email.com", "password", "12345678");
         customerSessionBean.createNewCustomer(testCustomer);

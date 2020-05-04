@@ -12,7 +12,7 @@ import util.exception.StaffNotFoundException;
 @Local
 public interface ComputerSetSessionBeanLocal {
 
-    public List<Long> createNewComputerSet(ComputerSet computerSetModel, LineItem lineItem);
+    public List<Long> createNewComputerSet(LineItem lineItem);
 
     public ComputerSet retrieveComputerSetById(Long computerSetId) throws ComputerSetNotFoundException;
 
