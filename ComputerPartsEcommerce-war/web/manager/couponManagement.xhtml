@@ -60,10 +60,10 @@
                         </p:column>
                         
                         <p:column headerText="Discount (if applicable)" filterMatchMode="contains">
-                            <h:outputText rendered="#{coupon.couponType.name() eq 'PERCENTAGE'}" value="#{coupon.getFormattedRate()}%">
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'PERCENTAGE'}" value="#{coupon.percentageRate}%">
                                 <f:convertNumber type="percent" pattern="#0.00" />
                             </h:outputText>
-                            <h:outputText rendered="#{coupon.couponType.name() eq 'FLAT_AMOUNT'}" value="$#{coupon.getFormattedFlatAmount()}" />
+                            <h:outputText rendered="#{coupon.couponType.name() eq 'FLAT_AMOUNT'}" value="$#{coupon.flatAmount}" />
                         </p:column>
 
                         <p:column headerText="Action">
