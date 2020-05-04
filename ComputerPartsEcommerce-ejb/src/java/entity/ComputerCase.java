@@ -19,14 +19,9 @@ public class ComputerCase extends ComputerPart implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String type; //(ATX Mid Tower)
-    // private String[] colours;
-    @ElementCollection
-    @NotNull
-    private List<String> colours;
     @Column(nullable = false)
     @NotNull
     private String sidePanelView; //tintered tempered glass
-    // private String[] MotherBoardFormFactor; //atx micro atx mini itx
     @ElementCollection
     @NotNull
     private List<String> motherBoardFormFactor;
@@ -46,10 +41,9 @@ public class ComputerCase extends ComputerPart implements Serializable {
     @NotNull
     private Double rearFanSupport;
     @Column
-    private String selectedColour; // the color customer selected
+    private String colour;
 
     public ComputerCase() {
-        colours = new ArrayList<>();
         motherBoardFormFactor = new ArrayList<>();
     }
 
@@ -57,11 +51,11 @@ public class ComputerCase extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String manufacturer, String type, List<String> colours, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String manufacturer, String type, String colour, String sidePanelView, List<String> motherBoardFormFactor, Integer fullHeightExpansionSlot, Double MaxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.manufacturer = manufacturer;
         this.type = type;
-        this.colours = colours;
+        this.colour = colour;
         this.sidePanelView = sidePanelView;
         this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
@@ -128,22 +122,6 @@ public class ComputerCase extends ComputerPart implements Serializable {
         this.rearFanSupport = rearFanSupport;
     }
 
-   public String getSelectedColour() {
-        return selectedColour;
-    }
-
-    public void setSelectedColour(String selectedColour) {
-        this.selectedColour = selectedColour;
-    } 
-
-    public List<String> getColours() {
-        return colours;
-    }
-
-    public void setColours(List<String> colours) {
-        this.colours = colours;
-    }
-
     public List<String> getMotherBoardFormFactor() {
         return motherBoardFormFactor;
     }
@@ -159,5 +137,12 @@ public class ComputerCase extends ComputerPart implements Serializable {
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
-    
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
 }

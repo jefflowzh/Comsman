@@ -257,9 +257,9 @@ public class ProductManagementManagedBean implements Serializable {
         }
 
         if (selectedProductToUpdate instanceof ComputerCase) {
-            for (StringValue s : stringValues) {
-                coloursTemp.add(s.getValue());
-            }
+//            for (StringValue s : stringValues) {
+//                coloursTemp.add(s.getValue());
+//            }
             for (StringValue s : getStringValues2()) {
                 mbffTemp.add(s.getValue());
             }
@@ -278,7 +278,7 @@ public class ProductManagementManagedBean implements Serializable {
                 computerPartSessionBeanLocal.updatePowerSupply((PowerSupply) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof ComputerCase) {
                 ComputerCase selectedComputerCaseToUpdate = (ComputerCase) selectedProductToUpdate;
-                selectedComputerCaseToUpdate.setColours(coloursTemp);
+//                selectedComputerCaseToUpdate.setColours(coloursTemp);
                 selectedComputerCaseToUpdate.setMotherBoardFormFactor(mbffTemp);
                 computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedComputerCaseToUpdate);
             } else if (selectedProductToUpdate instanceof GPU) {
@@ -525,13 +525,14 @@ public class ProductManagementManagedBean implements Serializable {
                 newComputerCase.setTopFanSupport(topFanSupport);
                 newComputerCase.setFrontFanSupport(frontFanSupport);
                 newComputerCase.setRearFanSupport(rearFanSupport);
-
-                String[] values = stringEdit.trim().split(",");
+                newComputerCase.setColour(colour);
+                
+//                String[] values = stringEdit.trim().split(",");
                 String[] values2 = stringEdit2.trim().split(",");
 
-                for (String s : values) {
-                    newComputerCase.getColours().add(s);
-                }
+//                for (String s : values) {
+//                    newComputerCase.getColours().add(s);
+//                }
                 for (String s : values2) {
                     newComputerCase.getMotherBoardFormFactor().add(s);
                 }

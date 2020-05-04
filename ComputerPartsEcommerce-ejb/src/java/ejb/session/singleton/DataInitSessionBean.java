@@ -1,6 +1,5 @@
 package ejb.session.singleton;
 
-import datamodel.StringValue;
 import ejb.session.stateless.ComputerPartSessionBeanLocal;
 import ejb.session.stateless.ComputerSetSessionBeanLocal;
 import ejb.session.stateless.CouponSessionBeanLocal;
@@ -14,9 +13,7 @@ import entity.CPU;
 import entity.CPUAirCooler;
 import entity.CPUWaterCooler;
 import entity.ComputerCase;
-import entity.ComputerPart;
 import entity.ComputerSet;
-import entity.Coupon;
 import entity.Customer;
 import entity.LineItem;
 import entity.CustomerOrder;
@@ -35,18 +32,15 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import util.enumeration.CouponTypeEnum;
 import util.enumeration.PreBuiltComputerSetTierEnum;
 import util.enumeration.StaffAccessRightEnum;
 import util.exception.ComputerSetNotFoundException;
 import util.exception.ComputerSetTierAlreadyExistsException;
 import util.exception.CustomerNotFoundException;
 import util.exception.StaffAlreadyExistsException;
-import util.exception.LineItemNotFoundException;
 import util.exception.StaffNotFoundException;
 
 @Singleton
@@ -134,15 +128,12 @@ public class DataInitSessionBean {
         computerPartSessionBean.createNewPowerSupply(powersupply);
         // create computer case
         // String[] colours = {"red", "blue"};
-        List<String> colours = new ArrayList<>();
-        colours.add("red");
-        colours.add("white");
 
         List<String> motherBoardFormFactor = new ArrayList<>();
         motherBoardFormFactor.add("mbff1");
         motherBoardFormFactor.add("mbff2");
         // String[] MotherBoardFormFactor = {"MotherBoardFormFactor"};
-        ComputerCase cs = new ComputerCase("Manufacturer", "type", colours, "sidePanelView", motherBoardFormFactor, 5, 100.99, 10.00, 11.00, 102.00, "case", 100.00, 5, "test.png");
+        ComputerCase cs = new ComputerCase("Manufacturer", "type", "blue", "sidePanelView", motherBoardFormFactor, 5, 100.99, 10.00, 11.00, 102.00, "case", 100.00, 5, "test.png");
         computerPartSessionBean.createNewComCase(cs);
 
         // create gpu
@@ -196,7 +187,6 @@ public class DataInitSessionBean {
             comset.addRam(r);
         }
         comset.setPsu(powersupply);
-        cs.setSelectedColour("red");
         comset.setCompCase(cs);
 
         LineItem testcomsetLineItem = new LineItem(2);
