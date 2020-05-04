@@ -111,7 +111,7 @@
                         <p:commandButton value="Close" icon="fa fa-remove" actionListener="#{productManagementManagedBean.doNull}" style="border:none !important; background-color:white !important; color: black;" oncomplete="PF('sidebarCreateNewProduct').hide()"/>
 
                         <p:messages id="messagesCreateNewProduct" redisplay="false" />
-                      
+
                         <p:panelGrid styleClass="ui-noborder" columnClasses="ui-grid-col-4" style="width:100%;">
 
                             <p:row>
@@ -456,6 +456,15 @@
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="Interface" value="#{productManagementManagedBean.interface}" required="true" requiredMessage="Interface is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
+                                <p:column>
+                                    <p:outputLabel for="interfaceForm" value="Interface Form: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="interfaceForm" value="#{productManagementManagedBean.interfaceForm}" required="true" requiredMessage="InterfaceForm is required" />
                                 </p:column>
                             </p:row>
 
@@ -902,12 +911,21 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU' or (productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
+                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'GPU'}">
                                 <p:column>
                                     <p:outputLabel for="Interface" value="Interface: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="Interface" value="#{productManagementManagedBean.selectedProductToUpdate.interface}" required="true" requiredMessage="Interface is required" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'HDD') or (productManagementManagedBean.selectedProduct eq 'SSD')}">
+                                <p:column>
+                                    <p:outputLabel for="interfaceForm" value="InterfaceForm: " style="font-weight: bold;"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="interfaceForm" value="#{productManagementManagedBean.selectedProductToUpdate.interfaceForm}" required="true" requiredMessage="InterfaceForm is required" />
                                 </p:column>
                             </p:row>
 

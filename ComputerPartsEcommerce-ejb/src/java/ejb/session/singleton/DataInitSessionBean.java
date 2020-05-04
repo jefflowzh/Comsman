@@ -55,6 +55,7 @@ import util.exception.StaffNotFoundException;
 @Startup
 public class DataInitSessionBean {
 
+    @EJB
     private PreBuiltComputerSetModelSessionBeanLocal preBuiltComputerSetModelSessionBeanLocal;
     @EJB
     private PeripheralSessionBeanLocal peripheralSessionBeanLocal;
@@ -80,7 +81,7 @@ public class DataInitSessionBean {
     public void postConstruct() {
         try {
             // check if there is anything in database
-            staffSessionBeanLocal.retrieveStaffByEmail("wd@email.com", true, true);
+            staffSessionBeanLocal.retrieveStaffByEmail("john@gmail.com", true, true);
         } catch (StaffNotFoundException ex) {
             initializeData();
 

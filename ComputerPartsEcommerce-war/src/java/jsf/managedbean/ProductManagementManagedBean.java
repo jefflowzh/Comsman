@@ -132,6 +132,7 @@ public class ProductManagementManagedBean implements Serializable {
 
     // HDD
     private Integer Capacity; //in GB
+    private String interfaceForm;
 
     // SSD
     private Boolean NVME;
@@ -208,29 +209,6 @@ public class ProductManagementManagedBean implements Serializable {
 
                 previousProduct = selectedProductToUpdate;
             }
-
-//            if (selectedProductToUpdate instanceof ComputerCase) {
-//                // List<String> coloursTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("colours", selectedProductToUpdate.getProductId());
-//                List<String> mbffTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("motherBoardFormFactor", selectedProductToUpdate.getProductId());
-//
-//                stringValues = new ArrayList<>();
-//
-//                // when empty you load
-////                if (stringValues.isEmpty()) {
-////                    for (String s1 : coloursTemp) {
-////                        stringValues.add(new StringValue(s1));
-////                    }
-////                }
-//
-//                stringValues2 = new ArrayList<>();
-//
-//                if (stringValues2.isEmpty()) {
-//                    for (String s2 : mbffTemp) {
-//                        stringValues2.add(new StringValue(s2));
-//                    }
-//                }
-//                previousProduct = selectedProductToUpdate;
-//            }
         }
     }
 
@@ -248,23 +226,12 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void updateProduct(ActionEvent event) {
         List<String> temp = new ArrayList<>();
-        List<String> coloursTemp = new ArrayList<>();
-        List<String> mbffTemp = new ArrayList<>();
 
         if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard || selectedProductToUpdate instanceof ComputerCase) {
             for (StringValue s : stringValues) {
                 temp.add(s.getValue());
             }
         }
-
-//        if (selectedProductToUpdate instanceof ComputerCase) {
-////            for (StringValue s : stringValues) {
-////                coloursTemp.add(s.getValue());
-////            }
-//            for (StringValue s : getStringValues2()) {
-//                mbffTemp.add(s.getValue());
-//            }
-//        }
 
         try {
             if (selectedProductToUpdate instanceof CPU) {
@@ -279,7 +246,6 @@ public class ProductManagementManagedBean implements Serializable {
                 computerPartSessionBeanLocal.updatePowerSupply((PowerSupply) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof ComputerCase) {
                 ComputerCase selectedComputerCaseToUpdate = (ComputerCase) selectedProductToUpdate;
-//                selectedComputerCaseToUpdate.setColours(coloursTemp);
                 selectedComputerCaseToUpdate.setMotherBoardFormFactor(temp);
                 computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedComputerCaseToUpdate);
             } else if (selectedProductToUpdate instanceof GPU) {
@@ -301,7 +267,6 @@ public class ProductManagementManagedBean implements Serializable {
             }
 
             selectedProductToUpdate = null;
-            // stringValues = new ArrayList<>();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
         } catch (ComputerPartNotFoundException ex) {
@@ -572,7 +537,7 @@ public class ProductManagementManagedBean implements Serializable {
                 newHdd.setType(type);
                 newHdd.setCapacity(Capacity);
                 newHdd.setFormFactor(formFactor);
-                newHdd.setInterfaceForm(Interface);
+                newHdd.setInterfaceForm(interfaceForm);
 
                 computerPartSessionBeanLocal.createNewHDD(newHdd);
 
@@ -588,7 +553,7 @@ public class ProductManagementManagedBean implements Serializable {
                 newSsd.setType(type);
                 newSsd.setCapacity(Capacity);
                 newSsd.setFormFactor(formFactor);
-                newSsd.setInterfaceForm(Interface);
+                newSsd.setInterfaceForm(interfaceForm);
                 newSsd.setNVME(NVME);
 
                 computerPartSessionBeanLocal.createNewSSD(newSsd);
@@ -1124,14 +1089,6 @@ public class ProductManagementManagedBean implements Serializable {
         this.rearFanSupport = rearFanSupport;
     }
 
-    public String getInterface() {
-        return Interface;
-    }
-
-    public void setInterface(String Interface) {
-        this.Interface = Interface;
-    }
-
     public Double getLength() {
         return length;
     }
@@ -1218,6 +1175,22 @@ public class ProductManagementManagedBean implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getInterfaceForm() {
+        return interfaceForm;
+    }
+
+    public void setInterfaceForm(String interfaceForm) {
+        this.interfaceForm = interfaceForm;
+    }
+
+    public String getInterface() {
+        return Interface;
+    }
+
+    public void setInterface(String Interface) {
+        this.Interface = Interface;
     }
 
 }
