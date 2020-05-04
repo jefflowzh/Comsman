@@ -4,6 +4,7 @@ import entity.ComputerSet;
 import javax.ejb.Local;
 import util.exception.ComputerPartNotFoundException;
 import util.exception.ComputerSetNotFoundException;
+import util.exception.IncompatiblePartException;
 import util.exception.LineItemNotFoundException;
 import util.exception.StaffNotFoundException;
 
@@ -17,5 +18,7 @@ public interface ComputerSetSessionBeanLocal {
     public void updateComputerSet(ComputerSet computerSet, Long staffId) throws ComputerPartNotFoundException, StaffNotFoundException;
 
 //    public void deleteComputerSet(Long computerSetId) throws ComputerSetNotFoundException;
+
+    public boolean compatibilityCheck(ComputerSet set, Long current) throws IncompatiblePartException, ComputerPartNotFoundException;
 
 }

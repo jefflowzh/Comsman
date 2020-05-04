@@ -14,21 +14,21 @@ import { Staff } from './staff';
 export class ComputerSet {
 
     computerSetId: number;
-    warrantyLengthInYears: number;
-    assembyComplete: boolean;
-    price: number;
     cpu: CPU;
-    CPUAirCooler: CPUAirCooler;
-    CPUWaterCooler: CPUWaterCooler;
+    motherBoard: MotherBoard;
+    rams: RAM[];
+    psu: PowerSupply;
     compCase: ComputerCase;
     gpus: GPU[];
     hdds: HDD[];
-    motherBoard: MotherBoard;
-    psu: PowerSupply;
-    rams: RAM[];
     ssds: SSD[];
-    lineItem: LineItem;
+    waterCooler: CPUWaterCooler;
+    airCooler: CPUAirCooler;
+    warrantyLengthInYears: number;
     assemblyAssignedTo: Staff;
+    assembyComplete: boolean;
+    lineItem: LineItem;
+    price: number;
 
     // only in typscript class
     tier: string;
@@ -39,4 +39,17 @@ export class ComputerSet {
         this.rams = [];
         this.ssds = [];
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

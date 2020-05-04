@@ -67,12 +67,34 @@ export class ProductService {
       );
   }
 
-  retrieveAllCPUCoolers(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllCPUCoolers").pipe
+  retrieveAllCPUAirCoolers(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllCPUAirCoolers").pipe
       (
         catchError(this.handleError)
       );
   }
+
+  retrieveAllCPUWaterCoolers(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllCPUWaterCoolers").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  retrieveAllHDD(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllHDD").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
+  retrieveAllSSD(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/retrieveAllSSD").pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
 
   retrievePreBuiltComputerSetModels(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + "/retrievePreBuiltComputerSetModels").pipe

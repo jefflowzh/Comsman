@@ -354,6 +354,9 @@ export class ViewAllMotherboardComponent implements OnInit {
       if (!this.selectedColour.includes(mb.colour.toString()) && this.filteredMotherboard.indexOf(mb) < 0) {
         continue;
       }
+      if (!this.selectedSLICrossFire.includes(mb.SLICrossFire.toString()) && this.filteredMotherboard.indexOf(mb) < 0) {
+        continue;
+      }
       if (!this.selectedPCIEx16.includes(mb.PCIEx16.toString()) && this.filteredMotherboard.indexOf(mb) < 0) {
         continue;
       }

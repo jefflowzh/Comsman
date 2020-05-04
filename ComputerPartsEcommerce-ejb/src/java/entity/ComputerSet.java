@@ -103,7 +103,9 @@ public class ComputerSet implements Serializable {
         this.rams = new ArrayList<>();
         this.gpus = new ArrayList<>();
         this.hdds = new ArrayList<>();
-        this.ssds = new ArrayList<>();   
+        this.ssds = new ArrayList<>();
+        this.price = 0.0;
+        this.assemblyComplete = false;
     }
 
     /* original constructor

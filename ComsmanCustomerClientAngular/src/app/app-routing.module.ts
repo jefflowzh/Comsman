@@ -16,11 +16,16 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
-import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
-import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
+
+
 import { ViewAllPeripheralsComponent } from './view-all-peripherals/view-all-peripherals.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { CustomerCouponComponent } from './customer-coupon/customer-coupon.component';
+import { ViewAllAirCoolerComponent } from './view-all-air-cooler/view-all-air-cooler.component';
+import { ViewAllWaterCoolerComponent } from './view-all-water-cooler/view-all-water-cooler.component';
+import { ViewAllHddComponent } from './view-all-hdd/view-all-hdd.component';
+import { ViewAllSsdComponent } from './view-all-ssd/view-all-ssd.component';
+
 import { ViewAllSearchResultsComponent } from './view-all-search-results/view-all-search-results.component';
 
 const routes: Routes = [
@@ -43,8 +48,13 @@ const routes: Routes = [
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
   { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
-  { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
-  { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent },
+  { path: 'viewAllAirCPUCooler', component: ViewAllAirCoolerComponent },
+  { path: 'viewAllWaterCPUCooler', component: ViewAllWaterCoolerComponent },
+  { path: 'viewAllHDD', component: ViewAllHddComponent },
+  { path: 'viewAllSSD', component: ViewAllSsdComponent },
+  
+  
+  { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent },
   { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent },
   { path: 'viewAllSearchResults/:searchTerm', component: ViewAllSearchResultsComponent, runGuardsAndResolvers: 'always' }
 ];

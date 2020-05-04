@@ -20,11 +20,11 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
    
-    private String Manufacturer;
+    private String manufacturer;
     private String colour;
     private Integer noiseLevel; //(in dB)
     private String[] CPUChipCompatibility;
-    private Double RadiatorSize; // (mm)
+    private Double radiatorSize; // (mm)
 
     public CPUWaterCooler() {
     }
@@ -35,19 +35,19 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
 
     public CPUWaterCooler(String Manufacturer, String colour, Integer noiseLevel, String[] CPUChipCompatibility, Double RadiatorSize, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.CPUChipCompatibility = CPUChipCompatibility;
-        this.RadiatorSize = RadiatorSize;
+        this.radiatorSize = RadiatorSize;
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getColour() {
@@ -75,11 +75,11 @@ public class CPUWaterCooler extends ComputerPart implements Serializable {
     }
 
     public Double getRadiatorSize() {
-        return RadiatorSize;
+        return radiatorSize;
     }
 
     public void setRadiatorSize(Double RadiatorSize) {
-        this.RadiatorSize = RadiatorSize;
+        this.radiatorSize = RadiatorSize;
     }
 
     

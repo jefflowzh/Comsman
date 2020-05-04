@@ -6,7 +6,7 @@ export class SSD extends ComputerPart {
     type: string;
     capacity: number;
     formFactor: string;
-    interface: string;
+    interfaceForm: string;
     NVME: boolean;
 
 }

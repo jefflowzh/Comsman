@@ -30,6 +30,13 @@ export class CustomerService {
       );
   }
 
+  getCurrentComputerSetPartsList(email: string): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/getCurrentComputerSetPartsList?email=" + email).pipe
+      (
+        catchError(this.handleError)
+      );
+  }
+
   customerRegistration(newCustomer: Customer): Observable<any> {
 
     let customerRegistrationReq = { "newCustomer": newCustomer }
@@ -93,11 +100,11 @@ export class CustomerService {
         let computerSetPartIds: number[] = [];
         computerSetPartIds.push(li.computerSet.compCase.productId);
         computerSetPartIds.push(li.computerSet.cpu.productId);
-        if (li.computerSet.CPUAirCooler) {
-          computerSetPartIds.push(li.computerSet.CPUAirCooler.productId);
+        if (li.computerSet.airCooler) {
+          computerSetPartIds.push(li.computerSet.airCooler.productId);
         }
-        if (li.computerSet.CPUWaterCooler) {
-          computerSetPartIds.push(li.computerSet.CPUWaterCooler.productId);
+        if (li.computerSet.waterCooler) {
+          computerSetPartIds.push(li.computerSet.waterCooler.productId);
         }
         for (let gpu of li.computerSet.gpus) {
           computerSetPartIds.push(gpu.productId);

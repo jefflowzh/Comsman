@@ -18,10 +18,10 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
     private static final long serialVersionUID = 1L;
     
     
-    private String Manufacturer;
+    private String manufacturer;
     private String colour;
     private Integer noiseLevel; // (in dB)
-    private Double Height; // (mm) //this one not really useful if its water cooled
+    private Double height; // (mm) //this one not really useful if its water cooled
     private String[] CPUChipCompatibility;
 
     public CPUAirCooler() {
@@ -33,19 +33,19 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
 
     public CPUAirCooler(String Manufacturer, String colour, Integer noiseLevel, Double Height, String[] CPUChipCompatibility, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
         this.colour = colour;
         this.noiseLevel = noiseLevel;
-        this.Height = Height;
+        this.height = Height;
         this.CPUChipCompatibility = CPUChipCompatibility;
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String Manufacturer) {
-        this.Manufacturer = Manufacturer;
+        this.manufacturer = Manufacturer;
     }
 
     public String getColour() {
@@ -65,11 +65,11 @@ public class CPUAirCooler extends ComputerPart implements Serializable {
     }
 
     public Double getHeight() {
-        return Height;
+        return height;
     }
 
     public void setHeight(Double Height) {
-        this.Height = Height;
+        this.height = Height;
     }
 
     public String[] getCPUChipCompatibility() {

@@ -371,7 +371,27 @@ public class DataInitSessionBean {
             ComputerSet set = new ComputerSet();
             set.setCpu(testCpu);
             set.setCompCase(testComputerCase1);
-
+            set.getGpus().add(testGpu);
+            set.getGpus().add(testGpu2);
+            set.getHdds().add(testHDD1);
+            set.getHdds().add(testHDD2);
+            set.getSsds().add(testSSD1);
+            set.setMotherBoard(testmb1);
+            set.setPsu(testPsu);
+            set.getRams().add(testRam);
+            set.getRams().add(testRam1);
+            
+//            LineItem setItem = new LineItem();
+//            setItem.setQuantity(1);
+//            setItem.setComputerSet(set);
+//            Long setId = lineItemSessionBean.createNewLineItem(setItem);
+//            computerSetSessionBean.createNewComputerSet(set,setId);
+//            
+//            List<LineItem> itemSets = new ArrayList();
+//            itemSets.add(setItem);
+//            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
+//            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
+            
             PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET);
             p1.setCpu(testCpu);
             p1.setWaterCooler(testCPUWaterCooler1);

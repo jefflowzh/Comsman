@@ -3,9 +3,9 @@ import { ComputerPart } from './computer-part';
 export class CPUWaterCooler extends ComputerPart {
 
     manufacturer: string;
-    color: string;
+    colour: string;
     noiseLevel: number;
-    cpuChipCompatibility: string[];
+    CPUChipCompatibility: string[];
     radiatorSize: number;
 
 }

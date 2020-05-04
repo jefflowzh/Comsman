@@ -101,10 +101,10 @@ export class AmateurSetMainPageComponent implements OnInit {
       computerSet.ssds.push(ssd);
     }
     if (preBuiltComputerSetModel.waterCooler != null) {
-      computerSet.CPUWaterCooler = preBuiltComputerSetModel.waterCooler;
+      computerSet.waterCooler = preBuiltComputerSetModel.waterCooler;
     }
     if (preBuiltComputerSetModel.airCooler != null) {
-      computerSet.CPUAirCooler = preBuiltComputerSetModel.airCooler;
+      computerSet.airCooler = preBuiltComputerSetModel.airCooler;
     }
 
     let selectedAdditionalWarranty: Warranty;
