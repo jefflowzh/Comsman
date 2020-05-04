@@ -99,51 +99,52 @@ public class CustomerResource {
             ComputerSet currComputerBuild = new ComputerSet();
             
             
-            if(currentBuild.isEmpty() == false){
-                for(ComputerPart currentComputerPart : currentBuild){
-                    if(currentComputerPart instanceof CPU){
-                        CPU currentPart = (CPU) currentComputerPart; 
-                        currComputerBuild.setCpu(currentPart);
-                    }
-                    else if(currentComputerPart instanceof MotherBoard){
-                        MotherBoard currentPart = (MotherBoard) currentComputerPart; 
-                        currComputerBuild.setMotherBoard(currentPart);
-                    }
-                    else if(currentComputerPart instanceof RAM){
-                        RAM currentPart = (RAM) currentComputerPart; 
-                        currComputerBuild.addRam(currentPart);
-                    }
-                    else if(currentComputerPart instanceof GPU){
-                        GPU currentPart = (GPU) currentComputerPart; 
-                        currComputerBuild.addGpu(currentPart);
-                    }
-                    else if(currentComputerPart instanceof HDD){
-                        HDD currentPart = (HDD) currentComputerPart; 
-                       currComputerBuild.addHdd(currentPart);
-                    }
-                    else if(currentComputerPart instanceof SSD){
-                        SSD currentPart = (SSD) currentComputerPart; 
-                       currComputerBuild.addSsd(currentPart);
-                    }
-                    else if(currentComputerPart instanceof PowerSupply){
-                        PowerSupply currentPart = (PowerSupply) currentComputerPart; 
-                        currComputerBuild.setPsu(currentPart);
-                    }
-                    else if(currentComputerPart instanceof ComputerCase){
-                        ComputerCase currentPart = (ComputerCase) currentComputerPart; 
-                        currComputerBuild.setCompCase(currentPart);
-                    }
-                    else if(currentComputerPart instanceof CPUAirCooler){
-                        CPUAirCooler currentPart = (CPUAirCooler) currentComputerPart; 
-                        currComputerBuild.setAirCooler(currentPart);
-                    }
-                    else if(currentComputerPart instanceof CPUWaterCooler){
-                        CPUWaterCooler currentPart = (CPUWaterCooler) currentComputerPart; 
-                        currComputerBuild.setWaterCooler(currentPart);
-                    }
-                }
-            }
-            CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer, currComputerBuild);
+//            if(currentBuild.isEmpty() == false){
+//                for(ComputerPart currentComputerPart : currentBuild){
+//                    if(currentComputerPart instanceof CPU){
+//                        CPU currentPart = (CPU) currentComputerPart; 
+//                        currComputerBuild.setCpu(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof MotherBoard){
+//                        MotherBoard currentPart = (MotherBoard) currentComputerPart; 
+//                        currComputerBuild.setMotherBoard(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof RAM){
+//                        RAM currentPart = (RAM) currentComputerPart; 
+//                        currComputerBuild.addRam(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof GPU){
+//                        GPU currentPart = (GPU) currentComputerPart; 
+//                        currComputerBuild.addGpu(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof HDD){
+//                        HDD currentPart = (HDD) currentComputerPart; 
+//                       currComputerBuild.addHdd(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof SSD){
+//                        SSD currentPart = (SSD) currentComputerPart; 
+//                       currComputerBuild.addSsd(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof PowerSupply){
+//                        PowerSupply currentPart = (PowerSupply) currentComputerPart; 
+//                        currComputerBuild.setPsu(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof ComputerCase){
+//                        ComputerCase currentPart = (ComputerCase) currentComputerPart; 
+//                        currComputerBuild.setCompCase(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof CPUAirCooler){
+//                        CPUAirCooler currentPart = (CPUAirCooler) currentComputerPart; 
+//                        currComputerBuild.setAirCooler(currentPart);
+//                    }
+//                    else if(currentComputerPart instanceof CPUWaterCooler){
+//                        CPUWaterCooler currentPart = (CPUWaterCooler) currentComputerPart; 
+//                        currComputerBuild.setWaterCooler(currentPart);
+//                    }
+//                }
+//            }
+
+            CustomerLoginRsp customerLoginRsp = new CustomerLoginRsp(customer);//, currComputerBuild);
             return Response.status(Status.OK).entity(customerLoginRsp).build();
         } catch (InvalidLoginCredentialException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

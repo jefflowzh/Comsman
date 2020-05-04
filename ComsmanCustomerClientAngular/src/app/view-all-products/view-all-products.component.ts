@@ -58,6 +58,11 @@ export class ViewAllProductsComponent implements OnInit {
       computerSet.cpu = product;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Air Cooler"){
@@ -65,48 +70,88 @@ export class ViewAllProductsComponent implements OnInit {
       computerSet.waterCooler = null;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Computer Case"){
       computerSet.compCase = product;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Graphics Card"){
       computerSet.gpus.push(product);
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Hard Drive"){
       computerSet.hdds.push(product);
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Motherboard"){
       computerSet.motherBoard = product;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Power Supply Unit"){
       computerSet.psu = product;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "RAM"){
       computerSet.rams.push(product);
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "SSD"){
       computerSet.ssds.push(product);
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
     if(this.productType == "Water Cooler"){
@@ -114,6 +159,11 @@ export class ViewAllProductsComponent implements OnInit {
       computerSet.airCooler = null;
       this.sessionService.setLastAddedComputerPart(product);
       this.sessionService.setCurrentComputerSet(computerSet);
+      let customer = this.sessionService.getCurrentCustomer();
+      if(this.sessionService.getLastAddedComputerPart() != null){
+        customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
+        this.sessionService.setCurrentCustomer(customer);
+      }
       this.router.navigate(["/advancedSetBuildPage"]);
     }
 

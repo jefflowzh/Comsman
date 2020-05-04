@@ -6,14 +6,15 @@ import entity.Customer;
 public class CustomerLoginRsp {
     
     Customer customer;
-    ComputerSet currComputerBuild;
+    //ComputerSet currComputerBuild;
 
     public CustomerLoginRsp() {
     }
 
-    public CustomerLoginRsp(Customer customer, ComputerSet currComputerBuild) {
+    public CustomerLoginRsp(Customer customer) //ComputerSet currComputerBuild)
+    {
         this.customer = customer;
-        this.currComputerBuild = currComputerBuild;
+        //this.currComputerBuild = currComputerBuild;
     }
 
     public Customer getCustomer() {
@@ -24,13 +25,13 @@ public class CustomerLoginRsp {
         this.customer = customer;
     }
 
-    public ComputerSet getCurrComputerBuild() {
-        return currComputerBuild;
-    }
+//    public ComputerSet getCurrComputerBuild() {
+//        return currComputerBuild;
+//    }
 
-    public void setCurrComputerBuild(ComputerSet currComputerBuild) {
-        this.currComputerBuild = currComputerBuild;
-    }
+//    public void setCurrComputerBuild(ComputerSet currComputerBuild) {
+//        this.currComputerBuild = currComputerBuild;
+//    }
 
     
     

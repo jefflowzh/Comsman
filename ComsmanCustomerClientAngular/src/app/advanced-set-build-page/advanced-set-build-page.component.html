@@ -13,126 +13,157 @@
 
     <div class="ui-g">
         <div class=" ui-g-3">Part</div>
-        <div class="ui-g-7">Name</div>
+        <div class="ui-g-6">Name</div>
         <div class="ui-g-2">Price</div>
+        <div class="ui-g-1">Clear</div>
     </div>
 
     <hr style="border-top: 5px solid darkgray;">
 
     <div class="ui-g">
         <div class="ui-g-3"><b>CPU</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.cpu">{{currentComputerSet.cpu.name}}</span>
             <button pButton type="button" label="Add CPU" *ngIf = "!currentComputerSet.cpu" [routerLink] = "['/viewAllCPU']"></button>
         </div>
         <div class="ui-g-2"><div *ngIf = "currentComputerSet.cpu">{{currentComputerSet.cpu.price}}</div></div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearCpu()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>CPU Cooler</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.waterCooler">{{currentComputerSet.waterCooler.name}}</span>
             <span *ngIf = "currentComputerSet.airCooler">{{currentComputerSet.airCooler.name}}</span>
             <button pButton type="button" label="Add CPU Air Cooler" *ngIf = "!currentComputerSet.airCooler && !currentComputerSet.waterCooler" [routerLink] = "['/viewAllAirCPUCooler']"></button>
             <button pButton type="button" label="Add Water Cooler" *ngIf = "!currentComputerSet.airCooler && !currentComputerSet.waterCooler" [routerLink] = "['/viewAllWaterCPUCooler']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.waterCooler">{{currentComputerSet.waterCooler.price}}</div>
+            <div *ngIf = "currentComputerSet.airCooler">{{currentComputerSet.airCooler.price}}</div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearCpuCooler()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>Computer Case</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.compCase">{{currentComputerSet.compCase.name}}</span>
             <button pButton type="button" label="Add Computer Case" *ngIf = "!currentComputerSet.compCase" [routerLink] = "['/viewAllComputerCases']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.compCase">{{currentComputerSet.compCase.price}}</div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearCompCase()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>GPU</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <div *ngIf = "currentComputerSet.gpus.length > 0"> 
                 <div *ngFor = "let gpu of currentComputerSet.gpus">{{gpu.name}}</div>
             </div>
             <button pButton type="button" label="Add gpu" *ngIf = "currentComputerSet.gpus.length < 2" [routerLink] = "['/viewAllGPU']"></button>
         </div>
 
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.gpus.length > 0"> 
+                <div *ngFor = "let gpu of currentComputerSet.gpus">{{gpu.price}}</div>
+            </div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearGpu()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>Internal Storage (SSD)</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <div *ngIf = "currentComputerSet.ssds.length > 0"> 
-                <div *ngFor = "let ssd of currentComputerSet.ssds">{{hdd.name}}</div>
+                <div *ngFor = "let ssd of currentComputerSet.ssds">{{ssd.name}}</div>
             </div>
-            <button pButton type="button" label="Add HDD" *ngIf = "currentComputerSet.ssds.length < 2" [routerLink] = "['/viewAllSSD']"></button>
+            <button pButton type="button" label="Add SSD" *ngIf = "currentComputerSet.ssds.length < 2" [routerLink] = "['/viewAllSSD']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.ssds.length > 0"> 
+                <div *ngFor = "let ssd of currentComputerSet.ssds">{{ssd.price}}</div>
+            </div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearSsd()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>Internal Storage (HDD)</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <div *ngIf = "currentComputerSet.hdds.length > 0"> 
                 <div *ngFor = "let hdd of currentComputerSet.hdds">{{hdd.name}}</div>
             </div>
             <button pButton type="button" label="Add HDD" *ngIf = "currentComputerSet.hdds.length < 2" [routerLink] = "['/viewAllHDD']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.hdds.length > 0"> 
+                <div *ngFor = "let hdd of currentComputerSet.hdds">{{hdd.price}}</div>
+            </div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearHdd()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>Motherboard</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.motherBoard">{{currentComputerSet.motherBoard.name}}</span>
             <button pButton type="button" label="Add Motherboard" *ngIf = "!currentComputerSet.motherBoard" [routerLink] = "['/viewAllMotherboard']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2"><div *ngIf = "currentComputerSet.motherBoard">{{currentComputerSet.motherBoard.price}}</div></div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearMotherboard()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>Power Supply</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <span *ngIf = "currentComputerSet.psu">{{currentComputerSet.psu.name}}</span>
             <button pButton type="button" label="Add Power Supply" *ngIf = "!currentComputerSet.compCase" [routerLink] = "['/viewAllPowerSupply']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2"><div *ngIf = "currentComputerSet.psu">{{currentComputerSet.psu.price}}</div></div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearPsu()"></button></div>
     </div>
 
     <hr>
 
     <div class="ui-g">
         <div class="ui-g-3"><b>RAM</b></div>
-        <div class="ui-g-7">
+        <div class="ui-g-6">
             <div *ngIf = "currentComputerSet.rams.length > 0"> 
                 <div *ngFor = "let ram of currentComputerSet.rams">{{ram.name}}</div>
             </div>
             <button pButton type="button" label="Add RAM" *ngIf = "currentComputerSet.rams.length < 2" [routerLink] = "['/viewAllRAM']"></button>
         </div>
-        <div class="ui-g-2">Col3</div>
+        <div class="ui-g-2">
+            <div *ngIf = "currentComputerSet.rams.length > 0"> 
+                <div *ngFor = "let ram of currentComputerSet.rams">{{ram.price}}</div>
+            </div>
+        </div>
+        <div class="ui-g-1"><button pButton type="button" label="Clear" (click)="clearRam()"></button></div>
     </div>
 
     <hr style="border-top: 5px solid darkgray;">
 
     <div class="ui-g">
         <div class="ui-g-10"></div>
-        <div class="ui-g-1"><b>Total: S$</b></div>
-        <div class="ui-g-1">price</div>
+        <div class="ui-g-1"><b>Total: S${{totalPrice}}</b></div>
+        <div class="ui-g-1"></div>
     </div>
 
     <div class="ui-g">

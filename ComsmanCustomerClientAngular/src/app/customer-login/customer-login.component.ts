@@ -53,29 +53,11 @@ export class CustomerLoginComponent implements OnInit {
             this.sessionService.setCurrentCustomer(customer);
             this.loginError = false;
             console.log(customer.currComputerBuild);
-            let currComputerBuild = response.currComputerBuild
-            // if(!currComputerBuild.cpu){
-            //   currComputerBuild.cpu = null;
-            // }
-            // if(!currComputerBuild.compCase){
-            //   currComputerBuild.compCase = null;
-            // }
-            // if(!currComputerBuild.motherBoard){
-            //   currComputerBuild.motherBoard = null;
-            // }
-            // if(!currComputerBuild.psu){
-            //   currComputerBuild.psu = null;
-            // }
-            // if(!currComputerBuild.airCooler){
-            //   currComputerBuild.airCooler = null;
-            // }
-            // if(!currComputerBuild.waterCooler){
-            //   currComputerBuild.waterCooler = null;
 
-            // 
+            //let currComputerBuild = response.currComputerBuild
 
-            this.sessionService.setCurrentComputerSet(currComputerBuild);
-            console.log(this.sessionService.getCurrentComputerSet());
+            //this.sessionService.setCurrentComputerSet(currComputerBuild);
+            //console.log(this.sessionService.getCurrentComputerSet());
             this.router.navigate(["/index"]);
           } else {
             this.loginError = true;

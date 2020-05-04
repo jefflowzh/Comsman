@@ -201,12 +201,12 @@ public class ComputerSetResource {
             }
             System.out.println("here");
             boolean compatible = computerSetSessionBean.compatibilityCheck(currentComputerSet, compatibilityCheckReq.getAddedPartId());
-            CompatibilityCheckRsp compatibilityCheckRsp = new CompatibilityCheckRsp(compatible);
+            CompatibilityCheckRsp compatibilityCheckRsp = new CompatibilityCheckRsp(compatible,"No error");
             System.out.println("go");
             return Response.status(Response.Status.OK).entity(compatibilityCheckRsp).build();
         } catch (IncompatiblePartException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(errorRsp).build();
+            return Response.status(Response.Status.OK).entity(new CompatibilityCheckRsp(false, ex.getMessage().toString())).build();
         } catch (ComputerPartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build(); 

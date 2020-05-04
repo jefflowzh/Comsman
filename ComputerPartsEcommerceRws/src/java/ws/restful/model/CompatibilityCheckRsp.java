@@ -11,16 +11,27 @@ package ws.restful.model;
  */
 public class CompatibilityCheckRsp {
     
-    Boolean compatible;
+    boolean compatible;
+    String message;
 
     public CompatibilityCheckRsp() {
     }
 
-    public CompatibilityCheckRsp(boolean compatible) {
+    public CompatibilityCheckRsp(boolean compatible, String message) {
         this.compatible = compatible;
+        this.message = message;
     }
 
-    public Boolean isCompatible() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    
+    public boolean isCompatible() {
         return compatible;
     }
 
