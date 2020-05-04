@@ -157,7 +157,7 @@ export class AdvancedSetBuildPageComponent implements OnInit {
   }
   //!mb.suportedMemorySpeed.some(r => this.selectedSupportedMemorySpeed.includes(r)
   clearGpu() {
-    let names: string[]
+    let names: string[] = []
     for (let gpu of this.currentComputerSet.gpus) {
       names.push(gpu.name);
     }
@@ -179,7 +179,7 @@ export class AdvancedSetBuildPageComponent implements OnInit {
   }
 
   clearSsd() {
-    let names: string[]
+    let names: string[] = []
     for (let gpu of this.currentComputerSet.ssds) {
       names.push(gpu.name);
     }
@@ -201,7 +201,7 @@ export class AdvancedSetBuildPageComponent implements OnInit {
   }
 
   clearHdd() {
-    let names: string[]
+    let names: string[] = []
     for (let gpu of this.currentComputerSet.hdds) {
       names.push(gpu.name);
     }
@@ -257,7 +257,7 @@ export class AdvancedSetBuildPageComponent implements OnInit {
   }
 
   clearRam() {
-    let names: string[]
+    let names: string[] = []
     for (let gpu of this.currentComputerSet.rams) {
       names.push(gpu.name);
     }
