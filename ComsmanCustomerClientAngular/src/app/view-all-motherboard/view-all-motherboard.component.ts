@@ -195,22 +195,18 @@ export class ViewAllMotherboardComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
-    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
-    //   this.AllManufacturersCheckbox = false
 
-    // }
     //types
     if (this.selectedFormFactor.length == 0) {
       this.removeFormFactorFilters();
@@ -219,9 +215,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllFormFactorCheckbox = true;
       return;
     }
-    // if (this.selectedTypes.length ! = this.selectedTypes.length){
-    //   this.AllTypesCheckbox = false
-    // }
+
     //colour
     if (this.selectedSocket.length == 0) {
       this.removeSocketFilters();
@@ -230,9 +224,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllSocketCheckbox = true;
       return;
     }
-    // if (this.selectedColours.length ! = this.colours.length){
-    //   this.AllColourCheckbox = false
-    // }
+
     //side panel view
     if (this.selectedChipset.length == 0) {
       this.removeChipsetFilters();
@@ -241,9 +233,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllChipsetCheckbox = true;
       return;
     }
-    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
-    //   this.AllSidePanelViewCheckbox = false
-    // }
+
     //motherboard form factor
     if (this.selectedMemorySlot.length == 0) {
       this.removeMemorySlotFilters();
@@ -252,22 +242,18 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllMemorySlotCheckbox = true;
       return;
     }
-    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
-    //   this.AllMotherboardFormFactorsCheckbox = false
-    // }
+
     //full Height ExpansionSlot 
     if (this.selectedColour.length == 0) {
-      console.log(this.selectedColour)
+
       this.removeColourFilters();
       this.selectedColour = this.colour;
-      console.log(this.selectedColour)
+
       this.applyFilters();
       this.AllColourCheckbox = true;
       return;
     }
-    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
-    //   this.AllFullHeightExpansionSlotCheckbox = false
-    // }
+
     //top fan support
     if (this.selectedSLICrossFire.length == 0) {
       this.removeSLICrossFireFilters();
@@ -276,9 +262,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllSLICrossFireCheckbox = true;
       return;
     }
-    // if (this.selectedTopFanSupport.length ! = this.topFanSupport.length){
-    //   this.AllTopFanSupportCheckbox = false
-    // }
+
     //front fan support 
     if (this.selectedPCIEx16.length == 0) {
       this.removePCIEx16Filters();
@@ -287,9 +271,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllPCIEx16Checkbox = true;
       return;
     }
-    // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
-    //   this.AllFrontFanSupportCheckbox = false
-    // }
+
     //front fan support 
     if (this.selectedM2Slot.length == 0) {
       this.removeM2SlotFilters();
@@ -298,9 +280,7 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllM2SlotCheckbox = true;
       return;
     }
-    // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
-    //   this.AllFrontFanSupportCheckbox = false
-    // }
+
     if (this.selectedWiFi.length == 0) {
       this.removeWiFiFilters();
       this.selectedWiFi = this.wiFi;
@@ -315,20 +295,6 @@ export class ViewAllMotherboardComponent implements OnInit {
       this.AllSupportedMemorySpeedCheckbox = true;
       return;
     }
-
-
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredMotherboard = [];
     this.updateFilters();

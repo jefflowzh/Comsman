@@ -10,19 +10,19 @@ export class CPUAirCooler extends ComputerPart {
 
     constructor(productId?: number, name?: string, price?: number, inventoryQuantity?: number, image?: string, isDisabled?: boolean,
         manufacturer?: string,
-        color?: string,
+        colour?: string,
         noiseLevel?: number,
         height?: number,
         CPUChipCompatibility?: string[]
-        ) {
+    ) {
 
         super(productId, name, price, inventoryQuantity, image, isDisabled);
         this.manufacturer = manufacturer;
-        this.colour = color;
+        this.colour = colour;
         this.noiseLevel = noiseLevel;
         this.height = height
         this.CPUChipCompatibility = CPUChipCompatibility;
-        
+
     }
 
 

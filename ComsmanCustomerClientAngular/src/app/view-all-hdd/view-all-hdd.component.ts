@@ -77,13 +77,13 @@ export class ViewAllHddComponent implements OnInit {
           }
 
 
-         
 
-          
+
+
           if (this.Interface.length == 0 || !this.Interface.includes(hdd.interfaceForm)) {
             this.Interface.push(hdd.interfaceForm);
           }
-          
+
 
           this.manufacturers.sort();
           this.capacity.sort();
@@ -106,27 +106,18 @@ export class ViewAllHddComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
-    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
-    //   this.AllManufacturersCheckbox = false
 
-    // }
-    //types
-    
-    // if (this.selectedColours.length ! = this.colours.length){
-    //   this.AllColourCheckbox = false
-    // }
     //side panel view
     if (this.selectedCapacity.length == 0) {
       this.removeCapacityFilters();
@@ -135,9 +126,7 @@ export class ViewAllHddComponent implements OnInit {
       this.AllTypeCheckbox = true;
       return;
     }
-    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
-    //   this.AllSidePanelViewCheckbox = false
-    // }
+
     //motherboard form factor
     if (this.selectedFormFactor.length == 0) {
       this.removeFormFactorFilters();
@@ -146,24 +135,19 @@ export class ViewAllHddComponent implements OnInit {
       this.AllCapacityCheckbox = true;
       return;
     }
-    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
-    //   this.AllMotherboardFormFactorsCheckbox = false
-    // }
+
     //full Height ExpansionSlot 
     if (this.selectedType.length == 0) {
-      console.log(this.selectedType)
+
       this.removeTypeFilters();
       this.selectedType = this.type;
-      console.log(this.selectedType)
+
       this.applyFilters();
       this.AllFormFactorCheckbox = true;
       return;
     }
-    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
-    //   this.AllFullHeightExpansionSlotCheckbox = false
-    // }
+
     //top fan support
-    
     if (this.selectedInterface.length == 0) {
       this.removeInterfaceFilters();
       this.selectedInterface = this.Interface;
@@ -171,20 +155,6 @@ export class ViewAllHddComponent implements OnInit {
       this.AllInterfaceCheckbox = true;
       return;
     }
-
-
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredHDD = [];
     this.updateFilters();
@@ -195,7 +165,7 @@ export class ViewAllHddComponent implements OnInit {
       if (!this.selectedManufacturers.includes(mb.manufacturer) && this.filteredHDD.indexOf(mb) < 0) {
         continue;
       }
-     
+
       if (!this.selectedCapacity.includes(mb.capacity.toString()) && this.filteredHDD.indexOf(mb) < 0) {
         continue;
       }
@@ -224,7 +194,7 @@ export class ViewAllHddComponent implements OnInit {
     this.updateFilters();
   }
 
-  
+
 
   removeInterfaceFilters() {
     if (!this.AllInterfaceCheckbox) {
@@ -238,8 +208,8 @@ export class ViewAllHddComponent implements OnInit {
   }
 
 
-  
-  
+
+
   removeTypeFilters() {
     if (!this.AllFormFactorCheckbox) {
       this.selectedType = [];
@@ -270,7 +240,7 @@ export class ViewAllHddComponent implements OnInit {
     this.filteredHDD = [];
     this.updateFilters();
   }
-  
+
 }
 
 

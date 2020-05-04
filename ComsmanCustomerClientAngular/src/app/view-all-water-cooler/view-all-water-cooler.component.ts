@@ -77,7 +77,7 @@ export class ViewAllWaterCoolerComponent implements OnInit {
           }
 
 
-         
+
 
           for (let m of airCooler.CPUChipCompatibility) {
             if (this.CPUChipCompatibility.length == 0 || !this.CPUChipCompatibility.includes(m)) {
@@ -106,27 +106,18 @@ export class ViewAllWaterCoolerComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
-    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
-    //   this.AllManufacturersCheckbox = false
 
-    // }
-    //types
-    
-    // if (this.selectedColours.length ! = this.colours.length){
-    //   this.AllColourCheckbox = false
-    // }
     //side panel view
     if (this.selectedNoiseLevel.length == 0) {
       this.removeChipsetFilters();
@@ -135,9 +126,7 @@ export class ViewAllWaterCoolerComponent implements OnInit {
       this.AllNoiseLevelCheckbox = true;
       return;
     }
-    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
-    //   this.AllSidePanelViewCheckbox = false
-    // }
+
     //motherboard form factor
     if (this.selectedRadiatorSize.length == 0) {
       this.removeMemorySlotFilters();
@@ -146,24 +135,19 @@ export class ViewAllWaterCoolerComponent implements OnInit {
       this.AllRadiatorSizeCheckbox = true;
       return;
     }
-    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
-    //   this.AllMotherboardFormFactorsCheckbox = false
-    // }
+
     //full Height ExpansionSlot 
     if (this.selectedColour.length == 0) {
-      console.log(this.selectedColour)
+
       this.removeColourFilters();
       this.selectedColour = this.colour;
-      console.log(this.selectedColour)
+
       this.applyFilters();
       this.AllColourCheckbox = true;
       return;
     }
-    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
-    //   this.AllFullHeightExpansionSlotCheckbox = false
-    // }
+
     //top fan support
-    
     if (this.selectedCPUChipCompatibility.length == 0) {
       this.removeSupportedMemorySpeedFilters();
       this.selectedCPUChipCompatibility = this.CPUChipCompatibility;
@@ -171,20 +155,6 @@ export class ViewAllWaterCoolerComponent implements OnInit {
       this.AllCpuChipCompatibilityCheckbox = true;
       return;
     }
-
-
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredWaterCooler = [];
     this.updateFilters();
@@ -195,7 +165,7 @@ export class ViewAllWaterCoolerComponent implements OnInit {
       if (!this.selectedManufacturers.includes(mb.manufacturer) && this.filteredWaterCooler.indexOf(mb) < 0) {
         continue;
       }
-     
+
       if (!this.selectedNoiseLevel.includes(mb.noiseLevel.toString()) && this.filteredWaterCooler.indexOf(mb) < 0) {
         continue;
       }
@@ -224,8 +194,6 @@ export class ViewAllWaterCoolerComponent implements OnInit {
     this.updateFilters();
   }
 
-  
-
   removeSupportedMemorySpeedFilters() {
     if (!this.AllCpuChipCompatibilityCheckbox) {
       this.selectedCPUChipCompatibility = [];
@@ -237,9 +205,6 @@ export class ViewAllWaterCoolerComponent implements OnInit {
     this.updateFilters();
   }
 
-
-  
-  
   removeColourFilters() {
     if (!this.AllColourCheckbox) {
       this.selectedColour = [];
@@ -270,6 +235,6 @@ export class ViewAllWaterCoolerComponent implements OnInit {
     this.filteredWaterCooler = [];
     this.updateFilters();
   }
-  
+
 }
 

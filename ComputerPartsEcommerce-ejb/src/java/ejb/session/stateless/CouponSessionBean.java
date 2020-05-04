@@ -62,9 +62,6 @@ public class CouponSessionBean implements CouponSessionBeanLocal {
             Coupon coupon = (Coupon) query.getSingleResult();
             
             Date currDate = new Date();
-            System.out.println(currDate);
-            System.out.println(coupon.getStartDate());
-            System.out.println(coupon.getEndDate());
             if ((currDate.compareTo(coupon.getStartDate()) >= 0) && (currDate.compareTo(coupon.getEndDate()) <= 0)) {
                 return coupon;
             } else {

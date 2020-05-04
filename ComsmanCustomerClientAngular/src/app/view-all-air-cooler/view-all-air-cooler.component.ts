@@ -77,7 +77,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
           }
 
 
-         
+
 
           for (let m of airCooler.CPUChipCompatibility) {
             if (this.CPUChipCompatibility.length == 0 || !this.CPUChipCompatibility.includes(m)) {
@@ -106,16 +106,14 @@ export class ViewAllAirCoolerComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
-
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
@@ -123,7 +121,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
 
     // }
     //types
-    
+
     // if (this.selectedColours.length ! = this.colours.length){
     //   this.AllColourCheckbox = false
     // }
@@ -151,10 +149,10 @@ export class ViewAllAirCoolerComponent implements OnInit {
     // }
     //full Height ExpansionSlot 
     if (this.selectedColour.length == 0) {
-      console.log(this.selectedColour)
+
       this.removeColourFilters();
       this.selectedColour = this.colour;
-      console.log(this.selectedColour)
+
       this.applyFilters();
       this.AllColourCheckbox = true;
       return;
@@ -163,7 +161,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
     //   this.AllFullHeightExpansionSlotCheckbox = false
     // }
     //top fan support
-    
+
     if (this.selectedCPUChipCompatibility.length == 0) {
       this.removeSupportedMemorySpeedFilters();
       this.selectedCPUChipCompatibility = this.CPUChipCompatibility;
@@ -171,20 +169,6 @@ export class ViewAllAirCoolerComponent implements OnInit {
       this.AllCpuChipCompatibilityCheckbox = true;
       return;
     }
-
-
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredAirCooler = [];
     this.updateFilters();
@@ -195,7 +179,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
       if (!this.selectedManufacturers.includes(mb.manufacturer) && this.filteredAirCooler.indexOf(mb) < 0) {
         continue;
       }
-     
+
       if (!this.selectedNoiseLevel.includes(mb.noiseLevel.toString()) && this.filteredAirCooler.indexOf(mb) < 0) {
         continue;
       }
@@ -224,7 +208,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
     this.updateFilters();
   }
 
-  
+
 
   removeSupportedMemorySpeedFilters() {
     if (!this.AllCpuChipCompatibilityCheckbox) {
@@ -238,8 +222,8 @@ export class ViewAllAirCoolerComponent implements OnInit {
   }
 
 
-  
-  
+
+
   removeColourFilters() {
     if (!this.AllColourCheckbox) {
       this.selectedColour = [];
@@ -270,7 +254,7 @@ export class ViewAllAirCoolerComponent implements OnInit {
     this.filteredAirCooler = [];
     this.updateFilters();
   }
-  
+
 }
 
 

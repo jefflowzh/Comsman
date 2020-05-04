@@ -127,22 +127,18 @@ export class ViewAllSsdComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
-    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
-    //   this.AllManufacturersCheckbox = false
 
-    // }
     //types
     if (this.selectedType.length == 0) {
       this.removeCapacityFilters();
@@ -151,9 +147,7 @@ export class ViewAllSsdComponent implements OnInit {
       this.AllTypeCheckbox = true;
       return;
     }
-    // if (this.selectedTypes.length ! = this.selectedTypes.length){
-    //   this.AllTypesCheckbox = false
-    // }
+
     //colour
     if (this.selectedCapacity.length == 0) {
       this.removeCapacityFilters();
@@ -162,9 +156,7 @@ export class ViewAllSsdComponent implements OnInit {
       this.AllCapacityCheckbox = true;
       return;
     }
-    // if (this.selectedColours.length ! = this.colours.length){
-    //   this.AllColourCheckbox = false
-    // }
+
     //side panel view
     if (this.selectedFormFactor.length == 0) {
       this.removeFormFactorFilters();
@@ -173,9 +165,7 @@ export class ViewAllSsdComponent implements OnInit {
       this.AllFormFactorCheckbox = true;
       return;
     }
-    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
-    //   this.AllSidePanelViewCheckbox = false
-    // }
+
     //motherboard form factor
     if (this.selectedInterfaceForm.length == 0) {
       this.removeInterfaceFormFilters();
@@ -184,34 +174,17 @@ export class ViewAllSsdComponent implements OnInit {
       this.AllInterfaceFormCheckbox = true;
       return;
     }
-    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
-    //   this.AllMotherboardFormFactorsCheckbox = false
-    // }
+
     //full Height ExpansionSlot 
     if (this.selectedNVME.length == 0) {
-      console.log(this.selectedNVME)
+
       this.removeNVMEFilters();
       this.selectedNVME = this.NVME;
-      console.log(this.selectedNVME)
+
       this.applyFilters();
       this.AllNVMECheckbox = true;
       return;
     }
-    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
-    //   this.AllFullHeightExpansionSlotCheckbox = false
-    // }
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredSSD = [];
     this.updateFilters();

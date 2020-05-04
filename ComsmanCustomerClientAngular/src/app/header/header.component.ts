@@ -45,17 +45,9 @@ export class HeaderComponent implements OnInit {
       }
     );
 
-    // // persist changes (if any) of customer currComputerBuild to database
-    // this.customerService.updateCustomerBuild(this.sessionService.getCurrentCustomer().currComputerBuild).subscribe(
-    //   response => {
-    //     console.log('********** HeaderComponent.ts updateCustomerBuild() successful!');
-    //   },
-    //   error => {
-    //     console.log('********** HeaderComponent.ts updateCustomerBuild() error:' + error);
-    //   }
-    // );
-
     this.sessionService.setCurrentCustomer(null);
+    this.sessionService.setCurrentComputerSet(null);
+    this.sessionService.setLastAddedComputerPart(null);
 
     this.router.navigate(["/index"]);
   }

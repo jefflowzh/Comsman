@@ -22,9 +22,9 @@ import { ComputerCase } from '../computer-case';
 })
 export class AdvancedSetBuildPageComponent implements OnInit {
 
-  
+
   currentComputerSet: ComputerSet;
-  
+
   latestAddedComputerPart: ComputerPart;
 
   compatible: boolean = true;
@@ -35,16 +35,14 @@ export class AdvancedSetBuildPageComponent implements OnInit {
 
   constructor(private router: Router, public sessionService: SessionService, public computerSetService: ComputerSetService) { }
 
-  
-
   ngOnInit() {
     this.currentComputerSet = this.sessionService.getCurrentComputerSet();
     this.latestAddedComputerPart = this.sessionService.getLastAddedComputerPart();
     let customer = this.sessionService.getCurrentCustomer();
-    for(let part of customer.currComputerBuild){
+    for (let part of customer.currComputerBuild) {
       this.totalPrice += part.price;
     }
-    
+
     // if(this.latestAddedComputerPart != null){
     //   customer.currComputerBuild.push(this.sessionService.getLastAddedComputerPart());
     //   this.sessionService.setCurrentCustomer(customer);
@@ -57,7 +55,7 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     console.log(this.latestAddedComputerPart)
   }
 
-  resetCurrentComputerSet(){
+  resetCurrentComputerSet() {
     this.currentComputerSet.cpu = null;
     this.currentComputerSet.motherBoard = null;
     this.currentComputerSet.rams = [];
@@ -78,12 +76,12 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.totalPrice = 0;
   }
 
-  compatibilityCheck(){
+  compatibilityCheck() {
     let computerPartIdList: number[] = [];
-    for(let part of this.sessionService.getCurrentCustomer().currComputerBuild){
+    for (let part of this.sessionService.getCurrentCustomer().currComputerBuild) {
       computerPartIdList.push(part.productId);
     }
-    if(this.latestAddedComputerPart === null){
+    if (this.latestAddedComputerPart === null) {
       return;
     }
 
@@ -91,14 +89,14 @@ export class AdvancedSetBuildPageComponent implements OnInit {
 
     this.computerSetService.compatibilityCheck(computerPartIdList, latestAddedComputerPartId).subscribe(
       response => {
-        if (response.compatible == true){
+        if (response.compatible == true) {
           this.compatible = response.compatible;
         }
-        else{
+        else {
           this.compatible = false;
           this.errorMessage = response.message;
         }
-        
+
       }, error => {
         this.compatible = false;
         console.log('********** CompatibilityCheckComponent.ts componentConflict(): ' + error);
@@ -108,24 +106,24 @@ export class AdvancedSetBuildPageComponent implements OnInit {
 
   }
 
-  getPrice(){
+  getPrice() {
     this.totalPrice = 0;
     let customer = this.sessionService.getCurrentCustomer();
-    for(let part of customer.currComputerBuild){
+    for (let part of customer.currComputerBuild) {
       this.totalPrice += part.price;
     }
   }
 
-  clearCpu(){
+  clearCpu() {
     let name = this.currentComputerSet.cpu.name;
     this.currentComputerSet.cpu = null;
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      console.log(computerPart[i].name == name)
-      if (computerPart[i].name == name){
-        computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+
+      if (computerPart[i].name == name) {
+        computerPart.splice(i, 1);
       }
     }
     customer.currComputerBuild = computerPart;
@@ -134,22 +132,22 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
 
-  clearCpuCooler(){
-    let name:string;
-    if(this.currentComputerSet.waterCooler!=null){
+  clearCpuCooler() {
+    let name: string;
+    if (this.currentComputerSet.waterCooler != null) {
       name = this.currentComputerSet.waterCooler.name;
       this.currentComputerSet.waterCooler = null;
     }
-    if(this.currentComputerSet.airCooler!=null){
+    if (this.currentComputerSet.airCooler != null) {
       name = this.currentComputerSet.airCooler.name;
       this.currentComputerSet.airCooler = null;
     }
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      if (computerPart[i].name == name){
-        computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      if (computerPart[i].name == name) {
+        computerPart.splice(i, 1);
       }
     }
     customer.currComputerBuild = computerPart;
@@ -158,19 +156,19 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
   //!mb.suportedMemorySpeed.some(r => this.selectedSupportedMemorySpeed.includes(r)
-  clearGpu(){
+  clearGpu() {
     let names: string[]
-    for(let gpu of this.currentComputerSet.gpus){
+    for (let gpu of this.currentComputerSet.gpus) {
       names.push(gpu.name);
     }
     this.currentComputerSet.gpus = [];
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      for(let j = 0; j < names.length; j++){
-        if (computerPart[i].name == names[j]){
-          computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      for (let j = 0; j < names.length; j++) {
+        if (computerPart[i].name == names[j]) {
+          computerPart.splice(i, 1);
         }
       }
     }
@@ -180,19 +178,19 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
 
-  clearSsd(){
+  clearSsd() {
     let names: string[]
-    for(let gpu of this.currentComputerSet.ssds){
+    for (let gpu of this.currentComputerSet.ssds) {
       names.push(gpu.name);
     }
     this.currentComputerSet.ssds = []
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      for(let j = 0; j < names.length; j++){
-        if (computerPart[i].name == names[j]){
-          computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      for (let j = 0; j < names.length; j++) {
+        if (computerPart[i].name == names[j]) {
+          computerPart.splice(i, 1);
         }
       }
     }
@@ -202,19 +200,19 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
 
-  clearHdd(){
+  clearHdd() {
     let names: string[]
-    for(let gpu of this.currentComputerSet.hdds){
+    for (let gpu of this.currentComputerSet.hdds) {
       names.push(gpu.name);
     }
     this.currentComputerSet.hdds = [];
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      for(let j = 0; j < names.length; j++){
-        if (computerPart[i].name == names[j]){
-          computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      for (let j = 0; j < names.length; j++) {
+        if (computerPart[i].name == names[j]) {
+          computerPart.splice(i, 1);
         }
       }
     }
@@ -224,15 +222,15 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
 
-  clearMotherboard(){
+  clearMotherboard() {
     let name = this.currentComputerSet.motherBoard.name;
     this.currentComputerSet.motherBoard = null;
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      if (computerPart[i],name == name){
-        computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      if (computerPart[i], name == name) {
+        computerPart.splice(i, 1);
       }
     }
     customer.currComputerBuild = computerPart;
@@ -241,15 +239,15 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.sessionService.setLastAddedComputerPart(null);
   }
 
-  clearPsu(){
+  clearPsu() {
     let name = this.currentComputerSet.psu.name;
     this.currentComputerSet.psu = null;
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      if (computerPart[i].name == name){
-        computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      if (computerPart[i].name == name) {
+        computerPart.splice(i, 1);
       }
     }
     customer.currComputerBuild = computerPart;
@@ -257,20 +255,20 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.getPrice();
     this.sessionService.setLastAddedComputerPart(null);
   }
-  
-  clearRam(){
+
+  clearRam() {
     let names: string[]
-    for(let gpu of this.currentComputerSet.rams){
+    for (let gpu of this.currentComputerSet.rams) {
       names.push(gpu.name);
     }
     this.currentComputerSet.rams = [];
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      for(let j = 0; j < names.length; j++){
-        if (computerPart[i].name == names[j]){
-          computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      for (let j = 0; j < names.length; j++) {
+        if (computerPart[i].name == names[j]) {
+          computerPart.splice(i, 1);
         }
       }
     }
@@ -279,16 +277,16 @@ export class AdvancedSetBuildPageComponent implements OnInit {
     this.getPrice();
     this.sessionService.setLastAddedComputerPart(null);
   }
-  
-  clearCompCase(){
+
+  clearCompCase() {
     let name = this.currentComputerSet.compCase.name;
     this.currentComputerSet.compCase = null;
     this.sessionService.setCurrentComputerSet(this.currentComputerSet);
     let customer = this.sessionService.getCurrentCustomer();
     let computerPart = customer.currComputerBuild;
-    for(let i = 0; i < computerPart.length; i++){
-      if (computerPart[i].name == name){
-        computerPart.splice(i,1);
+    for (let i = 0; i < computerPart.length; i++) {
+      if (computerPart[i].name == name) {
+        computerPart.splice(i, 1);
       }
     }
     customer.currComputerBuild = computerPart;

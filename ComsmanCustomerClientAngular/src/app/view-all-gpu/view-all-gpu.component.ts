@@ -168,22 +168,18 @@ export class ViewAllGPUComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
-    // if (this.selectedManufacturers.length ! = this.manufacturers.length){
-    //   this.AllManufacturersCheckbox = false
 
-    // }
     //types
     if (this.selectedChipset.length == 0) {
       this.removeChipsetFilters();
@@ -192,9 +188,7 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllChipsetCheckbox = true;
       return;
     }
-    // if (this.selectedTypes.length ! = this.selectedTypes.length){
-    //   this.AllTypesCheckbox = false
-    // }
+
     //colour
     if (this.selectedInterface.length == 0) {
       this.removeInterfaceFilters();
@@ -203,9 +197,7 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllInterfaceCheckbox = true;
       return;
     }
-    // if (this.selectedColours.length ! = this.colours.length){
-    //   this.AllColourCheckbox = false
-    // }
+
     //side panel view
     if (this.selectedLength.length == 0) {
       this.removeLengthFilters();
@@ -214,9 +206,7 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllLengthCheckbox = true;
       return;
     }
-    // if (this.selectedSidePanelViews.length ! = this.sidePanelViews.length){
-    //   this.AllSidePanelViewCheckbox = false
-    // }
+
     //motherboard form factor
     if (this.selectedTDP.length == 0) {
       this.removeTDPFilters();
@@ -225,22 +215,18 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllTDPCheckbox = true;
       return;
     }
-    // if (this.selectedMotherboardFormFactors.length ! = this.motherboardFormFactors.length){
-    //   this.AllMotherboardFormFactorsCheckbox = false
-    // }
+
     //full Height ExpansionSlot 
     if (this.selectedExpansionSlotWidth.length == 0) {
-      console.log(this.selectedExpansionSlotWidth)
+
       this.removeExpansionSlotFilters();
       this.selectedExpansionSlotWidth = this.expansionSlotWidth;
-      console.log(this.selectedExpansionSlotWidth)
+
       this.applyFilters();
       this.AllExpansionSlotWidthCheckbox = true;
       return;
     }
-    // if (this.selectedFullHeightExpansionSlot.length ! = this.fullHeightExpansionSlot.length){
-    //   this.AllFullHeightExpansionSlotCheckbox = false
-    // }
+
     //top fan support
     if (this.selectedExternalPower.length == 0) {
       this.removeExternalPowerFilters();
@@ -249,9 +235,7 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllExternalPowerCheckbox = true;
       return;
     }
-    // if (this.selectedTopFanSupport.length ! = this.topFanSupport.length){
-    //   this.AllTopFanSupportCheckbox = false
-    // }
+
     //front fan support 
     if (this.selectedMemory.length == 0) {
       this.removeMemoryFilters();
@@ -260,9 +244,7 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllMemoryCheckbox = true;
       return;
     }
-    // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
-    //   this.AllFrontFanSupportCheckbox = false
-    // }
+
     //front fan support 
     if (this.selectedMemoryType.length == 0) {
       this.removeMemoryTypeFilters();
@@ -271,23 +253,6 @@ export class ViewAllGPUComponent implements OnInit {
       this.AllMemoryTypeCheckbox = true;
       return;
     }
-    // if (this.selectedFrontFanSupport.length ! = this.frontFanSupport.length){
-    //   this.AllFrontFanSupportCheckbox = false
-    // }
-
-
-
-
-    // this.AllManufacturersCheckbox = false;
-    // this.AllTypesCheckbox = false;
-    // this.AllColourCheckbox = false;
-    // this.AllSidePanelViewCheckbox = false;
-    // this.AllMotherboardFormFactorsCheckbox = false;
-    // this.AllFullHeightExpansionSlotCheckbox = false;
-    // //AllTypesCheckbox: boolean = true;
-    // this.AllTopFanSupportCheckbox = false;
-    // this.AllFrontFanSupportCheckbox = false;
-    // this.AllRearFanSupportCheckbox = false;   
 
     this.filteredGPU = [];
     this.updateFilters();

@@ -83,11 +83,11 @@ export class ViewAllComputerCasesComponent implements OnInit {
           }
 
           //!computerCase.colours.some(r => this.selectedColours.includes(r)
-          
+
           if (this.colours.length == 0 || !this.colours.includes(computerCase.colour)) {
             this.colours.push(computerCase.colour)
           }
-          
+
 
           //sidePanelViews: string[]
           if (this.sidePanelViews.length == 0 || !this.sidePanelViews.includes(computerCase.sidePanelView)) {
@@ -138,23 +138,23 @@ export class ViewAllComputerCasesComponent implements OnInit {
           this.rearFanSupport.sort();
 
           this.selectedManufacturers = this.manufacturers;
-          
-          this.selectedTypes= this.types;
-        
-          this.selectedColours =  this.colours;
-          
+
+          this.selectedTypes = this.types;
+
+          this.selectedColours = this.colours;
+
           this.selectedSidePanelViews = this.sidePanelViews;
-          
+
           this.selectedMotherboardFormFactors = this.motherboardFormFactors;
-          
+
           this.selectedFullHeightExpansionSlot = this.fullHeightExpansionSlot
-          
+
           this.selectedMaxVideoHeightLength = this.maxVideoheightLength
-          
+
           this.selectedTopFanSupport = this.topFanSupport
-        
+
           this.selectedFrontFanSupport = this.frontFanSupport
-        
+
           this.selectedRearFanSupport = this.rearFanSupport
         }
       },
@@ -165,21 +165,20 @@ export class ViewAllComputerCasesComponent implements OnInit {
   }
 
   applyFilters() {
-    //console.log(this.selectedManufacturers)
 
     //manufacturers
     if (this.selectedManufacturers.length == 0) {
-      console.log(this.selectedManufacturers)
+
       this.removeManufacturerFilters();
       this.selectedManufacturers = this.manufacturers;
       this.applyFilters();
       this.AllManufacturersCheckbox = true
-      console.log(this.selectedManufacturers)
+
       return;
     }
     // if (this.selectedManufacturers.length ! = this.manufacturers.length){
     //   this.AllManufacturersCheckbox = false
-      
+
     // }
     //types
     if (this.selectedTypes.length == 0) {
@@ -227,10 +226,10 @@ export class ViewAllComputerCasesComponent implements OnInit {
     // }
     //full Height ExpansionSlot 
     if (this.selectedFullHeightExpansionSlot.length == 0) {
-      console.log(this.selectedFullHeightExpansionSlot)
+
       this.removeExpansionSlotFilters();
       this.selectedFullHeightExpansionSlot = this.fullHeightExpansionSlot;
-      console.log(this.selectedFullHeightExpansionSlot)
+
       this.applyFilters();
       this.AllFullHeightExpansionSlotCheckbox = true;
       return;
@@ -289,7 +288,7 @@ export class ViewAllComputerCasesComponent implements OnInit {
 
   updateFilters() {
     for (let computerCase of this.allComputerCases) {
-      if (!this.selectedManufacturers.includes(computerCase.manufacturer)&& this.filteredComputerCases.indexOf(computerCase) < 0) {
+      if (!this.selectedManufacturers.includes(computerCase.manufacturer) && this.filteredComputerCases.indexOf(computerCase) < 0) {
         continue;
       }
       if (!this.selectedTypes.includes(computerCase.type) && this.filteredComputerCases.indexOf(computerCase) < 0) {
@@ -328,11 +327,6 @@ export class ViewAllComputerCasesComponent implements OnInit {
 
     this.selectedManufacturers = this.manufacturers;
 
-    // console.log("remove:")
-    // console.log(this.selectedManufacturers)
-    // // this.AllManufacturersCheckbox = !this.AllManufacturersCheckbox;
-    // console.log(!this.AllManufacturersCheckbox)
-
     this.filteredComputerCases = [];
     this.updateFilters();
   }
@@ -345,11 +339,6 @@ export class ViewAllComputerCasesComponent implements OnInit {
     }
 
     this.selectedTypes = this.types;
-
-    // console.log("remove:")
-    // console.log(this.selectedTypes)
-    // // this.AllManufacturersCheckbox = !this.AllManufacturersCheckbox;
-    // console.log(!this.AllTypesCheckbox)
 
     this.filteredComputerCases = [];
     this.updateFilters();

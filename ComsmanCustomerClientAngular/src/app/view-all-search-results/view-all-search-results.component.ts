@@ -31,7 +31,6 @@ export class ViewAllSearchResultsComponent implements OnInit {
         this.retrieveProductsBySearchTerm();
       }
     });
-    console.log("after")
   }
 
   retrieveProductsBySearchTerm() {

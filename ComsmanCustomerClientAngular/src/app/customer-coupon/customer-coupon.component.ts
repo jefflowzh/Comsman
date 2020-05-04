@@ -14,23 +14,18 @@ export class CustomerCouponComponent implements OnInit {
   coupons: Coupon[];
   sidenavItems: MenuItem[];
 
-  constructor(private router: Router, public sessionService: SessionService, public couponService:CouponService) { }
+  constructor(private router: Router, public sessionService: SessionService, public couponService: CouponService) { }
 
   ngOnInit() {
     this.couponService.validCoupons().subscribe(
       response => {
-        // console.logdamn(response.)
         this.coupons = response.coupons;
-        console.log(this.coupons);
-        //this.sessionService.setCurrentOrder(this.customerOrders);
-        //this.customerOrders.push(this.co);
       }, error => {
-        // this.router.navigate(["/customerLogin"]);
         console.log('********** CustomerCoupons.ts validCoupons(): ' + error);
-        
+
       }
     );
-    
+
     this.sidenavItems = [{
       label: 'Manage My Account',
       items: [

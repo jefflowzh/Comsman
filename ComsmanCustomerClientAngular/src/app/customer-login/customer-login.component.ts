@@ -46,18 +46,13 @@ export class CustomerLoginComponent implements OnInit {
         response => {
           let customer: Customer = response.customer;
           customer.password = "";
-          
+
           if (customer != null) {
 
             this.sessionService.setIsLogin(true);
             this.sessionService.setCurrentCustomer(customer);
             this.loginError = false;
-            console.log(customer.currComputerBuild);
 
-            //let currComputerBuild = response.currComputerBuild
-
-            //this.sessionService.setCurrentComputerSet(currComputerBuild);
-            //console.log(this.sessionService.getCurrentComputerSet());
             this.router.navigate(["/index"]);
           } else {
             this.loginError = true;

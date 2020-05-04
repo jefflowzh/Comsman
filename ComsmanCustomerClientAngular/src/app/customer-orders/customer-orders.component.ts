@@ -34,7 +34,7 @@ export class CustomerOrdersComponent implements OnInit {
   //   this.coupon,
   //   OrderStatusEnum.COMPLETED
   // );
-  
+
   sidenavItems: MenuItem[];
 
   constructor(private router: Router, public sessionService: SessionService,
@@ -46,13 +46,9 @@ export class CustomerOrdersComponent implements OnInit {
     this.customerService.customerOrders(this.customer.email).subscribe(
       response => {
         this.customerOrders = response.orders;
-        console.log(this.customerOrders);
-        //this.sessionService.setCurrentOrder(this.customerOrders);
-        //this.customerOrders.push(this.co);
       }, error => {
-        // this.router.navigate(["/customerLogin"]);
         console.log('********** CustomerLoginComponent.ts customerOrders(): ' + error);
-        
+
       }
     );
 
@@ -60,7 +56,7 @@ export class CustomerOrdersComponent implements OnInit {
       label: 'Manage My Account',
       items: [
         { label: 'Account Details', icon: 'pi pi-user', routerLink: ['/customerDetails'] },
-        {  label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
+        { label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
       ]
     },
     {
@@ -76,8 +72,8 @@ export class CustomerOrdersComponent implements OnInit {
       ]
     }];
 
-    
+
   }
-  
+
 
 }

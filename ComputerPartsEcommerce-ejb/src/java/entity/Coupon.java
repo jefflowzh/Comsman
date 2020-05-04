@@ -115,10 +115,10 @@ public class Coupon implements Serializable {
         return percentageRate;
     }
     
-    public String getFormattedRate() {
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        return decimalFormat.format(percentageRate);
-    }
+//    public String getFormattedRate() {
+//        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//        return decimalFormat.format(percentageRate);
+//    }
 
     public void setPercentageRate(Double percentageRate) {
         this.percentageRate = percentageRate;
@@ -128,10 +128,10 @@ public class Coupon implements Serializable {
         return flatAmount;
     }
     
-    public String getFormattedFlatAmount() {
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        return decimalFormat.format(flatAmount);
-    }
+//    public String getFormattedFlatAmount() {
+//        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//        return decimalFormat.format(flatAmount);
+//    }
 
     public void setFlatAmount(Double flatAmount) {
         this.flatAmount = flatAmount;

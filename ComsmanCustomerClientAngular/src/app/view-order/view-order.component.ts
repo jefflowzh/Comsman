@@ -35,40 +35,27 @@ export class ViewOrderComponent implements OnInit {
     this.customerService.customerOrders(this.customer.email).subscribe(
       response => {
         this.customerOrders = response.orders;
-        //console.log(this.customerOrders);
-        //this.sessionService.setCurrentOrder(this.customerOrders);
-        //this.customerOrders.push(this.co);
-        for(let order of this.customerOrders){
-          if(this.orderId == order.customerOrderId.toString()){
-            //console.log(order.totalPrice);
+
+        for (let order of this.customerOrders) {
+          if (this.orderId == order.customerOrderId.toString()) {
+
             this.current = order;
             this.lines = order.lineItems;
-            //console.log(this.lines);
+
           }
         }
       }, error => {
-        // this.router.navigate(["/customerLogin"]);
+
         console.log('********** CustomerLoginComponent.ts customerOrders(): ' + error);
-        
+
       }
     );
-
-    // for(let line of this.lines){
-    //   if(this.isEmpty(line.computerSet)){
-    //     this.computerPartLineItems.push(line)
-    //   }
-    //   if(this.isEmpty(line.product)){
-    //     this.computerSetLineItems.push(line)
-    //   }
-    // }
-
-    
 
     this.sidenavItems = [{
       label: 'Manage My Account',
       items: [
         { label: 'Account Details', icon: 'pi pi-user', routerLink: ['/customerDetails'] },
-        {  label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
+        { label: 'View Available Coupons', icon: 'pi pi-ticket', routerLink: ['/customerCoupons'] },
       ]
     },
     {
@@ -86,12 +73,12 @@ export class ViewOrderComponent implements OnInit {
   }
 
   isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
     }
     return true;
-}
+  }
 
 
 }

@@ -53,8 +53,10 @@ public class CouponResource {
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response checkCouponByCode(@QueryParam("code") String code) {
+        System.out.println("************************ 1");
         try {
             Coupon coupon = couponSessionBean.checkCouponByCode(code);
+            System.out.println("************************ 2");
             CheckCouponByCodeRsp retrieveCouponByCodeRsp = new CheckCouponByCodeRsp(coupon);
             return Response.status(Status.OK).entity(retrieveCouponByCodeRsp).build();
         } catch (CouponInvalidException | CouponNotFoundException ex) {

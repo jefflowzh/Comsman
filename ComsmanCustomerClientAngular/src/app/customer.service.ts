@@ -124,12 +124,11 @@ export class CustomerService {
         cartComputerSetsPartIds.push(computerSetPartIds);
         cartComputerSetsQuantities.push(li.quantity);
         cartComputerSetsWarrantyLengths.push(li.computerSet.warrantyLengthInYears);
-        console.log(li.computerSet.warrantyLengthInYears);
         cartComputerSetsPrices.push(li.computerSet.price);
       }
 
     }
-    console.log(cartComputerSetsWarrantyLengths);
+
     let updateCustomerReq = {
       "userId": this.sessionService.getCurrentCustomer().userId,
       "cartProductIds": cartProductIds,
@@ -166,7 +165,6 @@ export class CustomerService {
   }
 
   customerOrders(email: string): Observable<any> {
-    console.log("end method");
     return this.httpClient.get<any>(this.baseUrl + "/customerOrders?email=" + email).pipe
       (
         catchError(this.handleError)
