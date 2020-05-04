@@ -4,6 +4,7 @@ import { SessionService } from '../session.service';
 import { CouponService } from '../coupon.service';
 import { LineItem } from '../line-item';
 import { Coupon } from '../coupon';
+import { CustomerOrder } from '../customer-order';
 
 @Component({
   selector: 'app-customer-cart',
@@ -12,7 +13,8 @@ import { Coupon } from '../coupon';
 })
 export class CustomerCartComponent implements OnInit {
 
-  cart: LineItem[];
+  productsCart: LineItem[];
+  computerSetsCart: LineItem[];
   couponCodeInput: string;
   coupon: Coupon;
   retrieveCouponError: boolean;
@@ -24,6 +26,8 @@ export class CustomerCartComponent implements OnInit {
   total: number;
 
   constructor(public sessionService: SessionService, public couponService: CouponService) {
+    this.productsCart = [];
+    this.computerSetsCart = [];
     this.couponCodeInput = "";
     this.retrieveCouponError = false;
     this.deliveryFee = 10;
@@ -33,31 +37,49 @@ export class CustomerCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cart = this.sessionService.getCurrentCustomer().cart;
-    this.calculateSubtotal();
+    let allLineItems = this.sessionService.getCurrentCustomer().cart;
+    for (let lineItem of allLineItems) {
+      // if line item contains product
+      if (lineItem.product) {
+        this.productsCart.push(lineItem);
+      } else {
+        // if line item contains computer set
+        this.computerSetsCart.push(lineItem);
+      }
+    }
+
+    // this.calculateSubtotal();
+
   }
 
   updateSessionCart() {
     let currCustomer = this.sessionService.getCurrentCustomer();
 
+    let newCurrentCart = this.productsCart.concat(this.computerSetsCart);
+
     // update session cart
-    currCustomer.cart = this.cart;
+    currCustomer.cart = newCurrentCart;
     // restringify currentCustomer with updated cart
     this.sessionService.setCurrentCustomer(currCustomer);
-
-    // update cart subtotal
-    this.calculateSubtotal();
   }
 
-  removeLineItem(index: number) {
-    this.cart.splice(index, 1);
+  removeProductLineItem(index: number) {
+    this.productsCart.splice(index, 1);
+    this.updateSessionCart();
+  }
+
+  removeComputerSetLineItem(index: number) {
+    this.computerSetsCart.splice(index, 1);
     this.updateSessionCart();
   }
 
   calculateSubtotal() {
     let subtotal = 0;
-    for (let lineItem of this.cart) {
+    for (let lineItem of this.productsCart) {
       subtotal += lineItem.product.price * lineItem.quantity;
+    }
+    for (let lineItem of this.computerSetsCart) {
+      subtotal += lineItem.computerSet.price * lineItem.quantity;
     }
 
     return subtotal;
@@ -129,8 +151,9 @@ export class CustomerCartComponent implements OnInit {
   }
 
   createNewCustomerOrder() {
-    let rounded2DP = parseFloat(this.total.toFixed(2))
+    let customerOrder = new CustomerOrder;
 
+    let rounded2DP = parseFloat(this.total.toFixed(2))
   }
 
 }

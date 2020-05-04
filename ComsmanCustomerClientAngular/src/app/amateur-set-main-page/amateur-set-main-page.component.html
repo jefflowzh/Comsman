@@ -28,12 +28,17 @@
             <div>{{budgetTierModel.motherboard.name}}</div>
             <div>{{budgetTierModel.psu.name}}</div>
             <div *ngIf="budgetTierModel.rams">{{budgetTierModel.rams[0].name}}</div>
+            <div>2 Years Warranty</div>
             <br>
             <div><b>Now S${{budgetTierModel.price.toFixed(2)}}</b></div>
+            <br>
+            <div>Additional warranty: <p-dropdown [options]="additionalWarrantyBudget"
+                    [(ngModel)]="selectedAdditionalWarrantyBudget" optionLabel="name"></p-dropdown>
+            </div>
 
             <br>
 
-            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/budget']"></button>
+            <button pButton type="button" label="Add to Cart" (click)="addBudgetToCart()"></button>
         </div>
 
         <div class="ui-g-4" style="border-left: 3px solid gray; border-right: 3px solid gray;"
@@ -57,12 +62,17 @@
             <div>{{regularTierModel.motherboard.name}}</div>
             <div>{{regularTierModel.psu.name}}</div>
             <div *ngIf="regularTierModel.rams">{{regularTierModel.rams[0].name}}</div>
+            <div>2 Years Warranty</div>
             <br>
             <div><b>Now S${{regularTierModel.price.toFixed(2)}}</b></div>
+            <br>
+            <div>Additional warranty: <p-dropdown [options]="additionalWarrantyRegular"
+                    [(ngModel)]="selectedAdditionalWarrantyRegular" optionLabel="name"></p-dropdown>
+            </div>
 
             <br>
 
-            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/regular']"></button>
+            <button pButton type="button" label="Add to Cart" (click)="addRegularToCart()"></button>
         </div>
 
         <div class="ui-g-4" *ngIf="premiumTierModel && premiumTierModel.isEnabled">
@@ -84,12 +94,17 @@
             <div>{{premiumTierModel.motherboard.name}}</div>
             <div>{{premiumTierModel.psu.name}}</div>
             <div *ngIf="premiumTierModel.rams">{{premiumTierModel.rams[0].name}}</div>
+            <div>2 Years Warranty</div>
             <br>
             <div><b>Now S${{premiumTierModel.price.toFixed(2)}}</b></div>
+            <br>
+            <div>Additional warranty: <p-dropdown [options]="additionalWarrantyPremium"
+                    [(ngModel)]="selectedAdditionalWarrantyPremium  " optionLabel="name"></p-dropdown>
+            </div>
 
             <br>
 
-            <button pButton type="button" label="Add to Cart" [routerLink]="['/amateurSetBuildPage/premium']"></button>
+            <button pButton type="button" label="Add to Cart" (click)="addPremiumToCart()"></button>
         </div>
 
     </div>
@@ -99,3 +114,18 @@
     <br>
 
 </div>
+
+<p-dialog header="Success" [(visible)]="displayAddtoCartSuccessModal" [modal]="true">
+    <div style="text-align: center;">
+        <br>
+        <div>Added to cart!
+            <br>
+            <br>
+            <div><button type="button" pButton (click)="confirmSuccess()" label="Go to Cart"
+                    class="ui-button-rounded ui-button-secondary" [routerLink]="['/customerCart']"></button>
+                <button type="button" pButton (click)="confirmSuccess()" label="Continue Shopping"
+                    class="ui-button-rounded"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

@@ -15,7 +15,6 @@ import { ViewAllRAMComponent } from './view-all-ram/view-all-ram.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
-import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
@@ -43,12 +42,11 @@ const routes: Routes = [
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'viewProduct/:productId', component: ViewProductComponent },
   { path: 'amateurSetMainPage', component: AmateurSetMainPageComponent },
-  { path: 'amateurSetBuildPage', component: AmateurSetBuildPageComponent },
   { path: 'advancedSetBuildPage', component: AdvancedSetBuildPageComponent },
   { path: 'viewAllCPUCooler', component: ViewAllCPUCoolerComponent },
   { path: 'viewAllInternalStorage', component: ViewAllInternalStorageComponent },
   { path: 'viewAllPeripherals', component: ViewAllPeripheralsComponent },
-  { path: 'viewAllSearchResults/:searchTerm', component: ViewAllSearchResultsComponent, runGuardsAndResolvers: 'paramsChange' }
+  { path: 'viewAllSearchResults/:searchTerm', component: ViewAllSearchResultsComponent, runGuardsAndResolvers: 'always' }
 ];
 
 @NgModule({

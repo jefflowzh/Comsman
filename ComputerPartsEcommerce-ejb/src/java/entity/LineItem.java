@@ -28,6 +28,8 @@ public class LineItem implements Serializable {
     private ComputerSet computerSet;
 
     public LineItem() {
+        // need instantiate this to null first, for customerLogin() in CustomerResource to work
+        this.computerSet = null;
     }
 
     public LineItem(Product product, Integer quantity) {
@@ -37,19 +39,19 @@ public class LineItem implements Serializable {
         this.quantity = quantity;
     }
     
-//    // In the case of computer set, because you can't create a computer set before creating a line item first
-//    public LineItem(Integer quantity) {
-//        this();
-//        
-//        this.quantity = quantity;
-//    }
-    
-   public LineItem(ComputerSet computerSet, Integer quantity) {
+    // In the case of computer set, because you can't create a computer set before creating a line item first
+    public LineItem(Integer quantity) {
         this();
         
-        this.computerSet = computerSet;
         this.quantity = quantity;
     }
+    
+//   public LineItem(ComputerSet computerSet, Integer quantity) {
+//        this();
+//        
+//        this.computerSet = computerSet;
+//        this.quantity = quantity;
+//    }
     
     public Long getLineItemId() {
         return lineItemId;

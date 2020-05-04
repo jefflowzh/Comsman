@@ -15,8 +15,9 @@
             <div class="ui-g-12">
                 <h2>{{product.name}}</h2>
             </div>
-            <div class="ui-g-12"><b>Description:</b></div>
-            <div class="ui-g-12">{{description}}</div>
+            <!-- Description -->
+            <div class="ui-g-12"></div>
+            <div class="ui-g-12"></div>
             <div class="ui-g-12"><b>Price:</b> S$ {{product.price.toFixed(2)}}</div>
             <div class="ui-g-12">
                 <b>Quantity:</b>
@@ -27,7 +28,8 @@
             <div class="ui-g-12" style="margin-top: 5%;">
                 <button pButton type="button" label="Add to Build" style="width: 150px; margin-right: 2%;"
                     class="ui-button-secondary" (click)="addToBuild()"></button>
-                <button pButton type="button" label="Add to Cart" style="width: 150px" (click)="addToCart()"></button>
+                <button pButton type="button" label="Add to Cart" style="width: 150px"
+                    (click)="addToCart(product)"></button>
             </div>
         </div>
 
@@ -37,3 +39,30 @@
     <br>
 
 </div>
+
+<p-dialog header="Success" [(visible)]="displayAddtoCartSuccessModal" [modal]="true">
+    <div style="text-align: center;">
+        <br>
+        <div>Added to cart!
+            <br>
+            <br>
+            <div><button type="button" pButton (click)="confirmSuccess()" label="Go to Cart"
+                    class="ui-button-rounded ui-button-secondary" [routerLink]="['/customerCart']"></button>
+                <button type="button" pButton (click)="confirmSuccess()" label="Continue Shopping"
+                    class="ui-button-rounded"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Error" [(visible)]="displayAddtoCartErrorModal" [modal]="true">
+    <div style="text-align: center;">
+        <br>
+        <div>Product already in cart!
+            <br>
+            <br>
+            <div><button type="button" pButton (click)="confirmError()" label="Continue"
+                    class="ui-button-rounded"></button></div>
+        </div>
+    </div>
+</p-dialog>

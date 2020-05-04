@@ -29,4 +29,14 @@ export class ComputerSet {
     ssds: SSD[];
     lineItem: LineItem;
     assemblyAssignedTo: Staff;
+
+    // only in typscript class
+    tier: string;
+
+    constructor() {
+        this.gpus = [];
+        this.hdds = [];
+        this.rams = [];
+        this.ssds = [];
+    }
 }

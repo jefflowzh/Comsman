@@ -43,11 +43,11 @@ public class ComputerCase extends ComputerPart implements Serializable {
         super(name, price, inventoryQuantity, image);
     }
 
-    public ComputerCase(String manufacturer, String type, String colours, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
+    public ComputerCase(String manufacturer, String type, String colour, String sidePanelView, String[] motherBoardFormFactor, Integer fullHeightExpansionSlot, Double maxVideoCardLength, Double topFanSupport, Double frontFanSupport, Double rearFanSupport, String name, Double price, Integer inventoryQuantity, String image) {
         super(name, price, inventoryQuantity, image);
         this.manufacturer = manufacturer;
         this.type = type;
-        this.colour = colours;
+        this.colour = colour;
         this.sidePanelView = sidePanelView;
         this.motherBoardFormFactor = motherBoardFormFactor;
         this.fullHeightExpansionSlot = fullHeightExpansionSlot;
@@ -77,8 +77,8 @@ public class ComputerCase extends ComputerPart implements Serializable {
         return colour;
     }
 
-    public void setColour(String colours) {
-        this.colour = colours;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
     public String getSidePanelView() {

@@ -49,7 +49,7 @@
                             <button pButton type="button" class="ui-button-rounded ui-button-secondary"
                                 label="Add to Build" style="margin-right: 3%;"></button>
                             <button pButton type="button" class="ui-button-rounded ui-button-secondary"
-                                label="Add to Cart"></button>
+                                label="Add to Cart" (click)="addToCart(product)"></button>
                         </div>
                     </p-footer>
                 </p-card>
@@ -58,3 +58,30 @@
     </p-dataView>
 
 </div>
+
+<p-dialog header="Success" [(visible)]="displayAddtoCartSuccessModal" [modal]="true">
+    <div style="text-align: center;">
+        <br>
+        <div>Added to cart!
+            <br>
+            <br>
+            <div><button type="button" pButton (click)="confirmSuccess()" label="Go to Cart"
+                    class="ui-button-rounded ui-button-secondary" [routerLink]="['/customerCart']"></button>
+                <button type="button" pButton (click)="confirmSuccess()" label="Continue Shopping"
+                    class="ui-button-rounded"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Error" [(visible)]="displayAddtoCartErrorModal" [modal]="true">
+    <div style="text-align: center;">
+        <br>
+        <div>Product already in cart!
+            <br>
+            <br>
+            <div><button type="button" pButton (click)="confirmError()" label="Continue"
+                    class="ui-button-rounded"></button></div>
+        </div>
+    </div>
+</p-dialog>

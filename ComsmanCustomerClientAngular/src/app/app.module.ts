@@ -41,7 +41,6 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component';
 
 import { AmateurSetMainPageComponent } from './amateur-set-main-page/amateur-set-main-page.component';
-import { AmateurSetBuildPageComponent } from './amateur-set-build-page/amateur-set-build-page.component';
 import { AdvancedSetBuildPageComponent } from './advanced-set-build-page/advanced-set-build-page.component';
 import { ViewAllCPUCoolerComponent } from './view-all-cpucooler/view-all-cpucooler.component';
 import { ViewAllInternalStorageComponent } from './view-all-internal-storage/view-all-internal-storage.component';
@@ -70,7 +69,6 @@ import { ViewAllSearchResultsComponent } from './view-all-search-results/view-al
     ViewProductComponent,
     CustomerOrdersComponent,
     AmateurSetMainPageComponent,
-    AmateurSetBuildPageComponent,
     AdvancedSetBuildPageComponent,
     ViewAllCPUCoolerComponent,
     ViewAllInternalStorageComponent,

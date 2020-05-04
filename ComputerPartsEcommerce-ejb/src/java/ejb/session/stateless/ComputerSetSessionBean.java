@@ -50,7 +50,6 @@ public class ComputerSetSessionBean implements ComputerSetSessionBeanLocal {
     // create set first, assign staff seperately later
     public Long createNewComputerSet(ComputerSet newComputerSet, Long lineItemId) throws LineItemNotFoundException {
         LineItem lineItem = lineItemSessionBeanLocal.retrieveLineItemById(lineItemId);
-        
         newComputerSet.setLineItem(lineItem);
         lineItem.setComputerSet(newComputerSet);
         

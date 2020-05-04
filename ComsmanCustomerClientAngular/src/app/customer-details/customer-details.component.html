@@ -104,7 +104,7 @@
                             <div class="col-md-5 form-group">
                                 <label for="password">Password</label>
                                 <div class="col-md-8 form-group" style="color: crimson;"
-                                    *ngIf="passwordReverseBind.invalid && (passwordReverseBind.dirty || passwordReverseBind.touched || submitted)">
+                                    *ngIf="passwordReverseBind.invalid && submitted">
                                     <div *ngIf="passwordReverseBind.errors.required">
                                         Password is required!
                                     </div>

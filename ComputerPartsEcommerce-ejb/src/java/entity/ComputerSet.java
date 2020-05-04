@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -80,7 +81,7 @@ public class ComputerSet implements Serializable {
     
     @Column(nullable = false)
     @NotNull
-    private Integer warrentyLengthInYears;
+    private Integer warrantyLengthInYears;
     @ManyToOne
     @JoinColumn
     private Staff assemblyAssignedTo;
@@ -99,6 +100,10 @@ public class ComputerSet implements Serializable {
     //private CustomerOrder customerOrder;
     
     public ComputerSet(){
+        this.rams = new ArrayList<>();
+        this.gpus = new ArrayList<>();
+        this.hdds = new ArrayList<>();
+        this.ssds = new ArrayList<>();   
     }
 
     /* original constructor
@@ -116,13 +121,14 @@ public class ComputerSet implements Serializable {
     
     // new constructor 
 
-    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrentyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+    public ComputerSet(CPU cpu, MotherBoard motherBoard, List<RAM> rams, PowerSupply psu, ComputerCase compCase, Integer warrantyLengthInYears, Boolean isAmatuer, LineItem lineItem) {
+        this();
         this.cpu = cpu;
         this.motherBoard = motherBoard;
         this.rams = rams;
         this.psu = psu;
         this.compCase = compCase;
-        this.warrentyLengthInYears = warrentyLengthInYears;
+        this.warrantyLengthInYears = warrantyLengthInYears;
         this.assemblyComplete = false;
         this.lineItem = lineItem;
     }
@@ -207,12 +213,12 @@ public class ComputerSet implements Serializable {
         this.ssds.add(ssd);
     }
     
-    public Integer getWarrentyLengthInYears() {
-        return warrentyLengthInYears;
+    public Integer getWarrantyLengthInYears() {
+        return warrantyLengthInYears;
     }
 
     public void setWarrentyLengthInYears(Integer warrentyLengthInYears) {
-        this.warrentyLengthInYears = warrentyLengthInYears;
+        this.warrantyLengthInYears = warrentyLengthInYears;
     }
 
     public Staff getAssemblyAssignedTo() {

@@ -69,6 +69,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   updateCustomerPassword(customerForm: NgForm) {
+    this.submitted = true;
     if (customerForm.valid) {
       this.customerService.updateCustomerPassword(this.customer).subscribe(
         response => {

@@ -38,7 +38,8 @@ public class UpdateCustomerReq {
     // each list in the list represents the computer part ids of one custom computer set 
     private List<List<Long>> cartComputerSetsPartIds;
     private List<Integer> cartComputerSetsQuantities; 
-    
+    private List<Integer> cartComputerSetsWarrantyLengths;
+    private List<Double> cartComputerSetsPrices;
     // current computer build product
     private List<Long> currComputerBuildComputerPartIds;
     
@@ -70,12 +71,14 @@ public class UpdateCustomerReq {
     }
 
     // cart
-    public UpdateCustomerReq(Long userId, List<Long> cartProductIds, List<Integer> cartProductQuantities, List<List<Long>> cartComputerSetsPartIds, List<Integer> cartComputerSetsQuantities) {
+    public UpdateCustomerReq(Long userId, List<Long> cartProductIds, List<Integer> cartProductQuantities, List<List<Long>> cartComputerSetsPartIds, List<Integer> cartComputerSetsQuantities, List<Integer> cartComputerSetsWarrantyLengths, List<Double> cartComputerSetsPrices) {
         this.userId = userId;
         this.cartProductIds = cartProductIds;
         this.cartProductQuantities = cartProductQuantities;
         this.cartComputerSetsPartIds = cartComputerSetsPartIds;
         this.cartComputerSetsQuantities = cartComputerSetsQuantities;
+        this.cartComputerSetsWarrantyLengths = cartComputerSetsWarrantyLengths;
+        this.cartComputerSetsPrices = cartComputerSetsPrices;
     }
 
     // current computer build product
@@ -196,6 +199,22 @@ public class UpdateCustomerReq {
         this.cartComputerSetsQuantities = cartComputerSetsQuantities;
     }
 
+    public List<Integer> getCartComputerSetsWarrantyLengths() {
+        return cartComputerSetsWarrantyLengths;
+    }
+
+    public void setCartComputerSetsWarrantyLengths(List<Integer> cartComputerSetsWarrantyLengths) {
+        this.cartComputerSetsWarrantyLengths = cartComputerSetsWarrantyLengths;
+    }
+
+    public List<Double> getCartComputerSetsPrices() {
+        return cartComputerSetsPrices;
+    }
+
+    public void setCartComputerSetsPrices(List<Double> cartComputerSetsPrices) {
+        this.cartComputerSetsPrices = cartComputerSetsPrices;
+    }
+    
     public List<Long> getCurrComputerBuildComputerPartIds() {
         return currComputerBuildComputerPartIds;
     }

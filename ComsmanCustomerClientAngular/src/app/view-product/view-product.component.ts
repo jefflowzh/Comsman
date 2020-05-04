@@ -15,12 +15,16 @@ import { SessionService } from '../session.service';
 })
 export class ViewProductComponent implements OnInit {
 
+  displayAddtoCartSuccessModal: boolean;
+  displayAddtoCartErrorModal: boolean;
+
   product: Product;
-  description: string;
   quantitySelected: number;
 
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, public sessionService: SessionService) {
-    this.description = "this is a description"
+    this.displayAddtoCartSuccessModal = false;
+    this.displayAddtoCartErrorModal = false;
+
     this.quantitySelected = 1;
   }
 
@@ -30,7 +34,6 @@ export class ViewProductComponent implements OnInit {
     this.productService.retrieveProductById(productId).subscribe(
       response => {
         this.product = response.product;
-        console.log(this.product);
       },
       error => {
         console.log('********** ViewProductComponent.ts: ' + error);
@@ -38,17 +41,35 @@ export class ViewProductComponent implements OnInit {
     );
   }
 
-  // addToCart() {
-  //   let lineItem = new LineItem(this.product, this.quantitySelected);
+  addToCart(product: Product) {
+    let currentCustomer = this.sessionService.getCurrentCustomer();
 
-  //   let currCustomer = this.sessionService.getCurrentCustomer();
-  //   currCustomer.cart.push(lineItem);
-  //   this.sessionService.setCurrentCustomer(currCustomer);
+    // check if product already in cart
+    let inCart = false;
+    for (let li of currentCustomer.cart) {
+      // is a product and not a computer set
+      if (li.product != null) {
+        if (li.product.productId == product.productId) {
+          inCart = true;
+          this.displayAddtoCartErrorModal = true;
+          break;
+        }
+      }
+    }
+    if (!inCart) {
+      let newLineItem = new LineItem(null, product, this.quantitySelected, null);
+      currentCustomer.cart.push(newLineItem);
+      this.sessionService.setCurrentCustomer(currentCustomer);
+      this.displayAddtoCartSuccessModal = true;
+    }
+  }
 
-  //   console.log("pushed")
-  // }
+  confirmSuccess() {
+    this.displayAddtoCartSuccessModal = false;
+  }
 
-  // addToBuild() {
-  // }
+  confirmError() {
+    this.displayAddtoCartErrorModal = false;
+  }
 
 }

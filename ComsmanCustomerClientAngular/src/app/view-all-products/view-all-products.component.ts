@@ -4,7 +4,8 @@ import { SelectItem } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 
 import { Product } from '../product';
-import { RouterLink } from '@angular/router';
+import { LineItem } from '../line-item';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-view-all-products',
@@ -12,6 +13,9 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./view-all-products.component.css']
 })
 export class ViewAllProductsComponent implements OnInit {
+
+  displayAddtoCartSuccessModal: boolean;
+  displayAddtoCartErrorModal: boolean;
 
   home: MenuItem;
   breadcrumbItems: MenuItem[];
@@ -23,7 +27,10 @@ export class ViewAllProductsComponent implements OnInit {
   sortOrder: number;
   @Input() productType: string;
 
-  constructor() {
+  constructor(public sessionService: SessionService) {
+    this.displayAddtoCartSuccessModal = false;
+    this.displayAddtoCartErrorModal = false;
+
     this.home = { icon: 'pi pi-home', routerLink: "/index" };
 
     this.sortOptions = [
@@ -47,6 +54,37 @@ export class ViewAllProductsComponent implements OnInit {
       this.sortOrder = 1;
       this.sortField = value;
     }
+  }
+
+  addToCart(product: Product) {
+    let currentCustomer = this.sessionService.getCurrentCustomer();
+
+    // check if product already in cart
+    let inCart = false;
+    for (let li of currentCustomer.cart) {
+      // is a product and not a computer set
+      if (li.product != null) {
+        if (li.product.productId == product.productId) {
+          inCart = true;
+          this.displayAddtoCartErrorModal = true;
+          break;
+        }
+      }
+    }
+    if (!inCart) {
+      let newLineItem = new LineItem(null, product, 1, null);
+      currentCustomer.cart.push(newLineItem);
+      this.sessionService.setCurrentCustomer(currentCustomer);
+      this.displayAddtoCartSuccessModal = true;
+    }
+  }
+
+  confirmSuccess() {
+    this.displayAddtoCartSuccessModal = false;
+  }
+
+  confirmError() {
+    this.displayAddtoCartErrorModal = false;
   }
 
 }

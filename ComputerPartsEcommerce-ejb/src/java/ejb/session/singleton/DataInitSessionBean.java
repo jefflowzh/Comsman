@@ -341,20 +341,20 @@ public class DataInitSessionBean {
             computerPartSessionBean.createNewSSD(testSSD1);
             computerPartSessionBean.createNewSSD(testSSD2);
             computerPartSessionBean.createNewSSD(testSSD3);
-            
+
             HDD testHDD1 = new HDD("Manufacturer1", "type1", 1, "formFactor1", "Interface1", "hdd1", 1.0, 1, "image1");
             HDD testHDD2 = new HDD("Manufacturer2", "type2", 2, "formFactor2", "Interface2", "hdd2", 2.0, 2, "image2");
             HDD testHDD3 = new HDD("Manufacturer3", "type3", 3, "formFactor3", "Interface3", "hdd3", 3.0, 3, "image3");
-            
+
             computerPartSessionBean.createNewHDD(testHDD1);
             computerPartSessionBean.createNewHDD(testHDD2);
             computerPartSessionBean.createNewHDD(testHDD3);
-            
+
             List<RAM> rams = new ArrayList();
             List<GPU> gpus = new ArrayList();
             List<SSD> ssds = new ArrayList();
             List<HDD> hdds = new ArrayList();
-            
+
             rams.add(testRam);
             rams.add(testRam1);
             
@@ -371,27 +371,7 @@ public class DataInitSessionBean {
             ComputerSet set = new ComputerSet();
             set.setCpu(testCpu);
             set.setCompCase(testComputerCase1);
-            set.getGpus().add(testGpu);
-            set.getGpus().add(testGpu2);
-            set.getHdds().add(testHDD1);
-            set.getHdds().add(testHDD2);
-            set.getSsds().add(testSSD1);
-            set.setMotherBoard(testmb1);
-            set.setPsu(testPsu);
-            set.getRams().add(testRam);
-            set.getRams().add(testRam1);
-            
-            LineItem setItem = new LineItem();
-            setItem.setQuantity(1);
-            setItem.setComputerSet(set);
-            Long setId = lineItemSessionBean.createNewLineItem(setItem);
-            computerSetSessionBean.createNewComputerSet(set,setId);
-            
-            List<LineItem> itemSets = new ArrayList();
-            itemSets.add(setItem);
-            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
-            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
-            
+
             PreBuiltComputerSetModel p1 = new PreBuiltComputerSetModel(PreBuiltComputerSetTierEnum.BUDGET);
             p1.setCpu(testCpu);
             p1.setWaterCooler(testCPUWaterCooler1);
@@ -437,6 +417,27 @@ public class DataInitSessionBean {
             p3.setIsEnabled(true);
             preBuiltComputerSetModelSessionBean.createNewPreBuiltComputerSetModel(p3);
             
+            set.getGpus().add(testGpu);
+            set.getGpus().add(testGpu2);
+            set.getHdds().add(testHDD1);
+            set.getHdds().add(testHDD2);
+            set.getSsds().add(testSSD1);
+            set.setMotherBoard(testmb1);
+            set.setPsu(testPsu);
+            set.getRams().add(testRam);
+            set.getRams().add(testRam1);
+//            System.out.println("********************** data init: 1");
+//            LineItem setItem = new LineItem();
+//            setItem.setQuantity(1);
+//            Long setId = lineItemSessionBean.createNewLineItem(setItem);
+//            setItem.setComputerSet(set);
+//            computerSetSessionBean.createNewComputerSet(set,setId);
+//            System.out.println("********************** data init: 2");
+//            List<LineItem> itemSets = new ArrayList();
+//            itemSets.add(setItem);
+//            CustomerOrder orderSet = new CustomerOrder(today, true, "home", itemSets);
+//            customerOrderSessionBean.createNewCustomerOrder(orderSet, testCustomer2.getUserId());
+//            System.out.println("********************** data init: 3");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
