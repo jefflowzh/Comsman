@@ -163,6 +163,7 @@ public class ProductManagementManagedBean implements Serializable {
     }
 
     public void subjectSelectionChanged(AjaxBehaviorEvent event) {
+        
         if (selectedProduct.equals("CPU")) {
             products = computerPartSessionBeanLocal.retrieveAllCPU();
         } else if (selectedProduct.equals("MotherBoard")) {
@@ -193,7 +194,7 @@ public class ProductManagementManagedBean implements Serializable {
 
         if (previousProduct == null || !(previousProduct.getProductId().equals(selectedProductToUpdate.getProductId()))) {
 
-            if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard) {
+            if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard || selectedProductToUpdate instanceof ComputerCase) {
                 List<String> temp = computerPartSessionBeanLocal.retrieveAllStringValue(selectedProduct, selectedProductToUpdate.getProductId());
 
                 stringValues = new ArrayList<>();
@@ -208,28 +209,28 @@ public class ProductManagementManagedBean implements Serializable {
                 previousProduct = selectedProductToUpdate;
             }
 
-            if (selectedProductToUpdate instanceof ComputerCase) {
-                List<String> coloursTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("colours", selectedProductToUpdate.getProductId());
-                List<String> mbffTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("motherBoardFormFactor", selectedProductToUpdate.getProductId());
-
-                stringValues = new ArrayList<>();
-
-                // when empty you load
-                if (stringValues.isEmpty()) {
-                    for (String s1 : coloursTemp) {
-                        stringValues.add(new StringValue(s1));
-                    }
-                }
-
-                stringValues2 = new ArrayList<>();
-
-                if (stringValues2.isEmpty()) {
-                    for (String s2 : mbffTemp) {
-                        stringValues2.add(new StringValue(s2));
-                    }
-                }
-                previousProduct = selectedProductToUpdate;
-            }
+//            if (selectedProductToUpdate instanceof ComputerCase) {
+//                // List<String> coloursTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("colours", selectedProductToUpdate.getProductId());
+//                List<String> mbffTemp = computerPartSessionBeanLocal.retrieveAllCCStringValue("motherBoardFormFactor", selectedProductToUpdate.getProductId());
+//
+//                stringValues = new ArrayList<>();
+//
+//                // when empty you load
+////                if (stringValues.isEmpty()) {
+////                    for (String s1 : coloursTemp) {
+////                        stringValues.add(new StringValue(s1));
+////                    }
+////                }
+//
+//                stringValues2 = new ArrayList<>();
+//
+//                if (stringValues2.isEmpty()) {
+//                    for (String s2 : mbffTemp) {
+//                        stringValues2.add(new StringValue(s2));
+//                    }
+//                }
+//                previousProduct = selectedProductToUpdate;
+//            }
         }
     }
 
@@ -250,20 +251,20 @@ public class ProductManagementManagedBean implements Serializable {
         List<String> coloursTemp = new ArrayList<>();
         List<String> mbffTemp = new ArrayList<>();
 
-        if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard) {
+        if (selectedProductToUpdate instanceof CPUWaterCooler || selectedProductToUpdate instanceof CPUAirCooler || selectedProductToUpdate instanceof MotherBoard || selectedProductToUpdate instanceof ComputerCase) {
             for (StringValue s : stringValues) {
                 temp.add(s.getValue());
             }
         }
 
-        if (selectedProductToUpdate instanceof ComputerCase) {
-            for (StringValue s : stringValues) {
-                coloursTemp.add(s.getValue());
-            }
-            for (StringValue s : getStringValues2()) {
-                mbffTemp.add(s.getValue());
-            }
-        }
+//        if (selectedProductToUpdate instanceof ComputerCase) {
+////            for (StringValue s : stringValues) {
+////                coloursTemp.add(s.getValue());
+////            }
+//            for (StringValue s : getStringValues2()) {
+//                mbffTemp.add(s.getValue());
+//            }
+//        }
 
         try {
             if (selectedProductToUpdate instanceof CPU) {
@@ -278,8 +279,8 @@ public class ProductManagementManagedBean implements Serializable {
                 computerPartSessionBeanLocal.updatePowerSupply((PowerSupply) selectedProductToUpdate);
             } else if (selectedProductToUpdate instanceof ComputerCase) {
                 ComputerCase selectedComputerCaseToUpdate = (ComputerCase) selectedProductToUpdate;
-                selectedComputerCaseToUpdate.setColours(coloursTemp);
-                selectedComputerCaseToUpdate.setMotherBoardFormFactor(mbffTemp);
+//                selectedComputerCaseToUpdate.setColours(coloursTemp);
+                selectedComputerCaseToUpdate.setMotherBoardFormFactor(temp);
                 computerPartSessionBeanLocal.updateComCase((ComputerCase) selectedComputerCaseToUpdate);
             } else if (selectedProductToUpdate instanceof GPU) {
                 computerPartSessionBeanLocal.updateGPU((GPU) selectedProductToUpdate);
@@ -525,13 +526,14 @@ public class ProductManagementManagedBean implements Serializable {
                 newComputerCase.setTopFanSupport(topFanSupport);
                 newComputerCase.setFrontFanSupport(frontFanSupport);
                 newComputerCase.setRearFanSupport(rearFanSupport);
-
-                String[] values = stringEdit.trim().split(",");
+                newComputerCase.setColour(colour);
+                
+//                String[] values = stringEdit.trim().split(",");
                 String[] values2 = stringEdit2.trim().split(",");
 
-                for (String s : values) {
-                    newComputerCase.getColours().add(s);
-                }
+//                for (String s : values) {
+//                    newComputerCase.getColours().add(s);
+//                }
                 for (String s : values2) {
                     newComputerCase.getMotherBoardFormFactor().add(s);
                 }

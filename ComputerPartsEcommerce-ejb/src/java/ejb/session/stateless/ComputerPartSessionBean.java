@@ -196,6 +196,11 @@ public class ComputerPartSessionBean implements ComputerPartSessionBeanLocal {
             query.setParameter("inProductId", productId);
 
             return query.getResultList();
+        } else if (type.equals("ComputerCase")) {
+            query = em.createQuery("SELECT c.motherBoardFormFactor FROM ComputerCase c WHERE c.productId = :inProductId");
+            query.setParameter("inProductId", productId);
+
+            return query.getResultList();
         }
 
         return null;

@@ -159,15 +159,6 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}">
-                                <p:column>
-                                    <p:outputLabel for="description" value="Description: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="description" value="#{productManagementManagedBean.newPeripheral.description}" required="true" requiredMessage="Description is required" />
-                                </p:column>
-                            </p:row>
-
                             <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
                                 <p:column>
                                     <p:outputLabel for="coreCount" value="Core Count: " style="font-weight: bold;"/>
@@ -246,7 +237,7 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
+                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
                                 <p:column>
                                     <p:outputLabel for="colour" value="Colour: " style="font-weight: bold;"/>
                                 </p:column>
@@ -452,15 +443,6 @@
 
                             <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
                                 <p:column>
-                                    <p:outputLabel for="colours" value="Colours: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="colours" value="#{productManagementManagedBean.stringEdit}" required="true" requiredMessage="Colours is required" />
-                                </p:column>
-                            </p:row>
-
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:column>
                                     <p:outputLabel for="MBFF" value="MBFF: " style="font-weight: bold;"/>
                                 </p:column>
                                 <p:column>
@@ -647,15 +629,6 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'Peripheral'}">
-                                <p:column>
-                                    <p:outputLabel for="description" value="Description: " style="font-weight: bold;"/>
-                                </p:column>
-                                <p:column>
-                                    <p:inputText id="description" value="#{productManagementManagedBean.selectedProductToUpdate.description}" required="true" requiredMessage="Description is required" />
-                                </p:column>
-                            </p:row>
-
                             <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'CPU'}">
                                 <p:column>
                                     <p:outputLabel for="coreCount" value="Core Count: " style="font-weight: bold;"/>
@@ -734,7 +707,7 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}">
+                            <p:row rendered="#{productManagementManagedBean.selectedProduct eq 'MotherBoard' or (productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
                                 <p:column>
                                     <p:outputLabel for="colour" value="Colour: " style="font-weight: bold;"/>
                                 </p:column>
@@ -1056,21 +1029,10 @@
                             <ui:repeat value="#{productManagementManagedBean.stringValues}" var="stringValue" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="Colours: " style="font-weight: bold;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{stringValue.value}" />
-                                    </p:column>
-                                </p:row>
-                            </ui:repeat>
-
-                            <ui:repeat value="#{productManagementManagedBean.stringValues2}" var="stringValue2" rendered="#{productManagementManagedBean.selectedProduct eq 'ComputerCase'}">
-                                <p:row>
-                                    <p:column>
                                         <p:outputLabel value="MBFF: " style="font-weight: bold;"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputText value="#{stringValue2.value}" />
+                                        <p:inputText value="#{stringValue.value}" />
                                     </p:column>
                                 </p:row>
                             </ui:repeat>
@@ -1081,28 +1043,12 @@
                                 </p:column>
                             </p:row>
 
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard')}">
+                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler') or (productManagementManagedBean.selectedProduct eq 'MotherBoard') or (productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
                                 <p:column colspan="2">
                                     <div align="center">
                                         <p:commandButton value="Add New CCC" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'CPUWaterCooler') or (productManagementManagedBean.selectedProduct eq 'CPUAirCooler')}" style="margin-right: 10px"/>
                                         <p:commandButton value="Add New SMS" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'MotherBoard')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
-                                    </div>
-                                </p:column>
-                            </p:row>
-
-                            <!-- asthetic issue -> create another for rendering computercase -->
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
-                                <p:column colspan="2">
-                                    <div align="center">
-                                        <p:commandButton value="Add New Colour" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
-                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString2}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
-                                    </div>
-                                </p:column>
-                            </p:row>
-                            <p:row rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}">
-                                <p:column colspan="2">
-                                    <div align="center">
+                                        <p:commandButton value="Add New MBFF" actionListener="#{productManagementManagedBean.addString}" process="@form" update="@form" oncomplete="PF('sidebarUpdateProduct').show()" rendered="#{(productManagementManagedBean.selectedProduct eq 'ComputerCase')}" style="margin-right: 10px"/>
                                         <p:commandButton value="Update Product" update="@form formAllProducts:dataTableAllProducts formAllProducts:messages" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('sidebarUpdateProduct').hide();" />
                                     </div>
                                 </p:column>
