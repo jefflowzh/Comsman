@@ -43,7 +43,7 @@
                         </p:column>
 
                         <p:column headerText="Delivery Assigned To" sortBy="#{task.deliveryAssignedTo}" filterBy="#{task.deliveryAssignedTo}" filterMatchMode="contains" >
-                            <h:outputText rendered="#{task.requiresDelivery == true}" value="#{task.deliveryAssignedTo}" />
+                            <h:outputText rendered="#{task.requiresDelivery == true}" value="#{task.deliveryAssignedTo.firstName} #{task.deliveryAssignedTo.lastName}" />
                             <h:outputText rendered="#{task.requiresDelivery == false}" value="No delivery needed" />
                         </p:column>
 

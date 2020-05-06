@@ -220,8 +220,7 @@ public class CustomerOrderSessionBean implements CustomerOrderSessionBeanLocal {
 
     @Override
     public List<CustomerOrder> retrieveAllTasks() {
-        Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inStatus and o.orderStatus <> :inVoid");
-        query.setParameter("inStatus", OrderStatusEnum.FULFILLED);
+        Query query = em.createQuery("SELECT o FROM CustomerOrder o WHERE o.orderStatus <> :inVoid");
         query.setParameter("inVoid", OrderStatusEnum.VOIDED);
 
         return query.getResultList();

@@ -148,8 +148,8 @@ public class ProductManagementManagedBean implements Serializable {
     private String description;
 
     private UploadedFile uploadedFile;
-    // private String destination = "C:\\IS3106_Project_Images_Src\\"; // windows
-    private String destination = "/Users/weidonglim/Documents/IS3106_Project_Images_Src/"; // mac
+    private String destination = "C:\\IS3106_Project_Images_Src\\"; // windows
+    //private String destination = "/Users/weidonglim/Documents/IS3106_Project_Images_Src/"; // mac
 
     public ProductManagementManagedBean() {
         stringValues = new ArrayList<>();

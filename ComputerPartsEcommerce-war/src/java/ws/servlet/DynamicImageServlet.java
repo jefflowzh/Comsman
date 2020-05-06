@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DynamicImageServlet extends HttpServlet {
 
-    // private String imageDirectory = "C:\\IS3106_Project_Images_Src\\";
-    private String imageDirectory = "/Users/weidonglim/Documents/IS3106_Project_Images_Src/";
+    private String imageDirectory = "C:\\IS3106_Project_Images_Src\\";
+    //private String imageDirectory = "/Users/weidonglim/Documents/IS3106_Project_Images_Src/";
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
