@@ -21,13 +21,13 @@
                     <td>{{coupon.code}}</td>
                     <td>{{coupon.startDate}}</td>
                     <td>{{coupon.endDate}}</td>
-                    <td>{{coupon.loyaltyPointRequired}}</td>
+                    <td>{{coupon.loyaltyPointsRequired}}</td>
                     <td>{{coupon.couponType}}</td>
                     <td *ngIf="coupon.couponType == 'PERCENTAGE'">
-                        {{coupon.percentageRate}}
+                        -{{coupon.percentageRate*100}}%
                     </td>
                     <td *ngIf="coupon.couponType == 'FLAT_AMOUNT'">
-                        {{coupon.flatAmount}}
+                        -S${{coupon.flatAmount}}
                     </td>
                     <td *ngIf="coupon.couponType == 'FREE_DELIVERY'">
                         Free delivery

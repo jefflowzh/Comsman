@@ -38,12 +38,6 @@ export class CustomerCouponComponent implements OnInit {
       items: [
         { label: 'Past Orders', icon: 'pi pi-file-o', routerLink: ['/customerOrders'] },
       ]
-    },
-    {
-      label: 'My Reviews',
-      items: [
-        { label: 'Posted Reviews', icon: 'pi pi-pencil' },
-      ]
     }];
 
   }
