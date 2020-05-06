@@ -17,6 +17,7 @@ export class CustomerDetailsComponent implements OnInit {
   customer: Customer;
   success: boolean;
   submitted: boolean = false;
+  passwordSubmitted: boolean = false;
   updateError: boolean = false;
   updateSuccess: boolean = false;
   sidenavItems: MenuItem[];
@@ -40,12 +41,6 @@ export class CustomerDetailsComponent implements OnInit {
       items: [
         { label: 'Past Orders', icon: 'pi pi-file-o', routerLink: ['/customerOrders'] },
       ]
-    },
-    {
-      label: 'My Reviews',
-      items: [
-        { label: 'Posted Reviews', icon: 'pi pi-pencil' },
-      ]
     }];
   }
 
@@ -55,6 +50,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerService.updateCustomerDetails(this.customer).subscribe(
         response => {
           let updatedCustomer = response.customer;
+          updatedCustomer.password = "";
           this.sessionService.setCurrentCustomer(updatedCustomer);
           this.customer = this.sessionService.getCurrentCustomer();
           this.updateError = false;
@@ -68,9 +64,9 @@ export class CustomerDetailsComponent implements OnInit {
     }
   }
 
-  updateCustomerPassword(customerForm: NgForm) {
-    this.submitted = true;
-    if (customerForm.valid) {
+  updateCustomerPassword(customerPasswordForm: NgForm) {
+    this.passwordSubmitted = true;
+    if (customerPasswordForm.valid) {
       this.customerService.updateCustomerPassword(this.customer).subscribe(
         response => {
           this.updateError = false;
