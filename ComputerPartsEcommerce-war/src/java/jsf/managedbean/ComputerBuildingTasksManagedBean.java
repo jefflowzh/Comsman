@@ -103,11 +103,19 @@ public class ComputerBuildingTasksManagedBean implements Serializable {
             parameters.put("input", selectedComputerSetId);
 
             Date date = java.util.Calendar.getInstance().getTime();
-            
-            String path = "/Users/weidonglim/Desktop/test/main.jasper";
-            String exportedTo = "/Users/weidonglim/Desktop/test/";
-
-            JasperRunManager.runReportToPdfFile(path, exportedTo + date.toString() + ".pdf", parameters, computerSetDS.getConnection());
+            //String path = "/Users/bryan/JaspersoftWorkspace/MyReports/main.jasper";
+            //String path = "C:\\Users\\bryan\\Desktop\\3106temp\\GP09\\data\\test\\main.jasper";
+            String path = "C:\\test\\main.jasper";
+            //String path = "C:/test/main.jasper";
+            //String path = "C:/Users/bryan/Desktop/3106temp/GP09/data/test/main.jasper";
+            //String path = "/Users/bryan/Documents/NetBeansProjects/Comsman/ComputerPartsEcommerce-war/web/jasperreports/main.jasper";
+            //String exportedTo = "C:\\Users\\bryan\\Desktop\\3106temp\\";
+            //String exportedTo = "C:\Users\bryan\Desktop\3106temp\";
+            //String exportedTo = "C:/Users/bryan/Desktop/3106temp";
+            String exportedTo = "C:\\test\\testDestination\\" + date.toString().replace(' ', '_').replace(':', '-') + ".pdf";
+            System.out.println("************" + exportedTo);
+            JasperRunManager.runReportToPdfFile(path, exportedTo, parameters, computerSetDS.getConnection());
+            System.out.println("PASSED RUN");
 //            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, computerSetDS.getConnection());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "PDF Exported to: " + exportedTo + " ", null));
